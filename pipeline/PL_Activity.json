@@ -1,18 +1,11 @@
 {
-	"name": "PL_setVariable",
+	"name": "PL_Activity",
 	"properties": {
 		"activities": [
 			{
 				"name": "SetVariable",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "WaitAcyivity",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -96,19 +89,13 @@
 						}
 					]
 				}
-			},
-			{
-				"name": "WaitAcyivity",
-				"type": "Wait",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 5
-				}
 			}
 		],
 		"variables": {
 			"Status": {
+				"type": "String"
+			},
+			"status": {
 				"type": "String"
 			}
 		},

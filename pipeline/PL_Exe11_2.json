@@ -2,6 +2,27 @@
 	"name": "PL_Exe11_2",
 	"properties": {
 		"description": "exercise 1.1 q2",
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "status",
+					"value": "Yes"
+				}
+			}
+		],
+		"variables": {
+			"status": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

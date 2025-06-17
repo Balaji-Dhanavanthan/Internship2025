@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "june2025datafactory"
+		},
+		"DS_Blob_storgare_connectionString": {
+			"value": ""
+		},
+		"LS_OnPrem_SQLServer_password": {
+			"value": ""
+		},
+		"LS_OnPrem_SQLServer_properties_typeProperties_server": {
+			"value": "SSIC-SQL-01"
+		},
+		"LS_OnPrem_SQLServer_properties_typeProperties_database": {
+			"value": "HR"
+		},
+		"LS_OnPrem_SQLServer_properties_typeProperties_userName": {
+			"value": "trainer"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

@@ -12,6 +12,11 @@
 				}
 			}
 		],
+		"variables": {
+			"Status": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

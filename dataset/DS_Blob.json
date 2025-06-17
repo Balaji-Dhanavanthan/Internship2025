@@ -8,6 +8,9 @@
 		"parameters": {
 			"filename": {
 				"type": "string"
+			},
+			"Folder_name": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -19,7 +22,10 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "kani_folder",
+				"folderPath": {
+					"value": "@dataset().Folder_name",
+					"type": "Expression"
+				},
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

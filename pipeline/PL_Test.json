@@ -5,6 +5,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Wait1",
@@ -65,6 +67,8 @@
 			{
 				"name": "Wait1",
 				"type": "Wait",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -88,15 +92,15 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "status ",
-					"value": "Yes"
+					"variableName": "yes",
+					"value": {
+						"value": "'Yes'",
+						"type": "Expression"
+					}
 				}
 			}
 		],
 		"variables": {
-			"status ": {
-				"type": "String"
-			},
 			"yes": {
 				"type": "String"
 			}

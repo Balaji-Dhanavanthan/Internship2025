@@ -1,0 +1,27 @@
+{
+	"name": "PL_setVariable",
+	"properties": {
+		"activities": [
+			{
+				"name": "SetVariable",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Status",
+					"value": "Yes"
+				}
+			}
+		],
+		"variables": {
+			"Status": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

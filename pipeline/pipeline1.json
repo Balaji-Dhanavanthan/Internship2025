@@ -1,0 +1,23 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"description": "1. Create a pipeline with a single \"Wait\" activity\n\no Wait for 5 seconds before completing.",
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			}
+		],
+		"variables": {
+			"status": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

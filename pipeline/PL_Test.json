@@ -4,8 +4,18 @@
 		"activities": [
 			{
 				"name": "Copy data1",
+				"description": "select * from emplyees",
 				"type": "Copy",
-				"dependsOn": [],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -53,8 +63,66 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 3
+				}
+			},
+			{
+				"name": "yes",
+				"description": "yes",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": true,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "yes",
+					"value": "yes"
+				}
+			},
+			{
+				"name": "yes1",
+				"description": "yes",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "yes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('yes'),'yes')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"yes": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

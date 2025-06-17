@@ -10,8 +10,28 @@
 				"typeProperties": {
 					"waitTimeInSeconds": 5
 				}
+			},
+			{
+				"name": "Set variable1",
+				"description": "",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "new",
+					"value": "'yes'"
+				}
 			}
 		],
+		"variables": {
+			"new": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

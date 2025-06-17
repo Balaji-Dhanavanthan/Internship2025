@@ -53,8 +53,48 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Status",
+					"value": "Yes"
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('status'),'Yes' )\n",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"Status": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

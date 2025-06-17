@@ -1,0 +1,23 @@
+{
+	"name": "DS_blob_r",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "data_95dd36a7-5bda-4dc1-9419-a23ef267b1c0_143a27e0-281f-4961-acdc-137969a64927.json",
+				"container": "jsoncontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

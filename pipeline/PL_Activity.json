@@ -13,7 +13,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Status",
-					"value": "Yes"
+					"value": "yes"
 				}
 			},
 			{
@@ -23,7 +23,6 @@
 					{
 						"activity": "SetVariable",
 						"dependencyConditions": [
-							"Completed",
 							"Succeeded"
 						]
 					}
@@ -31,12 +30,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('Status'),'Status')",
+						"value": "@equals(variables('Status'),'yes')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
 						{
-							"name": "Copy data1",
+							"name": "CP_countries",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -77,25 +76,60 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"SchemaName": "dbo",
+										"TableName": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": "countries.csv"
+									}
 								}
 							]
 						}
 					]
 				}
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
 			}
 		],
 		"variables": {
 			"Status": {
-				"type": "String"
-			},
-			"status": {
 				"type": "String"
 			}
 		},

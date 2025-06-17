@@ -30,6 +30,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('status'), 'Yes')",
+						"type": "Expression"
+					},
 					"ifTrueActivities": [
 						{
 							"name": "Copy data1",
@@ -50,11 +54,26 @@
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_JSON_test",
 									"type": "DatasetReference"
 								}
 							]

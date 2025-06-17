@@ -13,7 +13,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "status",
-					"value": "yes"
+					"value": "Yes"
 				}
 			},
 			{
@@ -30,9 +30,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('Status'),'Status')",
+						"value": "@equals(variables('Status'),'Yes')",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Fail1",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "Failed ",
+								"errorCode": "404"
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Copy data1",

@@ -2,6 +2,51 @@
 	"name": "PL_ex1-1",
 	"properties": {
 		"description": "exercise 1.1",
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "list",
+					"value": [
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('list')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(),2),0)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"list": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }

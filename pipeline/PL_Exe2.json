@@ -35,9 +35,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"exists"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false

@@ -102,20 +102,10 @@
 				}
 			}
 		],
-		"parameters": {
-			"status": {
-				"type": "string",
-				"defaultValue": "no"
-			}
-		},
 		"variables": {
 			"Status": {
 				"type": "String",
 				"defaultValue": "Yes"
-			},
-			"status": {
-				"type": "String",
-				"defaultValue": "No"
 			}
 		},
 		"annotations": []

@@ -5,11 +5,6 @@
 			"referenceName": "LS_OnPrem_SQLServer",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],

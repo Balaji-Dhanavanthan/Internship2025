@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('Numbers')",
+						"value": "@variables('numbers')",
 						"type": "Expression"
 					},
 					"condition": {
@@ -26,26 +26,10 @@
 				}
 			},
 			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_Test",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "Set variable1",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
@@ -53,7 +37,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Numbers",
+					"variableName": "numbers",
 					"value": [
 						1,
 						2,
@@ -66,7 +50,7 @@
 			}
 		],
 		"variables": {
-			"Numbers": {
+			"numbers": {
 				"type": "Array",
 				"defaultValue": [
 					1,
@@ -74,9 +58,7 @@
 					3,
 					4,
 					5,
-					6,
-					7,
-					8
+					6
 				]
 			}
 		},

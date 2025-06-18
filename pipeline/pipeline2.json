@@ -105,7 +105,7 @@
 									"parameters": {
 										"container": "practice-adf",
 										"folder": "pk_folder",
-										"filename": "foreach"
+										"filename": "foreach.csv"
 									}
 								}
 							]

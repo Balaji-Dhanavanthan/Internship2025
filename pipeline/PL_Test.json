@@ -60,15 +60,9 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -131,14 +125,23 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "dbo",
+										"table_name": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"folder": "pk_folder",
+										"filename": "if condition"
+									}
 								}
 							]
 						}
@@ -148,7 +151,14 @@
 			{
 				"name": "Even_Numbers",
 				"type": "Filter",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "If Condition",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {

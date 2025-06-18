@@ -84,6 +84,35 @@
 				]
 			},
 			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"structure"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
 				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
@@ -97,7 +126,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata').output.itemName",
+						"value": "@activity('Get Metadata1').output.structure",
 						"type": "Expression"
 					},
 					"batchCount": 2,
@@ -119,7 +148,6 @@
 									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
-										"maxConcurrentConnections": 0,
 										"recursive": true,
 										"enablePartitionDiscovery": false
 									},
@@ -163,31 +191,12 @@
 						}
 					]
 				}
-			},
-			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
-					},
-					"fieldList": []
-				}
 			}
 		],
 		"parameters": {
-			"Arun": {
-				"type": "string"
+			"arun": {
+				"type": "string",
+				"defaultValue": "arun"
 			}
 		},
 		"annotations": []

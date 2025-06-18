@@ -1,0 +1,50 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "sample_invoice_data.xlsx",
+				"container": "dataflow-session"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Invoice_ID",
+				"type": "String"
+			},
+			{
+				"name": "Drug_Name",
+				"type": "String"
+			},
+			{
+				"name": "Specialty_Prod_Flag",
+				"type": "String"
+			},
+			{
+				"name": "Invoice_Amount",
+				"type": "String"
+			},
+			{
+				"name": "Invoice_Date",
+				"type": "String"
+			},
+			{
+				"name": "Channel",
+				"type": "String"
+			},
+			{
+				"name": "identifier_ncpdp_id",
+				"type": "String"
+			}
+		]
+	}
+}

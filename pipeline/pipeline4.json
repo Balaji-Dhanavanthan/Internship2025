@@ -95,9 +95,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf",
-										"file": "file_name",
-										"folder": "Jeffina_folder"
+										"container": "practice-adf"
 									}
 								}
 							]

@@ -5,21 +5,12 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"name": {
-				"type": "string",
-				"defaultValue": "jai,pramo"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@pipeline().parameters.name",
-					"type": "Expression"
-				},
+				"fileName": "practice_text",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

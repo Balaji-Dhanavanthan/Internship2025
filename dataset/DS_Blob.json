@@ -5,12 +5,32 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"containerfor": {
+				"type": "string",
+				"defaultValue": "practise-adf"
+			},
+			"folderfor": {
+				"type": "string",
+				"defaultValue": "kalai"
+			},
+			"filefor": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "practice-adf"
+				"folderPath": {
+					"value": "@dataset().folderfor",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().containerfor",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

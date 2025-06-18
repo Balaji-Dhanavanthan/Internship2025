@@ -103,7 +103,7 @@
 									"parameters": {
 										"Container": "practice-adf",
 										"filename": {
-											"value": "@item().filename",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
@@ -117,7 +117,7 @@
 										"container": "practice-adf",
 										"directory": "dump",
 										"filename": {
-											"value": "@item().filename",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}

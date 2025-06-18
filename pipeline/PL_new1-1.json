@@ -28,14 +28,17 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "DS_Blob",
+									"referenceName": "Table2",
 									"type": "DatasetReference"
 								},
 								"fieldList": [
-									"childItems"
+									"itemName"
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"modifiedDatetimeStart": null,
+									"modifiedDatetimeEnd": null,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {

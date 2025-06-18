@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "practice-adf"
+				"container": "csvcontainer"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

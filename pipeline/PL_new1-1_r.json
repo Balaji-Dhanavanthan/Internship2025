@@ -40,18 +40,60 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
+										"modifiedDatetimeStart": null,
+										"modifiedDatetimeEnd": null,
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
 										"type": "DelimitedTextReadSettings"
 									}
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_blob_r",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "practice-adf",
+										"Filename": {
+											"value": "@item().filename",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_blob_r",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "practice-adf",
+										"Folder": "ramfolder",
+										"Filename": {
+											"value": "@item().filename",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -80,7 +122,6 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

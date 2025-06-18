@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": "ram_folder",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

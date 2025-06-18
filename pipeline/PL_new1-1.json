@@ -68,7 +68,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_table_r",
+									"referenceName": "DS_Blob",
 									"type": "DatasetReference"
 								}
 							]
@@ -79,6 +79,8 @@
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

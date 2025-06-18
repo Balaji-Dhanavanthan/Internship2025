@@ -1,0 +1,34 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "source1",
+					"description": "SELECT * FROM dbo.Employees;"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT * FROM dbo.Employees;',",
+				"     format: 'query') ~> source1",
+				"source1 split(ERROR_FUNCTION(''),",
+				"     disjoint: true) ~> split1@(stream1, stream2)"
+			]
+		}
+	}
+}

@@ -65,7 +65,7 @@
 						"parameters": {
 							"Container": "prctice-adf",
 							"folder": "kani_folder",
-							"filename": "foreach.csv"
+							"filename": "foreach"
 						}
 					}
 				],

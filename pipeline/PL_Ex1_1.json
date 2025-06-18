@@ -95,14 +95,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "SchemaName"
-					},
-					{
-						"name": "TableName"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",

@@ -8,7 +8,7 @@
 		"parameters": {
 			"containerfor": {
 				"type": "string",
-				"defaultValue": "practise-adf"
+				"defaultValue": "practice-adf"
 			},
 			"folderfor": {
 				"type": "string",

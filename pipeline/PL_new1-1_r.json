@@ -110,7 +110,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT   TABLE_SCHEMA AS schemaname,  TABLE_NAME AS table_name  FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_TYPE = 'BASE TABLE'  and table_schema = 'dbo'   ORDER BY schemaname, table_name;",
+						"sqlReaderQuery": "SELECT TABLE_SCHEMA AS schemaname,  TABLE_NAME AS table_name  FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' and table_schema = 'dbo'   ORDER BY schemaname, table_name;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

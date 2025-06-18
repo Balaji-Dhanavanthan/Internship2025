@@ -96,8 +96,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "ramfolder",
-							"Filename": "countries"
+							"Folder": "ramfolder"
 						}
 					}
 				]

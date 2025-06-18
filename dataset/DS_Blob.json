@@ -18,7 +18,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "IPL.cs",
+				"fileName": "IPL.csv",
+				"folderPath": "Samplefolder",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

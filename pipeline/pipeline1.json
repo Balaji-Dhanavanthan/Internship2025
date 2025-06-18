@@ -1,9 +1,9 @@
 {
-	"name": "PL_Test",
+	"name": "pipeline1",
 	"properties": {
 		"activities": [
 			{
-				"name": "wait1",
+				"name": "Wait1",
 				"type": "Wait",
 				"dependsOn": [],
 				"userProperties": [],
@@ -28,14 +28,7 @@
 			{
 				"name": "If Condition1",
 				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Set variable1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {

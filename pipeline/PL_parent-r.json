@@ -1,5 +1,5 @@
 {
-	"name": "PL_parent",
+	"name": "PL_parent-r",
 	"properties": {
 		"activities": [
 			{
@@ -12,7 +12,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_child",
+						"referenceName": "PL_child-r",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

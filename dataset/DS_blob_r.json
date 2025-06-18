@@ -22,7 +22,6 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "emp",
-				"folderPath": "ramfolder",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

@@ -30,7 +30,7 @@
 					"type": "Expression"
 				},
 				"container": {
-					"value": "practice-adf",
+					"value": "@dataset().Container",
 					"type": "Expression"
 				}
 			},

@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "PL_foreach",
 	"properties": {
 		"activities": [
 			{
@@ -19,8 +19,8 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "countries",
-							"TableName": "dbo"
+							"SchemaName": "dbo",
+							"TableName": "countries"
 						}
 					},
 					"fieldList": [
@@ -70,12 +70,7 @@
 								"sink": {
 									"type": "DelimitedTextSink",
 									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings",
-										"metadata": [
-											{
-												"value": ""
-											}
-										]
+										"type": "AzureBlobStorageWriteSettings"
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
@@ -98,8 +93,8 @@
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"SchemaName": "countries",
-										"TableName": "dbo"
+										"SchemaName": "dbo",
+										"TableName": "countries"
 									}
 								}
 							],

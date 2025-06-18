@@ -63,7 +63,17 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schemaname": {
+											"value": "@item().schemaname",
+											"type": "Expression"
+										},
+										"tablename": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
@@ -71,10 +81,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": {
-											"value": "@item()",
-											"type": "Expression"
-										},
+										"Container": "practice-adf",
 										"Folder": "kani_folder",
 										"Filename": {
 											"value": "@concat(item().table_name,'.csv')",

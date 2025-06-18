@@ -8,7 +8,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata2",
+						"activity": "Lookup1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -17,7 +17,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata2').output.childItems",
+						"value": "@activity('Lookup1').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -36,19 +36,9 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"modifiedDatetimeStart": null,
-										"modifiedDatetimeEnd": null,
-										"wildcardFolderPath": "ramfolder",
-										"wildcardFileName": "*",
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -73,12 +63,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_blob_r",
+									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "practice-adf",
-										"Folder": "ramfolder",
-										"Filename": "*"
+										"SchemaName": {
+											"value": "@item().schemaname",
+											"type": "Expression"
+										},
+										"TableName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -88,9 +83,9 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Container": "practice-adf",
-										"Folder": "ramfolder2",
+										"Folder": "ramfolder",
 										"Filename": {
-											"value": "@item().filename",
+											"value": "@concat(item().table_name,'.csv')",
 											"type": "Expression"
 										}
 									}
@@ -101,8 +96,8 @@
 				}
 			},
 			{
-				"name": "Get Metadata2",
-				"type": "GetMetadata",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -113,20 +108,17 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT   TABLE_SCHEMA AS schemaname,  TABLE_NAME AS table_name  FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_TYPE = 'BASE TABLE'  and table_schema = 'dbo'   ORDER BY schemaname, table_name;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_serverrr",
 						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
-					}
+					"firstRowOnly": false
 				}
 			}
 		],

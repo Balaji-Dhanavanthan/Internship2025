@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "IPL_1",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

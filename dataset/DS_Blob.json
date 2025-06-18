@@ -18,7 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "dbo.countries.txt",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
 				"container": {
 					"value": "@dataset().Container",
 					"type": "Expression"

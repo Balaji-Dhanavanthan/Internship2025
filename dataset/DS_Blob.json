@@ -21,14 +21,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
+				"folderPath": "kani_folder",
 				"container": {
 					"value": "@dataset().Container",
 					"type": "Expression"

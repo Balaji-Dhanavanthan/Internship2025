@@ -17,7 +17,11 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "countries",
+							"SchemaName": "dbo"
+						}
 					},
 					"fieldList": [
 						{
@@ -87,7 +91,14 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@split(replace(replace(item().name,']',''),'[',''),'.')[1]",
+											"type": "Expression"
+										},
+										"SchemaName": "@split(replace(replace(item().name,']',''),'[',''),'.')[0]"
+									}
 								}
 							],
 							"outputs": [
@@ -95,7 +106,11 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf"
+										"container": "practice-adf",
+										"filename": {
+											"value": "@concat(item().name, '.csv')",
+											"type": "Expression"
+										}
 									}
 								}
 							]

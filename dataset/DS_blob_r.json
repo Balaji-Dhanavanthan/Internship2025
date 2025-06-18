@@ -20,7 +20,9 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation"
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "ramfolder",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

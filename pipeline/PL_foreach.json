@@ -45,7 +45,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems\r\n ",
+						"value": "@activity('Get Metadata1').output.childItems\n ",
 						"type": "Expression"
 					},
 					"activities": [
@@ -93,8 +93,14 @@
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"SchemaName": "dbo",
-										"TableName": "countries"
+										"SchemaName": {
+											"value": "@split(replace(replace(item().name,']',''),'[',''),'.')[0]",
+											"type": "Expression"
+										},
+										"TableName": {
+											"value": "@split(replace(replace(item().name,']',''),'[',''),'.')[1]",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -105,7 +111,10 @@
 									"parameters": {
 										"Container": "practice-adf",
 										"FolderName": "doniya_folder",
-										"FileName": "file.csv"
+										"FileName": {
+											"value": "@concat(item().name, '.csv')",
+											"type": "Expression"
+										}
 									}
 								}
 							]

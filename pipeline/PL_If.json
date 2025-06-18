@@ -49,22 +49,14 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"wildcardFileName": "IPL.csv",
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
 									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings",
-										"copyBehavior": "FlattenHierarchy"
+										"type": "AzureBlobStorageWriteSettings"
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
@@ -84,13 +76,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"SchemaName": "dbo",
+										"TableName": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_Test",
+									"referenceName": "DS_Blob",
 									"type": "DatasetReference"
 								}
 							]

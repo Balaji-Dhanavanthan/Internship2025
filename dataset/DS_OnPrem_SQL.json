@@ -5,12 +5,21 @@
 			"referenceName": "LS_OnPrem_SQLServer",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"DatabaseObject": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "jobs"
+			"table": "employees"
 		}
 	}
 }

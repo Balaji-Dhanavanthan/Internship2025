@@ -10,6 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "countries.csv",
+				"folderPath": "jayan",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

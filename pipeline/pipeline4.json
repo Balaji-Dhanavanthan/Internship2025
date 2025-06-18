@@ -21,7 +21,7 @@
 					},
 					"fieldList": [
 						{
-							"value": "childItem",
+							"value": "childItems",
 							"type": "Expression"
 						}
 					]
@@ -30,11 +30,18 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItem",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"activities": [
@@ -89,7 +96,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "practice-adf",
-										"file": "doniya_folder"
+										"file": "file_name",
+										"folder": "Jeffina_folder"
 									}
 								}
 							]

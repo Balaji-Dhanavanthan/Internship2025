@@ -142,8 +142,39 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "If Condition",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Employees_ID",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@pipeline().parameters.even",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"Employees_ID": {
+				"type": "array"
+			},
+			"even": {
+				"type": "bool"
+			}
+		},
 		"variables": {
 			"status": {
 				"type": "String",

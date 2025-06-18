@@ -1,0 +1,34 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "jsoncontainer"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"job_id": {
+					"type": "string"
+				},
+				"job_title": {
+					"type": "string"
+				},
+				"min_salary": {
+					"type": "number"
+				},
+				"max_salary": {
+					"type": "number"
+				}
+			}
+		}
+	}
+}

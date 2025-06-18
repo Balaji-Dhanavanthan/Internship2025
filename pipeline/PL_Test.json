@@ -3,33 +3,17 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Wait1",
-				"type": "Wait",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 5
-				}
-			},
-			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Wait1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "yes",
-					"value": "YES"
+					"variableName": "status",
+					"value": "yes"
 				}
 			},
 			{
@@ -46,7 +30,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('yes'),'YES' )",
+						"value": "@equals(variables('yes'),variables('yes') )",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -104,13 +88,22 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"SchemaName": "dbo",
+										"TableName": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "practice-adf",
+										"Folder": "kanish",
+										"Filename": "ifcondition"
+									}
 								}
 							]
 						}
@@ -124,6 +117,10 @@
 			},
 			"yes": {
 				"type": "String"
+			},
+			"status": {
+				"type": "String",
+				"defaultValue": "yes"
 			}
 		},
 		"annotations": []

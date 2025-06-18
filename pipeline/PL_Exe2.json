@@ -6,8 +6,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -21,8 +19,6 @@
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -37,7 +33,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,

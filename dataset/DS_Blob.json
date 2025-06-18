@@ -10,8 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "as",
-				"folderPath": "Asrar",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

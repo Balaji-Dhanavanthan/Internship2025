@@ -8,12 +8,6 @@
 		"parameters": {
 			"Container": {
 				"type": "string"
-			},
-			"folder": {
-				"type": "string"
-			},
-			"filename": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -21,7 +15,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "kani_folder",
 				"container": {
 					"value": "@dataset().Container",
 					"type": "Expression"

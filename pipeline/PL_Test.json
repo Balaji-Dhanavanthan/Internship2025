@@ -45,7 +45,10 @@
 				"inputs": [
 					{
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "dbo"
+						}
 					}
 				],
 				"outputs": [

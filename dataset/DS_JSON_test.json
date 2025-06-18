@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "csvcontainer"
+				"fileName": "IPL.csv",
+				"container": "jsoncontainer"
 			}
 		},
 		"schema": {}

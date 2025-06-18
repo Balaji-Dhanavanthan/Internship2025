@@ -80,6 +80,11 @@
 				}
 			}
 		],
+		"variables": {
+			"status": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

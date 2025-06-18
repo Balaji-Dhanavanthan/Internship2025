@@ -26,11 +26,11 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().folder",
+					"value": "@dataset().filename",
 					"type": "Expression"
 				},
 				"container": {
-					"value": "@dataset().Container",
+					"value": "practice-adf",
 					"type": "Expression"
 				}
 			},

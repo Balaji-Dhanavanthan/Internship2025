@@ -1,9 +1,38 @@
 {
-	"name": "PL_Foreach",
+	"name": "pipeline1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Foreach_ex1",
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "countries",
+							"schema": "dbo"
+						}
+					},
+					"fieldList": [
+						{
+							"value": "childItems",
+							"type": "Expression"
+						}
+					]
+				}
+			},
+			{
+				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -16,12 +45,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems\n",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "CopyData",
+							"name": "Copydata_retrive",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -64,8 +93,14 @@
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"filename": "countries",
-										"schema": "dbo"
+										"filename": {
+											"value": "@item()",
+											"type": "Expression"
+										},
+										"schema": {
+											"value": "@item()",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -74,41 +109,21 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "prctice-adf",
-										"folder": "kani_folder",
-										"filename": "foreach"
+										"Container": {
+											"value": "@item()",
+											"type": "Expression"
+										},
+										"folder": {
+											"value": "@item()",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@item()",
+											"type": "Expression"
+										}
 									}
 								}
 							]
-						}
-					]
-				}
-			},
-			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": " ",
-							"schema": " "
-						}
-					},
-					"fieldList": [
-						{
-							"value": "childItems",
-							"type": "Expression"
 						}
 					]
 				}

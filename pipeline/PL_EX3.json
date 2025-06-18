@@ -116,7 +116,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"Container": "practice-adf",
-													"Folder": "Kani_folder",
+													"Folder": "kani_folder",
 													"Filename": {
 														"value": "@item().name",
 														"type": "Expression"
@@ -130,7 +130,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"Container": "practice-adf",
-													"Folder": "Kani_folder/Doni_folder",
+													"Folder": "kani_folder/doni_folder",
 													"Filename": {
 														"value": "@item().name",
 														"type": "Expression"

@@ -5,11 +5,9 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata3",
+						"activity": "Get Metadata1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -18,14 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "Get Metadata2",
-							"type": "GetMetadata",
+							"name": "Copy data1",
+							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -36,52 +34,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"dataset": {
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
-								},
-								"fieldList": [
-									"itemType"
-								],
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							}
-						},
-						{
-							"name": "Copy data1",
-							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Get Metadata2",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -106,8 +62,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "dbo"
+									}
 								}
 							],
 							"outputs": [
@@ -139,78 +98,8 @@
 				}
 			},
 			{
-				"name": "Delete1",
-				"type": "Delete",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"enableLogging": true
-				}
-			},
-			{
-				"name": "Copy data2",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "BinarySource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true
-						},
-						"formatSettings": {
-							"type": "BinaryReadSettings"
-						}
-					},
-					"sink": {
-						"type": "BinarySink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "Binary1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "samplefile"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Binary1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "sample"
-						}
-					}
-				]
-			},
-			{
-				"name": "Get Metadata3",
+				"name": "Get Metadata1",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -226,10 +115,11 @@
 						"type": "DatasetReference"
 					},
 					"fieldList": [
-						"itemType"
+						"childItems"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

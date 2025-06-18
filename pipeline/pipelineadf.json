@@ -13,19 +13,41 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "status",
-					"value": "\"yes\""
+					"value": {
+						"value": "yes",
+						"type": "Expression"
+					}
 				}
 			},
 			{
 				"name": "If Condition",
 				"type": "IfCondition",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
 						"value": "@equals(variables('status'),'yes')",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Fail1",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "failed",
+								"errorCode": "401`"
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Copy data1",
@@ -75,7 +97,11 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "test-container",
+										"file": "IPL.csv"
+									}
 								}
 							],
 							"outputs": [
@@ -83,16 +109,70 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "Source",
-										"file": "Source12.csv"
+										"Container": "csvcontainer",
+										"file": {
+											"value": "@concat('IPL_Abishek','.csv')",
+											"type": "Expression"
+										}
 									}
 								}
 							]
+						},
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
 						}
 					]
 				}
+			},
+			{
+				"name": "filternumber",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "If Condition",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.even",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(), 2), 0)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"even": {
+				"type": "array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10
+				]
+			}
+		},
 		"variables": {
 			"status": {
 				"type": "String"

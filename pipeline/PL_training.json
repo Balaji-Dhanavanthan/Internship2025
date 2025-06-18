@@ -1,19 +1,8 @@
 {
-	"name": "pipeline1",
+	"name": "PL_training",
 	"properties": {
 		"description": "1. Create a pipeline with a single \"Wait\" activity\n\no Wait for 5 seconds before completing.",
 		"activities": [
-			{
-				"name": "Wait1",
-				"type": "Wait",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 5
-				}
-			},
 			{
 				"name": "hi",
 				"type": "SetVariable",
@@ -94,7 +83,10 @@
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"": "yes"
+									}
 								}
 							]
 						}

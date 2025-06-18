@@ -1,5 +1,5 @@
 {
-	"name": "exercise_1_pipeline",
+	"name": "PL_Exercise_Emp_ID",
 	"properties": {
 		"activities": [
 			{
@@ -120,7 +120,14 @@
 			{
 				"name": "Filter1",
 				"type": "Filter",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {

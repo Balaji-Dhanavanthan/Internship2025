@@ -154,7 +154,6 @@
 						]
 					}
 				],
-				"userProperties": [],
 				"typeProperties": {
 					"items": {
 						"value": "@pipeline().parameters.Employees_ID",

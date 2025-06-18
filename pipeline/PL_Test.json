@@ -78,6 +78,8 @@
 			{
 				"name": "Status",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data1",
@@ -90,15 +92,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Yes",
-					"value": "Yes"
+					"variableName": "Status",
+					"value": "Yes\n"
 				}
 			},
 			{
 				"name": "If Condition1",
 				"type": "IfCondition",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Status",
@@ -168,10 +171,41 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.even",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(),2 ), 0)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"even": {
+				"type": "array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5
+				]
+			}
+		},
 		"variables": {
 			"Yes": {
+				"type": "String"
+			},
+			"Status": {
 				"type": "String"
 			}
 		},

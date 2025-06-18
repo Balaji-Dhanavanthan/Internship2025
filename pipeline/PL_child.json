@@ -1,0 +1,23 @@
+{
+	"name": "PL_child",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"parameters": {
+			"source": {
+				"type": "int",
+				"defaultValue": 5
+			}
+		},
+		"annotations": []
+	}
+}

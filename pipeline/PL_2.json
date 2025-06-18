@@ -324,12 +324,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"arun": {
-				"type": "string",
-				"defaultValue": "arun"
-			}
-		},
 		"annotations": []
 	}
 }

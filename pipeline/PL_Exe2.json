@@ -14,7 +14,67 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings",
+										"copyBehavior": "FlattenHierarchy"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"DatabaseObject": "dbo",
+										"TableName": "Departments"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_JSON_test",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "testcsvcontainer",
+										"Folder": "janafolder",
+										"File": "depts.json"
+									}
+								}
+							]
+						}
+					]
+				}
 			},
 			{
 				"name": "Get Metadata1",

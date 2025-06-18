@@ -44,7 +44,10 @@
 				"inputs": [
 					{
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "dbo"
+						}
 					}
 				],
 				"outputs": [
@@ -74,7 +77,10 @@
 					},
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "dbo"
+						}
 					},
 					"firstRowOnly": false
 				}

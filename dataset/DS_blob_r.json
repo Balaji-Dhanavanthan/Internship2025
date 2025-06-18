@@ -21,7 +21,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "ramfolder",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

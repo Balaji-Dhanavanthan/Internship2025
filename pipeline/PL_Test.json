@@ -109,8 +109,36 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.list",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(),2 ),0)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"list": {
+				"type": "array"
+			}
+		},
 		"variables": {
 			"Job_ID": {
 				"type": "Array"

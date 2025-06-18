@@ -1,0 +1,22 @@
+{
+	"name": "DS_JSON_test_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "data_copy"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "IPL.csv",
+				"container": "jsoncontainer"
+			}
+		},
+		"schema": {}
+	}
+}

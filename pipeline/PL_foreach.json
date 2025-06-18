@@ -104,8 +104,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Container": "practice-adf",
-										"FolderName": "doniya-folder",
-										"FileName": "test"
+										"FolderName": "doniya_folder",
+										"FileName": "file.csv"
 									}
 								}
 							]

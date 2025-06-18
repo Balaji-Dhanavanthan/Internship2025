@@ -5,7 +5,14 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -30,7 +37,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('Status'),variables('Status'))",
+						"value": "@equals(variables('Status'),'Yes')",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -100,8 +107,34 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.input",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"input": {
+				"type": "Array"
+			}
+		},
 		"variables": {
 			"Status": {
 				"type": "String",

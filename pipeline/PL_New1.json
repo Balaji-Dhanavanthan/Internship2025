@@ -5,8 +5,6 @@
 			{
 				"name": "Wait1",
 				"type": "Wait",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -24,8 +22,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "new",
-					"value": "yes"
+					"variableName": "even",
+					"value": [
+						"yes"
+					]
 				}
 			},
 			{
@@ -64,7 +64,6 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
-										"wildcardFileName": "IPL.csv",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -107,9 +106,35 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('even')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(),2 ) ,0)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
+			"even": {
+				"type": "Array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5
+				]
+			},
 			"new": {
 				"type": "String"
 			}

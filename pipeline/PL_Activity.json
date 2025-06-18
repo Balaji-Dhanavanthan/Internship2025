@@ -113,10 +113,7 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "IPL.csv"
-						}
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -190,17 +187,6 @@
 				]
 			}
 		],
-		"variables": {
-			"Status": {
-				"type": "String"
-			},
-			"numbersArray": {
-				"type": "Array",
-				"defaultValue": [
-					" "
-				]
-			}
-		},
 		"annotations": []
 	}
 }

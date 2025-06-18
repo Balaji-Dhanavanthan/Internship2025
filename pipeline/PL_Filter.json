@@ -1,0 +1,39 @@
+{
+	"name": "PL_Filter",
+	"properties": {
+		"activities": [
+			{
+				"name": "Filter_ex1",
+				"type": "Filter",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('num')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(), 2), 0)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"num": {
+				"type": "Array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6
+				]
+			}
+		},
+		"annotations": []
+	}
+}

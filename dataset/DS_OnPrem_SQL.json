@@ -6,10 +6,10 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"SchemaName": {
+			"filename": {
 				"type": "string"
 			},
-			"TableName": {
+			"schema": {
 				"type": "string"
 			}
 		},
@@ -17,14 +17,8 @@
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().SchemaName",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().TableName",
-				"type": "Expression"
-			}
+			"schema": "dbo",
+			"table": "countries"
 		}
 	}
 }

@@ -78,11 +78,7 @@
 					},
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "Departments"
-						}
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -90,6 +86,8 @@
 			{
 				"name": "LKP_Jobs",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -108,11 +106,7 @@
 					},
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "jobs"
-						}
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -145,12 +139,6 @@
 		"variables": {
 			"Job_ID": {
 				"type": "Array"
-			},
-			"numbersArray": {
-				"type": "Array",
-				"defaultValue": [
-					" "
-				]
 			}
 		},
 		"annotations": []

@@ -23,7 +23,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "new",
-					"value": "'yes'"
+					"value": "yes"
 				}
 			},
 			{
@@ -40,7 +40,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "if value=='yes'\n\n\n",
+						"value": "@equals(variables('new'), 'yes')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -59,14 +59,40 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
+									"sqlReaderQuery": "select * from employees",
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_new",
 									"type": "DatasetReference"
 								}
 							]

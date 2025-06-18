@@ -1,0 +1,36 @@
+{
+	"name": "PL_2",
+	"properties": {
+		"activities": [
+			{
+				"name": "var_abc",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var_abc",
+					"value": "[1,2,3,4,5,6,7,8,9]"
+				}
+			}
+		],
+		"variables": {
+			"num_arr": {
+				"type": "String",
+				"defaultValue": "[1,2,3,4,5,6,7,8,9]"
+			},
+			"Status": {
+				"type": "String",
+				"defaultValue": "[1,2,3,4,5,6,7,8,9]"
+			},
+			"var_abc": {
+				"type": "String",
+				"defaultValue": "[1,2,3,4,5,6,7,8]"
+			}
+		},
+		"annotations": []
+	}
+}

@@ -21,7 +21,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Status",
+					"variableName": "Status1",
 					"value": "Yes"
 				}
 			},
@@ -39,15 +39,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('status'),'Yes' )\n",
+						"value": "@equals(variables('status1'),'Yes' )\n",
 						"type": "Expression"
 					}
 				}
 			}
 		],
 		"variables": {
-			"Status": {
-				"type": "String"
+			"Status1": {
+				"type": "String",
+				"defaultValue": "[1,2,3,4,5,6,7,8,9]"
+			},
+			"var_abc": {
+				"type": "String",
+				"defaultValue": "[1,2,3,4,5,6,7,8]"
 			}
 		},
 		"annotations": []

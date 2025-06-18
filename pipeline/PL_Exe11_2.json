@@ -59,34 +59,9 @@
 										"type": "DelimitedTextReadSettings"
 									}
 								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+								"enableStaging": false
 							},
 							"inputs": [
-								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
 								{
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference"
@@ -99,12 +74,6 @@
 		],
 		"variables": {
 			"status": {
-				"type": "String"
-			},
-			"my_var": {
-				"type": "String"
-			},
-			"variable1": {
 				"type": "String"
 			}
 		},

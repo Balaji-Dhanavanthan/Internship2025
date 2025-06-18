@@ -13,13 +13,22 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "status",
-					"value": "Yes"
+					"variableName": "number_array",
+					"value": [
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
 				}
 			},
 			{
 				"name": "If Condition1",
 				"type": "IfCondition",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable1",
@@ -96,11 +105,47 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "FilterEvenNumbers",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('number_array')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(), 2), 0)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
 			"status": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "Yes"
+			},
+			"number_array": {
+				"type": "Array",
+				"defaultValue": [
+					1,
+					4,
+					6,
+					7,
+					8,
+					9,
+					10
+				]
 			}
 		},
 		"annotations": []

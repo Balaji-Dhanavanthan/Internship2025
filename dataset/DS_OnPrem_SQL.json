@@ -16,10 +16,6 @@
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "employees"
-		}
+		"schema": []
 	}
 }

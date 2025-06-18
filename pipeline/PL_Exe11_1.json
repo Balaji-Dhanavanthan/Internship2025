@@ -34,14 +34,18 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT * FROM dbo.Employee;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
-					}
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "dbo",
+							"TableName": "Jobs"
+						}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],

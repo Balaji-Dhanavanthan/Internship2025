@@ -95,13 +95,22 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "dbo",
+										"tablename": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"folder": "ArshadFolder",
+										"filename": "if"
+									}
 								}
 							]
 						}

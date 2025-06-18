@@ -71,8 +71,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"containerfor": "practice-adf",
-										"folderfor": "kalai",
-										"filefor": "for"
+										"folderfor": "kalaiR",
+										"filefor": "foreach"
 									}
 								}
 							]

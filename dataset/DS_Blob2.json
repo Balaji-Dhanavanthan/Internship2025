@@ -1,0 +1,35 @@
+{
+	"name": "DS_Blob2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "practice-adf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "country_id",
+				"type": "String"
+			},
+			{
+				"name": "country_name",
+				"type": "String"
+			},
+			{
+				"name": "region_id",
+				"type": "String"
+			}
+		]
+	}
+}

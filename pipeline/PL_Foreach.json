@@ -64,7 +64,7 @@
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"filename": "countries",
+										"tablename": "countries",
 										"schema": "dbo"
 									}
 								}
@@ -74,9 +74,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "prctice-adf",
-										"folder": "kani_folder",
-										"filename": "foreach"
+										"Container": "prctice-adf"
 									}
 								}
 							]
@@ -99,11 +97,7 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": " ",
-							"schema": " "
-						}
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						{

@@ -84,10 +84,7 @@
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"filename": "countries.csv"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}

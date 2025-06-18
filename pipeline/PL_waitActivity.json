@@ -65,8 +65,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "prctice-adf",
-							"filename": "foreach"
+							"Container": "prctice-adf"
 						}
 					}
 				],
@@ -98,6 +97,12 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "prctice-adf"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DS_Blob_storgare",
+							"type": "LinkedServiceReference"
 						}
 					},
 					"enableLogging": true,

@@ -44,7 +44,11 @@
 				"inputs": [
 					{
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "dbo",
+							"Table_Name": "countries"
+						}
 					}
 				],
 				"outputs": [

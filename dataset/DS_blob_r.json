@@ -21,6 +21,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "data_735cc1f8-bb3d-4a14-87e5-002da9e0ea09_1da1f26f-a123-48c6-afc6-16f2a64204a3.csv",
 				"folderPath": "ram_folder",
 				"container": "practice-adf"
 			},

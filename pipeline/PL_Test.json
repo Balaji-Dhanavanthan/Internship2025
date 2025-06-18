@@ -47,7 +47,8 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "dbo"
+							"SchemaName": "dbo",
+							"TableName": "departments"
 						}
 					}
 				],
@@ -58,7 +59,7 @@
 						"parameters": {
 							"Container": "practice_adf",
 							"Folder": "ram_folder",
-							"Filename": "departments"
+							"Filename": "departments.csv"
 						}
 					}
 				]

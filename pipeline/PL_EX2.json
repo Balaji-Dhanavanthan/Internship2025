@@ -63,17 +63,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference",
-									"parameters": {
-										"tablename": {
-											"value": "@item().table_name",
-											"type": "Expression"
-										},
-										"schema": {
-											"value": "@item().schemaname",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [

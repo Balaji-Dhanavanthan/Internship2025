@@ -3,35 +3,55 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('setArray')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(), 2), 0)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "Select * from countries where country_name = 'Brazil'",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "countries"
-						}
-					}
+					"variableName": "setArray",
+					"value": [
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
 				}
 			}
 		],
+		"variables": {
+			"setArray": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }

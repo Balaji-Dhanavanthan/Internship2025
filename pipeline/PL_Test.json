@@ -30,12 +30,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "X",
-						"value": "yes"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"variableName": "X",
 					"value": {

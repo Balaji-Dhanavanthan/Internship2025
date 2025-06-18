@@ -20,8 +20,7 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation",
-				"container": "jsoncontainer"
+				"type": "AzureBlobStorageLocation"
 			}
 		},
 		"schema": {}

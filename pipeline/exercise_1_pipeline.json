@@ -30,7 +30,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('Status'),'Status')",
+						"value": "@equals(variables('Status'),variables('Status'))",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -102,6 +102,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"status": {
+				"type": "string",
+				"defaultValue": "no"
+			}
+		},
 		"variables": {
 			"Status": {
 				"type": "String"

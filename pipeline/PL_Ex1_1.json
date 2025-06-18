@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output",
+						"value": "@activity('Copy data1').output.childItem",
 						"type": "Expression"
 					},
 					"activities": [
@@ -62,13 +62,22 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"SchemaName": "dbo",
+										"TableName": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "practice-adf",
+										"Folder": "MD_Folder",
+										"FileName": "ForEach"
+									}
 								}
 							]
 						}
@@ -97,9 +106,18 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "dbo",
+							"TableName": "countries"
+						}
 					},
-					"fieldList": []
+					"fieldList": [
+						{
+							"value": "childItem",
+							"type": "Expression"
+						}
+					]
 				}
 			}
 		],

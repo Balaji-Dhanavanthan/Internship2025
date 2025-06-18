@@ -60,9 +60,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -125,12 +131,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": "dbo",
-										"table_name": "countries"
-									}
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -144,34 +146,47 @@
 				}
 			},
 			{
-				"name": "Filter1",
+				"name": "Even_Numbers",
 				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "If Condition",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
+				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@pipeline().parameters.Employees_ID",
+						"value": "@pipeline().parameters.input_arr",
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@pipeline().parameters.even",
+						"value": "@equals(mod(item(),2),0)",
 						"type": "Expression"
 					}
 				}
 			}
 		],
 		"parameters": {
-			"Employees_ID": {
-				"type": "array"
-			},
-			"even": {
-				"type": "bool"
+			"input_arr": {
+				"type": "array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11,
+					12,
+					13,
+					14,
+					15,
+					16,
+					17,
+					18,
+					19,
+					20
+				]
 			}
 		},
 		"variables": {

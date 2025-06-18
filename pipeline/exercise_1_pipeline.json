@@ -110,7 +110,12 @@
 		},
 		"variables": {
 			"Status": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "Yes"
+			},
+			"status": {
+				"type": "String",
+				"defaultValue": "No"
 			}
 		},
 		"annotations": []

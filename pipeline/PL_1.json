@@ -16,8 +16,6 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
@@ -25,8 +23,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Status",
-					"value": ""
+					"variableName": "Status1",
+					"value": "YES"
 				}
 			},
 			{
@@ -36,7 +34,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('status'),'Yes' )\n",
+						"value": "@equals(variables('status1'),'Yes' )\n",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -198,7 +196,7 @@
 					9
 				]
 			},
-			"Status": {
+			"Status1": {
 				"type": "String",
 				"defaultValue": "[1,2,3,4,5,6,7,8,9]"
 			},

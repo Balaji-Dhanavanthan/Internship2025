@@ -148,6 +148,11 @@
 				}
 			}
 		],
+		"variables": {
+			"Status3": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

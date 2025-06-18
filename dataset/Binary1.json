@@ -15,8 +15,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Parameter",
-				"folderPath": "sample_folder"
+				"fileName": "test_test",
+				"container": "test-container"
 			}
 		}
 	}

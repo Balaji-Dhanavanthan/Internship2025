@@ -15,9 +15,13 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems\n",
+						"type": "Expression"
+					},
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "CopyData",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -95,11 +99,15 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "countries",
+							"schema": "dbo"
+						}
 					},
 					"fieldList": [
 						{
-							"value": "childItems\n",
+							"value": "childItems",
 							"type": "Expression"
 						}
 					]

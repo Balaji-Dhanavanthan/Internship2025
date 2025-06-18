@@ -13,8 +13,8 @@
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
+			"escapeChar": "No quote character",
+			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
 		"schema": [

@@ -92,6 +92,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Status",
 					"value": "Yes\n"
@@ -173,8 +174,10 @@
 				}
 			},
 			{
-				"name": "Filter1",
+				"name": "even number",
 				"type": "Filter",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {

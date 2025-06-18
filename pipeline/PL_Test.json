@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Delete1",
+				"type": "Delete",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,54 +15,28 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from departments",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".csv"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "departments"
-						}
-					}
-				],
-				"outputs": [
-					{
+					"dataset": {
 						"referenceName": "DS_blob_r",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "ramfolder",
-							"Filename": "dept"
+							"Folder": "ram_folder",
+							"Filename": "*"
 						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DS_Blob_storgare",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"fileListPath": "practice-adf/ram_folder/data_735cc1f8-bb3d-4a14-87e5-002da9e0ea09_1da1f26f-a123-48c6-afc6-16f2a64204a3.csv",
+						"enablePartitionDiscovery": false
 					}
-				]
+				}
 			}
 		],
 		"variables": {

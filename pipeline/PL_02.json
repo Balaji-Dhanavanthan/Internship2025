@@ -91,7 +91,21 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.folder2",
+								"type": "Expression"
+							},
+							"Directory": {
+								"value": "@pipeline().parameters.directory2",
+								"type": "Expression"
+							},
+							"File": {
+								"value": "@pipeline().parameters.file2",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"itemName"

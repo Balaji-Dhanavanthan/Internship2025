@@ -20,7 +20,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "practice-adf",
-							"folder": "pk_folder"
+							"folder": "kani_folder"
 						}
 					},
 					"fieldList": [
@@ -140,8 +140,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "filename",
-					"value": "0"
+					"variableName": "count",
+					"value": 0
 				}
 			}
 		],
@@ -154,6 +154,9 @@
 			},
 			"filename": {
 				"type": "String"
+			},
+			"temp": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

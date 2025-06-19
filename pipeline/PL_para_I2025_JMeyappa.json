@@ -1,5 +1,5 @@
 {
-	"name": "PL_para",
+	"name": "PL_para_I2025_JMeyappa",
 	"properties": {
 		"activities": [
 			{
@@ -69,6 +69,20 @@
 				]
 			}
 		],
+		"variables": {
+			"filecount": {
+				"type": "Integer"
+			},
+			"filename": {
+				"type": "String"
+			},
+			"add": {
+				"type": "Integer"
+			},
+			"temp": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

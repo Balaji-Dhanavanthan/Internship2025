@@ -1,5 +1,5 @@
 {
-	"name": "PL_Delete",
+	"name": "PL_Delete_I2025_JMeyappa",
 	"properties": {
 		"activities": [
 			{
@@ -98,6 +98,18 @@
 					5,
 					6
 				]
+			},
+			"filecount": {
+				"type": "Integer"
+			},
+			"filename": {
+				"type": "String"
+			},
+			"add": {
+				"type": "Integer"
+			},
+			"temp": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

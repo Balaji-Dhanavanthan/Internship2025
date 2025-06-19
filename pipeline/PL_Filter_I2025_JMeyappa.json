@@ -1,5 +1,5 @@
 {
-	"name": "PL_Filter",
+	"name": "PL_Filter_I2025_JMeyappa",
 	"properties": {
 		"activities": [
 			{
@@ -28,7 +28,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_Test",
+						"referenceName": "PL_Test_I2025_JMeyappa",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -46,6 +46,18 @@
 					5,
 					6
 				]
+			},
+			"filecount": {
+				"type": "Integer"
+			},
+			"filename": {
+				"type": "String"
+			},
+			"add": {
+				"type": "Integer"
+			},
+			"temp": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

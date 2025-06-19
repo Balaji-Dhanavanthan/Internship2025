@@ -1,5 +1,5 @@
 {
-	"name": "PL_copycsv",
+	"name": "PL_copycsv_I2025_JMeyappa",
 	"properties": {
 		"activities": [
 			{
@@ -140,6 +140,20 @@
 				}
 			}
 		],
+		"variables": {
+			"filecount": {
+				"type": "Integer"
+			},
+			"filename": {
+				"type": "String"
+			},
+			"add": {
+				"type": "Integer"
+			},
+			"temp": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

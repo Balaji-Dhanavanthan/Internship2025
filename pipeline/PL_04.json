@@ -51,7 +51,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('develop').output.childItems",
+						"value": "@activity('develop').output.itemName",
 						"type": "Expression"
 					},
 					"condition": {

@@ -118,7 +118,12 @@
 							"outputs": [
 								{
 									"referenceName": "DS_copy_pr",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "test-container",
+										"folder": "I2025_PRajan",
+										"file": "new2.csv"
+									}
 								}
 							]
 						}

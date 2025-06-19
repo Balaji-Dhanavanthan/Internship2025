@@ -10,8 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "ArshadFolder",
-				"folderPath": "jc_try",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

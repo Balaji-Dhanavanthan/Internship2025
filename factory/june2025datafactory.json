@@ -1,13 +1,5 @@
 {
 	"name": "june2025datafactory",
-	"properties": {
-		"globalParameters": {
-			"Database": {
-				"type": "string",
-				"value": "HR"
-			}
-		}
-	},
 	"location": "southindia",
 	"identity": {
 		"type": "SystemAssigned",

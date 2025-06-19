@@ -106,6 +106,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "ADF_exercise_1.1"
+		},
 		"annotations": []
 	}
 }

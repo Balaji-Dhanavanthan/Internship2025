@@ -38,13 +38,18 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Filter1').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -99,14 +104,25 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"folder": "aabidh"
+										"folder": "aabidh",
+										"Filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
 									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_Blob2",
-									"type": "DatasetReference"
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder": "arun_folder",
+										"Filename": {
+											"value": "@concat('arun_',item().name)",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -135,8 +151,29 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Test",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
+		"parameters": {
+			"abc": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

@@ -5,8 +5,6 @@
 			{
 				"name": "Wait1",
 				"type": "Wait",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -17,8 +15,6 @@
 				"name": "yes",
 				"description": "yes",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Wait1",
@@ -41,8 +37,6 @@
 				"name": "if con",
 				"description": "",
 				"type": "IfCondition",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "yes",
@@ -119,7 +113,11 @@
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"folder": "arun1",
+										"Filename": "if_con"
+									}
 								}
 							]
 						}
@@ -129,6 +127,8 @@
 			{
 				"name": "Filter1",
 				"type": "Filter",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {

@@ -17,14 +17,18 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "arun1",
+							"file": "if_con"
+						}
 					},
 					"fieldList": [
 						"childItems"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -68,7 +72,7 @@
 									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
-										"fileListPath": "csvcontainer/IPL.csv",
+										"recursive": true,
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -99,7 +103,12 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"folder": "arun1",
+										"file": "if_con"
+									}
 								}
 							],
 							"outputs": [
@@ -129,12 +138,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"file": {
-				"type": "string",
-				"defaultValue": "@item().name"
-			}
-		},
 		"annotations": []
 	}
 }

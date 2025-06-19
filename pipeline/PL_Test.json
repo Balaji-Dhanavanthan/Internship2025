@@ -55,7 +55,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from countries",
+						"sqlReaderQuery": "select * from jobs",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -86,7 +86,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "dbo",
-							"TableName": "countries"
+							"TableName": "jobs"
 						}
 					}
 				],
@@ -96,7 +96,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "ramfolder"
+							"Folder": "ramfolder",
+							"Filename": "jobs.csv"
 						}
 					}
 				]

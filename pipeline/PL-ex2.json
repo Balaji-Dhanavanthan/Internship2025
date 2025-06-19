@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "PL-ex2",
 	"properties": {
 		"activities": [
 			{
@@ -16,15 +16,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"FolderName": "kani_folder",
-							"FileName": "@iem"
+							"FolderName": "kani-folder"
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false

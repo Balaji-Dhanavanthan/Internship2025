@@ -60,7 +60,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_test",
+						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "test-container",

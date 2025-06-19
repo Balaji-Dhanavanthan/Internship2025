@@ -42,60 +42,45 @@
 							{
 								"source": {
 									"name": "id",
-									"type": "nchar"
+									"type": "String",
+									"physicalType": "nchar"
 								},
 								"sink": {
 									"name": "id",
-									"type": "nchar"
-								}
-							},
-							{
-								"source": {
-									"name": "company_name",
-									"type": "nvarchar"
-								},
-								"sink": {
-									"name": "company_name",
-									"type": "nvarchar"
+									"type": "String",
+									"physicalType": "nchar"
 								}
 							},
 							{
 								"source": {
 									"name": "name",
-									"type": "nvarchar"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "customer_name"
-								}
-							},
-							{
-								"source": {
-									"name": "city",
-									"type": "nvarchar"
-								},
-								"sink": {
-									"name": "city",
-									"type": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "phone",
-									"type": "nvarchar"
-								},
-								"sink": {
-									"name": "phone",
-									"type": "nvarchar"
+									"name": "name",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
 									"name": "email",
-									"type": "nvarchar"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"name": "email",
-									"type": "nvarchar"
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "date_added",
+									"type": "String"
+								},
+								"sink": {
+									"name": "date_added"
 								}
 							}
 						],
@@ -122,7 +107,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "copied_new_customers"
+							"TableName": "copied_new_customers_2"
 						}
 					}
 				]

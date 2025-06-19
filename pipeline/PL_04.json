@@ -54,7 +54,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@equals(item().name,'locations.csv')",
+						"value": "@equals(item().name,'regions.csv')",
 						"type": "Expression"
 					}
 				}

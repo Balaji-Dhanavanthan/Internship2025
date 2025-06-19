@@ -1,0 +1,17 @@
+{
+	"name": "PL_6",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
+		"folder": {
+			"name": "ex1.1"
+		},
+		"annotations": []
+	}
+}

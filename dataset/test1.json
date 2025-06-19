@@ -9,7 +9,7 @@
 			"report": {
 				"type": "string"
 			},
-			"csv": {
+			"foldername": {
 				"type": "string"
 			},
 			"filename": {
@@ -26,7 +26,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().csv",
+					"value": "@dataset().foldername",
 					"type": "Expression"
 				},
 				"container": {

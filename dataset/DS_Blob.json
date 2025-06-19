@@ -7,13 +7,12 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "practice-adf"
 			},
-			"Folder": {
-				"type": "string"
-			},
-			"FileName": {
-				"type": "string"
+			"Directory": {
+				"type": "string",
+				"defaultValue": "Asrar"
 			}
 		},
 		"annotations": [],

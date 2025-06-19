@@ -14,6 +14,7 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
+				"folderPath": "jc_try",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

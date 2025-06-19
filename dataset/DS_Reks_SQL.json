@@ -5,6 +5,11 @@
 			"referenceName": "LS_Reks_SQL_OnPrem",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [
@@ -30,7 +35,7 @@
 		],
 		"typeProperties": {
 			"schema": "I2025_EStalin",
-			"table": "Employee"
+			"table": "api_data"
 		}
 	}
 }

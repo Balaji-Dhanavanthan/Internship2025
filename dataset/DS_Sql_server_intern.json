@@ -8,7 +8,7 @@
 		"parameters": {
 			"DatabaseObject": {
 				"type": "string",
-				"defaultValue": "dbo"
+				"defaultValue": "I2025_JSenthil"
 			},
 			"TableName": {
 				"type": "string"

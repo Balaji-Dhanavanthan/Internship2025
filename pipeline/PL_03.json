@@ -18,6 +18,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"folder3": {
+				"type": "string"
+			},
+			"directory3": {
+				"type": "string"
+			},
+			"file3": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

@@ -35,13 +35,16 @@
 		],
 		"parameters": {
 			"folder3": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "practice-adf"
 			},
 			"directory3": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "aabidh"
 			},
 			"file3": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "countries.csv"
 			}
 		},
 		"annotations": []

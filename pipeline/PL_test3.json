@@ -44,15 +44,9 @@
 							],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -77,14 +71,23 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "dbo",
+										"tablename": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"datacontainer": "practice-adf",
+										"foldername": "jc-testing",
+										"filename": "foreach.csv"
+									}
 								}
 							]
 						}
@@ -105,31 +108,38 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"tablename": "countries"
+						}
 					},
-					"fieldList": [],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
+					"fieldList": [
+						{
+							"value": "childItems",
+							"type": "Expression"
+						}
+					]
+				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Test",
+						"type": "PipelineReference"
 					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
-					}
+					"waitOnCompletion": true
 				}
 			}
 		],
-		"parameters": {
-			"book1": {
-				"type": "string",
-				"defaultValue": "harry potter"
-			},
-			"book2": {
-				"type": "string",
-				"defaultValue": "breaking bad"
-			}
-		},
 		"variables": {
 			"items": {
 				"type": "Array"

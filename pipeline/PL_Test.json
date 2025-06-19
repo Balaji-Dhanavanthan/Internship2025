@@ -30,7 +30,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('status'),'status')",
+						"value": "@equals(variables('status'),variables('status'))",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -76,13 +76,31 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "dbo",
+										"tablename": "countries"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"datacontainer": {
+											"value": "practice-adf",
+											"type": "Expression"
+										},
+										"foldername": {
+											"value": "jc-folder",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@pipeline().parameters.testing10",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -90,11 +108,32 @@
 				}
 			}
 		],
+		"parameters": {
+			"testing10": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"flag": {
 				"type": "String"
 			},
 			"status": {
+				"type": "String",
+				"defaultValue": "yes"
+			},
+			"dbo": {
+				"type": "String"
+			},
+			"countries": {
+				"type": "String"
+			},
+			"practice-adf": {
+				"type": "String"
+			},
+			"jc-folder": {
+				"type": "String"
+			},
+			"testing_10": {
 				"type": "String"
 			}
 		},

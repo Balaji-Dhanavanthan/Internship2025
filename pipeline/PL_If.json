@@ -110,6 +110,15 @@
 			},
 			"setArray": {
 				"type": "Array"
+			},
+			"filename": {
+				"type": "String"
+			},
+			"filecount": {
+				"type": "Integer"
+			},
+			"count": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

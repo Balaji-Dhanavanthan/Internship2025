@@ -364,7 +364,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice"
+							"container": "practice",
+							"Directory": "countries"
 						}
 					},
 					"fieldList": [
@@ -372,6 +373,8 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"modifiedDatetimeStart": null,
+						"modifiedDatetimeEnd": null,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

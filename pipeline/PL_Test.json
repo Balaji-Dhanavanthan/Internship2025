@@ -76,31 +76,13 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": "dbo",
-										"tablename": "countries"
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"datacontainer": {
-											"value": "practice-adf",
-											"type": "Expression"
-										},
-										"foldername": {
-											"value": "jc-folder",
-											"type": "Expression"
-										},
-										"filename": {
-											"value": "@pipeline().parameters.testing10",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
@@ -114,27 +96,9 @@
 			}
 		},
 		"variables": {
-			"flag": {
-				"type": "String"
-			},
 			"status": {
 				"type": "String",
 				"defaultValue": "yes"
-			},
-			"dbo": {
-				"type": "String"
-			},
-			"countries": {
-				"type": "String"
-			},
-			"practice-adf": {
-				"type": "String"
-			},
-			"jc-folder": {
-				"type": "String"
-			},
-			"testing_10": {
-				"type": "String"
 			}
 		},
 		"annotations": []

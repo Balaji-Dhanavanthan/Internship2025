@@ -72,22 +72,13 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": "dbo",
-										"tablename": "countries"
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"datacontainer": "practice-adf",
-										"foldername": "jc-testing",
-										"filename": "foreach.csv"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
@@ -109,11 +100,7 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema": "dbo",
-							"tablename": "countries"
-						}
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						{

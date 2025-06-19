@@ -30,8 +30,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"referenceName": "DS_Blob2",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "practice-adf",
+							"FolderName": "kani_folder",
+							"FileName": "countries.csv"
+						}
 					}
 				]
 			}

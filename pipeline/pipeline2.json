@@ -48,6 +48,7 @@
 						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
+					"batchCount": 2,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -104,8 +105,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "practice-adf",
-										"folder": "pk_folder",
-										"filename": "foreach.csv"
+										"folder": "pk_folder"
 									}
 								}
 							]
@@ -127,12 +127,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@greaterOrEquals(length(activity('Get Metadata1').output.childItems),2)",
+						"value": "@equals(activity('Get Metadata1').output,activity('Get Metadata1').output)",
 						"type": "Expression"
 					}
 				}
 			}
 		],
+		"variables": {
+			"count": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

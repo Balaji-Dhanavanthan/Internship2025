@@ -5,7 +5,14 @@
 			{
 				"name": "Status",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Wait",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -30,7 +37,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('Status'),'Yes')",
+						"value": "@equals(variables('Status'),variables('status'))",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -139,8 +146,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "practice-adf",
-										"folder": "pk_folder",
-										"filename": "if condition.csv"
+										"folder": "pk_folder"
 									}
 								}
 							]
@@ -169,6 +175,15 @@
 						"value": "@equals(mod(item(),2),0)",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "Wait",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
 				}
 			}
 		],
@@ -203,6 +218,9 @@
 			"status": {
 				"type": "String",
 				"defaultValue": "'Yes'"
+			},
+			"count": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

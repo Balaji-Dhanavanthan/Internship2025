@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "IPL.csv",
+				"folderPath": "destination",
 				"container": "csvcontainer"
 			},
 			"columnDelimiter": ",",

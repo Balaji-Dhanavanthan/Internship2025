@@ -75,7 +75,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable1",
+							"name": "SV_count",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -92,11 +92,11 @@
 							}
 						},
 						{
-							"name": "Set variable2",
+							"name": "SV_temp",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable1",
+									"activity": "SV_count",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -116,11 +116,11 @@
 							}
 						},
 						{
-							"name": "Set variable3",
+							"name": "SV_file_name",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable2",
+									"activity": "SV_temp",
 									"dependencyConditions": [
 										"Succeeded"
 									]

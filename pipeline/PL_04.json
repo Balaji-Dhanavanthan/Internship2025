@@ -63,16 +63,13 @@
 		],
 		"parameters": {
 			"folder": {
-				"type": "array",
-				"defaultValue": "practice-adf"
+				"type": "array"
 			},
 			"directory": {
-				"type": "array",
-				"defaultValue": "aabidh"
+				"type": "array"
 			},
 			"file": {
-				"type": "array",
-				"defaultValue": "countries.csv"
+				"type": "array"
 			}
 		},
 		"annotations": []

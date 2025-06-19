@@ -8,10 +8,11 @@
 		"parameters": {
 			"DatabaseObject": {
 				"type": "string",
-				"defaultValue": "dbo"
+				"defaultValue": "I2025_EStalin"
 			},
 			"TableName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "api_data"
 			}
 		},
 		"annotations": [],
@@ -38,8 +39,14 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "I2025_EStalin",
-			"table": "Department"
+			"schema": {
+				"value": "@dataset().DatabaseObject",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
 		}
 	}
 }

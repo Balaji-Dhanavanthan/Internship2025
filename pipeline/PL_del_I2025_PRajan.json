@@ -16,13 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_copy_pr",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"folder": "I2025_PRajan",
-							"file": "new2.csv"
-						}
+						"referenceName": "DS_copy_I2025_PRajan",
+						"type": "DatasetReference"
 					},
 					"logStorageSettings": {
 						"linkedServiceName": {

@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": "select * from employees",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -46,7 +47,8 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"Schema_name": "dbo"
+							"Schema_name": "dbo",
+							"Table_name": "employees"
 						}
 					}
 				],
@@ -55,7 +57,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container_name": "Asrj_practise"
+							"Container_name": "practise-adf",
+							"folder_name": "srj"
 						}
 					}
 				]

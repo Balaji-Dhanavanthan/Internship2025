@@ -57,8 +57,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container_name": "practise-adf",
-							"folder_name": "srj"
+							"Container_name": "asrj",
+							"folder_name": "srj",
+							"file_name": "'.csv'"
 						}
 					}
 				]

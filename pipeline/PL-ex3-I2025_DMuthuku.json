@@ -53,7 +53,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"FolderName": "aabidh",
+							"FolderName": "doniya_folder",
 							"FileName": "countries.csv"
 						}
 					}
@@ -63,7 +63,7 @@
 						"referenceName": "DS_Blob3_I2025_DMuthuku",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
+							"container": "test-adf",
 							"folder": "doniya_folder",
 							"file": "countries.csv"
 						}
@@ -73,8 +73,6 @@
 			{
 				"name": "Copy data2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data1",
@@ -125,8 +123,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "test-adf",
-							"FolderName": "doniya-folder",
-							"FileName": "country.csv"
+							"FolderName": "doniya_folder",
+							"FileName": "countries.csv"
 						}
 					}
 				],

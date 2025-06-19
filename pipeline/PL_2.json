@@ -326,8 +326,8 @@
 				}
 			},
 			{
-				"name": "files",
-				"type": "GetMetadata",
+				"name": "Copy data5",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -338,22 +338,49 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_new",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf"
+							"container": "practice-adf",
+							"Folder": "Asrar",
+							"FileName": "countries"
 						}
-					},
-					"fieldList": [],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
 					}
-				}
+				]
 			}
 		],
 		"annotations": []

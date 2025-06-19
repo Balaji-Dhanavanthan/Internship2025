@@ -122,7 +122,7 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Folder": "ramfolder",
-							"Filename": "*"
+							"Filename": "jobs"
 						}
 					},
 					"fieldList": [
@@ -135,6 +135,22 @@
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
 					}
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "countvar",
+					"value": ""
 				}
 			}
 		],

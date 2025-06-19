@@ -13,9 +13,6 @@
 			"folderfor": {
 				"type": "string",
 				"defaultValue": "kalai"
-			},
-			"filefor": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -23,10 +20,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().filefor",
-					"type": "Expression"
-				},
 				"folderPath": {
 					"value": "@dataset().folderfor",
 					"type": "Expression"

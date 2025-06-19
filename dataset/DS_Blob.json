@@ -5,24 +5,13 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"datacontainer": {
-				"type": "string"
-			},
-			"foldername": {
-				"type": "string"
-			},
-			"filename": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().filename",
+					"value": "@dataset().file",
 					"type": "Expression"
 				},
 				"folderPath": {
@@ -30,7 +19,7 @@
 					"type": "Expression"
 				},
 				"container": {
-					"value": "@dataset().datacontainer",
+					"value": "@dataset().container",
 					"type": "Expression"
 				}
 			},

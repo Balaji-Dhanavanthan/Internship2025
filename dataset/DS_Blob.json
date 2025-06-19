@@ -10,7 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "csvcontainer"
+				"fileName": "AD_Products.csv",
+				"folderPath": "Day3_Exercise 1",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

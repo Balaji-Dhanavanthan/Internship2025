@@ -5,6 +5,8 @@
 			{
 				"name": "Wait1",
 				"type": "Wait",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -22,10 +24,26 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "even",
-					"value": [
-						"yes"
-					]
+					"variableName": "new",
+					"value": "yes"
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('even')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(),2 ) ,0)",
+						"type": "Expression"
+					}
 				}
 			},
 			{
@@ -42,7 +60,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('new'), 'yes')",
+						"value": "@equals(variables('new'),'yes' )",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -99,28 +117,12 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_new",
+									"referenceName": "DS_copy_pr",
 									"type": "DatasetReference"
 								}
 							]
 						}
 					]
-				}
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@variables('even')",
-						"type": "Expression"
-					},
-					"condition": {
-						"value": "@equals(mod(item(),2 ) ,0)",
-						"type": "Expression"
-					}
 				}
 			}
 		],
@@ -136,6 +138,9 @@
 				]
 			},
 			"new": {
+				"type": "String"
+			},
+			"yes": {
 				"type": "String"
 			}
 		},

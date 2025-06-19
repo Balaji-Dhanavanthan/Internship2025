@@ -64,7 +64,6 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "test-container",
-							"FileName": "test.csv",
 							"FolderName": "abc"
 						}
 					}

@@ -5,8 +5,6 @@
 			{
 				"name": "child_items",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -39,8 +37,6 @@
 			{
 				"name": "retrive files",
 				"type": "Filter",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "child_items",
@@ -56,7 +52,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@equals(item().type, 'File')\r\n",
+						"value": "@endsWith(item().name, '.csv')\n",
 						"type": "Expression"
 					}
 				}
@@ -165,91 +161,82 @@
 				]
 			},
 			{
-				"name": "db_copy",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_dub",
-						"type": "DatasetReference"
-					},
-					"fieldList": [
-						"structure"
-					]
-				}
-			},
-			{
-				"name": "Copy data2",
-				"type": "Copy",
+				"name": "to count the variables",
+				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "db_copy",
+						"activity": "retrive files",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					}
 				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"items": {
+						"value": "@activity('child_items').output.childItems",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Asrar",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
 						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "count",
+								"value": {
+									"value": "@add(variables('file_count'),1)",
+									"type": "Expression"
+								}
+							}
 						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_dub",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"Directory": "Asrar"
-						}
-					}
-				]
+					]
+				}
 			}
 		],
+		"variables": {
+			"Asrar": {
+				"type": "String",
+				"defaultValue": "' '"
+			},
+			"file_count": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
+			"count": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
 		"annotations": []
 	}
 }

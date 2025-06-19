@@ -21,9 +21,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"Folder": "Asrar",
-							"FileName": "FileName"
+							"container": "practice-adf"
 						}
 					},
 					"fieldList": [
@@ -66,8 +64,6 @@
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

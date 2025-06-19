@@ -364,9 +364,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice",
-							"Folder": "Asrar",
-							"FileName": "FieName"
+							"container": "practice"
 						}
 					},
 					"fieldList": [

@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "3558a6b7-746b-47f7-bde6-0f015721fb53.csv",
-				"folderPath": "I2025_PRajan/f1e1f5bf-743f-4d2d-9ab2-70cdaa65ba5c",
+				"fileName": "fb1a66ab-0f4f-45e4-9f4d-f560c0c41f49.csv",
+				"folderPath": "I2025_PRajan/65e4fc72-12f1-430c-8f6d-01125a00ed13",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

@@ -31,10 +31,7 @@
 					"value": "@dataset().folderfor",
 					"type": "Expression"
 				},
-				"container": {
-					"value": "@dataset().containerfor",
-					"type": "Expression"
-				}
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -9,12 +9,27 @@
 				"policy": {
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "PL_Test",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"folder4": {
+							"value": "@pipeline().parameters.folder3",
+							"type": "Expression"
+						},
+						"directory4": {
+							"value": "@pipeline().parameters.directory3",
+							"type": "Expression"
+						},
+						"file4": {
+							"value": "@pipeline().parameters.file3",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],

@@ -1,0 +1,23 @@
+{
+	"name": "pipeline3",
+	"properties": {
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"count": {
+				"type": "int"
+			}
+		},
+		"variables": {
+			"fileName": {
+				"type": "String"
+			},
+			"fileCount": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
+		"annotations": []
+	}
+}

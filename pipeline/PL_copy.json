@@ -51,7 +51,12 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "practice-adf",
+							"FolderName": "kani_folder",
+							"FileName": "jobs.csv"
+						}
 					}
 				],
 				"outputs": [

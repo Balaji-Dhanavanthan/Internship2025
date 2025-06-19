@@ -4,40 +4,59 @@
 		"description": "exercise 1.1",
 		"activities": [
 			{
-				"name": "Set variable1",
-				"type": "SetVariable",
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.itemName",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@startswith(item(), 'job')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "list",
-					"value": [
-						1,
-						2,
-						3,
-						4,
-						5,
-						6,
-						7
-					]
-				}
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@variables('list')",
-						"type": "Expression"
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "practice-adf",
+							"Folder": "ramfolder",
+							"Filename": "*"
+						}
 					},
-					"condition": {
-						"value": "@equals(mod(item(),2),0)",
-						"type": "Expression"
+					"fieldList": [
+						"itemName"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
 					}
 				}
 			}

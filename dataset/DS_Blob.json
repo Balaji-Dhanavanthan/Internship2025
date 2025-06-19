@@ -7,13 +7,16 @@
 		},
 		"parameters": {
 			"Container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "practice-adf"
 			},
 			"Directory": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "aabidh"
 			},
 			"File": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "countries.csv"
 			}
 		},
 		"annotations": [],

@@ -19,6 +19,7 @@
 						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
+					"batchCount": 2,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -68,12 +69,7 @@
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "practice-adf",
-										"folder": "AP_Tests",
-										"filename": "foreach"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
@@ -106,6 +102,12 @@
 				}
 			}
 		],
+		"variables": {
+			"filecount": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
 		"folder": {
 			"name": "ADF_exercise_1.1"
 		},

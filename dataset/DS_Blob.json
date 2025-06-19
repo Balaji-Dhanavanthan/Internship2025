@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "jsoncontainer"
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

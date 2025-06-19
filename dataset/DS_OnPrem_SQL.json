@@ -5,26 +5,8 @@
 			"referenceName": "LS_OnPrem_SQLServer",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"Schema": {
-				"type": "string"
-			},
-			"Table_Name": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": {
-				"value": "@dataset().Schema",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().Table_Name",
-				"type": "Expression"
-			}
-		}
+		"schema": []
 	}
 }

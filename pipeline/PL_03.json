@@ -9,30 +9,6 @@
 				"policy": {
 					"secureInput": false
 				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_Test",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "child",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Parent",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "PL_Test",

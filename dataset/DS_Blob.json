@@ -6,9 +6,6 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Container": {
-				"type": "string"
-			},
 			"Folder": {
 				"type": "string"
 			},
@@ -29,10 +26,7 @@
 					"value": "@dataset().Folder",
 					"type": "Expression"
 				},
-				"container": {
-					"value": "@dataset().Container",
-					"type": "Expression"
-				}
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

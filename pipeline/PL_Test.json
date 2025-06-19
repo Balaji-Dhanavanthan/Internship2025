@@ -55,7 +55,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from jobs",
+						"sqlReaderQuery": "select * from job_history",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -86,7 +86,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "dbo",
-							"TableName": "jobs"
+							"TableName": "job_history"
 						}
 					}
 				],
@@ -97,7 +97,7 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Folder": "ramfolder",
-							"Filename": "jobs.csv"
+							"Filename": "job_history.csv"
 						}
 					}
 				]

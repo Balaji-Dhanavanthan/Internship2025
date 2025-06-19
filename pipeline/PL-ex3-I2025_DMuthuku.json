@@ -134,7 +134,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_DMuthuku",
-							"TableName": "Countries"
+							"TableName": "Countries",
+							"database": "Intern_2025"
 						}
 					}
 				]

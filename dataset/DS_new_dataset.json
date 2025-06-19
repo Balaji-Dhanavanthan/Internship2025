@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "ksrj",
-				"container": "krj"
+				"folderPath": "srj",
+				"container": "asrj"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -10,18 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().Fl_name",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().Fld",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().Container",
-					"type": "Expression"
-				}
+				"container": "practise-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

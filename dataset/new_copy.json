@@ -5,12 +5,20 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Folder": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "IPL_1",
+				"folderPath": {
+					"value": "@dataset().Folder",
+					"type": "Expression"
+				},
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

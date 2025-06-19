@@ -9,13 +9,6 @@
 			"container": {
 				"type": "string",
 				"defaultValue": "practice-adf"
-			},
-			"folder": {
-				"type": "string",
-				"defaultValue": "ArshadFolder"
-			},
-			"filename": {
-				"type": "string"
 			}
 		},
 		"annotations": [],

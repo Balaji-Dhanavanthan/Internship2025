@@ -48,11 +48,92 @@
 						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data1",
-							"type": "Copy",
+							"name": "If Condition1",
+							"type": "IfCondition",
 							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@contains(item().name,'.csv' )",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Copy data1",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "SqlServerSource",
+												"queryTimeout": "02:00:00",
+												"partitionOption": "None"
+											},
+											"sink": {
+												"type": "DelimitedTextSink",
+												"storeSettings": {
+													"type": "AzureBlobStorageWriteSettings"
+												},
+												"formatSettings": {
+													"type": "DelimitedTextWriteSettings",
+													"quoteAllText": true,
+													"fileExtension": ".txt"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_OnPrem_SQL",
+												"type": "DatasetReference",
+												"parameters": {
+													"schema": "dbo",
+													"tablename": "countries"
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_Blob",
+												"type": "DatasetReference",
+												"parameters": {
+													"container": "practice-adf"
+												}
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"name": "Copy data2",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "If Condition1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -100,12 +181,10 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_Blob",
+									"referenceName": "DelimitedText1",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf",
-										"folder": "ArshadFolder",
-										"filename": "for"
+										"file": "copied1"
 									}
 								}
 							]
@@ -114,6 +193,16 @@
 				}
 			}
 		],
+		"variables": {
+			"currentfileame": {
+				"type": "String",
+				"defaultValue": "''"
+			},
+			"filecount": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
 		"annotations": []
 	}
 }

@@ -19,8 +19,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"folder": "ArshadFolder"
+							"container": "practice-adf"
 						}
 					},
 					"fieldList": [

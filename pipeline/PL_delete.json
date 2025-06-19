@@ -21,9 +21,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"folder": "ArshadFolder",
-							"filename": "for"
+							"container": "practice-adf"
 						}
 					},
 					"logStorageSettings": {
@@ -68,8 +66,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"folder": "ArshadFolder"
+							"container": "practice-adf"
 						}
 					},
 					"firstRowOnly": false

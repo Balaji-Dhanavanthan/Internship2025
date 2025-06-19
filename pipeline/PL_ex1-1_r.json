@@ -21,7 +21,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@startswith(item(), 'job')",
+						"value": "@startswith(item().name, 'job')",
 						"type": "Expression"
 					}
 				}

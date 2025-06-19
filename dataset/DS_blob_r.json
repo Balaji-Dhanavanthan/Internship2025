@@ -21,18 +21,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().Filename",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().Folder",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().Container",
-					"type": "Expression"
-				}
+				"fileName": "var1file",
+				"folderPath": "ramfolder2new",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

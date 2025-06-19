@@ -63,10 +63,11 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "MyDataSet",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf"
+							"container": "Arshad",
+							"file": "for"
 						}
 					},
 					"firstRowOnly": false
@@ -74,13 +75,11 @@
 			}
 		],
 		"variables": {
-			"currentfileame": {
-				"type": "String",
-				"defaultValue": "''"
+			"filename": {
+				"type": "String"
 			},
 			"filecount": {
-				"type": "Integer",
-				"defaultValue": 0
+				"type": "String"
 			}
 		},
 		"annotations": []

@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "MyDataSet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

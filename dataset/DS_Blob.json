@@ -16,6 +16,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": "Arshad",
 				"container": {
 					"value": "@dataset().container",
 					"type": "Expression"

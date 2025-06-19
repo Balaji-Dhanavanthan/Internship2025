@@ -3,40 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "employees"
-						}
-					},
-					"fieldList": [
-						{
-							"value": "childItems",
-							"type": "Expression"
-						}
-					]
-				}
-			},
-			{
 				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Lookup1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -45,9 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Lookup1').output.value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -93,8 +65,14 @@
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"SchemaName": "dbo",
-										"TableName": "countries"
+										"SchemaName": {
+											"value": "@item().schemaname",
+											"type": "Expression"
+										},
+										"TableName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -105,12 +83,59 @@
 									"parameters": {
 										"Container": "practice-adf",
 										"Folder": "MD_Folder",
-										"FileName": "ForEachTest"
+										"FileName": {
+											"value": "@concat(item().table_name,'.csv')",
+											"type": "Expression"
+										}
 									}
 								}
 							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Ex_PL",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Test",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": false
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT   TABLE_SCHEMA AS schemaname,  TABLE_NAME AS table_name  FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_TYPE = 'BASE TABLE'  and table_schema = 'dbo'   ORDER BY schemaname, table_name;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL2",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
 				}
 			}
 		],

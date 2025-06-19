@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -32,7 +33,7 @@
 				}
 			},
 			{
-				"name": "FL_only_name",
+				"name": "FL_only_file_name",
 				"type": "Filter",
 				"dependsOn": [
 					{
@@ -59,7 +60,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "FL_only_name",
+						"activity": "FL_only_file_name",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -67,6 +68,11 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('FL_only_file_name').output.Value",
+						"type": "Expression"
+					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Set variable1",
@@ -76,7 +82,62 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Count",
+								"value": {
+									"value": "@add(variables('Temp'), 1)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Temp",
+								"value": {
+									"value": "@variables('Count')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable3",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable2",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "FileName",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -87,6 +148,10 @@
 				"type": "String"
 			},
 			"Count": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
+			"Temp": {
 				"type": "Integer",
 				"defaultValue": 0
 			}

@@ -71,9 +71,10 @@
 						"value": "@activity('Filter1').output.Value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable1",
+							"name": "Set variable6",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -90,13 +91,37 @@
 							}
 						},
 						{
-							"name": "Set variable2",
+							"name": "Set variable7",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable1",
+									"activity": "Set variable6",
 									"dependencyConditions": [
-										"Succeeded"
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "temp_count",
+								"value": {
+									"value": "@add(variables('var_file_count'), 1)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable8",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable7",
+									"dependencyConditions": [
+										"Completed"
 									]
 								}
 							],
@@ -108,7 +133,7 @@
 							"typeProperties": {
 								"variableName": "var_file_count",
 								"value": {
-									"value": "@add(variables('var_file_count'), 1)",
+									"value": "@variables('temp_count')",
 									"type": "Expression"
 								}
 							}
@@ -122,6 +147,9 @@
 				"type": "String"
 			},
 			"var_file_count": {
+				"type": "Integer"
+			},
+			"temp_count": {
 				"type": "Integer"
 			}
 		},

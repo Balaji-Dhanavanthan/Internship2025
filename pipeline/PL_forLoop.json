@@ -16,14 +16,19 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"referenceName": "DS_blob_meta",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "kani_folder"
+						}
 					},
 					"fieldList": [
 						"childItems"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"modifiedDatetimeStart": null,
+						"modifiedDatetimeEnd": null,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -57,7 +62,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@item().name.'csv'",
+									"value": "@contains(item().name,'.csv' )",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -109,13 +114,27 @@
 										"inputs": [
 											{
 												"referenceName": "DS_Blob",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"folder": "kani_folder",
+													"filename": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
 											}
 										],
 										"outputs": [
 											{
-												"referenceName": "DS_new",
-												"type": "DatasetReference"
+												"referenceName": "DS_Blob",
+												"type": "DatasetReference",
+												"parameters": {
+													"folder": "jaya",
+													"filename": {
+														"value": "@concat('copy',item().name)",
+														"type": "Expression"
+													}
+												}
 											}
 										]
 									}

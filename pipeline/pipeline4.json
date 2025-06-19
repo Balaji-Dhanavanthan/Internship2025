@@ -17,7 +17,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from employees",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -59,7 +58,7 @@
 						"parameters": {
 							"Container_name": "asrj",
 							"folder_name": "srj",
-							"file_name": "'.csv'"
+							"file_name": "copiedfile.csv"
 						}
 					}
 				]

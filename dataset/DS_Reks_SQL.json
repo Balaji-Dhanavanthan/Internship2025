@@ -1,5 +1,5 @@
 {
-	"name": "SqlServerTable1",
+	"name": "DS_Reks_SQL",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_Reks_SQL_OnPrem",

@@ -1,0 +1,30 @@
+{
+	"name": "DS_Intern_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Intern_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ObjectName": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().ObjectName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

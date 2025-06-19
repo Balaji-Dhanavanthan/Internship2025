@@ -21,7 +21,7 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Directory": "aabidh",
-							"File": "*"
+							"File": "countries.csv"
 						}
 					},
 					"fieldList": [

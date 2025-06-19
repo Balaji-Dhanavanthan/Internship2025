@@ -13,6 +13,9 @@
 			"folderfor": {
 				"type": "string",
 				"defaultValue": "kalai"
+			},
+			"file": {
+				"type": "string"
 			}
 		},
 		"annotations": [],

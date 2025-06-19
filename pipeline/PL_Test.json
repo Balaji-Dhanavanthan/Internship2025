@@ -91,6 +91,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "Exercise ADF exercise"
+		},
 		"annotations": []
 	}
 }

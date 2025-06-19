@@ -165,6 +165,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Exercise ADF exercise"
+		},
 		"annotations": []
 	}
 }

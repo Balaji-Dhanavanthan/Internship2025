@@ -62,8 +62,7 @@
 						"referenceName": "MyDataSet",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "Arshad",
-							"file": "day3"
+							"container": "Arshad"
 						}
 					}
 				]

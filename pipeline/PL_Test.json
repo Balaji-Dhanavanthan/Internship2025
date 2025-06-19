@@ -184,8 +184,7 @@
 									"referenceName": "MyDataSet",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "Arshad",
-										"file": "copied1"
+										"container": "Arshad"
 									}
 								}
 							]

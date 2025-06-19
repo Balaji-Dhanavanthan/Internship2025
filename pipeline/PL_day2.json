@@ -16,11 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "MyDataSet",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "dbo",
-							"tablename": "countries"
+							"container": "Arshad"
 						}
 					},
 					"fieldList": [
@@ -28,7 +27,14 @@
 							"value": "childItems",
 							"type": "Expression"
 						}
-					]
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
 				}
 			},
 			{
@@ -49,7 +55,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@contains(item().name, '.csv')\n",
+						"value": "@contains(item().type, 'File')\n",
 						"type": "Expression"
 					}
 				}
@@ -68,9 +74,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter1').output.value",
+						"value": "@activity('Filter1').output.Value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "file",
@@ -90,68 +97,6 @@
 							}
 						},
 						{
-							"name": "Copy data1",
-							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": "dbo",
-										"tablename": "countries"
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "MyDataSet",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "Arshad",
-										"file": "day2"
-									}
-								}
-							]
-						},
-						{
 							"name": "count",
 							"type": "SetVariable",
 							"dependsOn": [
@@ -168,8 +113,11 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "count",
-								"value": "@add(variables('count'),1 )"
+								"variableName": "filecount",
+								"value": {
+									"value": "@add(variables('count'),1)",
+									"type": "Expression"
+								}
 							}
 						}
 					]
@@ -178,8 +126,6 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Filter1",
@@ -195,10 +141,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "count",
-					"value": {
-						"value": "0",
-						"type": "Expression"
-					}
+					"value": 0
 				}
 			}
 		],
@@ -209,6 +152,9 @@
 			"count": {
 				"type": "Integer",
 				"defaultValue": 0
+			},
+			"filecount": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

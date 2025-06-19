@@ -1,0 +1,31 @@
+{
+	"name": "DS_Sql_server_intern",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_server",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DatabaseObject": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().DatabaseObject",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

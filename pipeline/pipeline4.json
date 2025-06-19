@@ -109,14 +109,7 @@
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "practice-adf",
-										"filename": {
-											"value": "@concat(item().name, '.csv')",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
@@ -171,12 +164,7 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"filename": "countries.csv",
-							"foldername": "jeffina-folder"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -184,7 +172,6 @@
 						"referenceName": "DS_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file": "test.csv",
 							"container": "test-container"
 						}
 					}

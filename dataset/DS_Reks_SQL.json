@@ -5,6 +5,15 @@
 			"referenceName": "LS_Reks_SQL_OnPrem",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"DatabaseObject": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [

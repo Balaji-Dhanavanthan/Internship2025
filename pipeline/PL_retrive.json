@@ -20,7 +20,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "jeffine_folder"
+							"Folder": "jeffina_folder"
 						}
 					},
 					"fieldList": [

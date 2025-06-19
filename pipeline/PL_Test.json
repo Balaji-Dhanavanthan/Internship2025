@@ -25,15 +25,9 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false
 				},
@@ -45,7 +39,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Intern_dataset",
 						"type": "DatasetReference"
 					}
 				]

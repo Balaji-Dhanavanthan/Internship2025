@@ -7,7 +7,8 @@
 		},
 		"parameters": {
 			"ObjectName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "I2025_CKumaram"
 			},
 			"TableName": {
 				"type": "string"

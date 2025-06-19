@@ -1,5 +1,5 @@
 {
-	"name": "PL_Exe3",
+	"name": "PL_Exe3Q1",
 	"properties": {
 		"activities": [
 			{
@@ -46,7 +46,8 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
@@ -62,14 +63,14 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "random_jokes"
+							"TableName": "rand_jokes_official_joke_api_I2025_JSenthil"
 						}
 					}
 				]
 			}
 		],
 		"folder": {
-			"name": "Exercise ADF exercise/Exercise Day 3"
+			"name": "New folder"
 		},
 		"annotations": []
 	}

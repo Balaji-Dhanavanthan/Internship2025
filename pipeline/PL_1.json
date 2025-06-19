@@ -109,6 +109,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"folder1": {
+				"type": "string"
+			},
+			"directory1": {
+				"type": "string"
+			},
+			"file1": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"num_arr": {
 				"type": "Array",

@@ -153,6 +153,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"folder2": {
+				"type": "string"
+			},
+			"directory2": {
+				"type": "string"
+			},
+			"file2": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"Status3": {
 				"type": "String"

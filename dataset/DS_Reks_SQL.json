@@ -39,7 +39,7 @@
 		],
 		"typeProperties": {
 			"schema": "I2025_EStalin",
-			"table": "api_data"
+			"table": "Department"
 		}
 	}
 }

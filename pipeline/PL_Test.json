@@ -3,49 +3,16 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Delete1",
-				"type": "Delete",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_blob_r",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice-adf",
-							"Folder": "ram_folder",
-							"Filename": "*"
-						}
-					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "DS_Blob_storgare",
-							"type": "LinkedServiceReference"
-						}
-					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
-				}
-			},
-			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -56,10 +23,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from job_history",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "ramfolder",
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -84,11 +58,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_blob_r",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "job_history"
+							"Container": "practice-adf",
+							"Folder": "ramfolder",
+							"Filename": "*"
 						}
 					}
 				],
@@ -98,8 +73,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "ramfolder",
-							"Filename": "job_history.csv"
+							"Folder": "ramfolder2new",
+							"Filename": "*"
 						}
 					}
 				]
@@ -135,6 +110,29 @@
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@activity('Get Metadata1').output.itemType",
+						"type": "Expression"
 					}
 				}
 			}

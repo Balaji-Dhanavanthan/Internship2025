@@ -89,8 +89,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Container": "practice-adf",
-										"Folder": "kanish",
-										"Filename": "ifcondition"
+										"Folder": "kanish"
 									}
 								}
 							]

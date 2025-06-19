@@ -68,6 +68,7 @@
 									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
+										"fileListPath": "csvcontainer/IPL.csv",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {

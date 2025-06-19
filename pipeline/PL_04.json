@@ -25,10 +25,11 @@
 						}
 					},
 					"fieldList": [
-						"childItems"
+						"itemName"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

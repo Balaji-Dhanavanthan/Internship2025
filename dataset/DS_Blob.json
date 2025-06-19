@@ -6,13 +6,10 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"container": {
+			"Container": {
 				"type": "string"
 			},
-			"filename": {
-				"type": "string"
-			},
-			"foldername": {
+			"Folder": {
 				"type": "string"
 			}
 		},
@@ -21,16 +18,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
 				"folderPath": {
-					"value": "@dataset().foldername",
+					"value": "@dataset().Folder",
 					"type": "Expression"
 				},
 				"container": {
-					"value": "@dataset().container",
+					"value": "@dataset().Container",
 					"type": "Expression"
 				}
 			},

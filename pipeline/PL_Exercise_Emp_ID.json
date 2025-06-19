@@ -108,8 +108,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "practice-adf",
-										"folder": "ArshadFolder",
-										"filename": "if"
+										"folder": "ArshadFolder"
 									}
 								}
 							]
@@ -176,13 +175,11 @@
 				"type": "String",
 				"defaultValue": "Yes"
 			},
-			"currentfileame": {
-				"type": "String",
-				"defaultValue": "''"
+			"filename": {
+				"type": "String"
 			},
 			"filecount": {
-				"type": "Integer",
-				"defaultValue": 0
+				"type": "String"
 			}
 		},
 		"annotations": []

@@ -21,7 +21,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf"
+							"container": "practice-adf",
+							"folder": "for"
 						}
 					},
 					"logStorageSettings": {
@@ -39,38 +40,19 @@
 				}
 			},
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
+				"name": "PL_Exercise_Emp",
+				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+					"pipeline": {
+						"referenceName": "PL_Exercise_Emp_ID",
+						"type": "PipelineReference"
 					},
-					"dataset": {
-						"referenceName": "MyDataSet",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "Arshad",
-							"file": "for"
-						}
-					},
-					"firstRowOnly": false
+					"waitOnCompletion": true
 				}
 			}
 		],

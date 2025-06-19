@@ -9,6 +9,10 @@
 			"container": {
 				"type": "string",
 				"defaultValue": "practice-adf"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "ArshadFolder"
 			}
 		},
 		"annotations": [],
@@ -16,7 +20,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Arshad",
+				"fileName": "for",
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
 				"container": {
 					"value": "@dataset().container",
 					"type": "Expression"

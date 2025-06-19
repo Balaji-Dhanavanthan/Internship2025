@@ -16,10 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf"
+							"schema": "dbo",
+							"tablename": "countries"
 						}
 					},
 					"fieldList": [
@@ -27,14 +28,7 @@
 							"value": "childItems",
 							"type": "Expression"
 						}
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
-					}
+					]
 				}
 			},
 			{
@@ -74,7 +68,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter1').output",
+						"value": "@activity('Filter1').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -96,32 +90,11 @@
 							}
 						},
 						{
-							"name": "count",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "file",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "count",
-								"value": "@add(variables('count'),1)"
-							}
-						},
-						{
 							"name": "Copy data1",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "count",
+									"activity": "file",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -137,15 +110,9 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -170,10 +137,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
+									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf"
+										"schema": "dbo",
+										"tablename": "countries"
 									}
 								}
 							],
@@ -189,6 +157,25 @@
 							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "count",
+					"value": {
+						"value": "@add()",
+						"type": "Expression"
+					}
 				}
 			}
 		],

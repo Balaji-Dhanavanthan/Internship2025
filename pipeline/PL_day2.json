@@ -59,7 +59,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Filter1",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -92,14 +92,9 @@
 						{
 							"name": "Copy data1",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "file",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -155,6 +150,27 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "count",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "file",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "count",
+								"value": "@add(variables('count'),1 )"
+							}
 						}
 					]
 				}
@@ -164,7 +180,14 @@
 				"type": "SetVariable",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -173,7 +196,7 @@
 				"typeProperties": {
 					"variableName": "count",
 					"value": {
-						"value": "@add()",
+						"value": "0",
 						"type": "Expression"
 					}
 				}
@@ -185,7 +208,7 @@
 			},
 			"count": {
 				"type": "Integer",
-				"defaultValue": 1
+				"defaultValue": 0
 			}
 		},
 		"annotations": []

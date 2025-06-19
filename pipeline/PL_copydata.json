@@ -20,7 +20,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFileName": "IPL_1",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -52,13 +51,21 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Folder": "kani_folder",
+							"Filename": "countries.csv"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob2",
-						"type": "DatasetReference"
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"Folder": "kani_folder",
+							"Filename": "copy_countries.csv"
+						}
 					}
 				]
 			}

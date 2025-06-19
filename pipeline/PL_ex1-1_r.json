@@ -74,7 +74,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter1').output.value",
+						"value": "@activity('Filter1').output.Value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -90,7 +90,31 @@
 							"typeProperties": {
 								"variableName": "var1",
 								"value": {
-									"value": "@item().itemName",
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "refvar",
+								"value": {
+									"value": "@add(variables('countvar'), 1)",
 									"type": "Expression"
 								}
 							}

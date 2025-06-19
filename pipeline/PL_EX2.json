@@ -81,7 +81,6 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "practice-adf",
 										"Folder": "kani_folder",
 										"Filename": {
 											"value": "@concat(item().table_name,'.csv')",

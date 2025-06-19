@@ -1,5 +1,5 @@
 {
-	"name": "Ps_Exercise 1_PArul",
+	"name": "Day 2_Exercise 1",
 	"properties": {
 		"activities": [
 			{
@@ -52,7 +52,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@endswith(item().name, '.csv')",
+						"value": "@endswith(item().name, '.csv')\n",
 						"type": "Expression"
 					}
 				}
@@ -87,7 +87,7 @@
 							"typeProperties": {
 								"variableName": "filename",
 								"value": {
-									"value": "@item().name\n",
+									"value": "@item().name",
 									"type": "Expression"
 								}
 							}
@@ -109,9 +109,9 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "filecount",
+								"variableName": "count",
 								"value": {
-									"value": "@add(variables('fileCount'), 1)",
+									"value": "@add(variables('filecount'), 1)",
 									"type": "Expression"
 								}
 							}
@@ -121,11 +121,15 @@
 			}
 		],
 		"variables": {
+			"filecount": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
 			"filename": {
 				"type": "String",
 				"defaultValue": "' '"
 			},
-			"filecount": {
+			"count": {
 				"type": "Integer",
 				"defaultValue": 0
 			}

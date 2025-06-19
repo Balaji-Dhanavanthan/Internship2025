@@ -10,8 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "if_copy_activity",
-				"folderPath": "jc_try",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

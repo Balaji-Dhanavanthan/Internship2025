@@ -61,6 +61,20 @@
 				}
 			}
 		],
+		"parameters": {
+			"folder": {
+				"type": "string",
+				"defaultValue": "practice-adf"
+			},
+			"directory": {
+				"type": "string",
+				"defaultValue": "aabidh"
+			},
+			"file": {
+				"type": "string",
+				"defaultValue": "countries.csv"
+			}
+		},
 		"annotations": []
 	}
 }

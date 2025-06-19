@@ -1,5 +1,5 @@
 {
-	"name": "DS_serverrr",
+	"name": "DS_SQLSERVER",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_OnPrem_SQLServer",

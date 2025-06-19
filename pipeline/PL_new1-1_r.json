@@ -115,7 +115,7 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "DS_serverrr",
+						"referenceName": "DS_SQLSERVER",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false

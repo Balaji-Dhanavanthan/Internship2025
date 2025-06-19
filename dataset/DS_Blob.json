@@ -14,14 +14,7 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@dataset().foldername",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().container",
-					"type": "Expression"
-				}
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

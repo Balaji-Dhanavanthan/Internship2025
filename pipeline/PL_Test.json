@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Filter1",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -74,10 +74,34 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Folder": "ramfolder2new",
-							"Filename": "*"
+							"Filename": "var1file"
 						}
 					}
 				]
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var1",
+					"value": {
+						"value": "@activity('Get Metadata1').output.itemName",
+						"type": "Expression"
+					}
+				}
 			},
 			{
 				"name": "Get Metadata1",
@@ -112,36 +136,14 @@
 						"type": "DelimitedTextReadSettings"
 					}
 				}
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "Get Metadata1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
-						"type": "Expression"
-					},
-					"condition": {
-						"value": "@startswith(item().name, 'emp')",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"variables": {
-			"Yes": {
-				"type": "String"
+			"countvar": {
+				"type": "Integer",
+				"defaultValue": 7
 			},
-			"Status": {
+			"var1": {
 				"type": "String"
 			}
 		},

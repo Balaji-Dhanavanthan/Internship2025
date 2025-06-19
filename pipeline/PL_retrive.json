@@ -19,7 +19,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practicer-adf",
+							"Container": "practice-adf",
 							"Folder": "jeffine_folder"
 						}
 					},

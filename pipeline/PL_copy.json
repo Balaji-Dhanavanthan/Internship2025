@@ -26,7 +26,26 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -36,6 +55,17 @@
 							"Container": "practice-adf",
 							"FolderName": "kani_folder",
 							"FileName": "jobs.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FileName": "test.csv",
+							"FolderName": "abc"
 						}
 					}
 				]

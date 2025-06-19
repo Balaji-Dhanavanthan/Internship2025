@@ -1,5 +1,5 @@
 {
-	"name": "PL_copydata",
+	"name": "PL_copydata_8qe1",
 	"properties": {
 		"activities": [
 			{
@@ -53,8 +53,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "kani_folder",
-							"Filename": "countries.csv"
+							"Folder": "kani_folder"
 						}
 					}
 				],
@@ -63,13 +62,23 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "kani_folder",
-							"Filename": "copy_countries.csv"
+							"Folder": "kani_folder"
 						}
 					}
 				]
 			}
 		],
+		"variables": {
+			"num": {
+				"type": "Integer"
+			},
+			"Filename": {
+				"type": "String"
+			},
+			"count": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

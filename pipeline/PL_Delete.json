@@ -109,6 +109,17 @@
 				]
 			}
 		],
+		"variables": {
+			"num": {
+				"type": "Integer"
+			},
+			"Filename": {
+				"type": "String"
+			},
+			"count": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

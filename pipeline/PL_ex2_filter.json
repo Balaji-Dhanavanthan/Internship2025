@@ -19,8 +19,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "kani_folder",
-							"Filename": "countries.csv"
+							"Folder": "kani_folder"
 						}
 					},
 					"fieldList": [
@@ -42,6 +41,17 @@
 				"userProperties": []
 			}
 		],
+		"variables": {
+			"num": {
+				"type": "Integer"
+			},
+			"Filename": {
+				"type": "String"
+			},
+			"count": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

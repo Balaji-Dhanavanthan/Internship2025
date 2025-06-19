@@ -81,11 +81,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Folder": "kani_folder",
-										"Filename": {
-											"value": "@concat(item().table_name,'.csv')",
-											"type": "Expression"
-										}
+										"Folder": "kani_folder"
 									}
 								}
 							]
@@ -120,6 +116,17 @@
 				}
 			}
 		],
+		"variables": {
+			"num": {
+				"type": "Integer"
+			},
+			"Filename": {
+				"type": "String"
+			},
+			"count": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

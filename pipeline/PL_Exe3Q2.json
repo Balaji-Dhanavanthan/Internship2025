@@ -1,6 +1,133 @@
 {
 	"name": "PL_Exe3Q2",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"additionalColumns": [
+							{
+								"name": "date_added",
+								"value": {
+									"value": "@formatDateTime(utcNow(), 'yyyy-MM-dd')",
+									"type": "Expression"
+								}
+							}
+						],
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "id",
+									"type": "nchar"
+								},
+								"sink": {
+									"name": "id",
+									"type": "nchar"
+								}
+							},
+							{
+								"source": {
+									"name": "company_name",
+									"type": "nvarchar"
+								},
+								"sink": {
+									"name": "company_name",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "name",
+									"type": "nvarchar"
+								},
+								"sink": {
+									"name": "customer_name"
+								}
+							},
+							{
+								"source": {
+									"name": "city",
+									"type": "nvarchar"
+								},
+								"sink": {
+									"name": "city",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "phone",
+									"type": "nvarchar"
+								},
+								"sink": {
+									"name": "phone",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "email",
+									"type": "nvarchar"
+								},
+								"sink": {
+									"name": "email",
+									"type": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "new_customers"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "copied_new_customers"
+						}
+					}
+				]
+			}
+		],
 		"folder": {
 			"name": "New folder"
 		},

@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Northwind",
+				"fileName": "Northwind_Customers.xlsx",
+				"folderPath": "I2025_JNagara1",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

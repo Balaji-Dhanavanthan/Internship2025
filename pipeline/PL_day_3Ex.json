@@ -1,5 +1,5 @@
 {
-	"name": "PL_day3Ex",
+	"name": "PL_day_3Ex",
 	"properties": {
 		"activities": [
 			{
@@ -35,9 +35,9 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "truncate table MMuthumu.countries",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {

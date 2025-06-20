@@ -51,23 +51,13 @@
 				"inputs": [
 					{
 						"referenceName": "DS_I2025_PRajan",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"folder": "I2025_PRajan",
-							"file": "new1.csv"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_I2025_PRajan",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"folder": "I2025_PRajan",
-							"file": "accept.csv"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}

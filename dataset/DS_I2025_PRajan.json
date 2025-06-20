@@ -5,24 +5,12 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"container": {
-				"type": "string"
-			},
-			"folder": {
-				"type": "string"
-			},
-			"file": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Northwind_Customers.xlsx",
-				"folderPath": "Northwind",
+				"folderPath": "I2025_PRajan",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

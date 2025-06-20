@@ -74,12 +74,7 @@
 							"outputs": [
 								{
 									"referenceName": "DS_I2025_PRajan",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "test-container",
-										"folder": "I2025_PRajan",
-										"file": "foreach.csv"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}

@@ -3,14 +3,23 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_OnPrem_SQLServer",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Database": "Intern_2025"
+			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "countries"
+			"schema": {
+				"value": "@dataset.schemaname()",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset.tablename()",
+				"type": "Expression"
+			}
 		}
 	}
 }

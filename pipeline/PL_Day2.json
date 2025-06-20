@@ -105,7 +105,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "filecount",
-								"value": 0
+								"value": ""
 							}
 						},
 						{

@@ -48,7 +48,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "k_folder"
+							"Folder": "k_folder",
+							"Filename": "countries.csv"
 						}
 					}
 				],
@@ -67,8 +68,6 @@
 			{
 				"name": "copydata",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -117,7 +116,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "kani_folder"
+							"Folder": "kani_folder",
+							"Filename": "countries.csv"
 						}
 					}
 				],
@@ -127,7 +127,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"Folder": "k_folder"
+							"Folder": "k_folder",
+							"Filename": "countries.csv"
 						}
 					}
 				]

@@ -100,9 +100,10 @@
 									"referenceName": "DS_excelNW",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "test-container",
-										"Folder": "Northwind",
-										"File": "*"
+										"SheetName": {
+											"value": "@item().SheetName",
+											"type": "Expression"
+										}
 									}
 								}
 							],

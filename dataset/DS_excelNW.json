@@ -5,21 +5,13 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"SheetName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "@dataset().SheetName",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": {
-					"value": "@dataset().SheetName",
-					"type": "Expression"
-				}
+				"folderPath": "Northwind",
+				"container": "test-container"
 			},
 			"firstRowAsHeader": true
 		},

@@ -74,6 +74,8 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
+										"wildcardFolderPath": "@dataset().SSheetName",
+										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									}
 								},
@@ -96,13 +98,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_excelNW",
-									"type": "DatasetReference",
-									"parameters": {
-										"SheetName": {
-											"value": "@item().SheetName",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [

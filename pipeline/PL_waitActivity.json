@@ -65,7 +65,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "prctice-adf"
+							"container": "prctice-adf"
 						}
 					}
 				],
@@ -74,7 +74,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf"
+							"container": "practice-adf"
 						}
 					}
 				]
@@ -96,7 +96,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "prctice-adf"
+							"container": "prctice-adf"
 						}
 					},
 					"logStorageSettings": {

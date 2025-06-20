@@ -6,9 +6,6 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Container": {
-				"type": "string"
-			},
 			"Folder": {
 				"type": "string"
 			},
@@ -21,14 +18,15 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().Filename",
+					"type": "Expression"
+				},
 				"folderPath": {
 					"value": "@dataset().Folder",
 					"type": "Expression"
 				},
-				"container": {
-					"value": "@dataset().Container",
-					"type": "Expression"
-				}
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

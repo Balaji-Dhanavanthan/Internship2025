@@ -27,10 +27,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": {
-								"value": "@activity('copydata').output",
-								"type": "Expression"
-							},
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -40,8 +36,7 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -58,8 +53,7 @@
 						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
-							"Folder": "k_folder",
+							"Folder": "j_folder",
 							"Filename": "countries.csv"
 						}
 					}
@@ -70,7 +64,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MMuthu",
-							"tablename": "Department",
+							"tablename": "countries",
 							"database": "Intern_2025"
 						}
 					}
@@ -126,7 +120,6 @@
 						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
 							"Folder": "kani_folder",
 							"Filename": "countries.csv"
 						}
@@ -137,8 +130,7 @@
 						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
-							"Folder": "k_folder",
+							"Folder": "j_folder",
 							"Filename": "countries.csv"
 						}
 					}

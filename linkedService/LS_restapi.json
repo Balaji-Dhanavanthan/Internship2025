@@ -1,0 +1,12 @@
+{
+	"name": "LS_restapi",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://potterapi-fedeperin.vercel.app/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

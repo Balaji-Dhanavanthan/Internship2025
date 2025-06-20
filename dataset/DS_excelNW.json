@@ -19,6 +19,7 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Northwind_Customers",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {

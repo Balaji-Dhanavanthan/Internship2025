@@ -1,0 +1,63 @@
+{
+	"name": "Excel_1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Products.xlsx",
+				"folderPath": "Northwind",
+				"container": "test-container"
+			},
+			"sheetIndex": 0,
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ProductID",
+				"type": "String"
+			},
+			{
+				"name": "ProductName",
+				"type": "String"
+			},
+			{
+				"name": "SupplierID",
+				"type": "String"
+			},
+			{
+				"name": "CategoryID",
+				"type": "String"
+			},
+			{
+				"name": "QuantityPerUnit",
+				"type": "String"
+			},
+			{
+				"name": "UnitPrice",
+				"type": "String"
+			},
+			{
+				"name": "UnitsInStock",
+				"type": "String"
+			},
+			{
+				"name": "UnitsOnOrder",
+				"type": "String"
+			},
+			{
+				"name": "ReorderLevel",
+				"type": "String"
+			},
+			{
+				"name": "Discontinued",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -3,121 +3,37 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Status",
-				"type": "SetVariable",
+				"name": "Filter1",
+				"type": "Filter",
 				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Status",
-					"value": "Yes"
-				}
-			},
-			{
-				"name": "If Condition",
-				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Status",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"expression": {
-						"value": "@equals(variables('Status'),'Yes')",
+					"items": {
+						"value": "@pipeline().parameters.arr",
 						"type": "Expression"
 					},
-					"ifFalseActivities": [
-						{
-							"name": "Fail1",
-							"type": "Fail",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"message": "Failed IF",
-								"errorCode": "401"
-							}
-						}
-					],
-					"ifTrueActivities": [
-						{
-							"name": "Copy_data",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"wildcardFileName": "*",
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
-								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "test-container",
-										"folder": "kanish"
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DS_New",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "test-container",
-										"folder": "I2025_PMahendi",
-										"file": "if_copy"
-									}
-								}
-							]
-						}
-					]
+					"condition": {
+						"value": "@equals(mod(item(), 2),0)",
+						"type": "Expression"
+					}
 				}
 			}
 		],
+		"parameters": {
+			"arr": {
+				"type": "array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8
+				]
+			}
+		},
 		"variables": {
 			"Status": {
 				"type": "String"

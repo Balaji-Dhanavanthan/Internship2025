@@ -16,8 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"referenceName": "test1",
+						"type": "DatasetReference",
+						"parameters": {
+							"report": "test-container",
+							"foldername": "I2025_JSivakum",
+							"filename": "file1.csv"
+						}
 					},
 					"logStorageSettings": {
 						"linkedServiceName": {

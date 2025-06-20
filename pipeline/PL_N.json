@@ -70,16 +70,13 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
+									"type": "ExcelSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": "Northwind",
 										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
 									}
 								},
 								"sink": {
@@ -100,12 +97,12 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_blob_r",
+									"referenceName": "DS_excelNW",
 									"type": "DatasetReference",
 									"parameters": {
 										"Container": "test-container",
 										"Folder": "Northwind",
-										"Filename": "*"
+										"File": "*"
 									}
 								}
 							],

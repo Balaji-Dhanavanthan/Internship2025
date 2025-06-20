@@ -20,8 +20,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": " kani_folder",
-							"wildcardFileName": "*",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -51,23 +49,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_Blob3",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
 							"Folder": "kani_folder",
-							"file": "countries.csv"
+							"File": "countries.csv"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_Blob3",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
 							"Folder": "k_folder",
-							"file": "countries.csv"
+							"File": "countries.csv"
 						}
 					}
 				]
@@ -75,6 +73,8 @@
 			{
 				"name": "Link_database",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy_file",
@@ -106,7 +106,8 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -120,12 +121,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_Blob3",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
 							"Folder": "k_folder",
-							"file": "countries.csv"
+							"File": "countries.csv"
 						}
 					}
 				],
@@ -134,8 +135,8 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"schemaname": "SS_MMuthumu",
-							"tablename": "countries.csv",
+							"schemaname": "I2025_MMuthu",
+							"tablename": "countries",
 							"database": "Intern_2025"
 						}
 					}

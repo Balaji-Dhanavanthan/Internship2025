@@ -27,7 +27,10 @@
 							},
 							{
 								"name": "email",
-								"value": "$$COLUMN:Company_Name"
+								"value": {
+									"value": "@concat($Company_Name, '@gmail.com')",
+									"type": "Expression"
+								}
 							}
 						],
 						"queryTimeout": "02:00:00",

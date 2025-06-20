@@ -1,10 +1,12 @@
 {
-	"name": "PL_day3",
+	"name": "PL_day3_1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy",
+				"name": "Question_1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -27,7 +29,8 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
@@ -44,6 +47,75 @@
 						"parameters": {
 							"schema": "I2025_AMohamad",
 							"tablename": "ADF_Day_3",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "Question_2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"additionalColumns": [
+							{
+								"name": "email",
+								"value": "$$COLUMN:City"
+							},
+							{
+								"name": "created_date",
+								"value": {
+									"value": "@formatDateTime(utcNow(),'mm dd yyyy')",
+									"type": "Expression"
+								}
+							}
+						],
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"tablename": "Customers",
+							"database": "Northwind"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "I2025_AMohamad",
+							"tablename": "ADF_Day3_2",
 							"database": "Intern_2025"
 						}
 					}

@@ -1,0 +1,12 @@
+{
+	"name": "LS_rest",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://catfact.ninja/fact  ",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

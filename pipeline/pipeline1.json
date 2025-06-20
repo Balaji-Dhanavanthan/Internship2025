@@ -67,13 +67,45 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"additionalColumns": [
+							{
+								"name": "id",
+								"value": {
+									"value": "'I2025_DMuthuku'",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "name",
+								"value": {
+									"value": "'Donia'",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "email",
+								"value": {
+									"value": "'abc@gmail.com'",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "created_date",
+								"value": "$$COLUMN:"
+							},
+							{
+								"name": "pipeline_runid",
+								"value": "$$COLUMN:"
+							}
+						],
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false,
 					"translator": {

@@ -25,10 +25,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from employees\n",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -53,14 +58,22 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar"
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar"
+						}
 					}
 				]
 			},

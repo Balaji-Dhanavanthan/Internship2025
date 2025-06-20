@@ -100,7 +100,11 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar"
+						}
 					},
 					"fieldList": [
 						"childItems"
@@ -284,9 +288,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"Folder": "Asrar",
-							"FileName": "copy_data.csv"
+							"container": "practice-adf"
 						}
 					}
 				]
@@ -310,9 +312,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"Folder": "Asrar",
-							"FileName": "copy_data.csv"
+							"container": "practice-adf"
 						}
 					},
 					"enableLogging": true,
@@ -377,6 +377,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"modifiedDatetimeStart": null,
 						"modifiedDatetimeEnd": null,
 						"enablePartitionDiscovery": false

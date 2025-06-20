@@ -102,8 +102,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": false,
-							"wildcardFolderPath": "aabidh",
-							"wildcardFileName": "regions.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {

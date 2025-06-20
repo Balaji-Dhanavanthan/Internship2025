@@ -469,23 +469,21 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-adf",
 							"folder": "aabidh/ex1",
-							"filename": "*"
+							"container": "test-adf"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-container",
 							"folder": "I2025_MAbdul1/ex3de",
-							"filename": "*"
+							"container": "test-container"
 						}
 					}
 				]
@@ -511,12 +509,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-adf",
 							"folder": "aabidh/ex1",
-							"filename": "*"
+							"container": "test-adf"
 						}
 					},
 					"logStorageSettings": {

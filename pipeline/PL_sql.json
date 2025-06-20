@@ -83,7 +83,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_KRavi",
-							"TableName": "frompipeline",
+							"TableName": "tgt_Customers_I2025",
 							"Database": "Intern_2025"
 						}
 					}

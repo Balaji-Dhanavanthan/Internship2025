@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Day3_Exercise 1",
+				"folderPath": "Northwind",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

@@ -14,7 +14,14 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -136,7 +143,7 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Directory": "aabidh",
-							"File": "regions.csv"
+							"File": "regions"
 						}
 					}
 				],

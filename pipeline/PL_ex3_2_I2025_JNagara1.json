@@ -488,7 +488,13 @@
 										}
 									}
 								},
-								"enableLogging": false,
+								"logStorageSettings": {
+									"linkedServiceName": {
+										"referenceName": "DS_Blob_storgare",
+										"type": "LinkedServiceReference"
+									}
+								},
+								"enableLogging": true,
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,

@@ -140,6 +140,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@activity('Copy data1')",
+						"type": "Expression"
+					},
 					"ifTrueActivities": [
 						{
 							"name": "Copy data1",

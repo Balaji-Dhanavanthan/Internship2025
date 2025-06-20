@@ -74,8 +74,6 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
-										"wildcardFolderPath": "Northwind",
-										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									}
 								},

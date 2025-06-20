@@ -13,19 +13,11 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Northwind_Customers",
+			"sheetName": "@dataset().SheetName",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().File",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().Folder",
-					"type": "Expression"
-				},
 				"container": {
-					"value": "@dataset().Container",
+					"value": "@dataset().SheetName",
 					"type": "Expression"
 				}
 			},

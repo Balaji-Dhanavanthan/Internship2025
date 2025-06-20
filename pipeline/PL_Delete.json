@@ -21,9 +21,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
 							"Folder": "kani_folder/doni_folder",
-							"Filename": "countries.csv"
+							"container": "practice-adf"
 						}
 					},
 					"logStorageSettings": {
@@ -90,9 +89,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
 							"Folder": "kani_folder",
-							"Filename": "countries.csv"
+							"container": "practice-adf"
 						}
 					}
 				],
@@ -101,9 +99,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
 							"Folder": "kani_folder/doni_folder",
-							"Filename": "countries.csv"
+							"container": "practice-adf"
 						}
 					}
 				]

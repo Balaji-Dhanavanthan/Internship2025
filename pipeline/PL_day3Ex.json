@@ -5,7 +5,14 @@
 			{
 				"name": "Link_database",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "copydata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -58,7 +65,7 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"schemaname": "SS_MMuthumu",
+							"schemaname": "I2025_MMuthu",
 							"tablename": "countries",
 							"database": "Intern_2025"
 						}

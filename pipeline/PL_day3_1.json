@@ -55,6 +55,8 @@
 			{
 				"name": "Question_2",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -66,11 +68,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
+						"type": "ExcelSource",
 						"additionalColumns": [
 							{
 								"name": "email",
-								"value": "$$COLUMN:City"
+								"value": "$$COLUMN:"
 							},
 							{
 								"name": "created_date",
@@ -80,8 +82,66 @@
 								}
 							}
 						],
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob_XLSX",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "I2025_AMohamad",
+							"tablename": "ADF_Day3_2",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "Question_3",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
 					},
 					"sink": {
 						"type": "SqlServerSink",
@@ -100,13 +160,8 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema": "dbo",
-							"tablename": "Customers",
-							"database": "Northwind"
-						}
+						"referenceName": "DS_Blob_XLSX",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -115,7 +170,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "I2025_AMohamad",
-							"tablename": "ADF_Day3_2",
+							"tablename": "ADF_Day3_3",
 							"database": "Intern_2025"
 						}
 					}

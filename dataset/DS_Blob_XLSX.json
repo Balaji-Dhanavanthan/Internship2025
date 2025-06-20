@@ -16,9 +16,6 @@
 			},
 			"file": {
 				"type": "string"
-			},
-			"sheet": {
-				"type": "int"
 			}
 		},
 		"annotations": [],

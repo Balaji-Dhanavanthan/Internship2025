@@ -21,7 +21,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Folder": "Northwind",
-							"Filename": "Northwind_Customers"
+							"Filename": "*"
 						}
 					},
 					"fieldList": [
@@ -39,6 +39,8 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",

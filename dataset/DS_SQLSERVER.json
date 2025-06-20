@@ -11,8 +11,7 @@
 				"defaultValue": "I2025_RRamesh"
 			},
 			"TableName": {
-				"type": "string",
-				"defaultValue": "dept"
+				"type": "string"
 			}
 		},
 		"annotations": [],

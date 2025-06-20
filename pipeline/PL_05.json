@@ -26,12 +26,14 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
-							"Directory": "aabidh",
-							"File": "*"
+							"Container": "Target Folders",
+							"Directory": "I2025_SRavikum",
+							"File": "adf_ex_1"
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"exists"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,

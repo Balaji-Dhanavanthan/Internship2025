@@ -24,20 +24,6 @@
 									"value": "@utcNow()",
 									"type": "Expression"
 								}
-							},
-							{
-								"name": "name",
-								"value": {
-									"value": "@pipeline().parameters.name",
-									"type": "Expression"
-								}
-							},
-							{
-								"name": "email",
-								"value": {
-									"value": "@pipeline().parameters.email",
-									"type": "Expression"
-								}
 							}
 						],
 						"queryTimeout": "02:00:00",
@@ -97,24 +83,6 @@
 								"sink": {
 									"name": "created_at"
 								}
-							},
-							{
-								"source": {
-									"name": "name",
-									"type": "String"
-								},
-								"sink": {
-									"name": "name"
-								}
-							},
-							{
-								"source": {
-									"name": "email",
-									"type": "String"
-								},
-								"sink": {
-									"name": "email"
-								}
 							}
 						],
 						"typeConversion": true,
@@ -146,16 +114,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"name": {
-				"type": "string",
-				"defaultValue": "John"
-			},
-			"email": {
-				"type": "string",
-				"defaultValue": "john@gmail"
-			}
-		},
 		"annotations": []
 	}
 }

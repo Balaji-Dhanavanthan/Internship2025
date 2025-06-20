@@ -5,17 +5,6 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"ContainerName": {
-				"type": "string"
-			},
-			"DirectroyName": {
-				"type": "string"
-			},
-			"FileName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

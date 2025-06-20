@@ -83,7 +83,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "Intern_2025",
+							"tablename": " tgt_api_I2025_MSyed",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -311,7 +311,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "tgr_customer11",
+							"tablename": "tgt_customer_I2025_MSyed",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -490,7 +490,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "tgt_excel_1",
+							"tablename": "tgt_multipleexcel_I2025_MSyed",
 							"databasename": "Intern_2025"
 						}
 					}

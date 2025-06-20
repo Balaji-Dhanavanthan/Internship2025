@@ -118,6 +118,19 @@
 		"variables": {
 			"status": {
 				"type": "String"
+			},
+			"filename": {
+				"type": "String"
+			},
+			"filecount": {
+				"type": "Integer"
+			},
+			"counts": {
+				"type": "Integer"
+			},
+			"nameoffile": {
+				"type": "Array",
+				"defaultValue": []
 			}
 		},
 		"annotations": []

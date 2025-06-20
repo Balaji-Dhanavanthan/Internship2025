@@ -20,7 +20,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
-							"FolderName": "kani_folder"
+							"FolderName": "kani_folder",
+							"FileName": "countries.csv"
 						}
 					},
 					"fieldList": [
@@ -28,6 +29,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

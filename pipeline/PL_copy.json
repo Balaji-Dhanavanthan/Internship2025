@@ -63,8 +63,9 @@
 						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "test-container",
-							"FolderName": "abc"
+							"Container": "practice.adf",
+							"FolderName": "doniya_folder/test_folder",
+							"FileName": "jobs.csv"
 						}
 					}
 				]

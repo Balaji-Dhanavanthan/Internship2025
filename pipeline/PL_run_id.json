@@ -24,6 +24,10 @@
 									"value": "@formatDateTime(utcNow(), 'dd-MM-yyyy')",
 									"type": "Expression"
 								}
+							},
+							{
+								"name": "email",
+								"value": "$$COLUMN:Customer_Id"
 							}
 						],
 						"queryTimeout": "02:00:00",
@@ -83,7 +87,8 @@
 								"sink": {
 									"name": "created_at"
 								}
-							}
+							},
+							null
 						],
 						"typeConversion": true,
 						"typeConversionSettings": {
@@ -114,6 +119,12 @@
 				]
 			}
 		],
+		"parameters": {
+			"email": {
+				"type": "string",
+				"defaultValue": "@gmail.com"
+			}
+		},
 		"annotations": []
 	}
 }

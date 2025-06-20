@@ -73,7 +73,8 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
@@ -88,7 +89,9 @@
 						"referenceName": "DS_sqlcpoy_ls",
 						"type": "DatasetReference",
 						"parameters": {
-							"schemaname": "Intern_2025"
+							"schemaname": "Intern_2025",
+							"tablename": "tgt_api_2025",
+							"Database": "Intern_2025"
 						}
 					}
 				]

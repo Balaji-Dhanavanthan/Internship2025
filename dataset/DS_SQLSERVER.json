@@ -2,11 +2,31 @@
 	"name": "DS_SQLSERVER",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_OnPrem_SQLServer",
+			"referenceName": "LS_sqlserver3",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SchemaName": {
+				"type": "string",
+				"defaultValue": "I2025_RRamesh"
+			},
+			"TableName": {
+				"type": "string",
+				"defaultValue": "dept"
+			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
 	}
 }

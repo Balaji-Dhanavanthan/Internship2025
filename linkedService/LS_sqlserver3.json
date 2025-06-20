@@ -7,11 +7,15 @@
 		"typeProperties": {
 			"server": "SSIC-SQL-01",
 			"database": "Intern_2025",
-			"encrypt": "mandatory",
+			"encrypt": "optional",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
 			"userName": "I2025_RRamesh",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEUwQ0IzMkMwLURBMjMtNEFBRC1CMkEwLTRDNDQ5OEM4NUUxMl83ZWFlNjFkZS01YzRlLTQ3ZmMtOWJlMy02ZTQxZjYxMjdjZjgiDQp9"
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkYzVlMDkwMS1kMTU2LTRhYmMtYTA3ZS04Y2FhZmQ2MWRkNzQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SHIR-OnPrem",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }

@@ -1,31 +1,29 @@
 {
-	"name": "DS_Blob",
+	"name": "DS_Excel1_I2025JNagara1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"folder": {
+			"filename": {
 				"type": "string"
 			}
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().folder",
+					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "Target Folders / I2025_JNagara1/ex-3",
+				"folderPath": "Target Folders/I2025_JNagara1",
 				"container": "test-container"
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": false,
-			"quoteChar": "\""
+			"sheetIndex": 0,
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

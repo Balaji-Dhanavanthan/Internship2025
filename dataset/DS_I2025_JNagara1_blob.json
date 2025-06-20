@@ -5,13 +5,21 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"file": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "AD_Products.csv",
-				"folderPath": "Day3_Exercise 1",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": "Target Folders / I2025_JNagara1/ex-3",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

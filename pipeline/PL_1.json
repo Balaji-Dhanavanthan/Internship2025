@@ -113,8 +113,7 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -150,7 +149,7 @@
 						"parameters": {
 							"Container": "Target Folders",
 							"Directory": "I2025_SRavikum",
-							"File": "ADF EX 1.1"
+							"File": "Adf_ex_1.1"
 						}
 					}
 				]

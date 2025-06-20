@@ -45,7 +45,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"condition": {
@@ -53,8 +53,99 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set variable5",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter1').output.Value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Set variable3",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "filecount",
+								"value": {
+									"value": "@add(variables('count'),1)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable4",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable3",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "count",
+								"value": {
+									"value": "@variables('filecount')",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable5",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "count",
+					"value": 0
+				}
 			}
 		],
+		"variables": {
+			"count": {
+				"type": "Integer"
+			},
+			"filecount": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

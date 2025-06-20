@@ -95,9 +95,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "created_at",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "created_at"
 								}
 							},
 							{
@@ -106,9 +104,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "name",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "name"
 								}
 							},
 							{
@@ -117,9 +113,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "email",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "email"
 								}
 							}
 						],
@@ -136,17 +130,17 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_RRamesh",
-							"TableName": "Countries"
+							"TableName": "Customers"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_tgt_customer_I2025RRamesh",
+						"referenceName": "DS_SQLSERVER",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "CountriesCopy"
+							"SchemaName": "I2025_RRamesh",
+							"TableName": "CustomersCopy"
 						}
 					}
 				]
@@ -155,10 +149,11 @@
 		"parameters": {
 			"name": {
 				"type": "string",
-				"defaultValue": "\"John\""
+				"defaultValue": "John"
 			},
 			"email": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "john@gmail"
 			}
 		},
 		"annotations": []

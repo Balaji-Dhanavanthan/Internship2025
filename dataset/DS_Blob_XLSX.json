@@ -5,6 +5,12 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sheet": {
+				"type": "int",
+				"defaultValue": 0
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
@@ -14,7 +20,10 @@
 				"folderPath": "Northwind",
 				"container": "test-container"
 			},
-			"sheetIndex": 1
+			"sheetIndex": {
+				"value": "@dataset().sheet",
+				"type": "Expression"
+			}
 		},
 		"schema": []
 	}

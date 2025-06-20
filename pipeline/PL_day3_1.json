@@ -161,7 +161,10 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob_XLSX",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sheet": 0
+						}
 					}
 				],
 				"outputs": [

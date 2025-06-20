@@ -316,6 +316,185 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "q3",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ProductID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SupplierID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SupplierID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CategoryID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CategoryID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "QuantityPerUnit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "QuantityPerUnit",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UnitPrice",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "UnitPrice",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UnitsInStock",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "UnitsInStock",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UnitsOnOrder",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "UnitsOnOrder",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReorderLevel",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ReorderLevel",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Discontinued",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Discontinued",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Excel_1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "tgt_excel_1",
+							"databasename": "Intern_2025"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []

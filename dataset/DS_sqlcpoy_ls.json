@@ -5,12 +5,27 @@
 			"referenceName": "LS_sql_onpremcopy",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"schemaname": {
+				"type": "string",
+				"defaultValue": "Intern_2025"
+			},
+			"tablename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "I2025_MSyed",
-			"table": "Items_sub"
+			"schema": {
+				"value": "@dataset.schemaname()",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset.tablename()",
+				"type": "Expression"
+			}
 		}
 	}
 }

@@ -80,6 +80,8 @@
 						{
 							"name": "Set variable1",
 							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"secureOutput": false,
@@ -97,6 +99,8 @@
 						{
 							"name": "Set variable3",
 							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Set variable6",
@@ -121,6 +125,8 @@
 						{
 							"name": "Set variable6",
 							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"secureOutput": false,
@@ -134,6 +140,19 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Append variable2",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "nameoffile",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -141,6 +160,8 @@
 			{
 				"name": "Set variable5",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Filter1",
@@ -158,6 +179,16 @@
 					"variableName": "counts",
 					"value": 0
 				}
+			},
+			{
+				"name": "Append variable1",
+				"type": "AppendVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "nameoffile",
+					"value": ""
+				}
 			}
 		],
 		"variables": {
@@ -171,7 +202,8 @@
 				"type": "Integer"
 			},
 			"nameoffile": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": []
 			}
 		},
 		"annotations": []

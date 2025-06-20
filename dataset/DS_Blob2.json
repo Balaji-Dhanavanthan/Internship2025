@@ -19,7 +19,7 @@
 					"value": "@dataset().folder",
 					"type": "Expression"
 				},
-				"container": "practice-adf"
+				"container": "test-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

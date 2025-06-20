@@ -27,7 +27,7 @@
 							},
 							{
 								"name": "email",
-								"value": "$$COLUMN:Customer_Id"
+								"value": "$$COLUMN:Company_Name"
 							}
 						],
 						"queryTimeout": "02:00:00",
@@ -85,10 +85,20 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "created_at"
+									"name": "created_at",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
-							null
+							{
+								"source": {
+									"name": "email",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "email"
+								}
+							}
 						],
 						"typeConversion": true,
 						"typeConversionSettings": {
@@ -119,12 +129,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"email": {
-				"type": "string",
-				"defaultValue": "@gmail.com"
-			}
-		},
 		"annotations": []
 	}
 }

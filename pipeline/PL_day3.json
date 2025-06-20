@@ -1,6 +1,55 @@
 {
 	"name": "PL_day3",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_rest_api",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "I2025_AMohamad",
+							"tablename": "ADF_Day_3",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }

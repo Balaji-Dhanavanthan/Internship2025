@@ -376,6 +376,8 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -507,8 +509,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_DMuthuku",
-							"TableName": "employees",
-							"database": "HR"
+							"TableName": "Heathcare",
+							"database": "Intern_2025"
 						}
 					}
 				],
@@ -518,7 +520,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "test-container",
-							"FolderName": "I2025_D",
+							"FolderName": "I2025_DMuthuku",
 							"FileName": "tgt_customers_I2025_DMuthuku"
 						}
 					}

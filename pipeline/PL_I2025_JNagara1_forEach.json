@@ -160,6 +160,11 @@
 				}
 			}
 		],
+		"variables": {
+			"filename": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

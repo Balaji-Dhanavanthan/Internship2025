@@ -1,5 +1,5 @@
 {
-	"name": "PL_Exercise_Emp_ID",
+	"name": "PL_Exercise_1_1",
 	"properties": {
 		"activities": [
 			{
@@ -107,8 +107,12 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf",
-										"folder": "ArshadFolder"
+										"container": "test-container",
+										"folder": "Target Folders/I2025_AMohamad",
+										"file": {
+											"value": "file1.csv",
+											"type": "Expression"
+										}
 									}
 								}
 							]

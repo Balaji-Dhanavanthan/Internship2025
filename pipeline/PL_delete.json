@@ -5,8 +5,6 @@
 			{
 				"name": "Delete1",
 				"type": "Delete",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -21,8 +19,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"folder": "for"
+							"container": "test-container",
+							"folder": "Target Folders/I2025_AMohamad",
+							"file": "file2"
 						}
 					},
 					"logStorageSettings": {
@@ -42,6 +41,8 @@
 			{
 				"name": "PL_Exercise_Emp",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -49,7 +50,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_Exercise_Emp_ID",
+						"referenceName": "PL_Exercise_1_1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

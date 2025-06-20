@@ -206,7 +206,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "test-container",
+										"Container": "Target Folders",
 										"Directory": "I2025_SRavikum",
 										"File": "Adf_ex_1"
 									}

@@ -34,8 +34,14 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "I2025_RRamesh",
-			"table": "Customers"
+			"schema": {
+				"value": "@dataset().SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
 		}
 	}
 }

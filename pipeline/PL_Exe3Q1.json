@@ -69,8 +69,18 @@
 				]
 			}
 		],
+		"variables": {
+			"iter": {
+				"type": "Integer",
+				"defaultValue": 50
+			},
+			"temp": {
+				"type": "Integer",
+				"defaultValue": 50
+			}
+		},
 		"folder": {
-			"name": "New folder"
+			"name": "Exercise Day 3"
 		},
 		"annotations": []
 	}

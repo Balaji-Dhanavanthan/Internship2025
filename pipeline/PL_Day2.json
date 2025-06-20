@@ -59,17 +59,33 @@
 				}
 			},
 			{
-				"name": "Set variable1",
-				"type": "SetVariable",
+				"name": "ForEach1",
+				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "filename",
-					"value": "[]"
+					"items": {
+						"value": "@activity('Filter1').output",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "nameoffile",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
@@ -84,7 +100,16 @@
 		},
 		"variables": {
 			"filename": {
-				"type": "String"
+				"type": "Array"
+			},
+			"filecount": {
+				"type": "Integer"
+			},
+			"counts": {
+				"type": "Integer"
+			},
+			"nameoffile": {
+				"type": "Array"
 			}
 		},
 		"annotations": []

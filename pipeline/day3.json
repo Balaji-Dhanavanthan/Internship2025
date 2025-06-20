@@ -92,8 +92,6 @@
 			{
 				"name": "q2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -108,7 +106,15 @@
 						"type": "SqlServerSource",
 						"additionalColumns": [
 							{
-								"value": "$$COLUMN:"
+								"name": "email",
+								"value": "$$COLUMN:Address"
+							},
+							{
+								"name": "Created_dt",
+								"value": {
+									"value": "@formatDateTime(utcNow(),'dd-mm-yyyy')",
+									"type": "Expression"
+								}
 							}
 						],
 						"queryTimeout": "02:00:00",
@@ -255,6 +261,28 @@
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
+							},
+							{
+								"source": {
+									"name": "email",
+									"type": "String"
+								},
+								"sink": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Created_dt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Created_dt",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
 							}
 						],
 						"typeConversion": true,
@@ -277,72 +305,12 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_sqlcpoy_ls",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "I2025_MSyed"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"additionalColumns": [
-							{
-								"name": "email",
-								"value": "$$COLUMN:"
-							}
-						],
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "Customers",
+							"tablename": "tgr_customer11",
 							"databasename": "Intern_2025"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "I2025_MSyed",
-							"tablename": "tgr_customer",
-							"databasename": "intern_2025"
 						}
 					}
 				]

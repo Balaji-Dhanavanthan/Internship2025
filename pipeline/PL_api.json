@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://randomuser.me/api/"
+					"url": "https://official-joke-api.appspot.com/random_joke"
 				}
 			}
 		],

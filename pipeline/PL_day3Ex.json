@@ -27,6 +27,10 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@activity('copydata').output",
+								"type": "Expression"
+							},
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -66,7 +70,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MMuthu",
-							"tablename": "countries",
+							"tablename": "Department",
 							"database": "Intern_2025"
 						}
 					}

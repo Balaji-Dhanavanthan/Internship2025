@@ -20,8 +20,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "I2025_PRajan",
-							"wildcardFileName": "new1.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -53,22 +51,27 @@
 				"inputs": [
 					{
 						"referenceName": "DS_I2025_PRajan",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "I2025_PRajan",
+							"file": "new1.csv"
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_I2025_PRajan",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "I2025_PRajan",
+							"file": "accept.csv"
+						}
 					}
 				]
 			}
 		],
-		"parameters": {
-			"new1": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }

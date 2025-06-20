@@ -251,8 +251,6 @@
 			{
 				"name": "DeleteSource",
 				"type": "Delete",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CopyST",
@@ -272,7 +270,18 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_blob_r",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "practice-adf",
+							"Folder": "ramfolder",
+							"Filename": "locations"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DS_Blob_storgare",
+							"type": "LinkedServiceReference"
+						}
 					},
 					"enableLogging": true,
 					"storeSettings": {

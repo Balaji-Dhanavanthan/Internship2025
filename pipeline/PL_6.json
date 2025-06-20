@@ -327,7 +327,12 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "test-container",
+										"folder": "Exercise 2 Qn. 5",
+										"file": "Order & Details.xlsx"
+									}
 								}
 							],
 							"outputs": [
@@ -337,7 +342,10 @@
 									"parameters": {
 										"report": "test-container",
 										"foldername": "I2025_JSivakum",
-										"filename": "copy10"
+										"filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
 									}
 								}
 							]
@@ -346,11 +354,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"result": {
 				"type": "String"

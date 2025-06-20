@@ -380,11 +380,7 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "test-container",
-							"FolderName": "Northwind"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [

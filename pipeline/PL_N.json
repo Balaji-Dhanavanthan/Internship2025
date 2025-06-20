@@ -74,8 +74,11 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
-										"wildcardFolderPath": "@dataset().SSheetName",
-										"wildcardFileName": "*",
+										"wildcardFolderPath": "Northwind",
+										"wildcardFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
 										"enablePartitionDiscovery": false
 									}
 								},
@@ -107,7 +110,10 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SchemaName": "I2025_RRamesh",
-										"TableName": "tgt_multipleexcel_NW_RRamesh"
+										"TableName": {
+											"value": "@replace(item().name, '.xlsx', '')",
+											"type": "Expression"
+										}
 									}
 								}
 							]

@@ -20,6 +20,20 @@
 						"additionalColumns": [
 							{
 								"name": "created_at",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "Name",
+								"value": {
+									"value": "@pipeline().parameters.name",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "Email",
 								"value": ""
 							}
 						],
@@ -38,47 +52,47 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Customer_Key",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "Customer_Key",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "Customer_Id",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "Customer_Id",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "Company_Name",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "Company_Name",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "created_at",
 									"type": "String"
 								},
 								"sink": {
 									"name": "created_at",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer_Key",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Customer_Key",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer_Id",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Customer_Id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Company_Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Company_Name",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}

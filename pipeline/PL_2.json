@@ -73,13 +73,21 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar"
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar"
+						}
 					}
 				]
 			},
@@ -288,7 +296,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf"
+							"container": "practice-adf",
+							"Directory": "Asrar"
 						}
 					}
 				]

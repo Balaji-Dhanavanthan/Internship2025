@@ -136,6 +136,9 @@
 		"variables": {
 			"count": {
 				"type": "Integer"
+			},
+			"Status": {
+				"type": "String"
 			}
 		},
 		"annotations": []

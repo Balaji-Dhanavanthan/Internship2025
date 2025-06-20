@@ -15,14 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_Blob2",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice-adf",
-							"Folder": "kani_folder"
-						}
-					},
 					"fieldList": [
 						"childItems"
 					],

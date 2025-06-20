@@ -44,7 +44,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob3",
+						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
@@ -112,7 +112,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob3",
+						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",
@@ -123,7 +123,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob3",
+						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "practice-adf",

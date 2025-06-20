@@ -1,5 +1,5 @@
 {
-	"name": "DS_Blob3",
+	"name": "DS_Blob1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

@@ -15,60 +15,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Blob2",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice-adf",
-							"Folder": "jeffina_folder",
-							"file": "countries.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob2",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice-adf",
-							"Folder": "kani_folder",
-							"file": "countries.csv"
-						}
-					}
-				]
+					"enableStaging": false
+				}
 			}
 		],
 		"variables": {

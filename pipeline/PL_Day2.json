@@ -63,7 +63,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Filter1",
+						"activity": "Set variable5",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -97,23 +97,9 @@
 						{
 							"name": "Set variable3",
 							"type": "SetVariable",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "filecount",
-								"value": ""
-							}
-						},
-						{
-							"name": "Set variable4",
-							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable3",
+									"activity": "Set variable6",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -125,19 +111,39 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"variableName": "filecount",
+								"value": {
+									"value": "@add(variables('counts'),1)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable6",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
 								"variableName": "counts",
-								"value": ""
+								"value": {
+									"value": "@variables('filecount')",
+									"type": "Expression"
+								}
 							}
 						}
 					]
 				}
 			},
 			{
-				"name": "Set variable2",
+				"name": "Set variable5",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "Filter1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -149,8 +155,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "filecount",
-					"value": ""
+					"variableName": "counts",
+					"value": 0
 				}
 			}
 		],

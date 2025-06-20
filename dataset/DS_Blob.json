@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Northwind_Customers.xlsx.txt",
 				"folderPath": "I2025_PRajan",
 				"container": "test-container"
 			},

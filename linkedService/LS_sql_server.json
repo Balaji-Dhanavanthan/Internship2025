@@ -1,0 +1,21 @@
+{
+	"name": "LS_sql_server",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "ssic-sql-01",
+			"database": "Intern_2025",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "I2025_SRangan1",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4M2I4M2MwMi0yYzkwLTRlNGEtOGRlZi03NjAyNzE4YmY3Y2IiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SHIR-OnPrem",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

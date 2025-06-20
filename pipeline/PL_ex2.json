@@ -81,8 +81,8 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf",
-										"folder": "aabidh",
+										"container": "test-adf",
+										"folder": "aabidh/ex1",
 										"filename": {
 											"value": "@concat(item().table_name,'.csv')",
 											"type": "Expression"

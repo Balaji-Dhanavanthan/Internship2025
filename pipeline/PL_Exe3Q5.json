@@ -19,7 +19,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "nothing"
+							"filename": "*"
 						}
 					},
 					"fieldList": [
@@ -101,13 +101,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_CSV_test",
-									"type": "DatasetReference",
-									"parameters": {
-										"file_name": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -126,6 +120,8 @@
 						{
 							"name": "Delete1",
 							"type": "Delete",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1",
@@ -145,13 +141,7 @@
 							"typeProperties": {
 								"dataset": {
 									"referenceName": "DS_CSV_test",
-									"type": "DatasetReference",
-									"parameters": {
-										"file_name": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								},
 								"logStorageSettings": {
 									"linkedServiceName": {

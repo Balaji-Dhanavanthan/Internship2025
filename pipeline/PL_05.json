@@ -197,7 +197,7 @@
 									"parameters": {
 										"Container": "practice-adf",
 										"Directory": "aabidh",
-										"File": "regions.csv"
+										"File": "regions"
 									}
 								}
 							],
@@ -207,7 +207,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Container": "test-container",
-										"Directory": "I2025_SRavikum"
+										"Directory": "I2025_SRavikum",
+										"File": "Adf_ex_1"
 									}
 								}
 							]

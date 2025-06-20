@@ -51,6 +51,8 @@
 			{
 				"name": "Copy data2",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -86,12 +88,12 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_sqlcpoy_ls",
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "Intern_2025",
 							"tablename": "tgt_api_2025",
-							"Database": "Intern_2025"
+							"databasename": "Intern_2025"
 						}
 					}
 				]

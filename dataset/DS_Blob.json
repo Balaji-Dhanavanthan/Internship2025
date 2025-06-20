@@ -9,7 +9,7 @@
 			"folder": {
 				"type": "string"
 			},
-			"filename": {
+			"file": {
 				"type": "string"
 			}
 		},
@@ -19,14 +19,14 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().filename",
+					"value": "@dataset().file",
 					"type": "Expression"
 				},
 				"folderPath": {
 					"value": "@dataset().folder",
 					"type": "Expression"
 				},
-				"container": "practice-adf"
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

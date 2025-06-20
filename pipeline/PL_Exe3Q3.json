@@ -52,11 +52,7 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"ContainerName": "test-container",
-							"DirectroyName": "Northwind"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [

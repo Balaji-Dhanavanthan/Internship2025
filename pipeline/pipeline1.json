@@ -355,6 +355,8 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "Northwind",
+							"wildcardFileName": "*.xlsx",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {

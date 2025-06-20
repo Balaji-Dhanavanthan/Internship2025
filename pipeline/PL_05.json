@@ -141,7 +141,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@activity('Copy data1')",
+						"value": "@activity('Get Metadata1').output.exists",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [

@@ -59,6 +59,12 @@
 						"dependencyConditions": [
 							"Completed"
 						]
+					},
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Completed"
+						]
 					}
 				],
 				"policy": {

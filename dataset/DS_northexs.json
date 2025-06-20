@@ -10,11 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Products.xlsx",
+				"fileName": "Northwind_Customers.xlsx",
 				"folderPath": "Northwind",
 				"container": "test-container"
 			},
-			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": []

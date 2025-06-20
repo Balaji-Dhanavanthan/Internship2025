@@ -41,7 +41,10 @@
 				"outputs": [
 					{
 						"referenceName": "DS_SQLSERVER",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "apitable"
+						}
 					}
 				]
 			}

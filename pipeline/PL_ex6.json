@@ -89,6 +89,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -151,6 +152,21 @@
 				}
 			}
 		],
+		"variables": {
+			"filename": {
+				"type": "String"
+			},
+			"filecount": {
+				"type": "Integer"
+			},
+			"counts": {
+				"type": "Integer"
+			},
+			"nameoffile": {
+				"type": "Array",
+				"defaultValue": []
+			}
+		},
 		"annotations": []
 	}
 }

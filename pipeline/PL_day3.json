@@ -468,11 +468,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
+							"container": "test-adf",
 							"folder": "aabidh/ex1",
-							"container": "test-adf"
+							"filename": "*"
 						}
 					}
 				],

@@ -5,7 +5,14 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -112,6 +119,15 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
 			}
 		],
 		"parameters": {
@@ -135,8 +151,7 @@
 				"type": "String"
 			},
 			"status": {
-				"type": "String",
-				"defaultValue": "yes"
+				"type": "String"
 			}
 		},
 		"annotations": []

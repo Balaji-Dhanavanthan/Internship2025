@@ -1,0 +1,13 @@
+{
+	"name": "LS_rest",
+	"properties": {
+		"description": "rest api linked service",
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://jsonplaceholder.typicode.com/users",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

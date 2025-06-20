@@ -5,6 +5,20 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"containerName": {
+				"type": "string",
+				"defaultValue": "test-container"
+			},
+			"dirName": {
+				"type": "string",
+				"defaultValue": "Northwind"
+			},
+			"fileName": {
+				"type": "string",
+				"defaultValue": " Northwind_Customers.xlsx"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

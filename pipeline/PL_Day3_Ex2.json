@@ -5,6 +5,8 @@
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -34,6 +36,8 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -94,7 +98,11 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Excel_blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"containerName": "test-container",
+										"dirName": "Northwind"
+									}
 								}
 							],
 							"outputs": [
@@ -104,12 +112,96 @@
 									"parameters": {
 										"DatabaseObject": "I2025_EStalin",
 										"TableName": {
-											"value": "@item().name",
+											"value": "@replace(item().name, '.xlsx', '')",
 											"type": "Expression"
 										}
 									}
 								}
 							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Get Metadata1_copy1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Test_Blob",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1_copy2",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1_copy1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1_copy1').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Get Metadata2",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DS_Excel_blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"containerName": "test-container",
+										"dirName": "Northwind",
+										"fileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"itemName"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"enablePartitionDiscovery": false
+								}
+							}
 						}
 					]
 				}

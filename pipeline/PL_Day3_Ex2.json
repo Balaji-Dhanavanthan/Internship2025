@@ -3,6 +3,95 @@
 	"properties": {
 		"activities": [
 			{
+				"name": "Day3_Ex2_4",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "fact",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "fact",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "length",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "length",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Reks_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_EStalin",
+							"TableName": "api_data"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": "asrj",
+							"dirName": "testFolder",
+							"fileName": "testFile"
+						}
+					}
+				]
+			},
+			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
 				"state": "Inactive",
@@ -71,6 +160,8 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
+										"modifiedDatetimeStart": null,
+										"modifiedDatetimeEnd": null,
 										"wildcardFolderPath": "Northwind",
 										"wildcardFileName": {
 											"value": "@item().name",
@@ -97,12 +188,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Excel_blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "test-container",
-										"dirName": "Northwind"
-									}
+									"referenceName": "DS_excel",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -123,8 +210,8 @@
 				}
 			},
 			{
-				"name": "Get Metadata1_copy1",
-				"type": "GetMetadata",
+				"name": "Copy data3",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -135,76 +222,59 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_Test_Blob",
-						"type": "DatasetReference"
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
-					"fieldList": [
-						"childItems"
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"enablePartitionDiscovery": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
-				}
-			},
-			{
-				"name": "ForEach1_copy2",
-				"type": "ForEach",
-				"dependsOn": [
+				},
+				"inputs": [
 					{
-						"activity": "Get Metadata1_copy1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": "asrj",
+							"dirName": "testFolder",
+							"fileName": "*"
+						}
 					}
 				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Get Metadata1_copy1').output.childItems",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Get Metadata2",
-							"type": "GetMetadata",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"dataset": {
-									"referenceName": "DS_Excel_blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "test-container",
-										"dirName": "Northwind",
-										"fileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
-								},
-								"fieldList": [
-									"itemName"
-								],
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"enablePartitionDiscovery": false
-								}
-							}
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": "asrj",
+							"dirName": "srj"
 						}
-					]
-				}
+					}
+				]
 			}
 		],
 		"annotations": []

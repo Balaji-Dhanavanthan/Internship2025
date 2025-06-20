@@ -8,7 +8,7 @@
 		"parameters": {
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "Intern_2025"
+				"defaultValue": "I2025_MSyed"
 			},
 			"tablename": {
 				"type": "string"

@@ -19,7 +19,7 @@
 						"referenceName": "DS_Blob2",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "aabidh"
+							"folder": "aabidh/ex1"
 						}
 					},
 					"fieldList": [
@@ -27,6 +27,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -67,11 +68,25 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "",
-					"value": ""
+					"variableName": "filename",
+					"value": "[]"
 				}
 			}
 		],
+		"parameters": {
+			"filename": {
+				"type": "array"
+			},
+			"filecount": {
+				"type": "int",
+				"defaultValue": 0
+			}
+		},
+		"variables": {
+			"filename": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

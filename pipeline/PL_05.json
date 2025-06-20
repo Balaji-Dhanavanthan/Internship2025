@@ -31,9 +31,7 @@
 							"File": "*"
 						}
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
@@ -128,75 +126,37 @@
 				}
 			},
 			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": "aabidh",
-							"wildcardFileName": "regions.csv",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "MergeFiles"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
 					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice-adf",
-							"Directory": "aabidh",
-							"File": "regions.csv"
-						}
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Completed"
+						]
 					}
 				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "Target Folders",
-							"Directory": "I2025_SRavikum",
-							"File": "Adf_ex_1"
+				"userProperties": [],
+				"typeProperties": {
+					"ifTrueActivities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"enableStaging": false
+							}
 						}
-					}
-				]
+					]
+				}
 			}
 		],
 		"annotations": []

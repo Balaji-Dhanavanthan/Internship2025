@@ -71,6 +71,7 @@
 						"value": "@activity('Filter1').output.Value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Set variable3",

@@ -2,16 +2,21 @@
 	"name": "LS_OnPrem_SQLServer",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"parameters": {
+			"Database": {
+				"type": "String"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
 			"server": "SSIC-SQL-01",
-			"database": "HR",
+			"database": "@{linkedService().Database}",
 			"encrypt": "optional",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
-			"userName": "trainer",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhZmMzNzQ0ZS02MGVjLTRmODUtODU0Ny0wMWQ4OWE5ZGNhNmMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "I2025_MSyed",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyMDc3MGY2ZS1lMGU4LTQ5MTMtOWRlMi0wM2JiZTM1NzNiN2YiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

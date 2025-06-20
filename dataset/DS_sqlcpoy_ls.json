@@ -1,0 +1,16 @@
+{
+	"name": "DS_sqlcpoy_ls",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sql_onpremcopy",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "I2025_MSyed",
+			"table": "Items_sub"
+		}
+	}
+}

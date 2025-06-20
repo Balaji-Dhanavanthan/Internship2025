@@ -21,7 +21,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Folder": "Northwind",
-							"Filename": "Northwind_Customers.xlsx"
+							"Filename": "Northwind_Customers"
 						}
 					},
 					"fieldList": [

@@ -101,7 +101,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -136,7 +136,7 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Directory": "aabidh",
-							"File": "countries.csv"
+							"File": "regions.csv"
 						}
 					}
 				],

@@ -20,7 +20,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "practice-adf"
+				"fileName": "AD_Products.csv",
+				"folderPath": "Day3_Exercise 1",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

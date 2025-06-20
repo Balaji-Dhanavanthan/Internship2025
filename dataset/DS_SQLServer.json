@@ -5,12 +5,28 @@
 			"referenceName": "LS_I2025_PRajan",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"objectName": {
+				"type": "string",
+				"defaultValue": "I2025_PRajan"
+			},
+			"tableName": {
+				"type": "string",
+				"defaultValue": "employees"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "I2025_PRajan",
-			"table": "Employees"
+			"schema": {
+				"value": "@dataset().objectName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
 		}
 	}
 }

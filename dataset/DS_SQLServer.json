@@ -1,0 +1,16 @@
+{
+	"name": "DS_SQLServer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_I2025_PRajan",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "I2025_PRajan",
+			"table": "Employees"
+		}
+	}
+}

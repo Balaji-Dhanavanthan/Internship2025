@@ -1,22 +1,18 @@
 {
-	"name": "DS_copy_I2025_PRajan",
+	"name": "DS_EXCEL_I2025_PRajan",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Northwind",
+				"folderPath": "I2025_PRajan",
 				"container": "test-container"
-			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			}
 		},
 		"schema": []
 	}

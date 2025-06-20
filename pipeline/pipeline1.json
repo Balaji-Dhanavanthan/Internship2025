@@ -351,16 +351,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "Northwind",
 							"wildcardFileName": "*.xlsx",
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -381,7 +378,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_excel",
 						"type": "DatasetReference"
 					}
 				],

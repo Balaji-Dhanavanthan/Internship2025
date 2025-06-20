@@ -1,0 +1,21 @@
+{
+	"name": "DS_excel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": ".xlsx",
+				"folderPath": "Northwind",
+				"container": "test-container"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

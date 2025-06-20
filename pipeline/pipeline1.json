@@ -390,7 +390,12 @@
 				"outputs": [
 					{
 						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_DMuthuku",
+							"TableName": "target_excel_I2025_DMuthuku",
+							"database": "Intern_2025"
+						}
 					}
 				]
 			}

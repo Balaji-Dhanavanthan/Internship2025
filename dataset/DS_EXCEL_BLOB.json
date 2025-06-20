@@ -1,23 +1,20 @@
 {
-	"name": "DS_Blob",
+	"name": "DS_EXCEL_BLOB",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Suppliers.xlsx",
 				"folderPath": "Northwind",
 				"container": "test-container"
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"sheetIndex": 0,
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

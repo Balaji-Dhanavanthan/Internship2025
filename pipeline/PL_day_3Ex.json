@@ -54,8 +54,7 @@
 						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "j_folder",
-							"Filename": "countries.csv"
+							"Folder": "j_folder"
 						}
 					}
 				],
@@ -121,8 +120,7 @@
 						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "kani_folder",
-							"Filename": "countries.csv"
+							"Folder": "kani_folder"
 						}
 					}
 				],
@@ -131,8 +129,7 @@
 						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "j_folder",
-							"Filename": "countries.csv"
+							"Folder": "j_folder"
 						}
 					}
 				]

@@ -133,7 +133,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TableName": "countries",
-							"SchemaName": "I2025_JMeyappa"
+							"SchemaName": "I2025_JMeyappa",
+							"DatabaseName": "Intern_2025"
 						}
 					}
 				]

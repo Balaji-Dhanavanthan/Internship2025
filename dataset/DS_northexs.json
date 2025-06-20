@@ -13,7 +13,9 @@
 				"fileName": "Products.xlsx",
 				"folderPath": "Northwind",
 				"container": "test-container"
-			}
+			},
+			"sheetIndex": 0,
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

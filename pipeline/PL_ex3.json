@@ -43,11 +43,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_sql",
-						"type": "DatasetReference",
-						"parameters": {
-							"ObjectName": "I2025_SRangan1",
-							"TableName": "api"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			},
@@ -158,21 +154,13 @@
 				"inputs": [
 					{
 						"referenceName": "DS_sql",
-						"type": "DatasetReference",
-						"parameters": {
-							"ObjectName": "I2025_SRangan1",
-							"TableName": "new"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_sql",
-						"type": "DatasetReference",
-						"parameters": {
-							"ObjectName": "I2025_SRangan1",
-							"TableName": "test_new"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			},
@@ -221,11 +209,7 @@
 				"inputs": [
 					{
 						"referenceName": "DS_sql",
-						"type": "DatasetReference",
-						"parameters": {
-							"ObjectName": "I2025_SRangan1",
-							"TableName": "new"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -236,8 +220,102 @@
 				]
 			},
 			{
-				"name": "Copy data4",
-				"type": "Copy",
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data4",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "csvcontainer",
+										"file": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "test-container/I2025_SRangan1",
+										"file": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -248,23 +326,25 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_sql",
+					"dataset": {
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"ObjectName": "I2025_SRangan1",
-							"TableName": "new"
+							"container": "csvcontainer",
+							"file": "*"
 						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
 					}
-				]
+				}
 			}
 		],
 		"annotations": []

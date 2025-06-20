@@ -6,13 +6,14 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"ObjectName": {
-				"type": "string",
-				"defaultValue": "I2025_SRangan1"
+			"container": {
+				"type": "string"
 			},
-			"TableName": {
-				"type": "string",
-				"defaultValue": "new"
+			"folder": {
+				"type": "string"
+			},
+			"file": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -72,16 +73,6 @@
 				"precision": 5,
 				"scale": 0
 			}
-		],
-		"typeProperties": {
-			"schema": {
-				"value": "@dataset().ObjectName",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().TableName",
-				"type": "Expression"
-			}
-		}
+		]
 	}
 }

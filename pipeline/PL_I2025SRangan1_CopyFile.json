@@ -1,5 +1,5 @@
 {
-	"name": "PL_I2025SRangan1",
+	"name": "PL_I2025SRangan1_CopyFile",
 	"properties": {
 		"activities": [
 			{
@@ -20,8 +20,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"modifiedDatetimeStart": null,
-							"modifiedDatetimeEnd": null,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -57,12 +55,20 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"parameters": {
+			"Folder": {
+				"type": "string"
+			},
+			"File": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"a": {
 				"type": "Integer"

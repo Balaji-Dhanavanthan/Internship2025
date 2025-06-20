@@ -1,7 +1,23 @@
 {
-	"name": "PL_ForEach",
+	"name": "PL_I2025SRangan1_ForEach",
 	"properties": {
 		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_I2025SRangan1_child",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
@@ -16,13 +32,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "lal",
-							"folder": "ktl",
-							"file": "copied_countries.csv"
-						}
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -34,22 +45,6 @@
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
 					}
-				}
-			},
-			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_child",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
 				}
 			},
 			{
@@ -89,7 +84,6 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
-										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -99,8 +93,7 @@
 								"sink": {
 									"type": "DelimitedTextSink",
 									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings",
-										"copyBehavior": "MergeFiles"
+										"type": "AzureBlobStorageWriteSettings"
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
@@ -120,16 +113,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "lal",
-										"folder": "ktl",
-										"file": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "DS_new",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -143,6 +128,14 @@
 				}
 			}
 		],
+		"variables": {
+			"a": {
+				"type": "Integer"
+			},
+			"b": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

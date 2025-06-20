@@ -5,21 +5,12 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"File": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().File",
-					"type": "Expression"
-				},
-				"folderPath": "Target Folders",
+				"folderPath": "I2025_SRangan1",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

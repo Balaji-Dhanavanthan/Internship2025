@@ -10,9 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "I2025_SRangan1",
-				"folderPath": "target-folders",
-				"container": "test-container"
+				"container": "csvcontainer"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

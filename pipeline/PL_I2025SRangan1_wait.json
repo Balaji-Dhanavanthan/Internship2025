@@ -1,5 +1,5 @@
 {
-	"name": "PL_wait",
+	"name": "PL_I2025SRangan1_wait",
 	"properties": {
 		"activities": [
 			{
@@ -141,6 +141,12 @@
 		"variables": {
 			"status": {
 				"type": "String"
+			},
+			"a": {
+				"type": "Integer"
+			},
+			"b": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

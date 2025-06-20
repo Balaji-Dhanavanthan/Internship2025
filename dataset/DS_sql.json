@@ -1,0 +1,87 @@
+{
+	"name": "DS_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sql_server",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ObjectName": {
+				"type": "string",
+				"defaultValue": "I2025_SRangan1"
+			},
+			"TableName": {
+				"type": "string",
+				"defaultValue": "Employees"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "first_name",
+				"type": "varchar"
+			},
+			{
+				"name": "last_name",
+				"type": "varchar"
+			},
+			{
+				"name": "email",
+				"type": "varchar"
+			},
+			{
+				"name": "phone_number",
+				"type": "varchar"
+			},
+			{
+				"name": "hire_date",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "job_id",
+				"type": "varchar"
+			},
+			{
+				"name": "salary",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "commission",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Department_Id",
+				"type": "decimal",
+				"precision": 4,
+				"scale": 0
+			},
+			{
+				"name": "Manager_Id",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().ObjectName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

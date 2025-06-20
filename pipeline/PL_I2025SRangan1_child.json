@@ -1,5 +1,5 @@
 {
-	"name": "PL_child",
+	"name": "PL_I2025SRangan1_child",
 	"properties": {
 		"activities": [
 			{
@@ -12,6 +12,14 @@
 				}
 			}
 		],
+		"variables": {
+			"a": {
+				"type": "Integer"
+			},
+			"b": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

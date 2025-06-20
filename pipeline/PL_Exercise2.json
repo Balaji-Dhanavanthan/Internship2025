@@ -1,7 +1,39 @@
 {
-	"name": "pipeline2",
+	"name": "PL_Exercise2",
 	"properties": {
 		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Blob2",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "aabidh/ex1"
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
@@ -34,9 +66,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -61,8 +99,15 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder": "aabidh/ex1",
+										"file": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
@@ -70,36 +115,14 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"containerfor": "practice-adf",
-										"folderfor": "kalaiR"
+										"folder": "kalai/ex1",
+										"file": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
 									}
 								}
 							]
-						}
-					]
-				}
-			},
-			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
-					},
-					"fieldList": [
-						{
-							"value": "childItems",
-							"type": "Expression"
 						}
 					]
 				}

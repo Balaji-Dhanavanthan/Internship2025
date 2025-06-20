@@ -64,7 +64,7 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"schemaname": "dbo",
+							"schemaname": "MMuthumu",
 							"tablename": "countries",
 							"database": "Intern_2025"
 						}

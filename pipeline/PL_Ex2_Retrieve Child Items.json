@@ -19,8 +19,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "kani_folder",
-							"container": "practice-adf"
+							"Folder": "kani_folder"
 						}
 					},
 					"fieldList": [

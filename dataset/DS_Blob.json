@@ -11,9 +11,6 @@
 			},
 			"FolderName": {
 				"type": "string"
-			},
-			"FileName": {
-				"type": "string"
 			}
 		},
 		"annotations": [],

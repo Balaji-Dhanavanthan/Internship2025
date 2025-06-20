@@ -5,7 +5,10 @@
 			"referenceName": "LS_OnPrem_SQLServer",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"Database": "Intern_2025"
+				"Database": {
+					"value": "@dataset().databasename",
+					"type": "Expression"
+				}
 			}
 		},
 		"parameters": {

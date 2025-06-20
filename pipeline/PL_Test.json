@@ -115,7 +115,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container": "practice-adf",
+										"Container": "csvcontainer",
 										"Folder": " ",
 										"FileName": "IPL.csv"
 									}
@@ -123,8 +123,13 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "CopyCsvFile",
-									"type": "DatasetReference"
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "test-container",
+										"Folder": "Target Folders/I2025_MDinesh",
+										"FileName": "Exercise 1"
+									}
 								}
 							]
 						}
@@ -183,6 +188,12 @@
 			},
 			"arr": {
 				"type": "Array"
+			},
+			"count": {
+				"type": "Integer"
+			},
+			"filecount": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

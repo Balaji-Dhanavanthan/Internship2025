@@ -411,7 +411,7 @@
 						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
+							"copyBehavior": "MergeFiles"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -422,6 +422,44 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "country_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "country_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "country_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "country_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "region_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "region_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -436,10 +474,7 @@
 						"parameters": {
 							"container": "test-adf",
 							"folder": "aabidh/ex1",
-							"filename": {
-								"value": "*",
-								"type": "Expression"
-							}
+							"filename": "*"
 						}
 					}
 				],
@@ -450,10 +485,7 @@
 						"parameters": {
 							"container": "test-container",
 							"folder": "I2025_MAbdul1/ex3de",
-							"filename": {
-								"value": "childItems",
-								"type": "Expression"
-							}
+							"filename": "*"
 						}
 					}
 				]

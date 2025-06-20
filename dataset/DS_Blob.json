@@ -8,11 +8,14 @@
 		"parameters": {
 			"container": {
 				"type": "string",
-				"defaultValue": "practice-adf"
+				"defaultValue": " test-adf"
 			},
 			"folder": {
 				"type": "string",
 				"defaultValue": "ArshadFolder"
+			},
+			"file": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -20,6 +23,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
 				"folderPath": {
 					"value": "@dataset().folder",
 					"type": "Expression"

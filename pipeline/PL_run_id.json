@@ -17,7 +17,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "select * from Countries",
+						"additionalColumns": [
+							{
+								"name": "created_at",
+								"value": ""
+							}
+						],
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -30,6 +35,55 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Customer_Key",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Customer_Key",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer_Id",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Customer_Id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Company_Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Company_Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "created_at",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_at",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,

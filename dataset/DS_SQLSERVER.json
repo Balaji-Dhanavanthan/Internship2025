@@ -11,21 +11,31 @@
 				"defaultValue": "I2025_RRamesh"
 			},
 			"TableName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Customers"
 			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": {
-				"value": "@dataset().SchemaName",
-				"type": "Expression"
+		"schema": [
+			{
+				"name": "Customer_Key",
+				"type": "int",
+				"precision": 10
 			},
-			"table": {
-				"value": "@dataset().TableName",
-				"type": "Expression"
+			{
+				"name": "Customer_Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Company_Name",
+				"type": "nvarchar"
 			}
+		],
+		"typeProperties": {
+			"schema": "I2025_RRamesh",
+			"table": "Customers"
 		}
 	}
 }

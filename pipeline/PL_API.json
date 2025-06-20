@@ -215,20 +215,18 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
+									"type": "ExcelSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
 									}
 								},
 								"sink": {
 									"type": "SqlServerSink",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate"
 								},
 								"enableStaging": false,
 								"translator": {
@@ -242,15 +240,16 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_Blob",
+									"referenceName": "DS_excel",
 									"type": "DatasetReference",
 									"parameters": {
+										"Container": "test-container",
 										"Folder": "Northwind",
-										"container": "test-container",
 										"Filename": {
 											"value": "@item().name",
 											"type": "Expression"
-										}
+										},
+										"sheet": 0
 									}
 								}
 							],
@@ -259,7 +258,7 @@
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"schemaname": "SS_MMuthumu",
+										"schemaname": "MMuthumu",
 										"tablename": "@concat('tgt_',replace(item().name,'.xlsx','' ),'MMuthumu')",
 										"database": "Intern_2025"
 									}

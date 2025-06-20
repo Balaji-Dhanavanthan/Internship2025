@@ -47,7 +47,7 @@
 						"referenceName": "DS_SQLSERVER",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "apitable"
+							"TableName": "tgt_api_I2025_RRamesh"
 						}
 					}
 				]

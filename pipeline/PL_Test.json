@@ -177,7 +177,11 @@
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"Directory": "Asrar"
+									}
 								}
 							]
 						}

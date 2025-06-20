@@ -321,7 +321,8 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf"
+							"container": "practice-adf",
+							"Directory": "Asrar"
 						}
 					},
 					"enableLogging": true,

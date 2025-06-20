@@ -130,7 +130,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@greater(length(activity('Get Metadata1').output.childItems),1)",
+						"value": "@greaterOrEquals(length(activity('Get Metadata1').output.childItems),1)",
 						"type": "Expression"
 					}
 				}

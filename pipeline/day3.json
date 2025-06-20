@@ -556,7 +556,7 @@
 				]
 			},
 			{
-				"name": "Copy data1",
+				"name": "q6",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -615,46 +615,11 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "Target Folder",
-							"Directory": "Asrar"
+							"container": "test-container",
+							"Directory": "Target Folder/Asrar"
 						}
 					}
 				]
-			},
-			{
-				"name": "Delete1",
-				"type": "Delete",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"Directory": "Asrar"
-						}
-					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
-				}
 			}
 		],
 		"annotations": []

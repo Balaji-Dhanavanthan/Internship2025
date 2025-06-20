@@ -116,12 +116,8 @@
 												"referenceName": "DS_Blob",
 												"type": "DatasetReference",
 												"parameters": {
-													"Container": "practice-adf",
-													"Folder": "kani_folder",
-													"Filename": {
-														"value": "@item().name",
-														"type": "Expression"
-													}
+													"container": "practice-adf",
+													"Folder": "kani_folder"
 												}
 											}
 										],
@@ -130,12 +126,8 @@
 												"referenceName": "DS_Blob",
 												"type": "DatasetReference",
 												"parameters": {
-													"Container": "practice-adf",
-													"Folder": "kani_folder/doni_folder",
-													"Filename": {
-														"value": "@item().name",
-														"type": "Expression"
-													}
+													"container": "practice-adf",
+													"Folder": "kani_folder/doni_folder"
 												}
 											}
 										]

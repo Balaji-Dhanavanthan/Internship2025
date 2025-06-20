@@ -27,7 +27,8 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
@@ -42,8 +43,9 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "Intern_2025",
-							"TableName": "apiTable"
+							"SchemaName": "I2025_KRavi",
+							"TableName": "apitable",
+							"Database": "Intern_2025"
 						}
 					}
 				]

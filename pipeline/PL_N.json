@@ -40,8 +40,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -76,6 +74,8 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
+										"wildcardFolderPath": "Northwind",
+										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -105,7 +105,7 @@
 									"parameters": {
 										"Container": "test-container",
 										"Folder": "Northwind",
-										"Filename": "Northwind_Customers.xlsx"
+										"Filename": "*"
 									}
 								}
 							],

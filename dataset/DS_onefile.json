@@ -1,0 +1,41 @@
+{
+	"name": "DS_onefile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "departments.csv",
+				"folderPath": "aabidh/ex1",
+				"container": "test-adf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "department_id",
+				"type": "String"
+			},
+			{
+				"name": "department_name",
+				"type": "String"
+			},
+			{
+				"name": "manager_id",
+				"type": "String"
+			},
+			{
+				"name": "location_id",
+				"type": "String"
+			}
+		]
+	}
+}

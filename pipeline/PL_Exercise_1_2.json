@@ -1,5 +1,5 @@
 {
-	"name": "PL_Test",
+	"name": "PL_Exercise_1_2",
 	"properties": {
 		"activities": [
 			{
@@ -16,11 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "dbo",
-							"tablename": "countries"
+							"container": "test-container",
+							"folder": "Target Folders/I2025_AMohamad",
+							"file": "*"
 						}
 					},
 					"fieldList": [
@@ -28,12 +29,19 @@
 							"value": "childItems",
 							"type": "Expression"
 						}
-					]
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
 				}
 			},
 			{
-				"name": "ForEach1",
-				"type": "ForEach",
+				"name": "Filter1",
+				"type": "Filter",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -48,92 +56,34 @@
 						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"condition": {
+						"value": "@greaterOrEquals(length(activity('Get Metadata1').output.childItems) , 1)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
 					"activities": [
 						{
-							"name": "If Condition1",
-							"type": "IfCondition",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"expression": {
-									"value": "@contains(item().name,'.csv' )",
-									"type": "Expression"
-								},
-								"ifTrueActivities": [
-									{
-										"name": "Copy data1",
-										"type": "Copy",
-										"dependsOn": [],
-										"policy": {
-											"timeout": "0.12:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"source": {
-												"type": "SqlServerSource",
-												"queryTimeout": "02:00:00",
-												"partitionOption": "None"
-											},
-											"sink": {
-												"type": "DelimitedTextSink",
-												"storeSettings": {
-													"type": "AzureBlobStorageWriteSettings"
-												},
-												"formatSettings": {
-													"type": "DelimitedTextWriteSettings",
-													"quoteAllText": true,
-													"fileExtension": ".txt"
-												}
-											},
-											"enableStaging": false,
-											"translator": {
-												"type": "TabularTranslator",
-												"typeConversion": true,
-												"typeConversionSettings": {
-													"allowDataTruncation": true,
-													"treatBooleanAsNumber": false
-												}
-											}
-										},
-										"inputs": [
-											{
-												"referenceName": "DS_OnPrem_SQL",
-												"type": "DatasetReference",
-												"parameters": {
-													"schema": "dbo",
-													"tablename": "countries"
-												}
-											}
-										],
-										"outputs": [
-											{
-												"referenceName": "DS_Blob",
-												"type": "DatasetReference",
-												"parameters": {
-													"container": "practice-adf"
-												}
-											}
-										]
-									}
-								]
-							}
-						},
-						{
-							"name": "Copy data2",
+							"name": "Copy",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "If Condition1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -144,9 +94,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -171,20 +127,26 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_OnPrem_SQL",
+									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema": "dbo",
-										"tablename": "countries"
+										"container": "test-container",
+										"folder": "Target Folders/I2025_AMohamad",
+										"file": "*"
 									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "MyDataSet",
+									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "Arshad"
+										"container": "test-container",
+										"folder": "Target Folders/I2025_AMohamad/copied",
+										"file": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
 									}
 								}
 							]

@@ -8,14 +8,15 @@
 		"parameters": {
 			"container": {
 				"type": "string",
-				"defaultValue": " test-adf"
+				"defaultValue": "test-container"
 			},
 			"folder": {
 				"type": "string",
-				"defaultValue": "ArshadFolder"
+				"defaultValue": "Target Folders"
 			},
 			"file": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "I2025_AMohamad"
 			}
 		},
 		"annotations": [],

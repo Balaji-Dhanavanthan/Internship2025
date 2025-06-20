@@ -101,7 +101,7 @@
 									"parameters": {
 										"DatabaseObject": "I2025_JSenthil",
 										"TableName": {
-											"value": "@item().name",
+											"value": "@replace(item().name, '.xlsx', '')",
 											"type": "Expression"
 										}
 									}

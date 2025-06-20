@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Suppliers.xlsx",
 				"folderPath": "Northwind",
 				"container": "test-container"
 			},

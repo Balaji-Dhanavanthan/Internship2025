@@ -1,0 +1,12 @@
+{
+	"name": "DS_rest_I2025_JNagara",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_rest_I2025_JNagara",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}

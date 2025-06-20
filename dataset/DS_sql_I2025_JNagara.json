@@ -1,0 +1,82 @@
+{
+	"name": "DS_sql_I2025_JNagara",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sql_I2025_JNagara",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"object": {
+				"type": "string",
+				"defaultValue": "I2025_JNagara1"
+			},
+			"table": {
+				"type": "string",
+				"defaultValue": "employee"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "first_name",
+				"type": "varchar"
+			},
+			{
+				"name": "last_name",
+				"type": "varchar"
+			},
+			{
+				"name": "phone_number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "hire_date",
+				"type": "date"
+			},
+			{
+				"name": "job_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "salary",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 0
+			},
+			{
+				"name": "commision",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 0
+			},
+			{
+				"name": "manager_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "department_id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().object",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
+		}
+	}
+}

@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -111,11 +112,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"folder": "Northwind",
-										"file": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
+										"folder": "Northwind"
 									}
 								}
 							],
@@ -124,11 +121,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"folder": "Target Folders/I2025_JNagara1",
-										"file": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
+										"folder": "Target Folders/I2025_JNagara1"
 									}
 								}
 							]

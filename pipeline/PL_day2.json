@@ -30,6 +30,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -65,7 +66,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "Filter1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -101,7 +102,7 @@
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "file",
+									"activity": "Set variable2",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -115,7 +116,31 @@
 							"typeProperties": {
 								"variableName": "filecount",
 								"value": {
-									"value": "@add(variables('count'),1)",
+									"value": "@variables('count')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "file",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "count",
+								"value": {
+									"value": "@add(variables('filecount'),1)",
 									"type": "Expression"
 								}
 							}
@@ -126,14 +151,9 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Filter1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -141,7 +161,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "count",
-					"value": 0
+					"value": 1
 				}
 			}
 		],
@@ -150,8 +170,7 @@
 				"type": "String"
 			},
 			"count": {
-				"type": "Integer",
-				"defaultValue": 0
+				"type": "Integer"
 			},
 			"filecount": {
 				"type": "Integer"

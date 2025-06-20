@@ -1,0 +1,12 @@
+{
+	"name": "LS_rest_I2025_JNagara",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://catfact.ninja/fact",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

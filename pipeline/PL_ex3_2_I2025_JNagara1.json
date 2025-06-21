@@ -357,8 +357,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"file": "*",
-							"contanier": "test-container ",
-							"folder": "Day3_Exercise 1"
+							"contanier": "test-container",
+							"folder": "Northwind"
 						}
 					},
 					"fieldList": [
@@ -391,6 +391,7 @@
 						"value": "@activity('Get Metadata2').output.childItems",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Copy data3_copy1",
@@ -447,7 +448,7 @@
 											"type": "Expression"
 										},
 										"contanier": "test-container",
-										"folder": "Day3_Exercise 1"
+										"folder": "Northwind"
 									}
 								}
 							],
@@ -456,7 +457,12 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"contanier": "test-container"
+										"file": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"contanier": "test-container",
+										"folder": "I2025_JNagara"
 									}
 								}
 							]
@@ -482,13 +488,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "DS_I2025_JNagara1_blob",
+									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
 										"file": {
 											"value": "@item().name",
 											"type": "Expression"
-										}
+										},
+										"contanier": "test-container",
+										"folder": "Northwind"
 									}
 								},
 								"logStorageSettings": {

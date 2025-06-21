@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_I2025_JNagara1_blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"file": "*"
+						}
 					},
 					"fieldList": [
 						"childItems"

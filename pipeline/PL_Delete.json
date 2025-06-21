@@ -20,7 +20,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "practice-adf",
-							"folder": "pk_folder"
+							"folder": "pk_folder",
+							"file": "for_each"
 						}
 					},
 					"logStorageSettings": {

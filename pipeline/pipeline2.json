@@ -16,11 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "dbo",
-							"table_name": "countries"
+							"container": "test-container",
+							"folder": "I2025_JSivakum",
+							"file": "*"
 						}
 					},
 					"fieldList": [
@@ -28,7 +29,14 @@
 							"value": "childItems",
 							"type": "Expression"
 						}
-					]
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
 				}
 			},
 			{
@@ -36,7 +44,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "If Condition1",
+						"activity": "Get Metadata1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -48,7 +56,6 @@
 						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
-					"batchCount": 2,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -64,9 +71,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -91,11 +104,12 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_OnPrem_SQL",
+									"referenceName": "DS_New",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema": "dbo",
-										"table_name": "countries"
+										"container": "test-container",
+										"folder": "I2025_JSivakum",
+										"file": "dbo.countries.txt"
 									}
 								}
 							],
@@ -104,32 +118,14 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf",
-										"folder": "pk_folder"
+										"container": "test-container",
+										"folder": "I2025_PMahendi",
+										"file": "for_each_2"
 									}
 								}
 							]
 						}
 					]
-				}
-			},
-			{
-				"name": "If Condition1",
-				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Get Metadata1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"expression": {
-						"value": "@equals(activity('Get Metadata1').output,activity('Get Metadata1').output)",
-						"type": "Expression"
-					}
 				}
 			}
 		],

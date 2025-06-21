@@ -6,6 +6,12 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
+			"file": {
+				"type": "string"
+			},
+			"contanier": {
+				"type": "string"
+			},
 			"folder": {
 				"type": "string"
 			}
@@ -16,11 +22,17 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": {
 					"value": "@dataset().folder",
 					"type": "Expression"
 				},
-				"folderPath": "Target Folders / I2025_JNagara1/ex-3",
-				"container": "test-container"
+				"container": {
+					"value": "@dataset().contanier",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -189,6 +189,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					}
 				}
@@ -352,10 +353,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_I2025_JNagara1_blob",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"file": "*"
+							"file": "*",
+							"contanier": "test-container ",
+							"folder": "Day3_Exercise 1"
 						}
 					},
 					"fieldList": [
@@ -363,6 +366,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -435,13 +439,15 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_I2025_JNagara1_blob",
+									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
 										"file": {
 											"value": "@item().name",
 											"type": "Expression"
-										}
+										},
+										"contanier": "test-container",
+										"folder": "Day3_Exercise 1"
 									}
 								}
 							],
@@ -450,10 +456,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"folder": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
+										"contanier": "test-container"
 									}
 								}
 							]

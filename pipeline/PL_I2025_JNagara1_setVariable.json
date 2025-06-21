@@ -86,8 +86,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"folder": "Northwind",
-										"file": "Northwind_Customers.xlsx"
+										"file": "Northwind"
 									}
 								}
 							],
@@ -96,8 +95,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"folder": "I2025_JNagara1",
-										"file": "Northwind_Customers.xlsx"
+										"file": "I2025_JNagara1"
 									}
 								}
 							]

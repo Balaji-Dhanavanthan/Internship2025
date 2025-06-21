@@ -58,7 +58,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "Target Folders / I2025_JNagara1/ex-3"
+							"file": "Target Folders / I2025_JNagara1/ex-3"
 						}
 					}
 				]
@@ -115,7 +115,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": {
+							"file": {
 								"value": "@activity('Copy data1').output",
 								"type": "Expression"
 							}

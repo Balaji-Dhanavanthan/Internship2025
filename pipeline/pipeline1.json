@@ -176,7 +176,7 @@
 				"type": "Integer"
 			},
 			"Temp": {
-				"type": "String"
+				"type": "Integer"
 			}
 		},
 		"annotations": []

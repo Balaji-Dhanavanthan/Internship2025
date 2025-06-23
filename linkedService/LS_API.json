@@ -1,0 +1,12 @@
+{
+	"name": "LS_API",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://api.artic.edu/api/v1/artworks/search?q=cats",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

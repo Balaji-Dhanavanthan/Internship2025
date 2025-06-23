@@ -19,8 +19,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"folder": "kani_folder"
+							"container": "test-container",
+							"folder": "I2025_PMahendi",
+							"file": "*"
 						}
 					},
 					"fieldList": [
@@ -67,7 +68,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Set variable4",
+						"activity": "Count",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -79,9 +80,10 @@
 						"value": "@activity('Filter').output.Value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable1",
+							"name": "Temp",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -90,7 +92,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "filecount",
+								"variableName": "temp",
 								"value": {
 									"value": "@add(variables('count'),1)",
 									"type": "Expression"
@@ -98,11 +100,11 @@
 							}
 						},
 						{
-							"name": "Set variable2",
+							"name": "filecount",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable1",
+									"activity": "Temp",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -116,7 +118,7 @@
 							"typeProperties": {
 								"variableName": "count",
 								"value": {
-									"value": "@variables('filecount')",
+									"value": "@variables('temp')",
 									"type": "Expression"
 								}
 							}
@@ -125,7 +127,7 @@
 				}
 			},
 			{
-				"name": "Set variable4",
+				"name": "Count",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -152,9 +154,6 @@
 			},
 			"filecount": {
 				"type": "Integer"
-			},
-			"filename": {
-				"type": "String"
 			},
 			"temp": {
 				"type": "Integer"

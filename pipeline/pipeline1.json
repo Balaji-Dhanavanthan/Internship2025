@@ -60,7 +60,7 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "var_set_count",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -85,7 +85,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "var_set_count",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -100,7 +100,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable2",
+							"name": "File_name",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -117,11 +117,11 @@
 							}
 						},
 						{
-							"name": "Set variable3",
+							"name": "File_count",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable2",
+									"activity": "File_name",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -141,11 +141,11 @@
 							}
 						},
 						{
-							"name": "Set variable4",
+							"name": "Temp",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable3",
+									"activity": "File_count",
 									"dependencyConditions": [
 										"Succeeded"
 									]

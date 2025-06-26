@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Northwind",
+				"fileName": "BASK Invitation Dataset.xlsx",
+				"folderPath": "Workshop_source",
 				"container": "test-container"
 			},
 			"sheetIndex": 0,

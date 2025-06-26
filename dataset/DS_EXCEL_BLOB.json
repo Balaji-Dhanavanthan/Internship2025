@@ -5,16 +5,25 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sheet_index": {
+				"type": "int",
+				"defaultValue": 0
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Products.xlsx",
-				"folderPath": "Northwind",
+				"fileName": "BASK Invitation Dataset.xlsx",
+				"folderPath": "Workshop_source",
 				"container": "test-container"
 			},
-			"sheetIndex": 0,
+			"sheetIndex": {
+				"value": "@dataset().sheet_index",
+				"type": "Expression"
+			},
 			"firstRowAsHeader": true
 		},
 		"schema": []

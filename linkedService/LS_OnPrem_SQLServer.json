@@ -4,7 +4,8 @@
 	"properties": {
 		"parameters": {
 			"Database": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "Intern_2025"
 			}
 		},
 		"annotations": [],
@@ -16,7 +17,7 @@
 			"trustServerCertificate": true,
 			"authenticationType": "SQL",
 			"userName": "I2025_ABabu",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlZmIzMjYzNy02NDE0LTQxOWEtOGQ4MS04Y2E5YWQzNjkwZjYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3YWM2ZjVmNi02OGNlLTRmNDUtODZmYy1iOTMwNWJmYmE1MTMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

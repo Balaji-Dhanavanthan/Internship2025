@@ -200,10 +200,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_CSV_test",
-						"type": "DatasetReference",
-						"parameters": {
-							"file_name": "suppliers.csv"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}

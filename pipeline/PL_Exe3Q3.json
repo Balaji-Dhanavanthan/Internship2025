@@ -17,11 +17,12 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_EXCEL_BLOB",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sheet_index": 0
+						}
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
@@ -92,7 +93,10 @@
 							"inputs": [
 								{
 									"referenceName": "DS_EXCEL_BLOB",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"sheet_index": 0
+									}
 								}
 							],
 							"outputs": [

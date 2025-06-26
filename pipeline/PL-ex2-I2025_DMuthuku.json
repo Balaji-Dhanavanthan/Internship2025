@@ -16,12 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
-							"FolderName": "kani_folder",
-							"FileName": "countries.csv"
+							"Container": "test-adf",
+							"FolderName": "doniya_folder",
+							"FileName": "country.csv"
 						}
 					},
 					"fieldList": [
@@ -29,7 +29,6 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

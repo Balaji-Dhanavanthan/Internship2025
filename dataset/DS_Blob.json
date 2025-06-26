@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"container": {
+			"folder": {
 				"type": "string"
 			},
 			"file": {
@@ -22,10 +22,11 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
-				"container": {
-					"value": "@dataset().container",
+				"folderPath": {
+					"value": "@dataset().folder",
 					"type": "Expression"
-				}
+				},
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

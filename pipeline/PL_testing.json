@@ -1,5 +1,5 @@
 {
-	"name": "PL_",
+	"name": "PL_testing",
 	"properties": {
 		"activities": [
 			{
@@ -21,13 +21,9 @@
 						"datasetParameters": {
 							"op": {
 								"sheet_index": 0
-							}
-						},
-						"linkedServiceParameters": {
-							"op": {
-								"schemaLinkedService": {
-									"sheet_index": "0"
-								}
+							},
+							"sqlServerSink": {
+								"filename": "EXCEL_from_dataflow"
 							}
 						}
 					},

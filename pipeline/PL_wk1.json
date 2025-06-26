@@ -31,8 +31,7 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -68,7 +67,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Folder": "I2025_RRamesh",
-							"Filename": "bask_tgt.parquet"
+							"Filename": "bask_tgt ParquetSink"
 						}
 					}
 				]

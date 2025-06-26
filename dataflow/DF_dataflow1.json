@@ -1,0 +1,27 @@
+{
+	"name": "DF_dataflow1",
+	"properties": {
+		"folder": {
+			"name": "DataFlow1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob_XLSX",
+						"type": "DatasetReference"
+					},
+					"name": "Src"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Src"
+			]
+		}
+	}
+}

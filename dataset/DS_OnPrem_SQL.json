@@ -13,13 +13,15 @@
 		},
 		"parameters": {
 			"schema": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "I2025_AMohamad"
 			},
 			"tablename": {
 				"type": "string"
 			},
 			"database": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Intern_2025"
 			}
 		},
 		"annotations": [],

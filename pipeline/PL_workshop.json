@@ -1,9 +1,9 @@
 {
-	"name": "PL_day3_1",
+	"name": "PL_workshop",
 	"properties": {
 		"activities": [
 			{
-				"name": "Question_1",
+				"name": "Copy data1",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -18,42 +18,132 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "RestSource",
-						"httpRequestTimeout": "00:01:40",
-						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET",
-						"paginationRules": {
-							"supportRFC5988": "true"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_rest_api",
-						"type": "DatasetReference"
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "Workshop_source",
+							"file": "BASK Invitation Dataset.xlsx"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "I2025_AMohamad",
-							"tablename": "ADF_Day_3",
-							"database": "Intern_2025"
+							"container": "test-container",
+							"folder": "Target Folders/I2025_AMohamad",
+							"file": "BASK Invitation Dataset.xlsx"
 						}
 					}
 				]
 			},
 			{
-				"name": "Question_2",
+				"name": "Copy data2",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "Workshop_source",
+							"file": "BASK Invitation Dataset.xlsx"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "Target Folders/I2025_AMohamad",
+							"file": "workshop.parquet"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data3",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -67,19 +157,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "ExcelSource",
-						"additionalColumns": [
-							{
-								"name": "email",
-								"value": "$$COLUMN:"
-							},
-							{
-								"name": "created_date",
-								"value": {
-									"value": "@formatDateTime(utcNow(),'mm dd yyyy')",
-									"type": "Expression"
-								}
-							}
-						],
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
@@ -117,67 +194,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "I2025_AMohamad",
-							"tablename": "ADF_Day3_2",
-							"database": "Intern_2025"
-						}
-					}
-				]
-			},
-			{
-				"name": "Question_3",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Blob_XLSX",
-						"type": "DatasetReference",
-						"parameters": {
-							"sheet": 0
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema": "I2025_AMohamad",
-							"tablename": "ADF_Day3_3",
+							"tablename": "rawdata",
 							"database": "Intern_2025"
 						}
 					}

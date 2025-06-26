@@ -16,8 +16,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Northwind_Customers.xlsx",
-				"folderPath": "Northwind",
+				"fileName": "BASK Invitation Dataset.xlsx",
+				"folderPath": "Target Folders/I2025_AMohamad",
 				"container": "test-container"
 			},
 			"sheetIndex": {

@@ -12,11 +12,10 @@
 			},
 			"folder": {
 				"type": "string",
-				"defaultValue": "Target Folders"
+				"defaultValue": "Target Folders/I2025_AMohamad"
 			},
 			"file": {
-				"type": "string",
-				"defaultValue": "I2025_AMohamad"
+				"type": "string"
 			}
 		},
 		"annotations": [],

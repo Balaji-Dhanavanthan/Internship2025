@@ -198,7 +198,12 @@
 				"inputs": [
 					{
 						"referenceName": "DS_excelNW",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"Folder": "input",
+							"FileName": "new_bask_tgt ParquetSink"
+						}
 					}
 				],
 				"outputs": [

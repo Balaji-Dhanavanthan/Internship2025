@@ -1,0 +1,20 @@
+{
+	"name": "DS_ADLS_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Workshop_source",
+				"container": "test-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

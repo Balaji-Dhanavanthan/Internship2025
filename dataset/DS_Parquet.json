@@ -1,0 +1,29 @@
+{
+	"name": "DS_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": "I2025_MAbdul1",
+				"container": "test-container"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

@@ -19,8 +19,8 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "NorthwindTables-backup",
-				"container": "csvcontainer"
+				"folderPath": "sinked",
+				"container": "test-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

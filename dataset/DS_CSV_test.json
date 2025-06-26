@@ -19,8 +19,8 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "NorthwindTable",
-				"container": "csvcontainer"
+				"folderPath": "Workshop_source",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

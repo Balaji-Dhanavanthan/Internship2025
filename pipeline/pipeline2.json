@@ -16,10 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob2",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "arun_folder"
+							"folder": "g",
+							"Filename": "f"
 						}
 					},
 					"fieldList": [
@@ -115,6 +116,54 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Set variable3",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable2",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "temp",
+								"value": {
+									"value": "@variables('count')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable4",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable3",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "filecount",
+								"value": {
+									"value": "@variables('count')",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -130,6 +179,9 @@
 				"defaultValue": "' '"
 			},
 			"count": {
+				"type": "Integer"
+			},
+			"temp": {
 				"type": "Integer"
 			}
 		},

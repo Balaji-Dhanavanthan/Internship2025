@@ -288,7 +288,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "csvcontainer",
+										"folder": "csvcontainer",
 										"file": {
 											"value": "@item().name",
 											"type": "Expression"
@@ -301,7 +301,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "test-container/I2025_SRangan1",
+										"folder": "test-container/I2025_SRangan1",
 										"file": {
 											"value": "@item().name",
 											"type": "Expression"
@@ -328,17 +328,12 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "csvcontainer",
-							"file": "*"
-						}
+						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

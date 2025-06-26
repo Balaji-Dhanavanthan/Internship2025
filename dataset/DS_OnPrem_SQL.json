@@ -17,7 +17,8 @@
 				"defaultValue": "I2025_AMohamad"
 			},
 			"tablename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "rawdata"
 			},
 			"database": {
 				"type": "string",

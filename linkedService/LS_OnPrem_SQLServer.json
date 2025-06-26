@@ -6,12 +6,12 @@
 		"type": "SqlServer",
 		"typeProperties": {
 			"server": "SSIC-SQL-01",
-			"database": "HR",
+			"database": "Intern_2025",
 			"encrypt": "optional",
-			"trustServerCertificate": false,
+			"trustServerCertificate": true,
 			"authenticationType": "SQL",
-			"userName": "trainer",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhZmMzNzQ0ZS02MGVjLTRmODUtODU0Ny0wMWQ4OWE5ZGNhNmMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "SSIC-SQL-01",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlNDhhNzM0MS1jNjkwLTQ5ODctOGUyNi1jYjBmOGQ4MTIxZWIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

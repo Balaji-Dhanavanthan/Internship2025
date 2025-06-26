@@ -39,7 +39,8 @@
 									"path": "$['userId']"
 								},
 								"sink": {
-									"name": "userId"
+									"name": "userId",
+									"type": "Int64"
 								}
 							},
 							{
@@ -47,7 +48,8 @@
 									"path": "$['id']"
 								},
 								"sink": {
-									"name": "id"
+									"name": "id",
+									"type": "Int64"
 								}
 							},
 							{
@@ -55,7 +57,8 @@
 									"path": "$['title']"
 								},
 								"sink": {
-									"name": "title"
+									"name": "title",
+									"type": "String"
 								}
 							},
 							{
@@ -63,7 +66,8 @@
 									"path": "$['body']"
 								},
 								"sink": {
-									"name": "body"
+									"name": "body",
+									"type": "String"
 								}
 							}
 						]

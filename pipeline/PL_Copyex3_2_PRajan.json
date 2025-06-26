@@ -1,12 +1,10 @@
 {
-	"name": "pipeline1",
+	"name": "PL_Copyex3_2_PRajan",
 	"properties": {
 		"activities": [
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -54,8 +52,6 @@
 			{
 				"name": "Copy data2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -179,8 +175,6 @@
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -205,6 +199,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					}
 				}
@@ -212,8 +207,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -301,8 +294,6 @@
 			{
 				"name": "Copy data4",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -372,18 +363,12 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"containerName": "asrj",
-							"dirName": "srj",
-							"fileName": "*"
-						}
+						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -458,29 +443,13 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "asrj",
-										"dirName": "srj",
-										"fileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "asrj",
-										"dirName": "testContainer",
-										"fileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						},
@@ -506,15 +475,7 @@
 							"typeProperties": {
 								"dataset": {
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "asrj",
-										"dirName": "srj",
-										"fileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								},
 								"logStorageSettings": {
 									"linkedServiceName": {

@@ -163,7 +163,7 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "input",
-							"wildcardFileName": "new_bask_tgt ParquetSink ParquetSource",
+							"wildcardFileName": "new_bask_tgt ParquetSink",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -193,7 +193,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Folder": "input",
-							"Filename": "new_bask_tgt ParquetSink ParquetSource"
+							"Filename": "new_bask_tgt ParquetSink"
 						}
 					}
 				],

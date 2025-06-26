@@ -3,7 +3,13 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_SQLSERVER",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"Schemaname": {
@@ -11,6 +17,9 @@
 			},
 			"tablename": {
 				"type": "string"
+			},
+			"database": {
+				"type": "String"
 			}
 		},
 		"annotations": [],

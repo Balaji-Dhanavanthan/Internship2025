@@ -20,6 +20,8 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "Workshop_source",
+							"wildcardFileName": "BASK Invitation Dataset.xlsx",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -54,7 +56,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Folder": "Workshop_source ",
-							"Filename": "BASK Invitation Dataset"
+							"Filename": "BASK Invitation Dataset.xlsx"
 						}
 					}
 				],

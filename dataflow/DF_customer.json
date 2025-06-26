@@ -13,6 +13,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "ADLSscorce"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -37,6 +44,10 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ADLSscorce",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"ADLSscorce select(mapColumn(",
 				"          ProductID,",
 				"          ProductName,",

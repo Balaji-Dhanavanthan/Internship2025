@@ -7,8 +7,7 @@
 		},
 		"parameters": {
 			"schemaname": {
-				"type": "string",
-				"defaultValue": "I2025_MSyed"
+				"type": "string"
 			},
 			"tablename": {
 				"type": "string"
@@ -22,11 +21,11 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset.schemaname()",
+				"value": "@dataset().schemaname",
 				"type": "Expression"
 			},
 			"table": {
-				"value": "@dataset.tablename()",
+				"value": "@dataset().tablename",
 				"type": "Expression"
 			}
 		}

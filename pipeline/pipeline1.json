@@ -28,12 +28,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "varibale ",
+					"variableName": "status ",
 					"value": "yes\n"
 				}
 			},
 			{
 				"name": "If Condition1",
+				"description": "",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
@@ -46,7 +47,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@e",
+						"value": "@equals(variables('status '),'yes')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -60,7 +61,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "varibale ",
+								"variableName": "status ",
 								"value": "yes"
 							}
 						}
@@ -69,9 +70,8 @@
 			}
 		],
 		"variables": {
-			"varibale ": {
-				"type": "String",
-				"defaultValue": "yes"
+			"status ": {
+				"type": "String"
 			}
 		},
 		"annotations": []

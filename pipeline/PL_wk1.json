@@ -162,8 +162,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "input",
-							"wildcardFileName": "new_bask_tgt ParquetSink",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {

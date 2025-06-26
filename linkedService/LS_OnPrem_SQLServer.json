@@ -10,8 +10,8 @@
 			"encrypt": "optional",
 			"trustServerCertificate": true,
 			"authenticationType": "SQL",
-			"userName": "SSIC-SQL-01",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlNDhhNzM0MS1jNjkwLTQ5ODctOGUyNi1jYjBmOGQ4MTIxZWIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "I2025_MDinesh",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4MDdkNTBjMi0wNTAwLTRkMzctYWRkNC04YzMxM2YwMmIwM2QiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

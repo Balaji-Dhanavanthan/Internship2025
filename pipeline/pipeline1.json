@@ -16,12 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-name",
-							"folder": "Kanish",
-							"file": "countries-copy.csv"
+							"schema": "dbo",
+							"table": "countries"
 						}
 					},
 					"fieldList": [
@@ -29,14 +28,7 @@
 							"value": "childItems",
 							"type": "Expression"
 						}
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
-					}
+					]
 				}
 			},
 			{
@@ -44,7 +36,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Set variable3",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -53,9 +45,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Filter1').output.Value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Set variable1",
@@ -67,9 +60,9 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "file_name",
+								"variableName": "temp",
 								"value": {
-									"value": "@item().name",
+									"value": "@add(variables('count'),1)",
 									"type": "Expression"
 								}
 							}
@@ -93,12 +86,56 @@
 							"typeProperties": {
 								"variableName": "count",
 								"value": {
-									"value": "@add(variables('file_count'),1)",
+									"value": "@variables('temp')",
 									"type": "Expression"
 								}
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@contains(item().type,'Table')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "count",
+					"value": 0
 				}
 			}
 		],
@@ -114,6 +151,9 @@
 			"count": {
 				"type": "Integer",
 				"defaultValue": 0
+			},
+			"temp": {
+				"type": "Integer"
 			}
 		},
 		"folder": {

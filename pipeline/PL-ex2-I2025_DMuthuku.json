@@ -21,7 +21,7 @@
 						"parameters": {
 							"Container": "test-adf",
 							"FolderName": "doniya_folder",
-							"FileName": "country.csv"
+							"FileName": "countries.csv"
 						}
 					},
 					"fieldList": [

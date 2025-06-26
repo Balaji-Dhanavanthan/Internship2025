@@ -61,7 +61,7 @@
 						"linkedServiceParameters": {
 							"op": {
 								"schemaLinkedService": {
-									"sheet_index": 0
+									"sheet_index": "0"
 								}
 							}
 						}

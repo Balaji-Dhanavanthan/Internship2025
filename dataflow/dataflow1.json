@@ -108,7 +108,7 @@
 				"          Issue_Resolution = {Issue Resolution},",
 				"          Product_Quality = {Product Quality},",
 				"          Delivery_Reliability = {Delivery Reliability},",
-				"          {Understanding_your_business _needs} = {Understanding your business needs}",
+				"          Understanding_your_business_needs = {Understanding your business needs}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
@@ -155,7 +155,7 @@
 				"          Issue_Resolution,",
 				"          Product_Quality,",
 				"          Delivery_Reliability,",
-				"          {Understandingyour_business _needs} = {Understanding_your_business _needs}",
+				"          Understanding_your_business_needs",
 				"     )) ~> sink1"
 			]
 		}

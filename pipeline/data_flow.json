@@ -3,77 +3,9 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "dbo",
-							"tablename": "departments",
-							"databasename": "HR"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"Directory": "Asrar"
-						}
-					}
-				]
-			},
-			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -89,24 +21,33 @@
 						"datasetParameters": {
 							"ADLSscorce": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"FileName": "locations"
 							},
 							"source1": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"FileName": "countries"
+							},
+							"finaltable": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "final_table"
 							}
 						},
 						"linkedServiceParameters": {
 							"ADLSscorce": {
 								"schemaLinkedService": {
 									"container": "practice-adf",
-									"Directory": "Asrar"
+									"Directory": "Asrar",
+									"FileName": "locations"
 								}
 							},
 							"source1": {
 								"schemaLinkedService": {
 									"container": "practice-adf",
-									"Directory": "Asrar"
+									"Directory": "Asrar",
+									"FileName": "countries"
 								}
 							}
 						}

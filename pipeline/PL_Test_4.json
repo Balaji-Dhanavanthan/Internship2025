@@ -50,7 +50,12 @@
 				"inputs": [
 					{
 						"referenceName": "DelimitedText1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "I2025_JSivakum",
+							"filename": "copied"
+						}
 					}
 				],
 				"outputs": [
@@ -60,7 +65,7 @@
 						"parameters": {
 							"container": "test-container",
 							"folder": "I2025_PArul",
-							"filename": "ap"
+							"filename": "copy"
 						}
 					}
 				]

@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "basf_invitation_jjs.parquet",
+				"fileName": "basf_invitation_jjs(1).parquet",
 				"folderPath": "sink",
 				"container": "parquetcontainer"
 			},

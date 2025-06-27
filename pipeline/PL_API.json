@@ -230,31 +230,8 @@
 									"sqlWriterUseTableLock": false,
 									"tableOption": "autoCreate"
 								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+								"enableStaging": false
 							},
-							"inputs": [
-								{
-									"referenceName": "DS_excel",
-									"type": "DatasetReference",
-									"parameters": {
-										"Container": "test-container",
-										"Folder": "Northwind",
-										"Filename": {
-											"value": "@item().name",
-											"type": "Expression"
-										},
-										"sheet": 0
-									}
-								}
-							],
 							"outputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",

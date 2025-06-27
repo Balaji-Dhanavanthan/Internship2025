@@ -9,7 +9,10 @@
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation"
+				"type": "AzureBlobStorageLocation",
+				"fileName": "new.parquet",
+				"folderPath": "Target Folders/I2025_SKomala",
+				"container": "test-container"
 			},
 			"compressionCodec": "snappy"
 		},

@@ -40,7 +40,8 @@
 			"sheetIndex": {
 				"value": "@dataset().Sheet",
 				"type": "Expression"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

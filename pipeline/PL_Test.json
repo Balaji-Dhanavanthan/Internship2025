@@ -136,7 +136,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schema": "dbo",
-										"table_name": "countries"
+										"table_name": "countries",
+										"database": "HR"
 									}
 								}
 							],
@@ -145,7 +146,7 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "practice-adf",
+										"container": "test-container",
 										"folder": "pk_folder"
 									}
 								}

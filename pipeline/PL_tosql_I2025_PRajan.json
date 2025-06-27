@@ -103,7 +103,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"objectName": "I2025_PRajan",
-										"tableName": "raw_data"
+										"tableName": "raw_data1"
 									}
 								}
 							]

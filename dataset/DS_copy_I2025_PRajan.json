@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "convert.csv",
 				"folderPath": "convertfile",
 				"container": "test-container"
 			},

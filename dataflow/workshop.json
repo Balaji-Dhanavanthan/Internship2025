@@ -1,0 +1,17 @@
+{
+	"name": "workshop",
+	"properties": {
+		"folder": {
+			"name": "I2025_MSyed"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}

@@ -218,6 +218,7 @@
 						"referenceName": "DS_rawdata",
 						"type": "DatasetReference",
 						"parameters": {
+							"SchemaName": "I2025_RRamesh",
 							"TableName": "bask"
 						}
 					}

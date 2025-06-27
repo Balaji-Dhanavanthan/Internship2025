@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "handleNullAndAddAuditColumns"
+				},
+				{
+					"name": "addSurrogateKey"
 				}
 			],
 			"scriptLines": [
@@ -102,13 +105,16 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectReqs",
 				"selectReqs filter(((Invitation_Status == 'Completed') && (Product_Quality < 6))) ~> InvDateAndProdQualityFilter",
-				"InvDateAndProdQualityFilter derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
+				"addSurrogateKey derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
 				"          each(match(type=='integer'), $$ = iifNull($#, 0)),",
 				"          Created_at = currentUTC(),",
 				"          last_edited = currentUTC(),",
 				"          edited_by = 'I2025_JSenthil',",
 				"          Average_score = round((Ease_of_doing_business + Issue_Resolution + Product_Quality + Delivery_Reliability) / 4, 2),",
 				"          Is_high_satisfaction = iif(((Ease_of_doing_business >= 8) && (Issue_Resolution >= 8) && (Product_Quality >= 8) && (Delivery_Reliability >= 8)), true(), false())) ~> handleNullAndAddAuditColumns",
+				"InvDateAndProdQualityFilter keyGenerate(output(Surrogate_key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> addSurrogateKey",
 				"handleNullAndAddAuditColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['ws_5_sol.csv'],",

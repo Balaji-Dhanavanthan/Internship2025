@@ -6,8 +6,15 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"filename": {
+			"file_name": {
 				"type": "string"
+			},
+			"folder_name": {
+				"type": "string"
+			},
+			"container_name": {
+				"type": "string",
+				"defaultValue": "csvcontainer"
 			}
 		},
 		"annotations": [],
@@ -16,11 +23,17 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().filename",
+					"value": "@dataset().file_name",
 					"type": "Expression"
 				},
-				"folderPath": "Workshop_source",
-				"container": "test-container"
+				"folderPath": {
+					"value": "@dataset().folder_name",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container_name",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

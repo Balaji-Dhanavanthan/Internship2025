@@ -19,7 +19,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "*"
+							"file_name": "*"
 						}
 					},
 					"fieldList": [
@@ -27,6 +27,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -103,7 +104,7 @@
 									"referenceName": "DS_CSV_test",
 									"type": "DatasetReference",
 									"parameters": {
-										"filename": {
+										"file_name": {
 											"value": "@item().name",
 											"type": "Expression"
 										}

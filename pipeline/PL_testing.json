@@ -16,21 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_testing",
+						"referenceName": "DF_for_workshop_1_2",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"op": {
 								"sheet_index": 0
 							},
-							"sqlServerSink": {
+							"CSVSink": {
 								"DatabaseObject": "I2025_JSenthil"
-							}
-						},
-						"linkedServiceParameters": {
-							"sqlServerSink": {
-								"schemaLinkedService": {
-									"DatabaseObject": "I2025_JSenthil"
-								}
 							}
 						}
 					},

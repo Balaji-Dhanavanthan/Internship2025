@@ -38,8 +38,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -51,21 +49,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_testing",
+						"referenceName": "DF_for_workshop_1_2",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"op": {
 								"sheet_index": 0
-							},
-							"sqlServerSink": {
-								"DatabaseObject": "I2025_JSenthil"
-							}
-						},
-						"linkedServiceParameters": {
-							"sqlServerSink": {
-								"schemaLinkedService": {
-									"DatabaseObject": "I2025_JSenthil"
-								}
 							}
 						}
 					},
@@ -77,11 +65,16 @@
 				}
 			},
 			{
-				"name": "CD_from_excel_to_sql_server",
+				"name": "copy_to_sql",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -92,11 +85,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -117,10 +113,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_EXCEL_BLOB",
+						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"sheet_index": 0
+							"file_name": "basf_sink_jjs.csv",
+							"folder_name": "sink",
+							"container_name": "csvcontainer"
 						}
 					}
 				],

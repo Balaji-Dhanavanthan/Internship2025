@@ -235,7 +235,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "LeadContactGBU/RBU",
+									"name": "LeadContactGBURBU",
 									"physicalType": "UTF8"
 								}
 							},

@@ -12,8 +12,20 @@
 					"name": "CSVSrc"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "invDateSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "invDateFilter"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          Survey_ID as string,",
@@ -41,7 +53,7 @@
 				"          Lead_Contact_Segmentation2 as string,",
 				"          Invitation_Status as string,",
 				"          Creationdate as string,",
-				"          Invitation_date as string,",
+				"          Invitation_date as date,",
 				"          Local_Invitation_Date as string,",
 				"          Survey_status as string,",
 				"          Expires_on_date as string,",
@@ -55,7 +67,14 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> CSVSrc"
+				"     ignoreNoFilesFound: false) ~> CSVSrc",
+				"CSVSrc filter(((year(Invitation_date) >= 2021) && (year(Invitation_date) <= 2022))) ~> invDateFilter",
+				"invDateFilter sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['inv_date_filtered_data.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> invDateSink"
 			]
 		}
 	}

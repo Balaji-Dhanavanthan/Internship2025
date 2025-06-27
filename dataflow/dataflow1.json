@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
 				}
 			],
 			"sinks": [
@@ -130,6 +137,49 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
+				"source(output(",
+				"          {Survey ID} as string,",
+				"          {Feedback Program} as string,",
+				"          {First name} as string,",
+				"          {Last name} as string,",
+				"          {Contact Name} as string,",
+				"          Email as string,",
+				"          {PHONE NUMBER} as long,",
+				"          {Contact Country} as string,",
+				"          {Job Title} as string,",
+				"          {Contact Department} as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          {Ship to} as string,",
+				"          Sold_to as string,",
+				"          {Sold to} as string,",
+				"          {Lead Contact OD} as string,",
+				"          {Lead Contact GBU/RBU} as string,",
+				"          {Lead Contact SBU} as string,",
+				"          {Main Industry} as string,",
+				"          Region as string,",
+				"          {Sales Channel} as string,",
+				"          {Customer Network} as boolean,",
+				"          {Lead Contact Segmentation1} as string,",
+				"          {Lead Contact Segmentation2} as string,",
+				"          {Invitation Status} as string,",
+				"          Creationdate as string,",
+				"          {Invitation date} as string,",
+				"          {Local Invitation Date} as string,",
+				"          {Survey status} as string,",
+				"          {Expires on date} as string,",
+				"          {Local Expiration Date} as string,",
+				"          {Reason for Score} as string,",
+				"          {Ease of doing business} as short,",
+				"          {Issue Resolution} as short,",
+				"          {Product Quality} as short,",
+				"          {Delivery Reliability} as short,",
+				"          {Understanding your business needs} as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source3",
 				"source1 select(mapColumn(",
 				"          Survey_ID = {Survey ID},",
 				"          Feedback_Program = {Feedback Program},",
@@ -213,8 +263,10 @@
 				"          country_name as string,",
 				"          region_id as string",
 				"     ),",
+				"     partitionFileNames:['selected_col'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink2"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
 			]
 		}
 	}

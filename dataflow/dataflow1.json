@@ -16,6 +16,12 @@
 			"transformations": [
 				{
 					"name": "select1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -86,7 +92,20 @@
 				"          Understanding_your_business_needs",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(Invitation_Status == 'Completed' && Product_Quality < 6",
+				") ~> filter1",
+				"filter1 derive(Ease_of_doing_business = iif(isNull(Ease_of_doing_business), 0, toInteger(Ease_of_doing_business)),",
+				"          Issue_Resolution = iif(isNull(Issue_Resolution),0,toInteger(Issue_Resolution)),",
+				"          Product_Quality = iif(isNull(Product_Quality), 0, toInteger(Product_Quality)),",
+				"          Delivery_Reliability = iif(isNull(Delivery_Reliability), 0, toInteger(Delivery_Reliability)),",
+				"          Understanding_your_business_needs = iif(isNull(Understanding_your_business_needs), 0, toInteger(Understanding_your_business_needs)),",
+				"          Survey_ID = iif(isNull(Survey_ID), 'UNK', Survey_ID),",
+				"          Contact_Name = iif(isNull(Contact_Name), 'UNK', Contact_Name),",
+				"          Email = iif(isNull(Email), 'UNK', Email),",
+				"          PHONE_NUMBER = iif(isNull(PHONE_NUMBER), 'UNK', toString(PHONE_NUMBER)),",
+				"          Job_Title = iif(isNull(Job_Title), 'UNK', Job_Title),",
+				"          Ship_to = iif(isNull(Ship_to), 'UNK', Ship_to)) ~> derivedColumn1"
 			]
 		}
 	}

@@ -8,6 +8,15 @@
 		"parameters": {
 			"work_sheet": {
 				"type": "int"
+			},
+			"file": {
+				"type": "string"
+			},
+			"container": {
+				"type": "string"
+			},
+			"folder": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -15,9 +24,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": " BASK Invitation Dataset.parquet",
-				"folderPath": "Workshop_source",
-				"container": "test-container"
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
 			"sheetIndex": {
 				"value": "@dataset().work_sheet",

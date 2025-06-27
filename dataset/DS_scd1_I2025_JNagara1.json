@@ -1,0 +1,36 @@
+{
+	"name": "DS_scd1_I2025_JNagara1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "countries.csv",
+				"container": "test-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "country_id",
+				"type": "String"
+			},
+			{
+				"name": "country_name",
+				"type": "String"
+			},
+			{
+				"name": "region_id",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"name": "DS_scd",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sql_I2025_JNagara",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "country_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "country_name",
+				"type": "varchar"
+			},
+			{
+				"name": "region_id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "I2025_JNagara1",
+			"table": "Countries"
+		}
+	}
+}

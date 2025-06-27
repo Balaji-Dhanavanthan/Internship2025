@@ -1,21 +1,20 @@
 {
-	"name": "DS_Excel1_I2025JNagara1",
+	"name": "Parquet1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Excel",
+		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "BASK Invitation Dataset.xlsx",
-				"folderPath": "Workshop_source",
+				"fileName": "bash.parquet",
+				"folderPath": "Target Folders/I2025_JNagara1/Input",
 				"container": "test-container"
 			},
-			"sheetIndex": 0,
-			"firstRowAsHeader": true
+			"compressionCodec": "snappy"
 		},
 		"schema": []
 	}

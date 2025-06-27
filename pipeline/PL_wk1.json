@@ -216,11 +216,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_rawdata",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "dbo",
-							"TableName": "bask"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}

@@ -17,10 +17,7 @@
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().SchemaName",
-				"type": "Expression"
-			},
+			"schema": "I2025_RRamesh",
 			"table": {
 				"value": "@dataset().TableName",
 				"type": "Expression"

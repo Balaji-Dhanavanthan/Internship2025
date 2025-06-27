@@ -1,0 +1,33 @@
+{
+	"name": "DS_SQL_Countries",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MSSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "country_id",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 0
+			},
+			{
+				"name": "country_name",
+				"type": "varchar"
+			},
+			{
+				"name": "region_id",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "I2025_SKomala",
+			"table": "countries"
+		}
+	}
+}

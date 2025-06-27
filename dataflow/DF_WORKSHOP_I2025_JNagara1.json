@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel1_I2025JNagara1",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -23,6 +30,13 @@
 						"referenceName": "DS_Blob_storgare",
 						"type": "LinkedServiceReference"
 					}
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -77,6 +91,9 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
 				"derivedColumn1 select(mapColumn(",
 				"          Survey_ID = {Survey ID},",
 				"          FeedbackProgram = {Feedback Program},",
@@ -165,7 +182,28 @@
 				"          ProductQuality,",
 				"          DeliveryReliability,",
 				"          Understandingyourbusinessneeds = {Understandingyourbusiness needs}",
-				"     )) ~> sink1"
+				"     )) ~> sink1",
+				"source2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          phone_number as integer,",
+				"          hire_date as date,",
+				"          job_id as integer,",
+				"          salary as decimal(6,0),",
+				"          commision as decimal(5,0),",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     deletable:true,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}

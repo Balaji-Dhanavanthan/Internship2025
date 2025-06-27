@@ -19,7 +19,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_WORKSHOP_I2025_JNagara1",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sink2": {
+								"object": "I2025_JNagara1",
+								"table": "employee"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -34,6 +40,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -54,13 +62,477 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"Survey ID"
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate"
 					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -81,6 +553,525 @@
 						"parameters": {
 							"object": "I2025_JNagara1",
 							"table": "rawdata"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data1_copy1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "delete from [stg]\nwhere left([Invitation date] ,4) not in ('2021','2022')",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"Survey ID"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold to",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "I2025_JNagara1",
+							"table": "stg"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "I2025_JNagara1",
+							"table": "stg"
 						}
 					}
 				]

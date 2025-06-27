@@ -129,8 +129,6 @@
 			{
 				"name": "Get Metadata1",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -158,10 +156,508 @@
 				}
 			},
 			{
-				"name": "ForEach1",
-				"type": "ForEach",
+				"name": "xcel to parquet",
+				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"additionalColumns": [
+							{
+								"name": "cur_date",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "createdby",
+								"value": {
+									"value": "I2025_SRangan1",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "I2025_SRangan1/input",
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey_ID",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Feedback_Program",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Firstname",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lastname",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ContactName",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHONE_NUMBER",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact_Country",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Job_Title",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact_Department",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead_Contact_OD",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead_Contact_GBU_RBU",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead_Contact_SBU",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MainIndustry",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalesChannel",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Customer_Network",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead_Contact_Segmentation1",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead_Contact_Segmentation2",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "InvitationStatus",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitationdate",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local_Invitation_Date",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey_status",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Expires_on_date",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local_Expiration_Date",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Reason_for_Score",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ease_of_doing_business",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Issue_Resolution",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Product_Quality",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Delivery_Reliability",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Understanding_your_business_needs",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "cur_date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "cur_date",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "createdby",
+									"type": "String"
+								},
+								"sink": {
+									"name": "createdby",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Excel",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Parquet",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -176,9 +672,10 @@
 						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
-							"name": "Move parquet",
+							"name": "move parquet",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -196,7 +693,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": "I2025_SRangan1/input",
-										"wildcardFileName": "*.parquet",
+										"wildcardFileName": "Par.csv",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -240,8 +737,10 @@
 				}
 			},
 			{
-				"name": "Copy data3",
+				"name": "parquet to csv",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -253,23 +752,25 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
+							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
 						}
 					},
 					"enableStaging": false,
@@ -284,13 +785,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Parquet",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Parquet",
+						"referenceName": "I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]

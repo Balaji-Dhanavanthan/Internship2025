@@ -10,6 +10,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"name": "tgt"
 				}
 			],
 			"sinks": [
@@ -23,11 +26,20 @@
 						"referenceName": "DS_Blob_storgare",
 						"type": "LinkedServiceReference"
 					}
+				},
+				{
+					"name": "sink2"
 				}
 			],
 			"transformations": [
 				{
+					"name": "join1"
+				},
+				{
 					"name": "alterRow1"
+				},
+				{
+					"name": "alterRow2"
 				}
 			],
 			"scriptLines": [
@@ -39,7 +51,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 alterRow(upsertIf(1 == 1)) ~> alterRow1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> tgt",
+				"source1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 alterRow(updateIf(1==1)) ~> alterRow1",
+				"join1 alterRow(insertIf(1==1)) ~> alterRow2",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -49,11 +69,15 @@
 				"     ),",
 				"     deletable:false,",
 				"     insertable:false,",
-				"     updateable:false,",
-				"     upsertable:true,",
+				"     updateable:true,",
+				"     upsertable:false,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"alterRow2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}

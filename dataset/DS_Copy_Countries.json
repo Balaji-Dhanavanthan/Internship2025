@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "DS_Copy_Countries",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

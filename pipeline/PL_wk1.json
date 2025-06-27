@@ -5,6 +5,8 @@
 			{
 				"name": "DF_wk1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -42,6 +44,8 @@
 			{
 				"name": "CopytoInput",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_wk1",
@@ -111,6 +115,45 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "DF_wk2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_wk2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "test-container",
+								"Directory": "inputFolder",
+								"FileName": "bask_new.pqt"
+							},
+							"sink1": {
+								"Container": "test-container",
+								"Folder": "inputFolder",
+								"Filename": "bask.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
 			}
 		],
 		"folder": {

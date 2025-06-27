@@ -1,0 +1,125 @@
+{
+	"name": "DF_wk2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"description": "Export data to DS_blob_r as csv file"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1",
+					"description": "get source1 data\n"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SurveyID as string,",
+				"          FeedbackProgram as string,",
+				"          Firstname as string,",
+				"          Lastname as string,",
+				"          ContactName as string,",
+				"          Email as string,",
+				"          PHONENUMBER as string,",
+				"          ContactCountry as string,",
+				"          JobTitle as string,",
+				"          ContactDepartment as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          ShiptoCompany as string,",
+				"          ShipTo as string,",
+				"          SoldToCompany as string,",
+				"          SoldTo as string,",
+				"          LeadContactOD as string,",
+				"          LeadContactGBURBU as string,",
+				"          LeadContactSBU as string,",
+				"          MainIndustry as string,",
+				"          Region as string,",
+				"          SalesChannel as string,",
+				"          CustomerNetwork as string,",
+				"          LeadContacTSegmentationOne as string,",
+				"          LeadContactSegmentationTwo as string,",
+				"          InvitationStatus as string,",
+				"          CreationDate as string,",
+				"          Invitationdate as string,",
+				"          LocalInvitationDate as string,",
+				"          SurveyStatus as string,",
+				"          Expiresondate as string,",
+				"          LocalExpirationDate as string,",
+				"          ReasonforScore as string,",
+				"          EaseofdoingBusiness as string,",
+				"          IssueResolution as string,",
+				"          ProductQuality as string,",
+				"          DeliveryReliability as string,",
+				"          UnderstandingYourBusinessNeeds as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> source1",
+				"source1 select(mapColumn(",
+				"          SurveyID,",
+				"          FeedbackProgram,",
+				"          Firstname,",
+				"          Lastname,",
+				"          ContactName,",
+				"          Email,",
+				"          PHONENUMBER,",
+				"          ContactCountry,",
+				"          JobTitle,",
+				"          ContactDepartment,",
+				"          Language,",
+				"          Salutation,",
+				"          ShiptoCompany,",
+				"          ShipTo,",
+				"          SoldToCompany,",
+				"          SoldTo,",
+				"          LeadContactOD,",
+				"          LeadContactGBURBU,",
+				"          LeadContactSBU,",
+				"          MainIndustry,",
+				"          Region,",
+				"          SalesChannel,",
+				"          CustomerNetwork,",
+				"          LeadContacTSegmentationOne,",
+				"          LeadContactSegmentationTwo,",
+				"          InvitationStatus,",
+				"          CreationDate,",
+				"          Invitationdate,",
+				"          LocalInvitationDate,",
+				"          SurveyStatus,",
+				"          Expiresondate,",
+				"          LocalExpirationDate,",
+				"          ReasonforScore,",
+				"          EaseofdoingBusiness,",
+				"          IssueResolution,",
+				"          ProductQuality,",
+				"          DeliveryReliability,",
+				"          UnderstandingYourBusinessNeeds",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

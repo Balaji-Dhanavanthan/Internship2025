@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "PL_Filter_Recs",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {

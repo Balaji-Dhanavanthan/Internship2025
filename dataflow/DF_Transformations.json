@@ -1,0 +1,132 @@
+{
+	"name": "DF_Transformations",
+	"properties": {
+		"folder": {
+			"name": "Workshop_DataFlows"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Csv",
+						"type": "DatasetReference"
+					},
+					"name": "baskImport"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Parquet",
+						"type": "DatasetReference"
+					},
+					"name": "baskResParquetSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "invitationQualityFilter"
+				},
+				{
+					"name": "colsReduce"
+				},
+				{
+					"name": "nullHandles"
+				},
+				{
+					"name": "surrKey"
+				},
+				{
+					"name": "auditAdddition"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Survey_ID as integer,",
+				"          Feedback_Program as string,",
+				"          First_name as string,",
+				"          Last_name as string,",
+				"          Contact_Name as string,",
+				"          Email as string,",
+				"          PHONE_NUMBER as long,",
+				"          Contact_Country as string,",
+				"          Job_Title as string,",
+				"          Contact_Department as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          Sold_to as string,",
+				"          Lead_Contact_OD as string,",
+				"          Lead_Contact_GBU_RBU as string,",
+				"          Lead_Contact_SBU as string,",
+				"          Main_Industry as string,",
+				"          Region as string,",
+				"          Sales_Channel as string,",
+				"          Customer_Network as boolean,",
+				"          Lead_Contact_Segmentation1 as string,",
+				"          Lead_Contact_Segmentation2 as string,",
+				"          Invitation_Status as string,",
+				"          Creationdate as date,",
+				"          Invitation_date as date,",
+				"          Local_Invitation_Date as date,",
+				"          Survey_status as string,",
+				"          Expires_on_date as date,",
+				"          Local_Expiration_Date as date,",
+				"          Reason_for_Score as string,",
+				"          Ease_of_doing_business as short,",
+				"          Issue_Resolution as short,",
+				"          Product_Quality as short,",
+				"          Delivery_Reliability as short,",
+				"          Understanding_your_business_needs as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> baskImport",
+				"colsReduce filter(Invitation_Status == 'Completed' && Product_Quality < 6) ~> invitationQualityFilter",
+				"baskImport select(mapColumn(",
+				"          Survey_ID,",
+				"          Contact_Name,",
+				"          Email,",
+				"          PHONE_NUMBER,",
+				"          Job_Title,",
+				"          Ship_to,",
+				"          Sold_to,",
+				"          Lead_Contact_SBU,",
+				"          Main_Industry,",
+				"          Lead_Contact_Segmentation1,",
+				"          Invitation_Status,",
+				"          Creationdate,",
+				"          Invitation_date,",
+				"          Local_Invitation_Date,",
+				"          Survey_status,",
+				"          Expires_on_date,",
+				"          Local_Expiration_Date,",
+				"          Reason_for_Score,",
+				"          Ease_of_doing_business,",
+				"          Issue_Resolution,",
+				"          Product_Quality,",
+				"          Delivery_Reliability,",
+				"          Understanding_your_business_needs",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> colsReduce",
+				"invitationQualityFilter derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
+				"          each(match(type == 'integer'), $$ = iifNull($$, 0))) ~> nullHandles",
+				"nullHandles keyGenerate(output(SurrogateKey as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrKey",
+				"surrKey derive(CreatedDate = currentUTC(),",
+				"          CreatedBy = 'I2025_EStalin',",
+				"          LastUpdated = currentUTC()) ~> auditAdddition",
+				"auditAdddition sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     partitionFileNames:['baskTransformations.parquet'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> baskResParquetSink"
+			]
+		}
+	}
+}

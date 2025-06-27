@@ -16,6 +16,24 @@
 			"transformations": [
 				{
 					"name": "select1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "select4"
+				},
+				{
+					"name": "select5"
 				}
 			],
 			"scriptLines": [
@@ -88,7 +106,27 @@
 				"          Understanding_your_business_needs = {Understanding your business needs}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(Invitation_Status == 'Completed' && Product_Quality < 6\r",
+				") ~> filter1",
+				"filter1 derive(Lead_Contact_SBU = iif(isNull(Lead_Contact_SBU), 'UNK', Lead_Contact_SBU),",
+				"          Lead_Contact_Segmentation1 = iif(isNull(Lead_Contact_SBU), 'UNK', Lead_Contact_SBU),",
+				"          Main_Industry = iif(isNull(Main_Industry), 'UNK', Main_Industry),",
+				"          Reason_for_Score = iif(isNull(Reason_for_Score), 'UNK', Reason_for_Score),",
+				"          Ease_of_doing_business = iif(isNull(Ease_of_doing_business), toShort(0), Ease_of_doing_business)\r",
+				",",
+				"          Issue_Resolution = iif(isNull(Issue_Resolution), toShort(0), Issue_Resolution),",
+				"          Product_Quality = iif(isNull(Product_Quality), toShort(0), Product_Quality),",
+				"          Delivery_Reliability = iif(isNull(Delivery_Reliability), toShort(0), Delivery_Reliability),",
+				"          Understanding_your_business_needs = iif(isNull(Understanding_your_business_needs), toShort(0), Understanding_your_business_needs)) ~> derivedColumn1",
+				"select3 select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select4 select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select5 select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				" select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select5"
 			]
 		}
 	}

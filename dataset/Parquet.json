@@ -5,14 +5,34 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"container": {
+				"type": "string"
+			},
+			"Folder": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "basf_invitation_jjs(1).parquet",
-				"folderPath": "sink",
-				"container": "parquetcontainer"
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Folder",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
 			"compressionCodec": "snappy"
 		},

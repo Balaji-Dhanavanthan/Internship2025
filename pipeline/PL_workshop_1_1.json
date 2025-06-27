@@ -1,5 +1,5 @@
 {
-	"name": "PL_workshop_1",
+	"name": "PL_workshop_1_1",
 	"properties": {
 		"activities": [
 			{
@@ -41,7 +41,7 @@
 			}
 		],
 		"folder": {
-			"name": "workshops"
+			"name": "workshops/workshop1"
 		},
 		"annotations": []
 	}

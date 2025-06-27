@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_SQL_Countries",
+						"referenceName": "DS_Copy_Countries",
 						"type": "DatasetReference"
 					},
 					"name": "sink1",
@@ -39,26 +39,16 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 alterRow(upsertIf(1 == 1)) ~> alterRow1",
+				"source1 alterRow(upsertIf(1==1)) ~> alterRow1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          country_id as decimal(6,0),",
+				"          country_id as string,",
 				"          country_name as string,",
-				"          region_id as decimal(6,0)",
+				"          region_id as string",
 				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          country_id,",
-				"          country_name,",
-				"          region_id",
-				"     )) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

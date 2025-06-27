@@ -185,6 +185,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['finalreportworkshop.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> finalreportworkshop"
 			]

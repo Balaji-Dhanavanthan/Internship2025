@@ -5,6 +5,8 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -130,8 +132,6 @@
 			{
 				"name": "exceltoparquet",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -192,7 +192,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Firstname",
+									"name": "First name",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -203,7 +204,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lastname",
+									"name": "Last name",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -214,7 +216,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "ContactName",
+									"name": "Contact Name",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -237,7 +240,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "PHONENUMBER",
+									"name": "PHONE NUMBER",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -248,7 +252,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "ContactCountry",
+									"name": "Contact Country",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -259,7 +264,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "JobTitle",
+									"name": "Job Title",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -270,7 +276,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "ContactDepartment",
+									"name": "Contact Department",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -305,7 +312,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Shipto",
+									"name": "Ship_to",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -316,7 +324,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Shipto",
+									"name": "Ship to",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -327,7 +336,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Soldto",
+									"name": "Sold_to",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -338,7 +348,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Soldto",
+									"name": "Sold to",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -589,8 +600,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Delivery Reliability",
-									"type": "String",
+									"name": "DeliveryReliability",
 									"physicalType": "UTF8"
 								}
 							},
@@ -601,8 +611,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Understanding your business needs",
-									"type": "String",
+									"name": "Understandingyourbusiness needs",
 									"physicalType": "UTF8"
 								}
 							}
@@ -633,7 +642,7 @@
 						"parameters": {
 							"container": "test-container",
 							"directory": "Target Folders",
-							"filename": "I2025_Asrar"
+							"filename": "I2025_Asrar.parquet"
 						}
 					}
 				]
@@ -641,6 +650,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -651,8 +662,25 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_parquet",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []

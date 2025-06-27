@@ -9,7 +9,7 @@
 						"referenceName": "DS_blob_excel",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -37,7 +37,7 @@
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     ignoreNoFilesFound: false) ~> source2",
 				"derivedColumn1 select(mapColumn(",
 				"          Survey_ID = {Survey ID},",
 				"          Feedback_Program = {Feedback Program},",
@@ -80,7 +80,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source1 derive(updatedon = currentDate(),",
+				"source2 derive(updatedon = currentDate(),",
 				"          created_date = currentDate()) ~> derivedColumn1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

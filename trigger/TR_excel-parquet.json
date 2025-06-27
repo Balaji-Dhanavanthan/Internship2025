@@ -1,0 +1,25 @@
+{
+	"name": "TR_excel-parquet",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_DF_wk2",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 1,
+				"startTime": "2025-06-27T00:00:00",
+				"endTime": "2025-06-27T11:46:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

@@ -15,6 +15,17 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Workshop1_4",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "test-adf",
+								"FolderName": "doniya_folder",
+								"FileName": "bask.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "countries.csv",
-				"folderPath": "I2025_SKomala",
+				"fileName": "scd1.csv",
+				"folderPath": "Target Folders/I2025_SKomala",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

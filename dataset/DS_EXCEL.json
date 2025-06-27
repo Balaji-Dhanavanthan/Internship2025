@@ -1,0 +1,20 @@
+{
+	"name": "DS_EXCEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "BASK Invitation Dataset.xlsx",
+				"folderPath": "Workshop_source",
+				"container": "test-container"
+			}
+		},
+		"schema": []
+	}
+}

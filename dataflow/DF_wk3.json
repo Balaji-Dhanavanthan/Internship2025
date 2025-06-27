@@ -1,0 +1,123 @@
+{
+	"name": "DF_wk3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "BASKcsvSource",
+					"description": "bask csv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SurveyID as string,",
+				"          FeedbackProgram as string,",
+				"          Firstname as string,",
+				"          Lastname as string,",
+				"          ContactName as string,",
+				"          Email as string,",
+				"          PHONENUMBER as long,",
+				"          ContactCountry as string,",
+				"          JobTitle as string,",
+				"          ContactDepartment as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          ShiptoCompany as string,",
+				"          ShipTo as string,",
+				"          SoldToCompany as string,",
+				"          SoldTo as string,",
+				"          LeadContactOD as string,",
+				"          LeadContactGBURBU as string,",
+				"          LeadContactSBU as string,",
+				"          MainIndustry as string,",
+				"          Region as string,",
+				"          SalesChannel as string,",
+				"          CustomerNetwork as boolean,",
+				"          LeadContacTSegmentationOne as string,",
+				"          LeadContactSegmentationTwo as string,",
+				"          InvitationStatus as string,",
+				"          CreationDate as string,",
+				"          Invitationdate as date,",
+				"          LocalInvitationDate as string,",
+				"          SurveyStatus as string,",
+				"          Expiresondate as date,",
+				"          LocalExpirationDate as date,",
+				"          ReasonforScore as string,",
+				"          EaseofdoingBusiness as short,",
+				"          IssueResolution as short,",
+				"          ProductQuality as short,",
+				"          DeliveryReliability as short,",
+				"          UnderstandingYourBusinessNeeds as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> BASKcsvSource",
+				"BASKcsvSource filter(Invitationdate >= toDate('2021-01-01', 'yyyy-MM-dd') && Invitationdate < toDate('2022-01-01', 'yyyy-MM-dd')",
+				") ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          SurveyID,",
+				"          FeedbackProgram,",
+				"          Firstname,",
+				"          Lastname,",
+				"          ContactName,",
+				"          Email,",
+				"          PHONENUMBER,",
+				"          ContactCountry,",
+				"          JobTitle,",
+				"          ContactDepartment,",
+				"          Language,",
+				"          Salutation,",
+				"          ShiptoCompany,",
+				"          ShipTo,",
+				"          SoldToCompany,",
+				"          SoldTo,",
+				"          LeadContactOD,",
+				"          LeadContactGBURBU,",
+				"          LeadContactSBU,",
+				"          MainIndustry,",
+				"          Region,",
+				"          SalesChannel,",
+				"          CustomerNetwork,",
+				"          LeadContacTSegmentationOne,",
+				"          LeadContactSegmentationTwo,",
+				"          InvitationStatus,",
+				"          CreationDate,",
+				"          Invitationdate,",
+				"          LocalInvitationDate,",
+				"          SurveyStatus,",
+				"          Expiresondate,",
+				"          LocalExpirationDate,",
+				"          ReasonforScore,",
+				"          EaseofdoingBusiness,",
+				"          IssueResolution,",
+				"          ProductQuality,",
+				"          DeliveryReliability,",
+				"          UnderstandingYourBusinessNeeds",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

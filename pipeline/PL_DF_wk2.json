@@ -23,6 +23,11 @@
 								"Container": "test-container",
 								"Folder": "inputFolder",
 								"Filename": "bask.csv"
+							},
+							"sink1": {
+								"Container": "test-container",
+								"Folder": "I2025_RRamesh",
+								"Filename": "baskISPQ.csv"
 							}
 						}
 					},

@@ -91,6 +91,14 @@
 								"container": "practice-adf",
 								"Directory": "Asrar"
 							}
+						},
+						"linkedServiceParameters": {
+							"source1": {
+								"schemaLinkedService": {
+									"container": "practice-adf",
+									"Directory": "Asrar"
+								}
+							}
 						}
 					},
 					"compute": {

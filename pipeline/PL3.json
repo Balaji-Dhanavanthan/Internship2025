@@ -180,7 +180,7 @@
 							"container": "test-container",
 							"folder": "I2025_JSivakum",
 							"filename": "Northwind_Customers.xlsx",
-							"index": "0"
+							"index": 0
 						}
 					}
 				],
@@ -189,8 +189,8 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"username": "I2025_JSivakum",
-							"tablename": "northwind_customers_1",
+							"schema": "I2025_JSivakum",
+							"tablename": "northwind_customer",
 							"database": "Intern_2025"
 						}
 					}

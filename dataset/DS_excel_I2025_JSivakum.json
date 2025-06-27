@@ -16,7 +16,7 @@
 				"type": "string"
 			},
 			"index": {
-				"type": "string"
+				"type": "int"
 			}
 		},
 		"annotations": [],

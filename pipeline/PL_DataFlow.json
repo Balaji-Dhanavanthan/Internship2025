@@ -24,10 +24,17 @@
 							"source1": {
 								"sheet": 0
 							},
+							"source2": {
+								"sheet": 0
+							},
 							"sink1": {
 								"container": "test-container",
 								"folder": "Target Folders/I2025_AMohamad/ADF",
 								"file": "ADF_Workshop"
+							},
+							"sink2": {
+								"container": "test-container",
+								"folder": "Target Folders/I2025_AMohamad"
 							}
 						}
 					},
@@ -60,10 +67,17 @@
 							"source1": {
 								"sheet": 0
 							},
+							"source2": {
+								"sheet": 0
+							},
 							"sink1": {
 								"container": "test-container",
 								"folder": "Target Folders/I2025_AMohamad/ADF",
 								"file": "Workshop"
+							},
+							"sink2": {
+								"container": "test-container",
+								"folder": "Target Folders/I2025_AMohamad"
 							}
 						}
 					},
@@ -77,8 +91,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -98,10 +110,15 @@
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -124,64 +141,15 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "I2025_AMohamad",
-							"tablename": "rawdata",
-							"database": "Intern_2025"
+							"container": "test-container",
+							"folder": "Target Folders/I2025_AMohamad",
+							"file": "workshop.parquet"
 						}
 					}
 				]
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "Get Metadata1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema": "I2025_AMohamad",
-							"tablename": "rawdata",
-							"database": "Intern_2025"
-						}
-					},
-					"fieldList": [
-						{
-							"value": "childItems",
-							"type": "Expression"
-						}
-					]
-				}
 			}
 		],
 		"annotations": []

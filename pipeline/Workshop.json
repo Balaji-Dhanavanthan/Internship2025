@@ -59,6 +59,53 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_workshop1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SRC": {
+								"filename": "BASK Invitation Dataset.xlsx",
+								"container": "test-container",
+								"directory": "Workshop_source",
+								"index": 0
+							},
+							"sink1": {
+								"container": "test-container",
+								"folder": "I2025_MAbdul1/workshop",
+								"filename": "stg"
+							}
+						},
+						"linkedServiceParameters": {
+							"SRC": {
+								"schemaLinkedService": {
+									"filename": "BASK Invitation Dataset.xlsx",
+									"container": "test-container",
+									"directory": "Workshop_source",
+									"index": 0
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []

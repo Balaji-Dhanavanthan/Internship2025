@@ -17,7 +17,20 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_EXL_PQT",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"container": "test-container",
+								"folder": "Workshop_source",
+								"file": "BASK Invitation Dataset.xlsx",
+								"sheet": 0
+							},
+							"sink1": {
+								"container": "test-adf",
+								"folder": "jeffina_folder",
+								"file": "bask.pqt"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,

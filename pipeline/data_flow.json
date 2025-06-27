@@ -5,8 +5,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -68,8 +66,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data1",
@@ -121,70 +117,6 @@
 					},
 					"traceLevel": "Fine"
 				}
-			},
-			{
-				"name": "countries",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "dbo",
-							"tablename": "countries",
-							"databasename": "HR"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"Directory": "Asrar",
-							"FileName": "countries"
-						}
-					}
-				]
 			},
 			{
 				"name": "location",
@@ -251,8 +183,10 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "countries",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

@@ -29,6 +29,15 @@
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "Oxford"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -52,27 +61,30 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"ADLSscorce select(mapColumn(",
-				"          ProductID,",
-				"          ProductName,",
-				"          SupplierID,",
-				"          CategoryID,",
-				"          QuantityPerUnit,",
-				"          UnitPrice,",
-				"          UnitsInStock,",
-				"          UnitsOnOrder,",
-				"          ReorderLevel,",
-				"          Discontinued",
+				"          country_id,",
+				"          country_name,",
+				"          region_id",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"source1 select(mapColumn(",
-				"          department_id,",
-				"          department_name,",
-				"          manager_id,",
-				"          location_id",
+				"          location_id,",
+				"          street_address,",
+				"          postal_code,",
+				"          city,",
+				"          state_province,",
+				"          country_id",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"source1, select2 join(source1@country_id == select2@country_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 filter(select2@city=='Oxford') ~> Oxford",
+				"Oxford derive(postal_code = iif(isNull(postal_code), 'Unknown', toString(postal_code)),",
+				"          state_province = iif(isNull(state_province), 'Unknown', toString(state_province))) ~> derivedColumn1"
 			]
 		}
 	}

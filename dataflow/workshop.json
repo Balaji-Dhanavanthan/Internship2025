@@ -16,11 +16,7 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [
-				{
-					"name": "select1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          {Survey ID} as integer,",
@@ -64,49 +60,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> rawdata",
-				"rawdata select(mapColumn(",
-				"          {Survey ID},",
-				"          {Feedback Program},",
-				"          {First name},",
-				"          {Last name},",
-				"          {Contact Name},",
-				"          Email,",
-				"          {PHONE NUMBER},",
-				"          {Contact Country},",
-				"          {Job Title},",
-				"          {Contact Department},",
-				"          Language,",
-				"          Salutation,",
-				"          Ship_to,",
-				"          {Ship to},",
-				"          Sold_to,",
-				"          {Sold to},",
-				"          {Lead Contact OD},",
-				"          {Lead Contact GBU/RBU},",
-				"          {Lead Contact SBU},",
-				"          {Main Industry},",
-				"          Region,",
-				"          {Sales Channel},",
-				"          {Customer Network},",
-				"          {Lead Contact Segmentation1},",
-				"          {Lead Contact Segmentation2},",
-				"          {Invitation Status},",
-				"          Creationdate,",
-				"          {Invitation date},",
-				"          {Local Invitation Date},",
-				"          {Survey status},",
-				"          {Expires on date},",
-				"          {Local Expiration Date},",
-				"          {Reason for Score},",
-				"          {Ease of doing business},",
-				"          {Issue Resolution},",
-				"          {Product Quality},",
-				"          {Delivery Reliability},",
-				"          {Understanding your business needs}",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     ignoreNoFilesFound: false) ~> rawdata"
 			]
 		}
 	}

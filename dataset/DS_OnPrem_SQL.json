@@ -13,13 +13,16 @@
 		},
 		"parameters": {
 			"schema": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "dbo"
 			},
 			"table_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "employees"
 			},
 			"database": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "HR"
 			}
 		},
 		"annotations": [],

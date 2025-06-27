@@ -7,13 +7,20 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "test-container"
 			},
 			"directory": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Workshop_source"
 			},
 			"file": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "BASK Invitation Dataset.xlsx"
+			},
+			"index": {
+				"type": "int",
+				"defaultValue": 0
 			}
 		},
 		"annotations": [],
@@ -33,6 +40,10 @@
 					"value": "@dataset().container",
 					"type": "Expression"
 				}
+			},
+			"sheetIndex": {
+				"value": "@dataset().index",
+				"type": "Expression"
 			}
 		},
 		"schema": []

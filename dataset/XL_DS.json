@@ -44,7 +44,8 @@
 			"sheetIndex": {
 				"value": "@dataset().index",
 				"type": "Expression"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

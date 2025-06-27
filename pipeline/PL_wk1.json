@@ -203,7 +203,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Sold_to_comapny",
+									"name": "Sold_to_company",
 									"physicalType": "UTF8"
 								}
 							},
@@ -304,7 +304,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_Segmentation1",
+									"name": "Lead_Contact_SegmentationOne",
 									"physicalType": "UTF8"
 								}
 							},
@@ -315,7 +315,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_Segmentation2",
+									"name": "Lead_Contact_SegmentationTwo",
 									"physicalType": "UTF8"
 								}
 							},
@@ -337,8 +337,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Creationdate",
-									"type": "String",
+									"name": "CreationDate",
 									"physicalType": "UTF8"
 								}
 							},

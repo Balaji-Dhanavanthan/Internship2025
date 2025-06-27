@@ -3,11 +3,59 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "CSVSrc"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          Survey_ID as string,",
+				"          Feedback_Program as string,",
+				"          First_name as string,",
+				"          Last_name as string,",
+				"          Contact_Name as string,",
+				"          Email as string,",
+				"          Phone_Number as long,",
+				"          Contact_Country as string,",
+				"          Job_Title as string,",
+				"          Contact_Department as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          Sold_to as string,",
+				"          Lead_Contact_OD as string,",
+				"          {Lead_Contact_GBU/RBU} as string,",
+				"          Lead_Contact_SBU as string,",
+				"          Main_Industry as string,",
+				"          Region as string,",
+				"          Sales_Channel as string,",
+				"          Customer_Network as boolean,",
+				"          Lead_Contact_egmentation1 as string,",
+				"          Lead_Contact_Segmentation2 as string,",
+				"          Invitation_Status as string,",
+				"          Creationdate as string,",
+				"          Invitation_date as string,",
+				"          Local_Invitation_Date as string,",
+				"          Survey_status as string,",
+				"          Expires_on_date as string,",
+				"          Local_Expiration_Date as string,",
+				"          Reason_for_Score as string,",
+				"          Ease_of_doing_business as short,",
+				"          Issue_Resolution as short,",
+				"          Product_Quality as short,",
+				"          Delivery_Reliability as short,",
+				"          Understanding_your_business_needs as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CSVSrc"
 			]
 		}
 	}

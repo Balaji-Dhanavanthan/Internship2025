@@ -92,11 +92,6 @@
 								"file": "BASK Invitation Dataset.xlsx",
 								"container": "test-container",
 								"folder": "Workshop_source"
-							},
-							"sink1": {
-								"filename": "copydf.parquet",
-								"container": "parquetcontainer",
-								"Folder": "sink"
 							}
 						}
 					},

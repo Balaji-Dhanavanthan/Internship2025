@@ -10,26 +10,48 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"name": "source2"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Parquet",
+						"referenceName": "DS_OnPrem_SQL2",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL2",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
 				{
-					"name": "select1"
+					"name": "derivedColumn1"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "join1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     parameter1 as string",
+				"}",
 				"source(output(",
 				"          {Survey ID} as integer,",
 				"          {Feedback Program} as string,",
@@ -73,94 +95,48 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"derivedColumn1 select(mapColumn(",
-				"          Survey_ID = {Survey ID},",
-				"          Feedback_Program = {Feedback Program},",
-				"          First_name = {First name},",
-				"          Last_name = {Last name},",
-				"          Contact_Name = {Contact Name},",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source2",
+				"source1 derive(create_date = currentDate()) ~> derivedColumn1",
+				"derivedColumn1, source2 join({Survey ID} == ERROR_FUNCTION(''),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(ERROR_FUNCTION(''),",
+				"     disjoint: false) ~> split1@(update, insert)",
+				"derivedColumn2 alterRow(updateIf(true())) ~> alterRow1",
+				"split1@update derive(column1 = ERROR_FUNCTION(''),",
+				"          column2 = ERROR_FUNCTION(''),",
+				"          column3 = ERROR_FUNCTION('')) ~> derivedColumn2",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
 				"          Email,",
-				"          PHONE_NUMBER = {PHONE NUMBER},",
-				"          Contact_Country = {Contact Country},",
-				"          Job_Title = {Job Title},",
-				"          Contact_Department = {Contact Department},",
 				"          Language,",
 				"          Salutation,",
 				"          Ship_to,",
-				"          Ship_to = {Ship to},",
 				"          Sold_to,",
-				"          Sold_to = {Sold to},",
-				"          Lead_Contact_OD = {Lead Contact OD},",
-				"          {Lead_Contact_GBU/RBU} = {Lead Contact GBU/RBU},",
-				"          Lead_Contact_SBU = {Lead Contact SBU},",
-				"          Main_Industry = {Main Industry},",
 				"          Region,",
-				"          Sales_Channel = {Sales Channel},",
-				"          Customer_Network = {Customer Network},",
-				"          Lead_Contact_Segmentation1 = {Lead Contact Segmentation1},",
-				"          Lead_Contact_Segmentation2 = {Lead Contact Segmentation2},",
-				"          Invitation_Status = {Invitation Status},",
-				"          Creationdate,",
-				"          Invitation_date = {Invitation date},",
-				"          Local_Invitation_Date = {Local Invitation Date},",
-				"          Survey_status = {Survey status},",
-				"          Expiresondate = {Expires on date},",
-				"          Local_ExpirationDate = {Local Expiration Date},",
-				"          Reason_for_Score = {Reason for Score},",
-				"          Ease_of_doing_business = {Ease of doing business},",
-				"          Issue_Resolution = {Issue Resolution},",
-				"          Product_Quality = {Product Quality},",
-				"          Delivery_Reliability = {Delivery Reliability},",
-				"          Understanding_your_business_needs = {Understanding your business needs}",
+				"          Creationdate",
 				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"split1@insert sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source1 derive(create_date = currentDate()) ~> derivedColumn1",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: true,",
-				"     input(",
-				"          Survey_ID as integer,",
-				"          Feedback_Program as string,",
-				"          First_name as string,",
-				"          Last_name as string,",
-				"          Contact_Name as string,",
-				"          Email as string,",
-				"          Phone_Number as long,",
-				"          Contact_Country as string,",
-				"          Job_Title as string,",
-				"          Contact_Department as string,",
-				"          Language as string,",
-				"          Salutation as string,",
-				"          Ship_to as string,",
-				"          Sold_to as string,",
-				"          Lead_Contact_OD as string,",
-				"          {Lead_Contact_GBU/RBU} as string,",
-				"          Lead_Contact_SBU as string,",
-				"          Main_Industry as string,",
-				"          Region as string,",
-				"          Sales_Channel as string,",
-				"          Customer_Network as boolean,",
-				"          Lead_Contact_egmentation1 as string,",
-				"          Lead_Contact_Segmentation2 as string,",
-				"          Invitation_Status as string,",
-				"          Creationdate as string,",
-				"          Invitation_date as string,",
-				"          Local_Invitation_Date as string,",
-				"          Survey_status as string,",
-				"          Expires_on_date as string,",
-				"          Local_Expiration_Date as string,",
-				"          Reason_for_Score as string,",
-				"          Ease_of_doing_business as short,",
-				"          Issue_Resolution as short,",
-				"          Product_Quality as short,",
-				"          Delivery_Reliability as short,",
-				"          Understanding_your_business_needs as short",
-				"     ),",
-				"     format: 'parquet',",
-				"     partitionFileNames:['kani.parquet'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}

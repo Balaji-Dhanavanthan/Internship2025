@@ -19,7 +19,7 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
-				"folderPath": "Target Folders / I2025_JNagara1/ex-3",
+				"folderPath": "Target Folders/I2025_JNagara1/Input",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

@@ -364,7 +364,7 @@
 							},
 							"sink1": {
 								"Container": "test-container",
-								"Folder": "inputFolder",
+								"Folder": "I2025_RRamesh",
 								"Filename": "bask23.csv"
 							}
 						}

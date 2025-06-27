@@ -27,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "I2025_SKomala",
-			"table": "rawdata"
+			"table": "stg"
 		}
 	}
 }

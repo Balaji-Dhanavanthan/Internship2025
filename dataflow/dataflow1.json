@@ -36,6 +36,12 @@
 				},
 				{
 					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -153,12 +159,16 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 filter(Invitation_Status == 'completed' && Product_Quality <6\r",
+				"derivedColumn2 filter(Invitation_Status == 'completed' && Product_Quality <6\r",
 				") ~> filter2",
 				"filter2 keyGenerate(output(surrogate_key as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 sink(allowSchemaDrift: true,",
+				"surrogateKey1 derive(each(match(type=='String'), $$ = iifNull($$,'UNK')),",
+				"          each(match(type=='integer'), $$ = iifNull($#,0))) ~> derivedColumn1",
+				"select2 derive(each(match(type=='String'), $$ = iifNull($$,'UNK')),",
+				"          each(match(type=='INTEGER'), $$ = iifNull($#,0))) ~> derivedColumn2",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['basf_surya'],",

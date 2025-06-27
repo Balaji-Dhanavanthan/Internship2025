@@ -17,9 +17,9 @@
 			],
 			"sinks": [
 				{
-					"linkedService": {
-						"referenceName": "LS_OnPrem_SQLServer",
-						"type": "LinkedServiceReference"
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference"
 					},
 					"name": "sink"
 				}
@@ -103,41 +103,13 @@
 				"     skipDuplicateMapOutputs: true) ~> select",
 				"select sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
 				"     format: 'table',",
-				"     store: 'sqlserver',",
-				"     schemaName: 'I2025_AMohamad',",
-				"     tableName: 'ADF_workshop',",
-				"     insertable: true,",
-				"     updateable: false,",
-				"     deletable: false,",
-				"     upsertable: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          {Survey ID},",
-				"          {Contact Name},",
-				"          Email,",
-				"          {PHONE NUMBER},",
-				"          {Job Title},",
-				"          {Ship to},",
-				"          Sold_to,",
-				"          {Lead Contact SBU},",
-				"          {Main Industry },",
-				"          {Lead Contact Segmentation1 },",
-				"          {Invitation Status},",
-				"          Creationdate,",
-				"          {Invitation date},",
-				"          {Local Invitation Date},",
-				"          {Survey status},",
-				"          {Expires on date},",
-				"          {Local Expiration Date},",
-				"          {Reason for Score},",
-				"          {Ease of doing business},",
-				"          {Issue Resolution},",
-				"          {Product Quality},",
-				"          {Delivery Reliability},",
-				"          {Understanding your business needs}",
-				"     )) ~> sink"
+				"     skipDuplicateMapOutputs: true) ~> sink"
 			]
 		}
 	}

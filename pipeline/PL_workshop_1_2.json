@@ -54,6 +54,11 @@
 						"datasetParameters": {
 							"op": {
 								"sheet_index": 0
+							},
+							"CSVSink": {
+								"file_name": "csvcontainer",
+								"folder_name": "sink",
+								"container_name": "basf_sink_jjs.csv"
 							}
 						}
 					},
@@ -61,7 +66,10 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			},
 			{

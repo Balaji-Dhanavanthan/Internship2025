@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Blob_copy1",
 						"type": "DatasetReference"
 					},
 					"name": "ADLSscorce"
@@ -33,31 +33,9 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          ProductID as short,",
-				"          Name as string,",
-				"          ProductNumber as string,",
-				"          MakeFlag as boolean,",
-				"          FinishedGoodsFlag as boolean,",
-				"          Color as string,",
-				"          SafetyStockLevel as short,",
-				"          ReorderPoint as short,",
-				"          StandardCost as double,",
-				"          ListPrice as double,",
-				"          Size as string,",
-				"          SizeUnitMeasureCode as string,",
-				"          WeightUnitMeasureCode as string,",
-				"          Weight as string,",
-				"          DaysToManufacture as short,",
-				"          ProductLine as string,",
-				"          Class as string,",
-				"          Style as string,",
-				"          ProductSubcategoryID as string,",
-				"          ProductModelID as string,",
-				"          SellStartDate as string,",
-				"          SellEndDate as string,",
-				"          DiscontinuedDate as string,",
-				"          rowguid as string,",
-				"          ModifiedDate as string",
+				"          country_id as string,",
+				"          country_name as string,",
+				"          region_id as short",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",

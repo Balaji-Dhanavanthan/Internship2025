@@ -1,0 +1,21 @@
+{
+	"name": "DS_Exer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Customers",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Northwind_Customers.xlsx",
+				"folderPath": "NorthwindTable",
+				"container": "csvcontainer"
+			}
+		},
+		"schema": []
+	}
+}

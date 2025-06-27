@@ -21,7 +21,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": " BASK Invitation Dataset.parquet",
+				"fileName": "BASK Invitation Dataset.xlsx",
 				"folderPath": "Workshop_source",
 				"container": "test-container"
 			},

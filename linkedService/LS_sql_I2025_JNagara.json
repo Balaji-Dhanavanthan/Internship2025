@@ -8,10 +8,10 @@
 			"server": "SSIC-sql-01",
 			"database": "Intern_2025",
 			"encrypt": "optional",
-			"trustServerCertificate": false,
+			"trustServerCertificate": true,
 			"authenticationType": "SQL",
 			"userName": "I2025_JNagara1",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1Mzk3MDVjZS0xMjcyLTQ3YmYtYWNmMy0zNzllNzQ5ZDc4YWMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4OGZjOGRkNC0xYzU1LTRiY2YtODkzMy1iYTdkM2Q2N2EzOTQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

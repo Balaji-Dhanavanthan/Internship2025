@@ -5,20 +5,12 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"file": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().file",
-					"type": "Expression"
-				},
+				"fileName": "*",
 				"folderPath": "I2025_SKomala",
 				"container": "test-container"
 			},

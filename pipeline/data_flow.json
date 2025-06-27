@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -32,25 +30,9 @@
 								"filename": "location"
 							},
 							"finaltable": {
-								"container": "practice-adf",
-								"Directory": "Asrar",
+								"container": "test-container",
+								"Directory": "Target Folders",
 								"filename": "final_table.csv"
-							}
-						},
-						"linkedServiceParameters": {
-							"ADLSscorce": {
-								"schemaLinkedService": {
-									"container": "practice-adf",
-									"Directory": "Asrar",
-									"filename": "countries"
-								}
-							},
-							"finaltable": {
-								"schemaLinkedService": {
-									"container": "practice-adf",
-									"Directory": "Asrar",
-									"filename": "final_table.csv"
-								}
 							}
 						}
 					},

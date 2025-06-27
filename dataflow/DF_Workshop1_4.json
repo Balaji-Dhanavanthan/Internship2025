@@ -90,7 +90,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(Invitation_Status == 'completed' && toInteger(Product_Quality) < 6",
+				"select1 filter(Invitation_Status == 'Completed' ",
 				") ~> filter1"
 			]
 		}

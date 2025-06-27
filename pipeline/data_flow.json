@@ -26,13 +26,19 @@
 							},
 							"source1": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "countries"
+								"Directory": "Asrar"
 							},
 							"finaltable": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "final_table"
+								"Directory": "Asrar"
+							}
+						},
+						"linkedServiceParameters": {
+							"finaltable": {
+								"schemaLinkedService": {
+									"container": "practice-adf",
+									"Directory": "Asrar"
+								}
 							}
 						}
 					},

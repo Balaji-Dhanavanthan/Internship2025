@@ -8,13 +8,11 @@
 		"parameters": {
 			"container": {
 				"type": "string",
-				"defaultValue": "practice-adf"
+				"defaultValue": "test-container"
 			},
 			"folder": {
-				"type": "string"
-			},
-			"filename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "I2025_PArul"
 			}
 		},
 		"annotations": [],
@@ -22,6 +20,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
 				"container": {
 					"value": "@dataset().container",
 					"type": "Expression"

@@ -51,18 +51,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_for_workshop",
+						"referenceName": "DF_testing",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"op": {
 								"sheet_index": 0
-							}
-						},
-						"linkedServiceParameters": {
-							"op": {
-								"schemaLinkedService": {
-									"sheet_index": "0"
-								}
 							}
 						}
 					},

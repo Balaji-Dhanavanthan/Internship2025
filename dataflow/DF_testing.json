@@ -1,5 +1,5 @@
 {
-	"name": "DF_for_workshop",
+	"name": "DF_testing",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

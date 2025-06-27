@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_for_workshop",
+						"referenceName": "DF_testing",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"op": {

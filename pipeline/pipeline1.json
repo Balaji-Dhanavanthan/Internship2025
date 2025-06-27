@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
+				"name": "Copy data1",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,37 +15,56 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"table_name": "employees",
+							"database": "HR"
+						}
+					}
+				],
+				"outputs": [
+					{
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "test-container",
-							"folder": "I2025_PMahendi",
-							"file": "*"
+							"directory": "I2025_PMahendi",
+							"file": "sql_to_blob"
 						}
-					},
-					"fieldList": [
-						{
-							"value": "childItems",
-							"type": "Expression"
-						}
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
 					}
-				}
+				]
 			}
 		],
-		"parameters": {
-			"copy": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"Status": {
 				"type": "String"

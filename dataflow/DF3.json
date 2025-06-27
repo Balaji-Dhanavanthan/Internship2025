@@ -36,6 +36,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -109,7 +112,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(equals({Invitation Status}, 'Completed') && lesser({Product Quality}, 6)) ~> filter2",
+				"derivedColumn3 filter(equals({Invitation Status}, 'Completed') && lesser({Product Quality}, 6)) ~> filter2",
 				"filter2 derive(each(match(type == 'string'), $$ = iifNull($$, \"UNK\")),",
 				"          each(match(type == 'integer'), $$ = iifNull($#,0))) ~> derivedColumn1",
 				"derivedColumn1 keyGenerate(output(surrogate as long),",
@@ -119,6 +122,8 @@
 				"          Created_by = \"I2025_PMahendi\",",
 				"          Quality_check = iif({Product Quality}<6, 'Bad', 'Good'),",
 				"          {bus_iss } = {Ease of doing business}*{Issue Resolution}) ~> derivedColumn2",
+				"select1 derive(ttt = ERROR_FUNCTION(''),",
+				"          column1 = ERROR_FUNCTION('')) ~> derivedColumn3",
 				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

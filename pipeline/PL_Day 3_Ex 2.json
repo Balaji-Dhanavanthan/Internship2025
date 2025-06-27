@@ -58,7 +58,7 @@
 				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "Copy data2",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -126,8 +126,10 @@
 				]
 			},
 			{
-				"name": "Copy data4",
+				"name": "Copy data3",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -139,17 +141,68 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "NorthwindTable",
-							"wildcardFileName": "*",
+							"wildcardFileName": "Northwind_Customers.xlsx",
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
 						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Exer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MDinesh",
+							"TableName": "Northwind_excel_file1",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data4",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -174,19 +227,24 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "csvcontainer",
-							"Folder": "NorthwindTable",
-							"FileName": "*"
+							"SchemaName": "dbo",
+							"TableName": "employees",
+							"database": "HR"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"referenceName": "CopyCsvFile",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "Target Folders/ I2025_MDinesh",
+							"FileName": "Copy_From_sql"
+						}
 					}
 				]
 			}

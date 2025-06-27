@@ -243,13 +243,44 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_wk3",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"BASKcsvSource": {
+								"Container": "test-container",
+								"Folder": "inputFolder",
+								"Filename": "bask.csv"
+							},
+							"sink1": {
+								"Container": "test-container",
+								"Folder": "inputFolder",
+								"Filename": "filteredbask.csv"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			},
+			{
+				"name": "CopytoSQL",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
 				}
 			}
 		],

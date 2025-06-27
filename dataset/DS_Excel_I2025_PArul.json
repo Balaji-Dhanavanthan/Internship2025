@@ -1,5 +1,5 @@
 {
-	"name": "DS_csv_I2025_PArul",
+	"name": "DS_Excel_I2025_PArul",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
@@ -7,17 +7,19 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "test-container"
 			},
 			"folder": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "I2025_PArul"
 			},
 			"filename": {
 				"type": "string"
 			}
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
@@ -34,10 +36,7 @@
 					"type": "Expression"
 				}
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

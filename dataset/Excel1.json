@@ -1,5 +1,5 @@
 {
-	"name": "DS_csv_I2025_PArul",
+	"name": "Excel1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
@@ -14,10 +14,13 @@
 			},
 			"filename": {
 				"type": "string"
+			},
+			"index": {
+				"type": "int"
 			}
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
@@ -34,10 +37,11 @@
 					"type": "Expression"
 				}
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"sheetIndex": {
+				"value": "@dataset().index",
+				"type": "Expression"
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

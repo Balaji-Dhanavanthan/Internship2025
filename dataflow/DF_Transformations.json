@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_Parquet",
+						"referenceName": "DS_Csv",
 						"type": "DatasetReference"
 					},
 					"name": "baskResParquetSink"
@@ -121,8 +121,7 @@
 				"          LastUpdated = currentUTC()) ~> auditAdddition",
 				"auditAdddition sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'parquet',",
-				"     partitionFileNames:['baskTransformations.parquet'],",
+				"     partitionFileNames:['baskTransformations.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> baskResParquetSink"

@@ -27,7 +27,7 @@
 							"baskResParquetSink": {
 								"containerName": "csvcontainer",
 								"dirName": "dumps",
-								"fileName": "baskTransformations.parquet"
+								"fileName": "baskTransformations.csv"
 							}
 						}
 					},

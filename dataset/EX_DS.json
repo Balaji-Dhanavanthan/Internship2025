@@ -5,6 +5,11 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sheet": {
+				"type": "int"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
@@ -13,6 +18,10 @@
 				"fileName": " BASK Invitation Dataset.parquet",
 				"folderPath": "Workshop_source",
 				"container": "test-container"
+			},
+			"sheetIndex": {
+				"value": "@dataset().sheet",
+				"type": "Expression"
 			},
 			"firstRowAsHeader": true
 		},

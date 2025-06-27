@@ -20,9 +20,23 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"tgtCSV": {
+								"file_name": "target_employees.csv",
+								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							},
 							"srcCSV": {
+								"file_name": "source_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"sink1": {
+								"file_name": "fin_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"sink2": {
+								"file_name": "fin_employees.csv",
+								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							}
 						}

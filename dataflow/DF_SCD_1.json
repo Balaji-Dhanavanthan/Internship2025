@@ -19,10 +19,31 @@
 					"name": "srcCSV"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
 			"transformations": [
 				{
 					"name": "InnerOnId"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "alterRow2"
 				}
 			],
 			"scriptLines": [
@@ -49,10 +70,37 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> srcCSV",
 				"tgtCSV, srcCSV join(tgtCSV@emp_id == srcCSV@emp_id,",
-				"     joinType:'inner',",
+				"     joinType:'right',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> InnerOnId"
+				"     broadcast: 'auto')~> InnerOnId",
+				"InnerOnId alterRow(insertIf(isNull(tgtCSV@emp_id))) ~> alterRow1",
+				"InnerOnId alterRow(updateIf(tgtCSV@emp_id == srcCSV@emp_id && (\r",
+				"    tgtCSV@salary != srcCSV@salary ||\r",
+				"    srcCSV@update_date != tgtCSV@update_date\r",
+				"))) ~> alterRow2",
+				"alterRow2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          emp_id = tgtCSV@emp_id,",
+				"          first_name = tgtCSV@first_name,",
+				"          last_name = tgtCSV@last_name,",
+				"          salary = tgtCSV@salary,",
+				"          created_date = tgtCSV@created_date,",
+				"          update_date = tgtCSV@update_date,",
+				"          emp_id = srcCSV@emp_id,",
+				"          first_name = srcCSV@first_name,",
+				"          last_name = srcCSV@last_name,",
+				"          salary = srcCSV@salary,",
+				"          created_date = srcCSV@created_date,",
+				"          update_date = srcCSV@update_date",
+				"     )) ~> sink1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}

@@ -14,12 +14,14 @@
 			},
 			"filename": {
 				"type": "string"
+			},
+			"sheet": {
+				"type": "int"
 			}
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "0",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
@@ -34,6 +36,10 @@
 					"value": "@dataset().container",
 					"type": "Expression"
 				}
+			},
+			"sheetIndex": {
+				"value": "@dataset().sheet",
+				"type": "Expression"
 			},
 			"firstRowAsHeader": true
 		},

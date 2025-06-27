@@ -6,17 +6,18 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Container": {
-				"type": "string"
-			},
-			"Folder": {
-				"type": "string"
-			},
-			"File": {
-				"type": "string"
-			},
 			"sheet": {
-				"type": "int"
+				"type": "int",
+				"defaultValue": 1
+			},
+			"file": {
+				"type": "string"
+			},
+			"container": {
+				"type": "string"
+			},
+			"folder": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -24,9 +25,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "basf_invitation_jjs.parquet",
-				"folderPath": "sink",
-				"container": "parquetcontainer"
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
 			"sheetIndex": {
 				"value": "@dataset().sheet",

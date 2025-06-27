@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -21,10 +19,15 @@
 						"referenceName": "DF_customer",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
+							"ADLSscorce": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
 								"filename": "countries"
+							},
+							"source1": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"filename": "location"
 							},
 							"finaltable": {
 								"container": "practice-adf",
@@ -36,7 +39,8 @@
 							"ADLSscorce": {
 								"schemaLinkedService": {
 									"container": "practice-adf",
-									"Directory": "Asrar"
+									"Directory": "Asrar",
+									"filename": "countries"
 								}
 							},
 							"finaltable": {

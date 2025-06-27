@@ -8,12 +8,14 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "BASK Invitation Dataset.xlsx",
 				"folderPath": "Workshop_source",
 				"container": "test-container"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

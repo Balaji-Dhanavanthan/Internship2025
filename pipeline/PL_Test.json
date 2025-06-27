@@ -35,28 +35,8 @@
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_ADLS_Excel",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_ADLS_parquet",
-						"type": "DatasetReference"
-					}
-				]
+					"enableStaging": false
+				}
 			},
 			{
 				"name": "Data flow1",
@@ -71,22 +51,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink1": {
-								"newfile": "Copy_2025"
-							}
-						},
-						"linkedServiceParameters": {
-							"sink1": {
-								"schemaLinkedService": {
-									"newfile": "Copy_2025"
-								}
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

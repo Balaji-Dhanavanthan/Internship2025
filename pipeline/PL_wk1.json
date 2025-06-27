@@ -5,6 +5,8 @@
 			{
 				"name": "DF_wk1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -28,7 +30,7 @@
 							"sink1": {
 								"Container": "test-container",
 								"Directory": "I2025_RRamesh",
-								"FileName": "bask_new.pqt"
+								"FileName": "bask.pqt"
 							}
 						}
 					},
@@ -96,7 +98,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Directory": "I2025_RRamesh",
-							"FileName": "bask_new.pqt"
+							"FileName": "bask.pqt"
 						}
 					}
 				],

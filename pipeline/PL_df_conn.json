@@ -23,11 +23,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
+							"maxConcurrentConnections": {
+								"value": "@activity('DF_conn').output",
+								"type": "Expression"
+							},
+							"fileListPath": "test-container/Workshop_source",
 							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
@@ -53,7 +60,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "EX_DS",
+						"referenceName": "Parquet",
 						"type": "DatasetReference"
 					}
 				],
@@ -84,7 +91,12 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_work1",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"work_sheet": 0
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,

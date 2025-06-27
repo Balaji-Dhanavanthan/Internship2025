@@ -19,7 +19,8 @@
 						"referenceName": "DS_blob_r",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink1",
+					"description": "Export data to DS_blob_r as filteredbask.csv"
 				}
 			],
 			"transformations": [

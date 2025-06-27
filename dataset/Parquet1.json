@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Basf",
+				"fileName": "Basf.pqt",
 				"folderPath": "Surya",
 				"container": "practice-adf"
 			},

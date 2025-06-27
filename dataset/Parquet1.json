@@ -1,0 +1,166 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "basf_invitation_jjs.parquet",
+				"folderPath": "sink",
+				"container": "parquetcontainer"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Survey_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "Feedback_Program",
+				"type": "UTF8"
+			},
+			{
+				"name": "First_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Last_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Contact_Name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Email",
+				"type": "UTF8"
+			},
+			{
+				"name": "Phone_Number",
+				"type": "INT64"
+			},
+			{
+				"name": "Contact_Country",
+				"type": "UTF8"
+			},
+			{
+				"name": "Job_Title",
+				"type": "UTF8"
+			},
+			{
+				"name": "Contact_Department",
+				"type": "UTF8"
+			},
+			{
+				"name": "Language",
+				"type": "UTF8"
+			},
+			{
+				"name": "Salutation",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ship_to",
+				"type": "UTF8"
+			},
+			{
+				"name": "Sold_to",
+				"type": "UTF8"
+			},
+			{
+				"name": "Lead_Contact_OD",
+				"type": "UTF8"
+			},
+			{
+				"name": "Lead_Contact_GBU/RBU",
+				"type": "UTF8"
+			},
+			{
+				"name": "Lead_Contact_SBU",
+				"type": "UTF8"
+			},
+			{
+				"name": "Main_Industry",
+				"type": "UTF8"
+			},
+			{
+				"name": "Region",
+				"type": "UTF8"
+			},
+			{
+				"name": "Sales_Channel",
+				"type": "UTF8"
+			},
+			{
+				"name": "Customer_Network",
+				"type": "BOOLEAN"
+			},
+			{
+				"name": "Lead_Contact_egmentation1",
+				"type": "UTF8"
+			},
+			{
+				"name": "Lead_Contact_Segmentation2",
+				"type": "UTF8"
+			},
+			{
+				"name": "Invitation_Status",
+				"type": "UTF8"
+			},
+			{
+				"name": "Creationdate",
+				"type": "UTF8"
+			},
+			{
+				"name": "Invitation_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Local_Invitation_Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Survey_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "Expires_on_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Local_Expiration_Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Reason_for_Score",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ease_of_doing_business",
+				"type": "INT_16"
+			},
+			{
+				"name": "Issue_Resolution",
+				"type": "INT_16"
+			},
+			{
+				"name": "Product_Quality",
+				"type": "INT_16"
+			},
+			{
+				"name": "Delivery_Reliability",
+				"type": "INT_16"
+			},
+			{
+				"name": "Understanding_your_business_needs",
+				"type": "INT_16"
+			}
+		]
+	}
+}

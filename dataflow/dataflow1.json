@@ -1,0 +1,125 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_excel",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "DS_Blob_storgare",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          Survey_ID = {Survey ID},",
+				"          Feedback_Program = {Feedback Program},",
+				"          First_name = {First name},",
+				"          Last_name = {Last name},",
+				"          Contact_Name = {Contact Name},",
+				"          Email,",
+				"          PHONE_NUMBER = {PHONE NUMBER},",
+				"          Contact_Country = {Contact Country},",
+				"          Job_Title = {Job Title},",
+				"          Contact_Department = {Contact Department},",
+				"          Language,",
+				"          Salutation,",
+				"          Ship_to,",
+				"          Ship_to = {Ship to},",
+				"          Sold_to,",
+				"          Sold_to = {Sold to},",
+				"          {Lead_Contact OD} = {Lead Contact OD},",
+				"          {Lead_Contact GBU/RBU} = {Lead Contact GBU/RBU},",
+				"          {Lead_Contact SBU} = {Lead Contact SBU},",
+				"          Main_Industry = {Main Industry},",
+				"          Region,",
+				"          Sales_Channel = {Sales Channel},",
+				"          Customer_Network = {Customer Network},",
+				"          Lead_Contact_Segmentation1 = {Lead Contact Segmentation1},",
+				"          Lead_Contact_Segmentation2 = {Lead Contact Segmentation2},",
+				"          Invitation_Status = {Invitation Status},",
+				"          Creationdate,",
+				"          Invitation_date = {Invitation date},",
+				"          Local_Invitation_Date = {Local Invitation Date},",
+				"          Survey_status = {Survey status},",
+				"          Expires_on_date = {Expires on date},",
+				"          Local_Expiration_Date = {Local Expiration Date},",
+				"          Reason_for_Score = {Reason for Score},",
+				"          {Ease_of_doing business} = {Ease of doing business},",
+				"          Issue_Resolution = {Issue Resolution},",
+				"          Product_Quality = {Product Quality},",
+				"          Delivery_Reliability = {Delivery Reliability},",
+				"          Understanding_your_business_needs = {Understanding your business needs}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Survey_ID as integer,",
+				"          Feedback_Program as string,",
+				"          First_name as string,",
+				"          Last_name as string,",
+				"          Contact_Name as string,",
+				"          Email as string,",
+				"          Phone_Number as long,",
+				"          Contact_Country as string,",
+				"          Job_Title as string,",
+				"          Contact_Department as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          Sold_to as string,",
+				"          Lead_Contact_OD as string,",
+				"          {Lead_Contact_GBU/RBU} as string,",
+				"          Lead_Contact_SBU as string,",
+				"          Main_Industry as string,",
+				"          Region as string,",
+				"          Sales_Channel as string,",
+				"          Customer_Network as boolean,",
+				"          Lead_Contact_egmentation1 as string,",
+				"          Lead_Contact_Segmentation2 as string,",
+				"          Invitation_Status as string,",
+				"          Creationdate as string,",
+				"          Invitation_date as string,",
+				"          Local_Invitation_Date as string,",
+				"          Survey_status as string,",
+				"          Expires_on_date as string,",
+				"          Local_Expiration_Date as string,",
+				"          Reason_for_Score as string,",
+				"          Ease_of_doing_business as short,",
+				"          Issue_Resolution as short,",
+				"          Product_Quality as short,",
+				"          Delivery_Reliability as short,",
+				"          Understanding_your_business_needs as short",
+				"     ),",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

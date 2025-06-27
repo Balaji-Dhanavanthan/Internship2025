@@ -12,10 +12,10 @@
 			"Folder": {
 				"type": "string"
 			},
-			"file": {
+			"File": {
 				"type": "string"
 			},
-			"Sheet": {
+			"sheet": {
 				"type": "int"
 			}
 		},
@@ -24,21 +24,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().file",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().Folder",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().Container",
-					"type": "Expression"
-				}
+				"fileName": "basf_invitation_jjs.parquet",
+				"folderPath": "sink",
+				"container": "parquetcontainer"
 			},
 			"sheetIndex": {
-				"value": "@dataset().Sheet",
+				"value": "@dataset().sheet",
 				"type": "Expression"
 			},
 			"firstRowAsHeader": true

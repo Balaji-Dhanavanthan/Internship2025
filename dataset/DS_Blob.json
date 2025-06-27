@@ -13,9 +13,6 @@
 			"folder": {
 				"type": "string",
 				"defaultValue": "I2025_PArul"
-			},
-			"filename": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -23,10 +20,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
+				"fileName": "stg",
 				"folderPath": {
 					"value": "@dataset().folder",
 					"type": "Expression"

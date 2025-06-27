@@ -7,16 +7,20 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "test-container"
 			},
 			"folder": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Workshop_source"
 			},
 			"filename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "BASK Invitation Dataset.xlsx"
 			},
 			"index": {
-				"type": "int"
+				"type": "int",
+				"defaultValue": 0
 			}
 		},
 		"annotations": [],

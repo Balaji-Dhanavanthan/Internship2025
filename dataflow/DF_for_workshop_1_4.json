@@ -87,7 +87,7 @@
 				"          Sold_to,",
 				"          Lead_Contact_SBU,",
 				"          Main_Industry,",
-				"          Lead_Contact_egmentation1,",
+				"          Lead_Contact_segmentation1 = Lead_Contact_egmentation1,",
 				"          Invitation_Status,",
 				"          Creationdate,",
 				"          Invitation_date,",

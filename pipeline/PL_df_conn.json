@@ -23,11 +23,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
@@ -53,13 +56,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "EX_DS",
+						"referenceName": "Parquet",
 						"type": "DatasetReference",
 						"parameters": {
-							"work_sheet": 0,
-							"file": "BASK Invitation Dataset.xlsx",
-							"container": "test-container",
-							"folder": "Workshop_source"
+							"filename": "basf_invitation_jjs.parquet",
+							"container": "parquetcontainer",
+							"Folder": "sink"
 						}
 					}
 				],
@@ -68,9 +70,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "Workshop_source",
+							"Folder": "kani_folder",
 							"container": "test-container",
-							"Filename": "BASK Invitation Dataset.parquet"
+							"Filename": "csv"
 						}
 					}
 				]

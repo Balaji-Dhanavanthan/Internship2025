@@ -170,7 +170,7 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"schemaname": "SS_MMuthumu",
+							"schemaname": "MMuthumu",
 							"tablename": "bask_table",
 							"database": "Intern_2025"
 						}

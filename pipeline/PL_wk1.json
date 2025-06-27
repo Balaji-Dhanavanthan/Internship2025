@@ -45,7 +45,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Survey_ID",
+									"name": "SurveyID",
 									"physicalType": "UTF8"
 								}
 							},
@@ -56,7 +56,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Feedback_Program",
+									"name": "FeedbackProgram",
 									"physicalType": "UTF8"
 								}
 							},
@@ -67,7 +67,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "First_name",
+									"name": "Firstname",
 									"physicalType": "UTF8"
 								}
 							},
@@ -78,7 +78,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Last_name",
+									"name": "Lastname",
 									"physicalType": "UTF8"
 								}
 							},
@@ -89,7 +89,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Contact_Name",
+									"name": "ContactName",
 									"physicalType": "UTF8"
 								}
 							},
@@ -112,7 +112,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "PHONE_NUMBER",
+									"name": "PHONENUMBER",
 									"physicalType": "UTF8"
 								}
 							},
@@ -123,7 +123,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Contact_Country",
+									"name": "ContactCountry",
 									"physicalType": "UTF8"
 								}
 							},
@@ -134,7 +134,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Job_Title",
+									"name": "JobTitle",
 									"physicalType": "UTF8"
 								}
 							},
@@ -145,7 +145,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Contact_Department",
+									"name": "ContactDepartment",
 									"physicalType": "UTF8"
 								}
 							},
@@ -180,7 +180,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Ship_to_company",
+									"name": "ShiptoCompany",
 									"physicalType": "UTF8"
 								}
 							},
@@ -191,8 +191,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Ship_to",
-									"type": "String",
+									"name": "ShipTo",
 									"physicalType": "UTF8"
 								}
 							},
@@ -203,7 +202,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Sold_to_company",
+									"name": "SoldToCompany",
 									"physicalType": "UTF8"
 								}
 							},
@@ -214,8 +213,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Sold_to",
-									"type": "String",
+									"name": "SoldTo",
 									"physicalType": "UTF8"
 								}
 							},
@@ -226,7 +224,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_OD",
+									"name": "LeadContactOD",
 									"physicalType": "UTF8"
 								}
 							},
@@ -237,7 +235,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_GBU/RBU",
+									"name": "LeadContactGBU/RBU",
 									"physicalType": "UTF8"
 								}
 							},
@@ -248,7 +246,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_SBU",
+									"name": "LeadContactSBU",
 									"physicalType": "UTF8"
 								}
 							},
@@ -259,7 +257,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Main_Industry",
+									"name": "MainIndustry",
 									"physicalType": "UTF8"
 								}
 							},
@@ -282,7 +280,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Sales_Channel",
+									"name": "SalesChannel",
 									"physicalType": "UTF8"
 								}
 							},
@@ -293,7 +291,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Customer_Network",
+									"name": "CustomerNetwork",
 									"physicalType": "UTF8"
 								}
 							},
@@ -304,7 +302,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_SegmentationOne",
+									"name": "LeadContacTSegmentationOne",
 									"physicalType": "UTF8"
 								}
 							},
@@ -315,7 +313,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Lead_Contact_SegmentationTwo",
+									"name": "LeadContactSegmentationTwo",
 									"physicalType": "UTF8"
 								}
 							},
@@ -326,7 +324,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Invitation_Status",
+									"name": "InvitationStatus",
 									"physicalType": "UTF8"
 								}
 							},
@@ -348,7 +346,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Invitation_date",
+									"name": "Invitationdate",
 									"physicalType": "UTF8"
 								}
 							},
@@ -359,7 +357,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Local_Invitation_Date",
+									"name": "LocalInvitationDate",
 									"physicalType": "UTF8"
 								}
 							},
@@ -370,7 +368,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Survey_status",
+									"name": "SurveyStatus",
 									"physicalType": "UTF8"
 								}
 							},
@@ -381,7 +379,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Expires_on_date",
+									"name": "Expiresondate",
 									"physicalType": "UTF8"
 								}
 							},
@@ -392,7 +390,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Local_Expiration_Date",
+									"name": "LocalExpirationDate",
 									"physicalType": "UTF8"
 								}
 							},

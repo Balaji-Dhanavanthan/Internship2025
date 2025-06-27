@@ -1,0 +1,102 @@
+{
+	"name": "PL_truncateload",
+	"properties": {
+		"activities": [
+			{
+				"name": "truncate",
+				"description": "",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_OnPrem_SQLServer",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "truncate table products;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "load-data",
+				"description": "",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "truncate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_excelNW",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "csvcontainer",
+							"Folder": "NorthwindTable",
+							"FileName": "Products.xlsx",
+							"SheetIndex": 0
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SQLSERVER",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_RRamesh",
+							"TableName": "Products"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

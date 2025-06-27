@@ -215,7 +215,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_rawdata",
+						"referenceName": "DS_SQLSERVER",
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_RRamesh",

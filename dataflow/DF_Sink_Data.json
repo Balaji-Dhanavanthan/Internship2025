@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "DF_Sink_Data",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -18,11 +18,7 @@
 						"referenceName": "DS_Parquet",
 						"type": "DatasetReference"
 					},
-					"name": "sink1",
-					"rejectedDataLinkedService": {
-						"referenceName": "DS_Blob_storgare",
-						"type": "LinkedServiceReference"
-					}
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -98,12 +94,12 @@
 				"          Region,",
 				"          Sales_Channel = {Sales Channel},",
 				"          Customer_Network = {Customer Network},",
-				"          {Lead Contact_Segmentation1} = {Lead Contact Segmentation1},",
-				"          {Lead Contact_Segmentation2} = {Lead Contact Segmentation2},",
+				"          Lead_Contact_Segmentation1 = {Lead Contact Segmentation1},",
+				"          Lead_Contact_Segmentation2 = {Lead Contact Segmentation2},",
 				"          Invitation_Status = {Invitation Status},",
 				"          Creationdate,",
 				"          Invitation_date = {Invitation date},",
-				"          {Local Invitation_Date} = {Local Invitation Date},",
+				"          Local_Invitation_Date = {Local Invitation Date},",
 				"          Survey_status = {Survey status},",
 				"          Expires_on_date = {Expires on date},",
 				"          Local_Expiration_Date = {Local Expiration Date},",
@@ -119,47 +115,9 @@
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
-				"     partitionFileNames:['bask_inv.parquet'],",
+				"     partitionFileNames:['basf_invitation.parquet'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          Survey_ID,",
-				"          Feedback_Program,",
-				"          First_name,",
-				"          Last_name,",
-				"          Contact_Name,",
-				"          Email,",
-				"          PHONE_NUMBER,",
-				"          Contact_Country,",
-				"          Job_Title,",
-				"          Contact_Department,",
-				"          Language,",
-				"          Salutation,",
-				"          Ship_to,",
-				"          Sold_to,",
-				"          Lead_Contact_OD,",
-				"          Lead_Contact_GBU_RBU,",
-				"          Lead_Contact_SBU,",
-				"          Main_Industry,",
-				"          Region,",
-				"          Sales_Channel,",
-				"          Customer_Network,",
-				"          Lead_Contact_Segmentation1 = {Lead Contact_Segmentation1},",
-				"          Lead_Contact_Segmentation2 = {Lead Contact_Segmentation2},",
-				"          Invitation_Status,",
-				"          Creationdate,",
-				"          Invitation_date,",
-				"          Local_Invitation_Date = {Local Invitation_Date},",
-				"          Survey_status,",
-				"          Expires_on_date,",
-				"          Local_Expiration_Date,",
-				"          Reason_for_Score,",
-				"          Ease_of_doing_business,",
-				"          Issue_Resolution,",
-				"          Product_Quality,",
-				"          Delivery_Reliability,",
-				"          Understanding_your_business_needs",
-				"     ),",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}

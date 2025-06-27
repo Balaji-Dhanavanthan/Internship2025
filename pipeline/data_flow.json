@@ -5,6 +5,8 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -26,18 +28,21 @@
 							},
 							"source1": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"filename": "countries"
 							},
 							"finaltable": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"filename": "final_table.csv"
 							}
 						},
 						"linkedServiceParameters": {
 							"finaltable": {
 								"schemaLinkedService": {
 									"container": "practice-adf",
-									"Directory": "Asrar"
+									"Directory": "Asrar",
+									"filename": "final_table.csv"
 								}
 							}
 						}
@@ -108,7 +113,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "location"
+							"filename": "location"
 						}
 					}
 				]

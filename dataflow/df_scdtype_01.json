@@ -18,7 +18,11 @@
 						"referenceName": "DS_SQL_Countries",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "DS_Blob_storgare",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
@@ -28,9 +32,9 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          country_id as string,",
+				"          country_id as integer,",
 				"          country_name as string,",
-				"          region_id as string",
+				"          region_id as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -49,7 +53,12 @@
 				"     upsertable:false,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          country_id,",
+				"          country_name,",
+				"          region_id",
+				"     )) ~> sink1"
 			]
 		}
 	}

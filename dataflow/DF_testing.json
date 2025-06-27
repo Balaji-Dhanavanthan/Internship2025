@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Sql_server_intern",
 						"type": "DatasetReference"
 					},
 					"name": "sqlServerSink"
@@ -87,6 +87,11 @@
 				"     skipDuplicateMapOutputs: true) ~> selectMainCols",
 				"selectMainCols sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sqlServerSink"
 			]

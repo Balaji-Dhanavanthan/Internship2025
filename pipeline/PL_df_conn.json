@@ -23,18 +23,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ParquetSource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"maxConcurrentConnections": {
-								"value": "@activity('DF_conn').output",
-								"type": "Expression"
-							},
-							"fileListPath": "test-container/Workshop_source",
+							"recursive": true,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
-							"type": "ParquetReadSettings"
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -60,8 +56,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Parquet",
-						"type": "DatasetReference"
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"Folder": "Workshop_source",
+							"container": "test-container",
+							"Filename": "BASK Invitation Dataset.xaxl"
+						}
 					}
 				],
 				"outputs": [

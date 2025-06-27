@@ -1,0 +1,118 @@
+{
+	"name": "PL_workshop_1_4",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_for_wk_1_4",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_for_workshop_1_4",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"csvSrc": {
+								"file_name": "basf_sink_jjs_2.csv",
+								"folder_name": "sink",
+								"container_name": "csvcontainer"
+							},
+							"csvSinking": {
+								"file_name": "ws_5_sol.csv",
+								"folder_name": "sink",
+								"container_name": "csvcontainer"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "toSqlServer-unnecessary",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DF_for_wk_1_4",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "ws_5_sol.csv",
+							"folder_name": "sink",
+							"container_name": "csvcontainer"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "workshop_5_sol"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "workshops/workshop1"
+		},
+		"annotations": []
+	}
+}

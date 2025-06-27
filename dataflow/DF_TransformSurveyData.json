@@ -42,6 +42,12 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -277,7 +283,12 @@
 				"          Issue_Resolution = iif(isNull(Issue_Resolution), toShort(0), Issue_Resolution),",
 				"          Product_Quality = iif(isNull(Product_Quality), toShort(0), Product_Quality),",
 				"          Delivery_Reliability = iif(isNull(Delivery_Reliability), toShort(0), Delivery_Reliability),",
-				"          Understanding_your_business_needs = iif(isNull(Understanding_your_business_needs), toShort(0), Understanding_your_business_needs)) ~> derivedColumn2"
+				"          Understanding_your_business_needs = iif(isNull(Understanding_your_business_needs), toShort(0), Understanding_your_business_needs)) ~> derivedColumn2",
+				"derivedColumn2 keyGenerate(output(Surrogate_ID as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(current_date = currentDate(),",
+				"          update_date = currentDate()) ~> derivedColumn3"
 			]
 		}
 	}

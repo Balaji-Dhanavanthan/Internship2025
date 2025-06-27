@@ -64,7 +64,7 @@
 						"parameters": {
 							"Folder": "Workshop_source",
 							"container": "test-container",
-							"Filename": " BASK Invitation Dataset.parquet"
+							"Filename": "BASK Invitation Dataset.parquet"
 						}
 					}
 				]

@@ -1025,6 +1025,8 @@
 			{
 				"name": "CopytoServer",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -1540,6 +1542,43 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "DF_wk1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_wk1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "test-container",
+								"Folder": "Workshop_source",
+								"FileName": "BASK Invitation Dataset.xlsx",
+								"SheetIndex": 0
+							},
+							"sink1": {
+								"Container": "test-container",
+								"Directory": "I2025_RRamesh",
+								"FileName": "bask_new.pqt"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []

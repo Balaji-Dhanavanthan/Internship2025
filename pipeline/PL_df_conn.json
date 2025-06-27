@@ -59,7 +59,7 @@
 							"work_sheet": 0,
 							"file": "BASK Invitation Dataset.xlsx",
 							"container": "test-container",
-							"folder": "workshop_source"
+							"folder": "Workshop_source"
 						}
 					}
 				],
@@ -96,7 +96,7 @@
 								"work_sheet": 0,
 								"file": "BASK Invitation Dataset.xlsx",
 								"container": "test-container",
-								"folder": "workshop_source"
+								"folder": "Workshop_source"
 							},
 							"sink1": {
 								"filename": "copydf.parquet",

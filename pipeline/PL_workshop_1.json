@@ -15,11 +15,28 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_for_workshop_1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"src": {
+								"sheet_index": 0
+							},
+							"sink1": {
+								"containerName": "parquetcontainer",
+								"folderName": "sink",
+								"fileName": "basf_invitation_jjs.parquet"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],

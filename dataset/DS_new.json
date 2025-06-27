@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DF.csv",
-				"folderPath": "I2025_SRangan1/DF",
+				"fileName": "ETL.csv",
+				"folderPath": "I2025_SRangan1/input",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

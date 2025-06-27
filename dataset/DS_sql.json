@@ -5,14 +5,6 @@
 			"referenceName": "LS_sql_server",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"ObjectName": {
-				"type": "string"
-			},
-			"FileName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [
@@ -72,14 +64,8 @@
 			}
 		],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().ObjectName",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().FileName",
-				"type": "Expression"
-			}
+			"schema": "I2025_SRangan1",
+			"table": "rawdata"
 		}
 	}
 }

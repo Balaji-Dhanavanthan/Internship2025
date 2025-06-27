@@ -23,7 +23,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "truncate table products;"
+							"text": "truncate table Products;"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"

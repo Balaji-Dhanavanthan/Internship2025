@@ -1,0 +1,284 @@
+{
+	"name": "PL_SCD",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "created_by",
+								"value": {
+									"value": "'aabidh'",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "created_at",
+								"value": {
+									"value": "@formatDateTime(utcNow(),'dd-MM-yyyy')",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "updated_by",
+								"value": {
+									"value": "'aabidh'",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "updated_at",
+								"value": {
+									"value": "@formatDateTime(utcNow(),'dd-MM-yyyy')",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "employee_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "employee_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "first_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "first_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "last_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "last_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "phone_number",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "phone_number",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "hire_date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hire_date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "job_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "job_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "salary",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "salary",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "commission_pct",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "commission_pct",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "manager_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "manager_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "department_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "department_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "created_by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_by",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "created_at",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_at",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "updated_by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "updated_by",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "updated_at",
+									"type": "String"
+								},
+								"sink": {
+									"name": "updated_at",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "aabidh",
+							"filename": "employees.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "aabidh/tgt",
+							"filename": "employees_tgt.csv"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

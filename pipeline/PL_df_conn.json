@@ -140,9 +140,9 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "DELETE FROM bask_table WHERE YEAR(Invitation_date) IN (2021, 2022);",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {

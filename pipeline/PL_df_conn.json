@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "DF_conn",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -85,12 +92,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_work1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"work_sheet": 0
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

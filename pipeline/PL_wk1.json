@@ -254,42 +254,6 @@
 						"enablePartitionDiscovery": false
 					}
 				}
-			},
-			{
-				"name": "Delete2",
-				"type": "Delete",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_blob_r",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "test-container",
-							"Folder": "input",
-							"Filename": "*"
-						}
-					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "DS_Blob_storgare",
-							"type": "LinkedServiceReference"
-						}
-					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
-				}
 			}
 		],
 		"annotations": []

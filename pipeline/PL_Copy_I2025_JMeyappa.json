@@ -166,10 +166,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_test",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}

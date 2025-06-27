@@ -33,8 +33,6 @@
 				"name": "load-data",
 				"description": "",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "truncate",

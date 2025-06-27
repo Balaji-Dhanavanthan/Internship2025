@@ -1,0 +1,84 @@
+{
+	"name": "DF_wk42",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "source1",
+					"description": "Import data from bask"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SurveyID as string,",
+				"          FeedbackProgram as string,",
+				"          Firstname as string,",
+				"          Lastname as string,",
+				"          ContactName as string,",
+				"          Email as string,",
+				"          PHONENUMBER as long,",
+				"          ContactCountry as string,",
+				"          JobTitle as string,",
+				"          ContactDepartment as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          ShiptoCompany as string,",
+				"          ShipTo as string,",
+				"          SoldToCompany as string,",
+				"          SoldTo as string,",
+				"          LeadContactOD as string,",
+				"          LeadContactGBURBU as string,",
+				"          LeadContactSBU as string,",
+				"          MainIndustry as string,",
+				"          Region as string,",
+				"          SalesChannel as string,",
+				"          CustomerNetwork as boolean,",
+				"          LeadContacTSegmentationOne as string,",
+				"          LeadContactSegmentationTwo as string,",
+				"          InvitationStatus as string,",
+				"          CreationDate as string,",
+				"          Invitationdate as string,",
+				"          LocalInvitationDate as string,",
+				"          SurveyStatus as string,",
+				"          Expiresondate as string,",
+				"          LocalExpirationDate as string,",
+				"          ReasonforScore as string,",
+				"          EaseofdoingBusiness as short,",
+				"          IssueResolution as short,",
+				"          ProductQuality as short,",
+				"          DeliveryReliability as short,",
+				"          UnderstandingYourBusinessNeeds as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 filter(InvitationStatus=='Completed' && ProductQuality<6) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['baskISPQ.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

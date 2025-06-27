@@ -16,7 +16,7 @@
 			},
 			"File": {
 				"type": "string",
-				"defaultValue": "countries.csv"
+				"defaultValue": "job_history"
 			}
 		},
 		"annotations": [],

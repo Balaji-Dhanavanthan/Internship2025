@@ -1,0 +1,573 @@
+{
+	"name": "PL_DataFlow",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "test-container",
+								"Folder": "Workshop_source",
+								"File": "BASK Invitation Dataset.xlsx",
+								"Sheet": 0
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Feedback Program",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "First name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Last name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHONE NUMBER",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Country",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Job Title",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact Department",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Language",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Salutation",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship_to",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Ship to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ship to",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold_to",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sold to",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sold to",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact OD",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact GBU/RBU",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact SBU",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Main Industry",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sales Channel",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Customer Network",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact Segmentation1",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lead Contact Segmentation2",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitation Status",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Creationdate",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Invitation date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local Invitation Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survey status",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Expires on date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local Expiration Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Reason for Score",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ease of doing business",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Issue Resolution",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Product Quality",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Delivery Reliability",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Understanding your business needs",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Exer",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"Folder": "Workshop_source",
+							"File": "BASK Invitation Dataset.xlsx",
+							"Sheet": 0
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"Folder": "Target Folders/I2025_MDinesh",
+							"FileName": "Container.Parquet"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

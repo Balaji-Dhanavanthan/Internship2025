@@ -5,15 +5,41 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Container": {
+				"type": "string"
+			},
+			"Folder": {
+				"type": "string"
+			},
+			"File": {
+				"type": "string"
+			},
+			"Sheet": {
+				"type": "int"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Customers",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Northwind_Customers.xlsx",
-				"folderPath": "NorthwindTable",
-				"container": "csvcontainer"
+				"fileName": {
+					"value": "@dataset().File",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Folder",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().Container",
+					"type": "Expression"
+				}
+			},
+			"sheetIndex": {
+				"value": "@dataset().Sheet",
+				"type": "Expression"
 			},
 			"firstRowAsHeader": true
 		},

@@ -72,7 +72,7 @@
 						"parameters": {
 							"Folder": "kani_folder",
 							"container": "test-container",
-							"Filename": "csv"
+							"Filename": "bask.csv"
 						}
 					}
 				]

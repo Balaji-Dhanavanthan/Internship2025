@@ -5,34 +5,13 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"report": {
-				"type": "string"
-			},
-			"foldername": {
-				"type": "string"
-			},
-			"filename": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().foldername",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().report",
-					"type": "Expression"
-				}
+				"fileName": "Workshop_source",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

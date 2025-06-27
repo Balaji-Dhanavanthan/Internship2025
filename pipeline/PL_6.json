@@ -327,12 +327,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "test-container",
-										"folder": "Exercise 2 Qn. 5",
-										"file": "Order & Details.xlsx"
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [

@@ -1,0 +1,50 @@
+{
+	"name": "DS_excel_I2025_JSivakum",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"container": {
+				"type": "string"
+			},
+			"folder": {
+				"type": "string"
+			},
+			"filename": {
+				"type": "string"
+			},
+			"sheet": {
+				"type": "string"
+			},
+			"index": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
+			},
+			"sheetIndex": {
+				"value": "@dataset().index",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}

@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"sheet": {
+			"work_sheet": {
 				"type": "int"
 			}
 		},
@@ -20,7 +20,7 @@
 				"container": "test-container"
 			},
 			"sheetIndex": {
-				"value": "@dataset().sheet",
+				"value": "@dataset().work_sheet",
 				"type": "Expression"
 			},
 			"firstRowAsHeader": true

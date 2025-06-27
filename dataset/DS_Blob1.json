@@ -23,9 +23,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "FileName",
-				"folderPath": "Asrar",
-				"container": "practice-adf"
+				"fileName": "Order & Details.xlsx",
+				"folderPath": "Exercise 2 Qn. 5",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

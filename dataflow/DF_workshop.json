@@ -10,13 +10,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_Excel_Workshop",
-						"type": "DatasetReference"
-					},
-					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -30,9 +23,6 @@
 						"referenceName": "DS_Blob_storgare",
 						"type": "LinkedServiceReference"
 					}
-				},
-				{
-					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -84,49 +74,6 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source(output(",
-				"          {Survey ID} as integer,",
-				"          {Feedback Program} as string,",
-				"          {First name} as string,",
-				"          {Last name} as string,",
-				"          {Contact Name} as string,",
-				"          Email as string,",
-				"          {PHONE NUMBER} as long,",
-				"          {Contact Country} as string,",
-				"          {Job Title} as string,",
-				"          {Contact Department} as string,",
-				"          Language as string,",
-				"          Salutation as string,",
-				"          Ship_to as string,",
-				"          {Ship to} as string,",
-				"          Sold_to as string,",
-				"          {Sold to} as string,",
-				"          {Lead Contact OD} as string,",
-				"          {Lead Contact GBU/RBU} as string,",
-				"          {Lead Contact SBU} as string,",
-				"          {Main Industry} as string,",
-				"          Region as string,",
-				"          {Sales Channel} as string,",
-				"          {Customer Network} as boolean,",
-				"          {Lead Contact Segmentation1} as string,",
-				"          {Lead Contact Segmentation2} as string,",
-				"          {Invitation Status} as string,",
-				"          Creationdate as string,",
-				"          {Invitation date} as date,",
-				"          {Local Invitation Date} as string,",
-				"          {Survey status} as string,",
-				"          {Expires on date} as string,",
-				"          {Local Expiration Date} as string,",
-				"          {Reason for Score} as string,",
-				"          {Ease of doing business} as short,",
-				"          {Issue Resolution} as short,",
-				"          {Product Quality} as short,",
-				"          {Delivery Reliability} as short,",
-				"          {Understanding your business needs} as short",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source2",
 				"source1 select(mapColumn(",
 				"          SurveyID = {Survey ID},",
 				"          FeedbackProgram = {Feedback Program},",
@@ -213,11 +160,7 @@
 				"          ProductQuality,",
 				"          DeliveryReliability,",
 				"          Understandingyourbusinessneeds = {Understandingyourbusiness needs}",
-				"     )) ~> sink1",
-				"source2 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink2"
+				"     )) ~> sink1"
 			]
 		}
 	}

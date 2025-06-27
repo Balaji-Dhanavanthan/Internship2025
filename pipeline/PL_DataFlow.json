@@ -5,6 +5,8 @@
 			{
 				"name": "dataflow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -16,18 +18,50 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_dataflow1",
+						"referenceName": "DF_Workshop",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"Src": {
+							"source1": {
 								"sheet": 0
+							},
+							"sink1": {
+								"container": "test-container",
+								"folder": "Target Folders/I2025_AMohamad/ADF",
+								"file": "ADF_Workshop"
 							}
-						},
-						"linkedServiceParameters": {
-							"Src": {
-								"schemaLinkedService": {
-									"sheet": 0
-								}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Workshop",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"sheet": 0
+							},
+							"sink1": {
+								"container": "test-container",
+								"folder": "Target Folders/I2025_AMohamad/ADF",
+								"file": "Workshop"
 							}
 						}
 					},

@@ -187,12 +187,7 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Excel",
-						"type": "DatasetReference",
-						"parameters": {
-							"containerName": "test-container",
-							"dirName": "Northwind",
-							"fileName": "*"
-						}
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -263,15 +258,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Excel",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "test-container",
-										"dirName": "Northwind",
-										"fileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [

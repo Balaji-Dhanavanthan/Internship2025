@@ -1,21 +1,20 @@
 {
-	"name": "DS_Excel",
+	"name": "DS_I2025_PRajan_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Excel",
+		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "BASK Invitation Dataset.xlsx",
-				"folderPath": "I2025_PRajan",
+				"fileName": "p.parquet",
+				"folderPath": "I2025_PRajan/parquet",
 				"container": "test-container"
 			},
-			"sheetIndex": 0,
-			"firstRowAsHeader": true
+			"compressionCodec": "snappy"
 		},
 		"schema": []
 	}

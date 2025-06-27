@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "PL_Sink",
+				"name": "DF_Sink",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -40,7 +40,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "PL_Sink",
+						"activity": "DF_Sink",
 						"dependencyConditions": [
 							"Succeeded"
 						]

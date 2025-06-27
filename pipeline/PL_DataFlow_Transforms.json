@@ -1,9 +1,9 @@
 {
-	"name": "PL_DataFlow_FilterCols",
+	"name": "PL_DataFlow_Transforms",
 	"properties": {
 		"activities": [
 			{
-				"name": "DF_Filter_Recs",
+				"name": "DF_Transforms",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -15,22 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DF_Filter_Recs",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"containerName": "csvcontainer",
-								"dirName": "dumps",
-								"fileName": "basf_invitation.parquet"
-							},
-							"sinkOutCsv": {
-								"containerName": "csvcontainer",
-								"dirName": "dumps",
-								"fileName": "filtered_basf_inv_date"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

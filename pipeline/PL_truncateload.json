@@ -16,14 +16,14 @@
 				},
 				"userProperties": [],
 				"linkedServiceName": {
-					"referenceName": "LS_OnPrem_SQLServer",
+					"referenceName": "LS_sqlserver3",
 					"type": "LinkedServiceReference"
 				},
 				"typeProperties": {
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "truncate Products;"
+							"text": "truncate table products;"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"

@@ -1,0 +1,59 @@
+{
+	"name": "DF_SCD_1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "tgtCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "srcCSV"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "InnerOnId"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as short,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          salary as double,",
+				"          created_date as string,",
+				"          update_date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> tgtCSV",
+				"source(output(",
+				"          emp_id as short,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          salary as double,",
+				"          created_date as string,",
+				"          update_date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> srcCSV",
+				"tgtCSV, srcCSV join(tgtCSV@emp_id == srcCSV@emp_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> InnerOnId"
+			]
+		}
+	}
+}

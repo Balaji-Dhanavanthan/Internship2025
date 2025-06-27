@@ -1,5 +1,5 @@
 {
-	"name": "PL_testing",
+	"name": "PL_SCD_1",
 	"properties": {
 		"activities": [
 			{
@@ -16,27 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_for_testing",
+						"referenceName": "DF_SCD_1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"csvSrc": {
-								"file_name": "source_employees.csv",
-								"folder_name": "ETL_stuff",
+							"tgtCSV": {
 								"container_name": "csvcontainer"
 							},
-							"source1": {
-								"file_name": "target_employees.csv",
-								"folder_name": "ETL_stuff",
-								"container_name": "csvcontainer"
-							},
-							"csvSink": {
-								"file_name": "source_employees_new.csv",
-								"folder_name": "ETL_stuff",
-								"container_name": "csvcontainer"
-							},
-							"sink1": {
-								"file_name": "target_employees_new.csv",
-								"folder_name": "ETL_stuff",
+							"srcCSV": {
 								"container_name": "csvcontainer"
 							}
 						}

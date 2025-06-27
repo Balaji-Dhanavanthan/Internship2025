@@ -15,6 +15,22 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Transformations",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"baskImport": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "stg_basf_filtered"
+							},
+							"baskResParquetSink": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "baskTransformations.parquet"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

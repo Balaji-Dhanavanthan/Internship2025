@@ -35,6 +35,9 @@
 				},
 				{
 					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -199,7 +202,8 @@
 				"          each(match(type=='date'), $$ = coalesce($$,'1900-01-01'))) ~> derivedColumn3",
 				"derivedColumn3 keyGenerate(output(surrogate_id as long),",
 				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1"
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(feedback = 'good') ~> derivedColumn4"
 			]
 		}
 	}

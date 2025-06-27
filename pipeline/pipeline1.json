@@ -19,8 +19,8 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "dbo",
-							"table": "countries"
+							"username": "dbo",
+							"tablename": "countries"
 						}
 					},
 					"fieldList": [

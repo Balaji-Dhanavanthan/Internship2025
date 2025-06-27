@@ -12,10 +12,10 @@
 			}
 		},
 		"parameters": {
-			"schema": {
+			"username": {
 				"type": "string"
 			},
-			"table": {
+			"tablename": {
 				"type": "string"
 			},
 			"database": {
@@ -27,11 +27,11 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().schema",
+				"value": "@dataset().username",
 				"type": "Expression"
 			},
 			"table": {
-				"value": "@dataset().table",
+				"value": "@dataset().tablename",
 				"type": "Expression"
 			}
 		}

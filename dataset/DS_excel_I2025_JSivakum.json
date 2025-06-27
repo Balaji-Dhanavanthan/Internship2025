@@ -15,11 +15,8 @@
 			"filename": {
 				"type": "string"
 			},
-			"sheet": {
-				"type": "string"
-			},
 			"index": {
-				"type": "int"
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -43,7 +40,8 @@
 			"sheetIndex": {
 				"value": "@dataset().index",
 				"type": "Expression"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

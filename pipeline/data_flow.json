@@ -21,11 +21,6 @@
 						"referenceName": "DF_customer",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"ADLSscorce": {
-								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "locations"
-							},
 							"source1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
@@ -38,6 +33,12 @@
 							}
 						},
 						"linkedServiceParameters": {
+							"ADLSscorce": {
+								"schemaLinkedService": {
+									"container": "practice-adf",
+									"Directory": "Asrar"
+								}
+							},
 							"finaltable": {
 								"schemaLinkedService": {
 									"container": "practice-adf",
@@ -121,6 +122,8 @@
 			{
 				"name": "countries",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

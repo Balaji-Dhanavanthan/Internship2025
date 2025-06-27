@@ -92,7 +92,15 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_work1",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"work_sheet": 0,
+								"file": "BASK Invitation Dataset.xlsx",
+								"container": "test-container",
+								"folder": "workshop_source"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,

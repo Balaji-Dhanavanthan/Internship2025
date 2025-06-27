@@ -14,7 +14,8 @@
 				"fileName": "Northwind_Customers.xlsx",
 				"folderPath": "NorthwindTable",
 				"container": "csvcontainer"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

@@ -187,7 +187,8 @@
 				"     ),",
 				"     partitionFileNames:['finalreportworkshop.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> finalreportworkshop"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> finalreportworkshop"
 			]
 		}
 	}

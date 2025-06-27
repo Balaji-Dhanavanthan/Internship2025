@@ -3,10 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "workshop",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -30,7 +28,7 @@
 							"finalreportworkshop": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"filename": "finalreportworkshop"
+								"filename": "finalreportworkshop.csv"
 							}
 						}
 					},
@@ -132,6 +130,8 @@
 			{
 				"name": "exceltoparquet",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

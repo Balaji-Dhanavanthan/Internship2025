@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "bash.parquet",
-				"folderPath": "Target Folders/I2025_JNagara1/Input",
+				"fileName": "part-00000-40456429-594a-431f-acdf-6ddb227bc2b0-c000.snappy.parquet",
+				"folderPath": "Target Folders/I2025_JNagara1",
 				"container": "test-container"
 			},
 			"compressionCodec": "snappy"

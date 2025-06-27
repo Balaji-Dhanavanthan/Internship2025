@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "DF_WORKSHOP_I2025_JNagara1",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

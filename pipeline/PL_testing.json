@@ -21,9 +21,6 @@
 						"datasetParameters": {
 							"op": {
 								"sheet_index": 0
-							},
-							"CSVSink": {
-								"DatabaseObject": "I2025_JSenthil"
 							}
 						}
 					},

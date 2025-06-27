@@ -55,19 +55,10 @@
 							"op": {
 								"sheet_index": 0
 							},
-							"CSVSink": {
-								"file_name": "csvcontainer",
+							"sinkcsv": {
+								"file_name": "basf_sink_jjs.csv",
 								"folder_name": "sink",
 								"container_name": "csvcontainer"
-							}
-						},
-						"linkedServiceParameters": {
-							"CSVSink": {
-								"schemaLinkedService": {
-									"file_name": "csvcontainer",
-									"folder_name": "sink",
-									"container_name": "basf_sink_jjs.csv"
-								}
 							}
 						}
 					},

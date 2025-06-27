@@ -18,7 +18,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference"
 					},
-					"name": "CSVSink"
+					"name": "sinkcsv"
 				}
 			],
 			"transformations": [
@@ -112,49 +112,10 @@
 				"     skipDuplicateMapOutputs: true) ~> selectMainCols",
 				"selectMainCols sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['basf_sink_jjs.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
-				"     mapColumn(",
-				"          SurveyID,",
-				"          FeedbackProgram,",
-				"          Firstname,",
-				"          Lastname,",
-				"          ContactName,",
-				"          Email,",
-				"          PHONENUMBER,",
-				"          ContactCountry,",
-				"          JobTitle,",
-				"          ContactDepartment,",
-				"          Language,",
-				"          Salutation,",
-				"          ShipTo,",
-				"          SoldTo,",
-				"          LeadContactOD,",
-				"          {LeadContactGBU/RBU},",
-				"          LeadContactSBU,",
-				"          MainIndustry,",
-				"          Region,",
-				"          SalesChannel,",
-				"          CustomerNetwork,",
-				"          LeadContactSegmentation1,",
-				"          LeadContactSegmentation2,",
-				"          InvitationStatus,",
-				"          Creationdate,",
-				"          Invitationdate,",
-				"          LocalInvitationDate,",
-				"          Surveystatus,",
-				"          ExpiresOnDate,",
-				"          LocalExpirationDate,",
-				"          ReasonForScore,",
-				"          EaseOfDoingBusiness,",
-				"          IssueResolution,",
-				"          ProductQuality,",
-				"          DeliveryReliability,",
-				"          UnderstandingYourBusinessNeeds",
-				"     ),",
-				"     partitionBy('hash', 1),",
-				"     format: 'table') ~> CSVSink"
+				"     partitionBy('hash', 1)) ~> sinkcsv"
 			]
 		}
 	}

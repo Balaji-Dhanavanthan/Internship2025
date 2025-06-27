@@ -52,11 +52,13 @@
 						"referenceName": "DF_for_workshop_1_2",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"op": {
-								"sheet_index": 0
+							"praqSrc": {
+								"containerName": "parquetcontainer",
+								"folderName": "sink",
+								"fileName": "basf_invitation_jjs.parquet"
 							},
-							"sinkcsv": {
-								"file_name": "basf_sink_jjs.csv",
+							"sinkCSV": {
+								"file_name": "basf_sink_jjs_2.csv",
 								"folder_name": "sink",
 								"container_name": "csvcontainer"
 							}
@@ -124,7 +126,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "basf_sink_jjs.csv",
+							"file_name": "basf_sink_jjs_2.csv",
 							"folder_name": "sink",
 							"container_name": "csvcontainer"
 						}
@@ -136,7 +138,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "rawdata"
+							"TableName": "rawdata_2"
 						}
 					}
 				]

@@ -1,0 +1,175 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "BASK Invitation Dataset.xlsx",
+				"folderPath": "Workshop_source",
+				"container": "test-container"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Survey ID",
+				"type": "String"
+			},
+			{
+				"name": "Feedback Program",
+				"type": "String"
+			},
+			{
+				"name": "First name",
+				"type": "String"
+			},
+			{
+				"name": "Last name",
+				"type": "String"
+			},
+			{
+				"name": "Contact Name",
+				"type": "String"
+			},
+			{
+				"name": "Email",
+				"type": "String"
+			},
+			{
+				"name": "PHONE NUMBER",
+				"type": "String"
+			},
+			{
+				"name": "Contact Country",
+				"type": "String"
+			},
+			{
+				"name": "Job Title",
+				"type": "String"
+			},
+			{
+				"name": "Contact Department",
+				"type": "String"
+			},
+			{
+				"name": "Language",
+				"type": "String"
+			},
+			{
+				"name": "Salutation",
+				"type": "String"
+			},
+			{
+				"name": "Ship_to",
+				"type": "String"
+			},
+			{
+				"name": "Ship to",
+				"type": "String"
+			},
+			{
+				"name": "Sold_to",
+				"type": "String"
+			},
+			{
+				"name": "Sold to",
+				"type": "String"
+			},
+			{
+				"name": "Lead Contact OD",
+				"type": "String"
+			},
+			{
+				"name": "Lead Contact GBU/RBU",
+				"type": "String"
+			},
+			{
+				"name": "Lead Contact SBU",
+				"type": "String"
+			},
+			{
+				"name": "Main Industry",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Sales Channel",
+				"type": "String"
+			},
+			{
+				"name": "Customer Network",
+				"type": "String"
+			},
+			{
+				"name": "Lead Contact Segmentation1",
+				"type": "String"
+			},
+			{
+				"name": "Lead Contact Segmentation2",
+				"type": "String"
+			},
+			{
+				"name": "Invitation Status",
+				"type": "String"
+			},
+			{
+				"name": "Creationdate",
+				"type": "String"
+			},
+			{
+				"name": "Invitation date",
+				"type": "String"
+			},
+			{
+				"name": "Local Invitation Date",
+				"type": "String"
+			},
+			{
+				"name": "Survey status",
+				"type": "String"
+			},
+			{
+				"name": "Expires on date",
+				"type": "String"
+			},
+			{
+				"name": "Local Expiration Date",
+				"type": "String"
+			},
+			{
+				"name": "Reason for Score",
+				"type": "String"
+			},
+			{
+				"name": "Ease of doing business",
+				"type": "String"
+			},
+			{
+				"name": "Issue Resolution",
+				"type": "String"
+			},
+			{
+				"name": "Product Quality",
+				"type": "String"
+			},
+			{
+				"name": "Delivery Reliability",
+				"type": "String"
+			},
+			{
+				"name": "Understanding your business needs",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,123 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {Survey ID} as string,",
+				"          {Feedback Program} as string,",
+				"          {First name} as string,",
+				"          {Last name} as string,",
+				"          {Contact Name} as string,",
+				"          Email as string,",
+				"          {PHONE NUMBER} as string,",
+				"          {Contact Country} as string,",
+				"          {Job Title} as string,",
+				"          {Contact Department} as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          {Ship to} as string,",
+				"          Sold_to as string,",
+				"          {Sold to} as string,",
+				"          {Lead Contact OD} as string,",
+				"          {Lead Contact GBU/RBU} as string,",
+				"          {Lead Contact SBU} as string,",
+				"          {Main Industry} as string,",
+				"          Region as string,",
+				"          {Sales Channel} as string,",
+				"          {Customer Network} as string,",
+				"          {Lead Contact Segmentation1} as string,",
+				"          {Lead Contact Segmentation2} as string,",
+				"          {Invitation Status} as string,",
+				"          Creationdate as string,",
+				"          {Invitation date} as string,",
+				"          {Local Invitation Date} as string,",
+				"          {Survey status} as string,",
+				"          {Expires on date} as string,",
+				"          {Local Expiration Date} as string,",
+				"          {Reason for Score} as string,",
+				"          {Ease of doing business} as string,",
+				"          {Issue Resolution} as string,",
+				"          {Product Quality} as string,",
+				"          {Delivery Reliability} as string,",
+				"          {Understanding your business needs} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          Survey_ID = {Survey ID},",
+				"          Feedback_Program = {Feedback Program},",
+				"          First_name = {First name},",
+				"          Last_name = {Last name},",
+				"          Contact_Name = {Contact Name},",
+				"          Email,",
+				"          PHONE_NUMBER = {PHONE NUMBER},",
+				"          Contact_Country = {Contact Country},",
+				"          Job_Title = {Job Title},",
+				"          Contact_Department = {Contact Department},",
+				"          Language,",
+				"          Salutation,",
+				"          Ship_to1 = Ship_to,",
+				"          Ship_to = {Ship to},",
+				"          Sold_to1 = Sold_to,",
+				"          Sold_to = {Sold to},",
+				"          Lead_Contact_OD = {Lead Contact OD},",
+				"          Lead_Contact_GBU_RBU = {Lead Contact GBU/RBU},",
+				"          Lead_Contact_SBU = {Lead Contact SBU},",
+				"          Main_Industry = {Main Industry},",
+				"          Region,",
+				"          Sales_Channel = {Sales Channel},",
+				"          Customer_Network = {Customer Network},",
+				"          Lead_Contact_Segmentation1 = {Lead Contact Segmentation1},",
+				"          Lead_Contact_Segmentation2 = {Lead Contact Segmentation2},",
+				"          Invitation_Status = {Invitation Status},",
+				"          Creationdate,",
+				"          Invitation_date = {Invitation date},",
+				"          Local_Invitation_Date = {Local Invitation Date},",
+				"          Survey_status = {Survey status},",
+				"          Expires_on_date = {Expires on date},",
+				"          Local_Expiration_Date = {Local Expiration Date},",
+				"          Reason_for_Score = {Reason for Score},",
+				"          Ease_of_doing_business = {Ease of doing business},",
+				"          Issue_Resolution = {Issue Resolution},",
+				"          Product_Quality = {Product Quality},",
+				"          Delivery_Reliability = {Delivery Reliability},",
+				"          {Understanding_your_business _needs} = {Understanding your business needs}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

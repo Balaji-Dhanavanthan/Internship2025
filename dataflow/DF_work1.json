@@ -12,7 +12,19 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "DS_Blob_storgare",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
 			"transformations": [
 				{
 					"name": "select1"
@@ -66,7 +78,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"derivedColumn1 select(mapColumn(",
-				"          Survey_ID = {Survey ID},",
+				"          Survey_ID = Creationdate,",
 				"          Feedback_Program = {Feedback Program},",
 				"          First_name = {First name},",
 				"          Last_name = {Last name},",
@@ -79,9 +91,9 @@
 				"          Language,",
 				"          Salutation,",
 				"          Ship_to,",
-				"          {Ship to},",
+				"          Ship_to = {Ship to},",
 				"          Sold_to,",
-				"          {Sold to},",
+				"          Sold_to = {Sold to},",
 				"          Lead_Contact_OD = {Lead Contact OD},",
 				"          {Lead_Contact_GBU/RBU} = {Lead Contact GBU/RBU},",
 				"          Lead_Contact_SBU = {Lead Contact SBU},",
@@ -94,21 +106,63 @@
 				"          Invitation_Status = {Invitation Status},",
 				"          Creationdate,",
 				"          Invitation_date = {Invitation date},",
-				"          {Local Invitation_Date} = {Local Invitation Date},",
+				"          Local_Invitation_Date = {Local Invitation Date},",
 				"          Survey_status = {Survey status},",
 				"          Expiresondate = {Expires on date},",
-				"          {Local ExpirationDate} = {Local Expiration Date},",
+				"          Local_ExpirationDate = {Local Expiration Date},",
 				"          Reason_for_Score = {Reason for Score},",
 				"          Ease_of_doing_business = {Ease of doing business},",
 				"          Issue_Resolution = {Issue Resolution},",
 				"          Product_Quality = {Product Quality},",
 				"          Delivery_Reliability = {Delivery Reliability},",
-				"          {Understanding _your_business_needs} = {Understanding your business needs}",
+				"          Understanding_your_business_needs = {Understanding your business needs}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source1 derive(column1 = ERROR_FUNCTION(''),",
-				"          each(match(type == 'int'), $$ = iifNull($$, -1, $$))) ~> derivedColumn1"
+				"source1 derive(Creationdate = currentDate()) ~> derivedColumn1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          Survey_ID as integer,",
+				"          Feedback_Program as string,",
+				"          First_name as string,",
+				"          Last_name as string,",
+				"          Contact_Name as string,",
+				"          Email as string,",
+				"          Phone_Number as long,",
+				"          Contact_Country as string,",
+				"          Job_Title as string,",
+				"          Contact_Department as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          Sold_to as string,",
+				"          Lead_Contact_OD as string,",
+				"          {Lead_Contact_GBU/RBU} as string,",
+				"          Lead_Contact_SBU as string,",
+				"          Main_Industry as string,",
+				"          Region as string,",
+				"          Sales_Channel as string,",
+				"          Customer_Network as boolean,",
+				"          Lead_Contact_egmentation1 as string,",
+				"          Lead_Contact_Segmentation2 as string,",
+				"          Invitation_Status as string,",
+				"          Creationdate as string,",
+				"          Invitation_date as string,",
+				"          Local_Invitation_Date as string,",
+				"          Survey_status as string,",
+				"          Expires_on_date as string,",
+				"          Local_Expiration_Date as string,",
+				"          Reason_for_Score as string,",
+				"          Ease_of_doing_business as short,",
+				"          Issue_Resolution as short,",
+				"          Product_Quality as short,",
+				"          Delivery_Reliability as short,",
+				"          Understanding_your_business_needs as short",
+				"     ),",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

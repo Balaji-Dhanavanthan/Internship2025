@@ -5,12 +5,18 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"newfile": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Workshop_source",
+				"fileName": "new_bask_tgt ParquetSink",
+				"folderPath": "input",
 				"container": "test-container"
 			},
 			"compressionCodec": "snappy"

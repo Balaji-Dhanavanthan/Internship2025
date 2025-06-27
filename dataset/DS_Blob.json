@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "IPL.csv",
-				"folderPath": "Samplefolder",
-				"container": "practice-adf"
+				"fileName": "output.parquet",
+				"folderPath": "ck",
+				"container": "asrj"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -7,12 +7,10 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string",
-				"defaultValue": "practice-adf"
+				"type": "string"
 			},
 			"Directory": {
-				"type": "string",
-				"defaultValue": "Asrar"
+				"type": "string"
 			},
 			"FileName": {
 				"type": "string"
@@ -23,8 +21,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "countries.csv",
-				"container": "test-container"
+				"fileName": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Directory",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

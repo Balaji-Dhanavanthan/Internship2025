@@ -237,7 +237,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "test-container",
-							"Folder": "input",
+							"Folder": "I2025_RRamesh",
 							"Filename": "*"
 						}
 					},
@@ -251,6 +251,7 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
+						"wildcardFileName": "*",
 						"enablePartitionDiscovery": false
 					}
 				}

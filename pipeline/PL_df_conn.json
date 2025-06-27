@@ -23,14 +23,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -56,12 +53,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "EX_DS",
 						"type": "DatasetReference",
 						"parameters": {
-							"Folder": "Workshop_source",
+							"work_sheet": 0,
+							"file": "BASK Invitation Dataset.xlsx",
 							"container": "test-container",
-							"Filename": "BASK Invitation Dataset.xaxl"
+							"folder": "workshop_source"
 						}
 					}
 				],
@@ -99,6 +97,11 @@
 								"file": "BASK Invitation Dataset.xlsx",
 								"container": "test-container",
 								"folder": "workshop_source"
+							},
+							"sink1": {
+								"filename": "copydf.parquet",
+								"container": "parquetcontainer",
+								"Folder": "sink"
 							}
 						}
 					},

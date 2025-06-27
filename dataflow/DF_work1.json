@@ -157,8 +157,10 @@
 				"          Understanding_your_business_needs as short",
 				"     ),",
 				"     format: 'parquet',",
+				"     partitionFileNames:['kani.parquet'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

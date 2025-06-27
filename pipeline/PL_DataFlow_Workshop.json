@@ -22,7 +22,7 @@
 							"sink1": {
 								"containerName": "csvcontainer",
 								"dirName": "dumps",
-								"fileName": "basf_invitation"
+								"fileName": "basf_invitation.parquet"
 							}
 						}
 					},

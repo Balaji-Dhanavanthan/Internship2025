@@ -92,7 +92,7 @@
 				"          Sold_to,",
 				"          Sold_to = {Sold to},",
 				"          Lead_Contact_OD = {Lead Contact OD},",
-				"          {Lead_Contact GBU_RBU} = {Lead Contact GBU/RBU},",
+				"          Lead_Contact_GBU_RBU = {Lead Contact GBU/RBU},",
 				"          Lead_Contact_SBU = {Lead Contact SBU},",
 				"          Main_Industry = {Main Industry},",
 				"          Region,",
@@ -119,6 +119,7 @@
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
+				"     partitionFileNames:['bask_inv.parquet'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
@@ -137,7 +138,7 @@
 				"          Ship_to,",
 				"          Sold_to,",
 				"          Lead_Contact_OD,",
-				"          Lead_Contact_GBU_RBU = {Lead_Contact GBU_RBU},",
+				"          Lead_Contact_GBU_RBU,",
 				"          Lead_Contact_SBU,",
 				"          Main_Industry,",
 				"          Region,",
@@ -158,7 +159,8 @@
 				"          Product_Quality,",
 				"          Delivery_Reliability,",
 				"          Understanding_your_business_needs",
-				"     )) ~> sink1"
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

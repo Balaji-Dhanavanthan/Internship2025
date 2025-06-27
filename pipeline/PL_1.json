@@ -216,7 +216,7 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"Directory": "aabidh",
-							"File": "job_history.csv"
+							"File": "hire_date.csv"
 						}
 					}
 				]
@@ -262,6 +262,19 @@
 			"etl": {
 				"type": "String",
 				"defaultValue": "yes2"
+			},
+			"intg": {
+				"type": "Array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5
+				]
+			},
+			"itc": {
+				"type": "Array"
 			}
 		},
 		"annotations": []

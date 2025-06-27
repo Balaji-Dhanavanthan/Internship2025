@@ -38,9 +38,6 @@
 			"transformations": [
 				{
 					"name": "select1"
-				},
-				{
-					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -172,8 +169,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source2 filter(year(toDate(`Invitation date`, 'yyyy-MM-dd')) == 2021 ||",
-				"year(toDate(`Invitation date`, 'yyyy-MM-dd')) == 2022) ~> filter1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
@@ -219,7 +214,7 @@
 				"          DeliveryReliability,",
 				"          Understandingyourbusinessneeds = {Understandingyourbusiness needs}",
 				"     )) ~> sink1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"source2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink2"

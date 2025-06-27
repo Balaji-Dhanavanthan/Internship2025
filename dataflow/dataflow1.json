@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_par_demo",
+						"referenceName": "DS_CK",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -114,8 +114,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'parquet',",
-				"     partitionFileNames:['output.paraquet'],",
+				"     partitionFileNames:['output.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink1"

@@ -1,0 +1,22 @@
+{
+	"name": "SS_RawData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Intern_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"dbo.I2025_CKumaram": {
+				"type": "string",
+				"defaultValue": "test_out"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "I2025_CKumaram",
+			"table": "basf_inv"
+		}
+	}
+}

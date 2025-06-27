@@ -5,8 +5,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -51,7 +49,7 @@
 						"parameters": {
 							"container": "test-container",
 							"folder": "Target Folders/I2025_AMohamad/ADF",
-							"file": "part-00000-f77b6f7c-945b-4b0e-80e2-1a81792d21c9-c000.csv"
+							"file": "part-00000-092f9aec-eb51-421f-b190-9b74eba2a61a-c000.csv"
 						}
 					}
 				],
@@ -61,7 +59,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "I2025_AMohamad",
-							"tablename": "ADF_workshop",
+							"tablename": "ADF",
 							"database": "Intern_2025"
 						}
 					}
@@ -70,6 +68,8 @@
 			{
 				"name": "Delete1",
 				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

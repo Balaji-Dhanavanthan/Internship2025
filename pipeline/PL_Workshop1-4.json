@@ -1,5 +1,5 @@
 {
-	"name": "PL_Workshop1",
+	"name": "PL_Workshop1-4",
 	"properties": {
 		"activities": [
 			{
@@ -15,23 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DF_Workshop1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"Container": "test-container",
-								"Folder": "Workshop_source",
-								"File": "BASK Invitation Dataset.xlsx",
-								"SheetName": 0
-							},
-							"sink1": {
-								"Container": "test-adf",
-								"Folder": "doniya_folder",
-								"File": "pqt_bask"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

@@ -1,0 +1,98 @@
+{
+	"name": "DF_Workshop1_4",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Survey_ID as string,",
+				"          Feedback_Program as string,",
+				"          First_name as string,",
+				"          Last_name as string,",
+				"          Contact_Name as string,",
+				"          Email as string,",
+				"          PHONE_NUMBER as long,",
+				"          Contact_Country as string,",
+				"          Job_Title as string,",
+				"          Contact_Department as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          Sold_to as string,",
+				"          Lead_Contact_OD as string,",
+				"          {Lead_Contact_GBU/RBU} as string,",
+				"          Lead_Contact_SBU as string,",
+				"          Main_Industry as string,",
+				"          Region as string,",
+				"          Sales_Channel as string,",
+				"          Customer_Network as boolean,",
+				"          Lead_Contact_Segmentation1 as string,",
+				"          Lead_Contact_Segmentation2 as string,",
+				"          Invitation_Status as string,",
+				"          Creationdate as string,",
+				"          Invitation_date as string,",
+				"          Local_Invitation_Date as string,",
+				"          Survey_status as string,",
+				"          Expires_on_date as string,",
+				"          Local_Expiration_Date as string,",
+				"          Reason_for_Score as string,",
+				"          Ease_of_doing_business as short,",
+				"          Issue_Resolution as short,",
+				"          Product_Quality as short,",
+				"          Delivery_Reliability as short,",
+				"          Understanding_your_business_needs as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          Survey_ID,",
+				"          Contact_Name,",
+				"          Email,",
+				"          PHONE_NUMBER,",
+				"          Job_Title,",
+				"          Ship_to,",
+				"          Sold_to,",
+				"          Lead_Contact_SBU,",
+				"          Main_Industry,",
+				"          Lead_Contact_Segmentation1,",
+				"          Invitation_Status,",
+				"          Creationdate,",
+				"          Invitation_date,",
+				"          Local_Invitation_Date,",
+				"          Survey_status,",
+				"          Expires_on_date,",
+				"          Local_Expiration_Date,",
+				"          Reason_for_Score,",
+				"          Ease_of_doing_business,",
+				"          Issue_Resolution,",
+				"          Product_Quality,",
+				"          Delivery_Reliability,",
+				"          Understanding_your_business_needs",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(Invitation_Status == 'completed' && toInteger(Product_Quality) < 6",
+				") ~> filter1"
+			]
+		}
+	}
+}

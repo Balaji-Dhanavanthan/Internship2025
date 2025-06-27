@@ -37,15 +37,7 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -54,17 +46,6 @@
 						"parameters": {
 							"Container": "practice-adf",
 							"FolderName": "kani_folder",
-							"FileName": "jobs.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob2",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice.adf",
-							"FolderName": "doniya_folder/test_folder",
 							"FileName": "jobs.csv"
 						}
 					}

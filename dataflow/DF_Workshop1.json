@@ -9,7 +9,7 @@
 						"referenceName": "DS_excel",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "SrcBask"
 				}
 			],
 			"sinks": [
@@ -69,8 +69,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 select(mapColumn(",
+				"     ignoreNoFilesFound: false) ~> SrcBask",
+				"SrcBask select(mapColumn(",
 				"          Survey_ID = {Survey ID},",
 				"          Feedback_Program = {Feedback Program},",
 				"          First_name = {First name},",
@@ -115,8 +115,10 @@
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
+				"     partitionFileNames:['bask.parquet'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

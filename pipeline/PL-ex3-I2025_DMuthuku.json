@@ -37,38 +37,8 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Blob2",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "practice-adf",
-							"FolderName": "doniya_folder",
-							"FileName": "countries.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob3_I2025_DMuthuku",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-adf",
-							"folder": "doniya_folder",
-							"file": "countries.csv"
-						}
-					}
-				]
+					"enableStaging": false
+				}
 			},
 			{
 				"name": "Copy data2",

@@ -1,10 +1,49 @@
 {
-	"name": "pipeline1",
+	"name": "PL_Workshop_1_3",
 	"properties": {
 		"activities": [
 			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Workshop1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SrcBask": {
+								"Container": "test-container",
+								"Folder": "Workshop_source",
+								"File": "BASK Invitation Dataset.xlsx",
+								"SheetName": 0
+							},
+							"sink1": {
+								"Container": "test-adf",
+								"Folder": "doniya_folder",
+								"File": "bask.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -16,20 +55,25 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -44,24 +88,94 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_excel",
+						"referenceName": "DS_Parquet",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "test-container",
-							"Folder": "Workshop_source",
-							"File": "BASK Invitation Dataset.xlsx",
-							"SheetName": 0
+							"Container": "test-adf",
+							"Folder": "doniya_folder",
+							"File": "bask.parquet"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Parquet",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "test-container",
-							"Folder": "I2025_DMuthuku",
-							"File": "Bask.pqt"
+							"Container": "test-adf",
+							"FolderName": "doniya_folder",
+							"FileName": "bask.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "DELETE FROM bask_table WHERE YEAR(Invitation_date) IN (2021, 2022);",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-adf",
+							"FolderName": "doniya_folder",
+							"FileName": "bask.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_DMuthuku",
+							"TableName": "bask_table",
+							"database": "Intern_2025"
 						}
 					}
 				]

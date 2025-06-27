@@ -83,8 +83,8 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 filter(select2@city=='Oxford') ~> Oxford",
-				"Oxford derive(postal_code = iif(isNull(postal_code), 'Unknown', toString(postal_code)),",
-				"          state_province = iif(isNull(state_province), 'Unknown', toString(state_province))) ~> derivedColumn1"
+				"Oxford derive(postal_code = iif(isNull(source1@postal_code), 'Unknown', toString(source1@postal_code)),",
+				"          state_province = iif(isNull(source1@state_province), 'Unknown', toString(source1@state_province))) ~> derivedColumn1"
 			]
 		}
 	}

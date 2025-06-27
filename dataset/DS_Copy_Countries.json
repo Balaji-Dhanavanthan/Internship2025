@@ -22,10 +22,7 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@dataset().folder",
-					"type": "Expression"
-				},
+				"folderPath": "I2025_SKomala",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

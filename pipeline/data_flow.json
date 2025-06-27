@@ -121,8 +121,6 @@
 			{
 				"name": "countries",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -172,12 +170,12 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob_copy1",
+						"referenceName": "DS_Blob1",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "countries"
+							"filename": "countries"
 						}
 					}
 				]

@@ -46,7 +46,7 @@
 						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"username": "dbo",
+							"schema": "dbo",
 							"tablename": "countries"
 						}
 					}

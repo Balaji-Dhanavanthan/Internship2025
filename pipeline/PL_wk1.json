@@ -216,7 +216,10 @@
 				"outputs": [
 					{
 						"referenceName": "DS_rawdata",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "bask"
+						}
 					}
 				]
 			}

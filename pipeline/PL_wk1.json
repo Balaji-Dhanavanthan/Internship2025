@@ -456,7 +456,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "UnderstandingYourBusiness needs",
+									"name": "UnderstandingYourBusinessNeeds",
 									"physicalType": "UTF8"
 								}
 							}

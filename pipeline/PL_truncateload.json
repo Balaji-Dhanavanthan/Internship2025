@@ -23,7 +23,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "truncate table Products;"
+							"text": "truncate Products;"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
@@ -33,6 +33,8 @@
 				"name": "load-data",
 				"description": "",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "truncate",

@@ -15,7 +15,8 @@
 				"defaultValue": "I2025_JSivakum"
 			},
 			"file": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "stg"
 			}
 		},
 		"annotations": [],

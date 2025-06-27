@@ -13,13 +13,16 @@
 		},
 		"parameters": {
 			"schema": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "I2025_JSivakum"
 			},
 			"tablename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "stg"
 			},
 			"database": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Intern_2025"
 			}
 		},
 		"annotations": [],

@@ -21,7 +21,9 @@
 						"datasetParameters": {
 							"source1": {
 								"container": "test-container",
-								"folder": "Workshop_source"
+								"folder": "Workshop_source",
+								"filename": "BASK Invitation Dataset.xlsx",
+								"index": 0
 							}
 						}
 					},
@@ -52,8 +54,53 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_excel_I2025_JSivakum",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"folder": "Workshop_source",
+							"filename": "BASK Invitation Dataset.xlsx",
+							"index": 0
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "I2025_JSivakum",
+							"tablename": "rawdata",
+							"database": "Intern_2025"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

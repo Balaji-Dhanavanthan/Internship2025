@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -19,7 +17,20 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "workshop",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"container": "test-container",
+								"directory": "Workshop_source",
+								"filename": "BASK Invitation Dataset.xlsx",
+								"sheet": 0
+							},
+							"finalreportworkshop": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"filename": "finalreportworkshop"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -117,8 +128,10 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "exceltoparquet",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -624,6 +637,22 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
 			}
 		],
 		"annotations": []

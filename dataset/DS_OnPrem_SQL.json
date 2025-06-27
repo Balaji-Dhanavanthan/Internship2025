@@ -12,7 +12,7 @@
 			}
 		},
 		"parameters": {
-			"username": {
+			"schema": {
 				"type": "string"
 			},
 			"tablename": {
@@ -27,7 +27,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().username",
+				"value": "@dataset().schema",
 				"type": "Expression"
 			},
 			"table": {

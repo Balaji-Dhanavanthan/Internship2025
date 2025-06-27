@@ -24,6 +24,11 @@
 								"folder": "Workshop_source",
 								"filename": "BASK Invitation Dataset.xlsx",
 								"index": 0
+							},
+							"source2": {
+								"container": "test-container",
+								"folder": "I2025_JSivakum",
+								"file": "stg"
 							}
 						}
 					},

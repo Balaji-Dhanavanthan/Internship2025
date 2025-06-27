@@ -17,37 +17,24 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
-					},
-					"name": "source3"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "Parquet",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
-				},
-				{
-					"dataset": {
-						"referenceName": "test1",
-						"type": "DatasetReference"
-					},
-					"name": "sink2"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
 					"name": "select1"
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -137,49 +124,6 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
-				"source(output(",
-				"          {Survey ID} as string,",
-				"          {Feedback Program} as string,",
-				"          {First name} as string,",
-				"          {Last name} as string,",
-				"          {Contact Name} as string,",
-				"          Email as string,",
-				"          {PHONE NUMBER} as long,",
-				"          {Contact Country} as string,",
-				"          {Job Title} as string,",
-				"          {Contact Department} as string,",
-				"          Language as string,",
-				"          Salutation as string,",
-				"          Ship_to as string,",
-				"          {Ship to} as string,",
-				"          Sold_to as string,",
-				"          {Sold to} as string,",
-				"          {Lead Contact OD} as string,",
-				"          {Lead Contact GBU/RBU} as string,",
-				"          {Lead Contact SBU} as string,",
-				"          {Main Industry} as string,",
-				"          Region as string,",
-				"          {Sales Channel} as string,",
-				"          {Customer Network} as boolean,",
-				"          {Lead Contact Segmentation1} as string,",
-				"          {Lead Contact Segmentation2} as string,",
-				"          {Invitation Status} as string,",
-				"          Creationdate as string,",
-				"          {Invitation date} as string,",
-				"          {Local Invitation Date} as string,",
-				"          {Survey status} as string,",
-				"          {Expires on date} as string,",
-				"          {Local Expiration Date} as string,",
-				"          {Reason for Score} as string,",
-				"          {Ease of doing business} as short,",
-				"          {Issue Resolution} as short,",
-				"          {Product Quality} as short,",
-				"          {Delivery Reliability} as short,",
-				"          {Understanding your business needs} as short",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source3",
 				"source1 select(mapColumn(",
 				"          Survey_ID = {Survey ID},",
 				"          Feedback_Program = {Feedback Program},",
@@ -223,50 +167,39 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"source2 select(mapColumn(",
-				"          {Survey ID},",
-				"          {Contact Name},",
+				"          {Survey _ID} = {Survey ID},",
+				"          Contact_Name = {Contact Name},",
 				"          Email,",
-				"          {PHONE NUMBER},",
-				"          {Job Title},",
-				"          {Ship to},",
-				"          {Sold to},",
-				"          {Lead Contact SBU},",
-				"          {Main Industry},",
-				"          {Lead Contact Segmentation1},",
-				"          {Invitation Status},",
+				"          PHONE_NUMBER = {PHONE NUMBER},",
+				"          Job_Title = {Job Title},",
+				"          Ship_to = {Ship to},",
+				"          Sold_to = {Sold to},",
+				"          Lead_Contact_SBU = {Lead Contact SBU},",
+				"          Main_Industry = {Main Industry},",
+				"          Lead_Contact_Segmentation1 = {Lead Contact Segmentation1},",
+				"          Invitation_Status = {Invitation Status},",
 				"          Creationdate,",
-				"          {Invitation date},",
-				"          {Local Invitation Date},",
-				"          {Survey status},",
-				"          {Expires on date},",
-				"          {Local Expiration Date},",
-				"          {Reason for Score},",
-				"          {Ease of doing business},",
-				"          {Issue Resolution},",
-				"          {Product Quality},",
-				"          {Delivery Reliability},",
-				"          {Understanding your business needs}",
+				"          Invitation_date = {Invitation date},",
+				"          {Local_Invitatio_ Date} = {Local Invitation Date},",
+				"          Survey_status = {Survey status},",
+				"          Expires_on_date = {Expires on date},",
+				"          Local_Expiration_Date = {Local Expiration Date},",
+				"          Reason_for_Score = {Reason for Score},",
+				"          Ease_of_doing_business = {Ease of doing business},",
+				"          Issue_Resolution = {Issue Resolution},",
+				"          Product_Quality = {Product Quality},",
+				"          Delivery_Reliability = {Delivery Reliability},",
+				"          Understanding_your_business_needs = {Understanding your business needs}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     format: 'parquet',",
-				"     partitionFileNames:['input'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1",
-				"select2 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          country_id as string,",
-				"          country_name as string,",
-				"          region_id as string",
-				"     ),",
-				"     partitionFileNames:['selected_col'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink2"
+				"select2 filter(Invitation_Status=='Completed'&&Product_Quality<6) ~> filter1",
+				"select1 derive(each(match(type=='string'), $$ = coalesce($$,'UNK')),",
+				"          each(match(type=='integer'), $$ = coalesce($$,0)),",
+				"          each(match(type=='date'), $$ = coalesce($$,'1900-01-01'))) ~> derivedColumn3",
+				"derivedColumn3 keyGenerate(output(surrogate_id as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1"
 			]
 		}
 	}

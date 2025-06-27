@@ -27,6 +27,15 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "filter2"
+				},
+				{
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -66,7 +75,7 @@
 				"          {Reason for Score} as string,",
 				"          {Ease of doing business} as string,",
 				"          {Issue Resolution} as string,",
-				"          {Product Quality} as string,",
+				"          {Product Quality} as integer,",
 				"          {Delivery Reliability} as string,",
 				"          {Understanding your business needs} as string",
 				"     ),",
@@ -117,7 +126,39 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 filter(year(toDate(Invitation_date)) == 2021 || year(toDate(Invitation_date)) == 2022",
 				") ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"filter1 select(mapColumn(",
+				"          Survey_ID,",
+				"          Contact_Name,",
+				"          Email,",
+				"          PHONE_NUMBER,",
+				"          Job_Title,",
+				"          Ship_to,",
+				"          Sold_to,",
+				"          Lead_Contact_SBU,",
+				"          Main_Industry,",
+				"          Lead_Contact_Segmentation1,",
+				"          Invitation_Status,",
+				"          Creationdate,",
+				"          Invitation_date,",
+				"          Local_Invitation_Date,",
+				"          Survey_status,",
+				"          Expires_on_date,",
+				"          Local_Expiration_Date,",
+				"          Reason_for_Score,",
+				"          Ease_of_doing_business,",
+				"          Issue_Resolution,",
+				"          Product_Quality,",
+				"          Delivery_Reliability,",
+				"          Understanding_your_business_needs",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 filter(Invitation_Status == 'completed' && Product_Quality <6\r",
+				") ~> filter2",
+				"filter2 keyGenerate(output(surrogate_key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['basf_surya'],",

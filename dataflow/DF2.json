@@ -10,13 +10,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference"
-					},
-					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -80,23 +73,6 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source(output(",
-				"          employee_id as integer,",
-				"          first_name as string,",
-				"          last_name as string,",
-				"          email as string,",
-				"          phone_number as string,",
-				"          hire_date as timestamp,",
-				"          job_id as string,",
-				"          salary as decimal(8,2),",
-				"          commission_pct as decimal(2,2),",
-				"          manager_id as integer,",
-				"          department_id as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source2",
 				"select1 filter(in(['2021','2022'], left(Invitation_date, 4))) ~> filter1",
 				"source1 select(mapColumn(",
 				"          Survey_ID = {Survey ID},",

@@ -25,14 +25,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_Blob_copy1",
+						"referenceName": "DS_Blob1",
 						"type": "DatasetReference"
 					},
-					"name": "oxfordcitydetail",
-					"rejectedDataLinkedService": {
-						"referenceName": "DS_Blob_storgare",
-						"type": "LinkedServiceReference"
-					}
+					"name": "finaltable"
 				}
 			],
 			"transformations": [
@@ -166,7 +162,7 @@
 				"          striker_out as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> oxfordcitydetail"
+				"     skipDuplicateMapOutputs: true) ~> finaltable"
 			]
 		}
 	}

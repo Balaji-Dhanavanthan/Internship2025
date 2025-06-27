@@ -6,13 +6,10 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"container": {
+			"ObjectName": {
 				"type": "string"
 			},
-			"folder": {
-				"type": "string"
-			},
-			"file": {
+			"FileName": {
 				"type": "string"
 			}
 		},
@@ -73,6 +70,16 @@
 				"precision": 5,
 				"scale": 0
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().ObjectName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().FileName",
+				"type": "Expression"
+			}
+		}
 	}
 }

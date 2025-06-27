@@ -1,6 +1,46 @@
 {
-	"name": "pipeline1",
+	"name": "PL_excel_to_parquet",
 	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"container": "test-container",
+								"directory": "Workshop_source",
+								"filename": "BASK Invitation Dataset.xlsx",
+								"index": 0
+							},
+							"sink1": {
+								"filename": "exceltoparq.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			}
+		],
 		"annotations": []
 	}
 }

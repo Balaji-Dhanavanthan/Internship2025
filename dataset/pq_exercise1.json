@@ -19,7 +19,7 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "I2025_KRavi",
+				"folderPath": "I2025_KRavi/input",
 				"container": "test-container"
 			},
 			"compressionCodec": "snappy"

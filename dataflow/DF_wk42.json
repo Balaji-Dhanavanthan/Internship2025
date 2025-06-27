@@ -17,6 +17,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -65,7 +68,12 @@
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
 				"          each(match(type=='integer'), $$ = iifNull($#, 0)),",
-				"          created_at = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"          created_at = currentDate(),",
+				"          created_by = 'I2025_RRamesh',",
+				"          Quality = iif(ProductQuality>5,'Good','Bad')) ~> derivedColumn1",
+				"derivedColumn1 keyGenerate(output(surrogate_key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1"
 			]
 		}
 	}

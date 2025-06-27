@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -144,6 +142,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "DELETE FROM rawdata WHERE YEAR(Invitation_date) IN (2021, 2022);",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate"

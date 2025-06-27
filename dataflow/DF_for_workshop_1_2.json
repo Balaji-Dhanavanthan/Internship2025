@@ -153,6 +153,7 @@
 				"          DeliveryReliability,",
 				"          UnderstandingYourBusinessNeeds",
 				"     ),",
+				"     partitionBy('hash', 1),",
 				"     format: 'table') ~> CSVSink"
 			]
 		}

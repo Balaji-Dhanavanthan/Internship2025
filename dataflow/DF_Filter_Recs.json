@@ -1,6 +1,9 @@
 {
 	"name": "DF_Filter_Recs",
 	"properties": {
+		"folder": {
+			"name": "Workshop_DataFlows"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -76,8 +79,10 @@
 				"source1 derive(Invitation_date = toDate(Invitation_date)) ~> derivedColumn1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['stg_basf_filtered'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkOutCsv"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkOutCsv"
 			]
 		}
 	}

@@ -1,6 +1,9 @@
 {
 	"name": "DF_Sink_Data",
 	"properties": {
+		"folder": {
+			"name": "Workshop_DataFlows"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

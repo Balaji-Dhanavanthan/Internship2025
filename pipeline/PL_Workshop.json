@@ -58,11 +58,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_new",
-						"type": "DatasetReference",
-						"parameters": {
-							"folder": "Target Folders",
-							"file": "I2025_SRangan1.csv"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			},

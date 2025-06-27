@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Northwind",
+				"fileName": "convert.csv",
+				"folderPath": "convertfile",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

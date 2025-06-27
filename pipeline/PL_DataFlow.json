@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -26,6 +24,11 @@
 								"Folder": "Workshop_source",
 								"File": "BASK Invitation Dataset.xlsx",
 								"Sheet": 0
+							},
+							"sink1": {
+								"Container": "parquetcontainer",
+								"Folder": "sink",
+								"File": "creatednew.parquet"
 							}
 						}
 					},
@@ -57,11 +60,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
@@ -545,13 +551,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Exer",
+						"referenceName": "DS_parquet",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "test-container",
-							"Folder": "Workshop_source",
-							"File": "BASK Invitation Dataset.xlsx",
-							"Sheet": 0
+							"Container": "parquetcontainer",
+							"Folder": "sink",
+							"File": "creatednew.parquet"
 						}
 					}
 				],
@@ -562,7 +567,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Folder": "Target Folders/I2025_MDinesh",
-							"FileName": "Container.Parquet"
+							"FileName": "Copyofparquet"
 						}
 					}
 				]

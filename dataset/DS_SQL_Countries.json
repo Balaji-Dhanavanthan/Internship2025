@@ -24,10 +24,6 @@
 				"precision": 6,
 				"scale": 0
 			}
-		],
-		"typeProperties": {
-			"schema": "I2025_SKomala",
-			"table": "countries"
-		}
+		]
 	}
 }

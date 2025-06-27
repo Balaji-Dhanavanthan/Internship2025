@@ -679,12 +679,47 @@
 							"type": "ParquetReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "DS_parquet",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"directory": "Target Folders",
+							"filename": "I2025_Asrar.parquet"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"Directory": "Target Folders",
+							"filename": "input.csv"
+						}
 					}
 				]
 			}

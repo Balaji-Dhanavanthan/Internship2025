@@ -19,16 +19,20 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
 				},
 				{
-					"name": "join2"
+					"name": "split1"
 				},
 				{
-					"name": "join3"
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -67,18 +71,21 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"join2 join(joinType:'inner',",
+				"source1, Employeetgt join(source1@employee_id == toInteger(Employeetgt@employee_id),",
+				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join3 join(joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2",
-				"source1 join(joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join3"
+				"join1 split((source1@employee_id==toShort(Employeetgt@employee_id)) && (source1@salary!=toDouble(Employeetgt@salary)),",
+				"     source1@employee_id!=toInteger(Employeetgt@employee_id),",
+				"     (source1@employee_id==toInteger(Employeetgt@employee_id)) && (source1@first_name==Employeetgt@first_name) && (source1@last_name==Employeetgt@last_name) &&(source1@email==Employeetgt@email)&&\r",
+				"(source1@phone_number==Employeetgt@phone_number),",
+				"     disjoint: false) ~> split1@(insert, update, remaining)",
+				"split1@insert derive(salary = split1@insert@salary) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

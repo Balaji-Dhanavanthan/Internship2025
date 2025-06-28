@@ -16,7 +16,7 @@
 						"referenceName": "DS_Blob2",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "Employeestgt"
 				}
 			],
 			"sinks": [
@@ -46,10 +46,7 @@
 					"name": "alterRow2"
 				},
 				{
-					"name": "derivedColumn1"
-				},
-				{
-					"name": "derivedColumn2"
+					"name": "NullHandling"
 				},
 				{
 					"name": "surrogateKey1"
@@ -59,6 +56,9 @@
 				},
 				{
 					"name": "derivedColumn4"
+				},
+				{
+					"name": "MergeSTT"
 				}
 			],
 			"scriptLines": [
@@ -80,14 +80,24 @@
 				"     inferDriftedColumnTypes: true,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source(output(",
-				"          DEPARTMENT_ID as short,",
-				"          DEPARTMENT_NAME as string,",
-				"          MANAGER_ID as short,",
-				"          LOCATION_ID as short",
+				"          employee_id as string,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as string,",
+				"          job_id as string,",
+				"          salary as string,",
+				"          manager_id as string,",
+				"          department_id as string,",
+				"          created_date as string,",
+				"          created_by as string,",
+				"          modified_date as string,",
+				"          modified_by as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source2",
+				"     ignoreNoFilesFound: false) ~> Employeestgt",
 				"surrogateKey1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -95,13 +105,19 @@
 				"     broadcast: 'auto')~> join1",
 				"derivedColumn4 alterRow(updateIf(1==1)) ~> alterRow1",
 				"derivedColumn3 alterRow(insertIf(1==1)) ~> alterRow2",
-				"source1 derive() ~> derivedColumn1",
-				"derivedColumn1 derive() ~> derivedColumn2",
-				"derivedColumn2 keyGenerate(output({undefined} as long),",
+				"MergeSTT derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK', $$)),",
+				"          each(match(type == 'double'), $$ = iifNull($$, 0.00, $$)),",
+				"          each(match(type == 'integer'), $$ = iifNull($$, 0, $$))) ~> NullHandling",
+				"NullHandling keyGenerate(output({undefined} as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
 				"join1 derive() ~> derivedColumn3",
 				"join1 derive() ~> derivedColumn4",
+				"source1, Employeestgt join(source1@employee_id == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> MergeSTT",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

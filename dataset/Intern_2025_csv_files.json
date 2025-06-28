@@ -1,11 +1,15 @@
 {
-	"name": "DS_csv_I2025_PArul",
+	"name": "Intern_2025_csv_files",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "employees.csv"
+			},
 			"container": {
 				"type": "string",
 				"defaultValue": "test-container"
@@ -13,10 +17,6 @@
 			"directory": {
 				"type": "string",
 				"defaultValue": "I2025_PArul"
-			},
-			"filename": {
-				"type": "string",
-				"defaultValue": "employees_target"
 			}
 		},
 		"annotations": [],

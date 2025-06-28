@@ -1,12 +1,10 @@
 {
-	"name": "Day 3_Exercise 1",
+	"name": "pipeline1",
 	"properties": {
 		"activities": [
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -18,15 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -51,22 +43,18 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_csv_I2025_PArul",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"directory": "I2025_JSivakum",
-							"filename": "copied"
-						}
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_csv_I2025_PArul",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "test-container",
-							"folder": "I2025_PArul"
+							"directory": "I2025_PArul",
+							"filename": "employee_target"
 						}
 					}
 				]

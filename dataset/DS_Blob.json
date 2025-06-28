@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "BASK Invitation Dataset.xlsx",
-				"folderPath": "Workshop_source",
+				"fileName": "scdnew.csv",
+				"folderPath": "scdnew",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

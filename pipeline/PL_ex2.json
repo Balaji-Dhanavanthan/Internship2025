@@ -72,7 +72,8 @@
 										"TableName": {
 											"value": "@item().table_name",
 											"type": "Expression"
-										}
+										},
+										"database": "HR"
 									}
 								}
 							],
@@ -81,8 +82,8 @@
 									"referenceName": "DS_Blob",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "test-adf",
-										"folder": "aabidh/ex1",
+										"container": "test-container",
+										"folder": "I2025_MAbdul1/ex1",
 										"filename": {
 											"value": "@concat(item().table_name,'.csv')",
 											"type": "Expression"
@@ -115,7 +116,10 @@
 					},
 					"dataset": {
 						"referenceName": "DS_OnPrem_SQL2",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "HR"
+						}
 					},
 					"firstRowOnly": false
 				}
@@ -134,6 +138,18 @@
 			"nameoffile": {
 				"type": "Array",
 				"defaultValue": []
+			},
+			"ocunter": {
+				"type": "Integer"
+			},
+			"counter": {
+				"type": "Integer"
+			},
+			"cc": {
+				"type": "Integer"
+			},
+			"a": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []

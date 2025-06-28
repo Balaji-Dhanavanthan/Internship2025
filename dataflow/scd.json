@@ -1,0 +1,141 @@
+{
+	"name": "scd",
+	"properties": {
+		"folder": {
+			"name": "I2025_MSyed"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel_1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Excel_1",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "tgtderive"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "inset"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {Survey ID} as integer,",
+				"          {Feedback Program} as string,",
+				"          {First name} as string,",
+				"          {Last name} as string,",
+				"          {Contact Name} as string,",
+				"          Email as string,",
+				"          {PHONE NUMBER} as long,",
+				"          {Contact Country} as string,",
+				"          {Job Title} as string,",
+				"          {Contact Department} as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          {Ship to} as string,",
+				"          Sold_to as string,",
+				"          {Sold to} as string,",
+				"          {Lead Contact OD} as string,",
+				"          {Lead Contact GBU/RBU} as string,",
+				"          {Lead Contact SBU} as string,",
+				"          {Main Industry} as string,",
+				"          Region as string,",
+				"          {Sales Channel} as string,",
+				"          {Customer Network} as boolean,",
+				"          {Lead Contact Segmentation1} as string,",
+				"          {Lead Contact Segmentation2} as string,",
+				"          {Invitation Status} as string,",
+				"          Creationdate as string,",
+				"          {Invitation date} as string,",
+				"          {Local Invitation Date} as string,",
+				"          {Survey status} as string,",
+				"          {Expires on date} as string,",
+				"          {Local Expiration Date} as string,",
+				"          {Reason for Score} as string,",
+				"          {Ease of doing business} as short,",
+				"          {Issue Resolution} as short,",
+				"          {Product Quality} as short,",
+				"          {Delivery Reliability} as short,",
+				"          {Understanding your business needs} as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          {Survey ID} as integer,",
+				"          {Feedback Program} as string,",
+				"          {First name} as string,",
+				"          {Last name} as string,",
+				"          {Contact Name} as string,",
+				"          Email as string,",
+				"          {PHONE NUMBER} as long,",
+				"          {Contact Country} as string,",
+				"          {Job Title} as string,",
+				"          {Contact Department} as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          Ship_to as string,",
+				"          {Ship to} as string,",
+				"          Sold_to as string,",
+				"          {Sold to} as string,",
+				"          {Lead Contact OD} as string,",
+				"          {Lead Contact GBU/RBU} as string,",
+				"          {Lead Contact SBU} as string,",
+				"          {Main Industry} as string,",
+				"          Region as string,",
+				"          {Sales Channel} as string,",
+				"          {Customer Network} as boolean,",
+				"          {Lead Contact Segmentation1} as string,",
+				"          {Lead Contact Segmentation2} as string,",
+				"          {Invitation Status} as string,",
+				"          Creationdate as string,",
+				"          {Invitation date} as string,",
+				"          {Local Invitation Date} as string,",
+				"          {Survey status} as string,",
+				"          {Expires on date} as string,",
+				"          {Local Expiration Date} as string,",
+				"          {Reason for Score} as string,",
+				"          {Ease of doing business} as short,",
+				"          {Issue Resolution} as short,",
+				"          {Product Quality} as short,",
+				"          {Delivery Reliability} as short,",
+				"          {Understanding your business needs} as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source2 derive(Created_by = 'I2025_MSyed',",
+				"          Created_date = currentDate(),",
+				"          Updated_by = 'I2025_MSyed',",
+				"          Updated_date = currentDate()) ~> tgtderive",
+				"source1, tgtderive join(source1@{Survey ID} == source2@{Survey ID},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 alterRow() ~> update",
+				"join1 alterRow() ~> inset"
+			]
+		}
+	}
+}

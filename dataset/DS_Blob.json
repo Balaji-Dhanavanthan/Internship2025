@@ -20,7 +20,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "countries.csv",
 				"folderPath": {
 					"value": "@dataset().folder",
 					"type": "Expression"

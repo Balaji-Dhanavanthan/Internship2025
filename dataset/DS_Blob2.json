@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Northwind",
+				"fileName": "department.csv",
+				"folderPath": "Target Folders/I2025_SKomala",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

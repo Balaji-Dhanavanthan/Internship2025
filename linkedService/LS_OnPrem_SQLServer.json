@@ -13,10 +13,10 @@
 			"server": "SSIC-SQL-01",
 			"database": "@{linkedService().Database}",
 			"encrypt": "optional",
-			"trustServerCertificate": false,
+			"trustServerCertificate": true,
 			"authenticationType": "SQL",
 			"userName": "I2025_MAbdul1",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxYmE4MDNkNC0xODY2LTQwYzItYWM0OC1lMDY1NDRjZjEyYTIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkMWIwODZhMC1hMTZlLTQzNjctOTA1ZS03MDA3N2Y1ZjcyZjAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

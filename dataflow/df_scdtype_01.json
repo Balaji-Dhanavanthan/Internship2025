@@ -9,30 +9,23 @@
 						"referenceName": "DS_Blob3",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "Employeesource"
 				},
 				{
 					"dataset": {
 						"referenceName": "DS_Blob2",
 						"type": "DatasetReference"
 					},
-					"name": "Employeestgt"
+					"name": "Employeetgt"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_SQL_Countries",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "sink1",
-					"rejectedDataLinkedService": {
-						"referenceName": "DS_Blob_storgare",
-						"type": "LinkedServiceReference"
-					}
-				},
-				{
-					"name": "sink2"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -40,30 +33,15 @@
 					"name": "join1"
 				},
 				{
-					"name": "alterRow1"
+					"name": "join2"
 				},
 				{
-					"name": "alterRow2"
-				},
-				{
-					"name": "NullHandling"
-				},
-				{
-					"name": "surrogateKey1"
-				},
-				{
-					"name": "derivedColumn3"
-				},
-				{
-					"name": "derivedColumn4"
-				},
-				{
-					"name": "MergeSTT"
+					"name": "join3"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          employee_id as short,",
+				"          employee_id as integer,",
 				"          first_name as string,",
 				"          last_name as string,",
 				"          email as string,",
@@ -78,64 +56,97 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     inferDriftedColumnTypes: true,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     ignoreNoFilesFound: false) ~> Employeesource",
 				"source(output(",
-				"          employee_id as string,",
-				"          first_name as string,",
-				"          last_name as string,",
-				"          email as string,",
-				"          phone_number as string,",
-				"          hire_date as string,",
-				"          job_id as string,",
-				"          salary as string,",
-				"          manager_id as string,",
-				"          department_id as string,",
-				"          created_date as string,",
-				"          created_by as string,",
-				"          modified_date as string,",
-				"          modified_by as string",
+				"          country_id as string,",
+				"          country_name as string,",
+				"          region_id as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Employeestgt",
-				"surrogateKey1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
-				"     joinType:'left',",
+				"     ignoreNoFilesFound: false) ~> Employeetgt",
+				"join2 join(joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"derivedColumn4 alterRow(updateIf(1==1)) ~> alterRow1",
-				"derivedColumn3 alterRow(insertIf(1==1)) ~> alterRow2",
-				"MergeSTT derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK', $$)),",
-				"          each(match(type == 'double'), $$ = iifNull($$, 0.00, $$)),",
-				"          each(match(type == 'integer'), $$ = iifNull($$, 0, $$))) ~> NullHandling",
-				"NullHandling keyGenerate(output({undefined} as long),",
-				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1",
-				"join1 derive() ~> derivedColumn3",
-				"join1 derive() ~> derivedColumn4",
-				"source1, Employeestgt join(source1@employee_id == ERROR_FUNCTION(''),",
-				"     joinType:'left',",
+				"join3 join(joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> MergeSTT",
-				"alterRow1 sink(allowSchemaDrift: true,",
+				"     broadcast: 'auto')~> join2",
+				"Employeesource join(joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3",
+				"Employeesource sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          country_id as decimal(6,0),",
-				"          country_name as string,",
-				"          region_id as decimal(6,0)",
+				"          Prop_0 as string,",
+				"          match_id as string,",
+				"          date as string,",
+				"          match_type as string,",
+				"          event_name as string,",
+				"          innings as string,",
+				"          batting_team as string,",
+				"          bowling_team as string,",
+				"          over as string,",
+				"          ball as string,",
+				"          ball_no as string,",
+				"          batter as string,",
+				"          bat_pos as string,",
+				"          runs_batter as string,",
+				"          balls_faced as string,",
+				"          bowler as string,",
+				"          valid_ball as string,",
+				"          runs_extras as string,",
+				"          runs_total as string,",
+				"          runs_bowler as string,",
+				"          runs_not_boundary as string,",
+				"          extra_type as string,",
+				"          non_striker as string,",
+				"          non_striker_pos as string,",
+				"          wicket_kind as string,",
+				"          player_out as string,",
+				"          fielders as string,",
+				"          runs_target as string,",
+				"          review_batter as string,",
+				"          team_reviewed as string,",
+				"          review_decision as string,",
+				"          umpire as string,",
+				"          umpires_call as string,",
+				"          player_of_match as string,",
+				"          match_won_by as string,",
+				"          win_outcome as string,",
+				"          toss_winner as string,",
+				"          toss_decision as string,",
+				"          venue as string,",
+				"          city as string,",
+				"          day as string,",
+				"          month as string,",
+				"          year as string,",
+				"          season as string,",
+				"          gender as string,",
+				"          team_type as string,",
+				"          superover_winner as string,",
+				"          result_type as string,",
+				"          method as string,",
+				"          balls_per_over as string,",
+				"          overs as string,",
+				"          event_match_no as string,",
+				"          stage as string,",
+				"          match_number as string,",
+				"          team_runs as string,",
+				"          team_balls as string,",
+				"          team_wicket as string,",
+				"          new_batter as string,",
+				"          batter_runs as string,",
+				"          batter_balls as string,",
+				"          bowler_wicket as string,",
+				"          batting_partners as string,",
+				"          next_batter as string,",
+				"          striker_out as string",
 				"     ),",
-				"     deletable:false,",
-				"     insertable:false,",
-				"     updateable:true,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1",
-				"alterRow2 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink2"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

@@ -170,7 +170,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     rowUrlColumn:'',",
+				"     partitionFileNames:['Modified'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]

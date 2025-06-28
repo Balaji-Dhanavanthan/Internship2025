@@ -89,8 +89,8 @@
 				}
 			},
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Data flow2",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -101,55 +101,29 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
+					"dataflow": {
+						"referenceName": "DF_Example",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"sheet": 0
+							},
+							"sink1": {
+								"container": "test-container",
+								"folder": "Target Folders/I2025_AMohamad/ADF",
+								"file": "Bask_modified"
+							}
 						}
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
+					"staging": {
+						"folderPath": "test-container/Target Folders/I2025_AMohamad"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Blob_XLSX",
-						"type": "DatasetReference",
-						"parameters": {
-							"sheet": 0
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"folder": "Target Folders/I2025_AMohamad",
-							"file": "workshop.parquet"
-						}
-					}
-				]
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []

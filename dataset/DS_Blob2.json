@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "department.csv",
+				"fileName": "Employees_Target.csv",
 				"folderPath": "Target Folders/I2025_SKomala",
 				"container": "test-container"
 			},

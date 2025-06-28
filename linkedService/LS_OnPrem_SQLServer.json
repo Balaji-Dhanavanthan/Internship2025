@@ -16,7 +16,7 @@
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
 			"userName": "I2025_MAbdul1",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4YTA3MTQ5YS05NmM5LTQxNWQtOWE1My01OTI0ZDI5MjNiMzMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxYmE4MDNkNC0xODY2LTQwYzItYWM0OC1lMDY1NDRjZjEyYTIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

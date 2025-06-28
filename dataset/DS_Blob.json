@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "scd1new.csv",
-				"folderPath": "I2025_PRajan_new",
+				"fileName": "newscd1.csv",
+				"folderPath": "I2025_PRajan_scd1",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

@@ -173,8 +173,6 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -186,7 +184,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_tosql_I2025_PRajan",
+						"referenceName": "DF_SCD1_I2025_PRajan",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -199,6 +197,8 @@
 			{
 				"name": "scd",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

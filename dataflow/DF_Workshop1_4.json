@@ -22,9 +22,6 @@
 				},
 				{
 					"name": "derivedColumn1"
-				},
-				{
-					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -96,8 +93,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(Invitation_Status == 'Completed' && toInteger(Product_Quality) < 6",
-				") ~> filter1",
+				"select1 filter(Invitation_Status == 'Completed' && toInteger(Product_Quality) < 6) ~> filter1",
 				"filter1 derive(Survey_ID = iif(isNull(Survey_ID), 'UNK', Survey_ID),",
 				"          Contact_Name = iif(isNull(Contact_Name), 'UNK', Contact_Name),",
 				"          Email = iif(isNull(Email), 'UNK', Email),",
@@ -109,19 +105,13 @@
 				"          Main_Industry = iif(isNull(Main_Industry), 'UNK', Main_Industry),",
 				"          Lead_Contact_Segmentation1 = iif(isNull(Lead_Contact_Segmentation1), 'UNK', Lead_Contact_Segmentation1),",
 				"          Invitation_Status = iif(isNull(Invitation_Status), 'UNK', Invitation_Status),",
-				"          Survey_status = iif(isNull(Survey_status), 'UNK', Survey_status)\r",
-				",",
+				"          Survey_status = iif(isNull(Survey_status), 'UNK', Survey_status),",
 				"          Reason_for_Score = iif(isNull(Reason_for_Score), 'UNK', Reason_for_Score),",
 				"          Ease_of_doing_business = iif(isNull(Ease_of_doing_business), 'UNK', Ease_of_doing_business),",
 				"          Issue_Resolution = iif(isNull(Issue_Resolution), 'UNK', Issue_Resolution),",
 				"          Product_Quality = iif(isNull(Product_Quality), 'UNK', Product_Quality),",
-				"          Delivery_Reliability = iif(isNull(Delivery_Reliability), 'UNK', Delivery_Reliability)\r",
-				",",
-				"          Understanding_your_business_needs = iif(isNull(Understanding_your_business_needs), 'UNK', Understanding_your_business_needs)\r",
-				") ~> derivedColumn1",
-				"derivedColumn1 keyGenerate(output(SurrogateKey as long),",
-				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1"
+				"          Delivery_Reliability = iif(isNull(Delivery_Reliability), 'UNK', Delivery_Reliability),",
+				"          Understanding_your_business_needs = iif(isNull(Understanding_your_business_needs), 'UNK', Understanding_your_business_needs)) ~> derivedColumn1"
 			]
 		}
 	}

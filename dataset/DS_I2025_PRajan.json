@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "mew3.csv",
-				"folderPath": "I2025_PRajan/new",
+				"fileName": "source.csv",
+				"folderPath": "I2025_PRajan",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

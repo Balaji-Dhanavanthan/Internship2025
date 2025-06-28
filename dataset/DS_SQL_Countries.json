@@ -27,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "I2025_SKomala",
-			"table": "Employees_Target"
+			"table": "Employees_Target_1"
 		}
 	}
 }

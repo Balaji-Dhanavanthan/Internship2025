@@ -1,0 +1,17 @@
+{
+	"name": "SSIC_SQL_01",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "SSIC-SQL-01",
+			"database": "Intern_2025",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "I2025_PArul",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEUwQ0IzMkMwLURBMjMtNEFBRC1CMkEwLTRDNDQ5OEM4NUUxMl8yY2NhYmQ2Mi1kYTM5LTQ2MDktODBjOS1jYmRmZmFmNDcxNDMiDQp9"
+		}
+	}
+}

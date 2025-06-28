@@ -1,5 +1,5 @@
 {
-	"name": "DS_rest",
+	"name": "DS_rest_I2025SRangan1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_Rest_service",

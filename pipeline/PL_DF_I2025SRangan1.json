@@ -1,10 +1,12 @@
 {
-	"name": "PL_DF",
+	"name": "PL_DF_I2025SRangan1",
 	"properties": {
 		"activities": [
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -16,7 +18,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DL_Workshop1_4",
+						"referenceName": "DF_Workshop1_4_I2025SRangan1",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -42,7 +44,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_new",
+						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					},
 					"enableLogging": false,
@@ -97,13 +99,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_new",
+						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_sql",
+						"referenceName": "DS_sql_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -124,7 +126,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DL_Workshop1_4",
+						"referenceName": "DF_Workshop1_4_I2025SRangan1",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -636,13 +638,129 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_new",
+						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_sql",
+						"referenceName": "DS_sql_I2025SRangan1",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "ETL load to sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_new_I2025SRangan1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"ObjectName": "I2025_SRangan1",
+							"FileName": "ETL"
+						}
+					}
+				]
+			},
+			{
+				"name": "sql to csv",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_sql_I2025SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"ObjectName": "I2025_SRangan1",
+							"FileName": "customer_target"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				]

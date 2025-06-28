@@ -1,5 +1,5 @@
 {
-	"name": "DS_Excel",
+	"name": "DS_Excel_I2025SRangan1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

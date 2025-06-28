@@ -1,5 +1,5 @@
 {
-	"name": "PL_I2025SRangan1_wait",
+	"name": "PL_wait_I2025SRangan1",
 	"properties": {
 		"activities": [
 			{
@@ -91,7 +91,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_new",
+									"referenceName": "DS_new_I2025SRangan1",
 									"type": "DatasetReference"
 								}
 							]

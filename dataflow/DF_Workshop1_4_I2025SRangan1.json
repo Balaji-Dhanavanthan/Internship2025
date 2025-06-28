@@ -1,5 +1,5 @@
 {
-	"name": "DL_Workshop1_4",
+	"name": "DF_Workshop1_4_I2025SRangan1",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_new",
+						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -113,7 +113,7 @@
 				"filter1 keyGenerate(output(SurrogateKey as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK')),",
+				"surrogateKey1 derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
 				"          each(match(type=='integer'), $$ = iifNull($#, 0)),",
 				"          file_name = 'Par.csv') ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",

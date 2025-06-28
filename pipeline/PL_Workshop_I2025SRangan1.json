@@ -1,5 +1,5 @@
 {
-	"name": "PL_Workshop",
+	"name": "PL_Workshop_I2025SRangan1",
 	"properties": {
 		"activities": [
 			{
@@ -57,7 +57,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_new",
+						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -142,6 +142,7 @@
 					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -638,13 +639,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Excel",
+						"referenceName": "DS_Excel_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Parquet",
+						"referenceName": "DS_Parquet_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -718,7 +719,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_sql",
+									"referenceName": "DS_sql_I2025SRangan1",
 									"type": "DatasetReference"
 								}
 							]
@@ -775,7 +776,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Parquet",
+						"referenceName": "DS_Parquet_I2025SRangan1",
 						"type": "DatasetReference"
 					}
 				],

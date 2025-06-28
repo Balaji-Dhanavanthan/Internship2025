@@ -1,5 +1,5 @@
 {
-	"name": "DS_Parquet",
+	"name": "DS_Parquet_I2025SRangan1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

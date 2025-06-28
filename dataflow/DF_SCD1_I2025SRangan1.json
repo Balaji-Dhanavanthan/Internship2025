@@ -1,79 +1,21 @@
 {
-	"name": "DF_Workshop1_3_I2025SRangan1",
+	"name": "DF_SCD1_I2025SRangan1",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
-				}
-			],
-			"sinks": [
-				{
-					"dataset": {
 						"referenceName": "DS_new_I2025SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "target"
 				}
 			],
-			"transformations": [
-				{
-					"name": "filter1"
-				}
-			],
+			"sinks": [],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          Survey_ID as string,",
-				"          Feedback_Program as string,",
-				"          Firstname as string,",
-				"          Lastname as string,",
-				"          ContactName as string,",
-				"          Email as string,",
-				"          PHONE_NUMBER as string,",
-				"          Contact_Country as string,",
-				"          Job_Title as string,",
-				"          Contact_Department as string,",
-				"          Language as string,",
-				"          Salutation as string,",
-				"          Ship_to as string,",
-				"          Sold_to as string,",
-				"          Lead_Contact_OD as string,",
-				"          Lead_Contact_GBU_RBU as string,",
-				"          Lead_Contact_SBU as string,",
-				"          MainIndustry as string,",
-				"          Region as string,",
-				"          SalesChannel as string,",
-				"          Customer_Network as boolean,",
-				"          Lead_Contact_Segmentation1 as string,",
-				"          Lead_Contact_Segmentation2 as string,",
-				"          InvitationStatus as string,",
-				"          Creationdate as string,",
-				"          Invitationdate as string,",
-				"          Local_Invitation_Date as string,",
-				"          Survey_status as string,",
-				"          Expires_on_date as string,",
-				"          Local_Expiration_Date as string,",
-				"          Reason_for_Score as string,",
-				"          Ease_of_doing_business as short,",
-				"          Issue_Resolution as short,",
-				"          Product_Quality as short,",
-				"          Delivery_Reliability as short,",
-				"          Understanding_your_business_needs as short,",
-				"          cur_date as string,",
-				"          createdby as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(in(['2021','2022'],left({Invitationdate}, 4))) ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
 				"          Prop_0 as string,",
 				"          match_id as string,",
 				"          date as string,",
@@ -139,10 +81,9 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['DF.csv'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target"
 			]
 		}
 	}

@@ -1,5 +1,5 @@
 {
-	"name": "DS_new",
+	"name": "DS_new_I2025SRangan1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "ETL.csv",
-				"folderPath": "I2025_SRangan1/input",
+				"fileName": "Target.csv",
+				"folderPath": "I2025_SRangan1/DF",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

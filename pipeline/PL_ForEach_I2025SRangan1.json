@@ -1,5 +1,5 @@
 {
-	"name": "PL_I2025SRangan1_ForEach",
+	"name": "PL_ForEach_I2025SRangan1",
 	"properties": {
 		"activities": [
 			{
@@ -12,7 +12,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_I2025SRangan1_child",
+						"referenceName": "PL_child_I2025SRangan1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -114,13 +114,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_new",
+									"referenceName": "DS_new_I2025SRangan1",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_new",
+									"referenceName": "DS_new_I2025SRangan1",
 									"type": "DatasetReference"
 								}
 							]

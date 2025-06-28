@@ -1,9 +1,17 @@
 {
-	"name": "DS_sql",
+	"name": "DS_sql_I2025SRangan1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_sql_server",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ObjectName": {
+				"type": "string"
+			},
+			"FileName": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
@@ -64,8 +72,14 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "I2025_SRangan1",
-			"table": "rawdata"
+			"schema": {
+				"value": "@dataset().ObjectName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().FileName",
+				"type": "Expression"
+			}
 		}
 	}
 }

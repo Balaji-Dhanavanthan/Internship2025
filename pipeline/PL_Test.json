@@ -145,6 +145,12 @@
 		"variables": {
 			"Job_ID": {
 				"type": "Array"
+			},
+			"status": {
+				"type": "String"
+			},
+			"status1": {
+				"type": "String"
 			}
 		},
 		"annotations": []

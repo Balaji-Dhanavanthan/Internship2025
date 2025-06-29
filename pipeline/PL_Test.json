@@ -12,7 +12,7 @@
 				}
 			},
 			{
-				"name": "yes",
+				"name": "status",
 				"description": "yes",
 				"type": "SetVariable",
 				"dependsOn": [
@@ -34,12 +34,12 @@
 				}
 			},
 			{
-				"name": "if con",
+				"name": "if condition",
 				"description": "",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "yes",
+						"activity": "status",
 						"dependencyConditions": [
 							"Succeeded"
 						]

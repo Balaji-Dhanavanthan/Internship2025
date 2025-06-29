@@ -26,6 +26,9 @@
 				},
 				{
 					"name": "splitInsert"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -51,12 +54,22 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
-				"source1, source2 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"source1, source2 lookup(source1@CustomerID == source2@CustomerID,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
-				"lookup1 split(ERROR_FUNCTION(''),",
-				"     disjoint: false) ~> splitInsert@(Insert, )"
+				"lookup1 split(isNull(CustomerID_tgt),",
+				"     disjoint: false) ~> splitInsert@(InsertStream)",
+				"source2 select(mapColumn(",
+				"          CustomerID_tgt = CustomerID,",
+				"          CustomerName_tgt = CustomerName,",
+				"          Email_tgt = Email,",
+				"          Phone_tgt = Phone,",
+				"          City_tgt = City,",
+				"          LastModifiedDate_tgt = LastModifiedDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}

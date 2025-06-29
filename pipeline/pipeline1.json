@@ -16,6 +16,8 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
@@ -30,6 +32,8 @@
 			{
 				"name": "If Condition1",
 				"type": "IfCondition",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable1",
@@ -46,30 +50,9 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "Set variable2",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "status",
-								"value": "'yes'"
-							}
-						},
-						{
 							"name": "Copy data1",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Set variable2",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -136,6 +119,24 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('items')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(mod(item(),2 ),0 )",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
@@ -144,6 +145,16 @@
 			},
 			"status1": {
 				"type": "String"
+			},
+			"items": {
+				"type": "Array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5
+				]
 			}
 		},
 		"annotations": []

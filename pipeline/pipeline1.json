@@ -114,13 +114,23 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Blob",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"directory": "aabidh",
+										"filename": "departments.csv"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DelimitedText1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"directory": "aabidh",
+										"filename": "departments.csv"
+									}
 								}
 							]
 						}

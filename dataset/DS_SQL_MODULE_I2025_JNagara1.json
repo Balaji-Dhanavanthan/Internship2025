@@ -5,11 +5,6 @@
 			"referenceName": "LS_sql_I2025_JNagara",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"tablename": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "ADF_Module_1_I2025_JNagara1"
 		},

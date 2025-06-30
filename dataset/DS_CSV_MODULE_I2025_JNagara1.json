@@ -8,6 +8,9 @@
 		"parameters": {
 			"filename": {
 				"type": "string"
+			},
+			"folder": {
+				"type": "string"
 			}
 		},
 		"folder": {
@@ -22,7 +25,10 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "Module Test 1 Qn2",
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
 				"container": "adf-module-test-1-source"
 			},
 			"columnDelimiter": ",",

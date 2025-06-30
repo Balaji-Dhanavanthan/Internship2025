@@ -24,6 +24,11 @@
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"value": "$$FILEPATH"
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
@@ -35,13 +40,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true,
-							"keys": [
-								"anime_id"
-							]
-						},
+						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
@@ -173,10 +172,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_SQL_MODULE_I2025_JNagara1",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "TGT_Anime_I2025_JNagara1"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			},
@@ -198,7 +194,16 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source1": {
-								"filename": "ModuleTest 1.csv"
+								"filename": "ModuleTest 1.csv",
+								"folder": "ModuleTest 1 Qn 1"
+							}
+						},
+						"linkedServiceParameters": {
+							"source1": {
+								"schemaLinkedService": {
+									"filename": "ModuleTest 1.csv",
+									"folder": "ModuleTest 1 Qn 1"
+								}
 							}
 						}
 					},

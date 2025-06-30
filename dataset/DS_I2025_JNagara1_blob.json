@@ -19,8 +19,8 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
-				"folderPath": "Target Folders/I2025_JNagara1/Input",
-				"container": "test-container"
+				"folderPath": "Module Test 1 Qn2",
+				"container": "adf-module-test-1-source"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

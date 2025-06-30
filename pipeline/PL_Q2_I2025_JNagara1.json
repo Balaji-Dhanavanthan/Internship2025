@@ -20,19 +20,29 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source1": {
-								"filename": " raw_anime1.csv"
+								"file": " raw_anime1.csv"
 							},
 							"source2": {
-								"filename": " raw_anime2.csv"
+								"file": " raw_anime2.csv"
 							},
 							"source3": {
-								"filename": "raw_anime3.csv"
+								"file": " raw_anime3.csv"
 							}
 						},
 						"linkedServiceParameters": {
+							"source1": {
+								"schemaLinkedService": {
+									"file": " raw_anime1.csv"
+								}
+							},
 							"source2": {
 								"schemaLinkedService": {
-									"filename": " raw_anime3.csv"
+									"file": " raw_anime2.csv"
+								}
+							},
+							"source3": {
+								"schemaLinkedService": {
+									"file": " raw_anime3.csv"
 								}
 							}
 						}
@@ -99,6 +109,114 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "anime_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "anime_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "genre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "genre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "type",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "episodes",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "episodes",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "rating",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rating",
+									"type": "Double",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "members",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "members",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "created_by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_by",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "created_time",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_time",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -115,10 +233,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_SQL_MODULE_I2025_JNagara1",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "TGT_Raw_Anime_I2025_JNagara1"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}

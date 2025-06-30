@@ -9,7 +9,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "sourcet2"
 				}
 			],
 			"sinks": [
@@ -18,7 +18,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sinkt2"
 				}
 			],
 			"transformations": [],
@@ -91,8 +91,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
+				"     ignoreNoFilesFound: false) ~> sourcet2",
+				"sourcet2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",
@@ -161,7 +161,7 @@
 				"          striker_out as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sinkt2"
 			]
 		}
 	}

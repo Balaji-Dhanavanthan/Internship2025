@@ -1,5 +1,5 @@
 {
-	"name": "DS rawanime 2",
+	"name": "DsRawAnime2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

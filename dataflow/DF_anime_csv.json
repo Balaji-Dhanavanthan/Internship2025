@@ -1,0 +1,87 @@
+{
+	"name": "DF_anime_csv",
+	"properties": {
+		"folder": {
+			"name": "ADF_module_test_1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference"
+					},
+					"name": "animeCsv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference"
+					},
+					"name": "sinkIntoBlob"
+				}
+			],
+			"transformations": [
+				{
+					"name": "UpdateColsAndChangeOVA"
+				},
+				{
+					"name": "renameType"
+				},
+				{
+					"name": "changeONA"
+				},
+				{
+					"name": "changeTV"
+				},
+				{
+					"name": "changeMovie"
+				},
+				{
+					"name": "filterAnimeType"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as integer,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> animeCsv",
+				"renameType derive(genre = replace(genre, ',', ' :'),",
+				"          rating = round(rating, 2),",
+				"          anime_type = case(anime_type == 'OVA', 'Original video animation', anime_type)) ~> UpdateColsAndChangeOVA",
+				"animeCsv select(mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          anime_type = type,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> renameType",
+				"UpdateColsAndChangeOVA derive(anime_type = case(anime_type == 'ONA', 'Original Net Animation', anime_type)) ~> changeONA",
+				"changeONA derive(anime_type = case(anime_type == 'TV', 'Television', anime_type)) ~> changeTV",
+				"changeTV derive(anime_type = case(anime_type == 'Movie', 'Cinema', anime_type)) ~> changeMovie",
+				"changeMovie filter(!isNull(anime_type)) ~> filterAnimeType",
+				"filterAnimeType sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['ADF_module_test_1_q1_sink.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkIntoBlob"
+			]
+		}
+	}
+}

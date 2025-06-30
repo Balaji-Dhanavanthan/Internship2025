@@ -1,0 +1,24 @@
+{
+	"name": "DS_MODULE_sink_I2025JNagar1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Q1_csv.csv",
+				"folderPath": "ADF_MODULE_I2025_JNagara1",
+				"container": "adf-module-test-1-target"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

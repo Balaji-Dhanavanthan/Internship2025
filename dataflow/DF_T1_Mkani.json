@@ -1,0 +1,107 @@
+{
+	"name": "DF_T1_Mkani",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          Prop_0 as string,",
+				"          match_id as string,",
+				"          date as string,",
+				"          match_type as string,",
+				"          event_name as string,",
+				"          innings as string,",
+				"          batting_team as string,",
+				"          bowling_team as string,",
+				"          over as string,",
+				"          ball as string,",
+				"          ball_no as string,",
+				"          batter as string,",
+				"          bat_pos as string,",
+				"          runs_batter as string,",
+				"          balls_faced as string,",
+				"          bowler as string,",
+				"          valid_ball as string,",
+				"          runs_extras as string,",
+				"          runs_total as string,",
+				"          runs_bowler as string,",
+				"          runs_not_boundary as string,",
+				"          extra_type as string,",
+				"          non_striker as string,",
+				"          non_striker_pos as string,",
+				"          wicket_kind as string,",
+				"          player_out as string,",
+				"          fielders as string,",
+				"          runs_target as string,",
+				"          review_batter as string,",
+				"          team_reviewed as string,",
+				"          review_decision as string,",
+				"          umpire as string,",
+				"          umpires_call as string,",
+				"          player_of_match as string,",
+				"          match_won_by as string,",
+				"          win_outcome as string,",
+				"          toss_winner as string,",
+				"          toss_decision as string,",
+				"          venue as string,",
+				"          city as string,",
+				"          day as string,",
+				"          month as string,",
+				"          year as string,",
+				"          season as string,",
+				"          gender as string,",
+				"          team_type as string,",
+				"          superover_winner as string,",
+				"          result_type as string,",
+				"          method as string,",
+				"          balls_per_over as string,",
+				"          overs as string,",
+				"          event_match_no as string,",
+				"          stage as string,",
+				"          match_number as string,",
+				"          team_runs as string,",
+				"          team_balls as string,",
+				"          team_wicket as string,",
+				"          new_batter as string,",
+				"          batter_runs as string,",
+				"          batter_balls as string,",
+				"          bowler_wicket as string,",
+				"          batting_partners as string,",
+				"          next_batter as string,",
+				"          striker_out as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

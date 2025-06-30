@@ -55,8 +55,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Folder": "Module Test 1 Qn2",
-							"container": "adf-module-test-1-source",
-							"Filename": "ModuleTest 1.csv"
+							"container": "adf-module-test-1-source"
 						}
 					}
 				],
@@ -91,13 +90,11 @@
 						"datasetParameters": {
 							"source": {
 								"Folder": "Module Test 1 Qn2",
-								"container": "adf-module-test-1-source",
-								"Filename": "ModuleTest 1.csv"
+								"container": "adf-module-test-1-source"
 							},
 							"sink1": {
 								"Folder": "I2025_MMuthumu",
-								"container": "adf-module-test-1-source",
-								"Filename": "ModuleTest 1.csv"
+								"container": "adf-module-test-1-source"
 							}
 						}
 					},

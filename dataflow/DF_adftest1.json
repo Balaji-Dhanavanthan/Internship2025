@@ -112,7 +112,8 @@
 				"          episodes,",
 				"          rating,",
 				"          members",
-				"     )) ~> sink1"
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

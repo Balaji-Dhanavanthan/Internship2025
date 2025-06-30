@@ -1,0 +1,47 @@
+{
+	"name": "DF_Q2",
+	"properties": {
+		"folder": {
+			"name": "ADF-Module test 1-I2025_MAbdul1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference"
+					},
+					"name": "rawanime1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference"
+					},
+					"name": "rawanime2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference"
+					},
+					"name": "rawanime3"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawanime1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawanime2",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawanime3"
+			]
+		}
+	}
+}

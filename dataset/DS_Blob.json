@@ -16,7 +16,7 @@
 			},
 			"file": {
 				"type": "string",
-				"defaultValue": "stg2"
+				"defaultValue": "sql_to_blob"
 			}
 		},
 		"annotations": [],

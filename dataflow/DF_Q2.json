@@ -87,7 +87,7 @@
 				"rawanime1, rawanime2, rawanime3 union(byName: true)~> joiningall",
 				"joiningall sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['TGT_Raw_Anime_I2025_MAbdul'],",
+				"     partitionFileNames:['TGT_Raw_Anime_I2025_MAbdul.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink"

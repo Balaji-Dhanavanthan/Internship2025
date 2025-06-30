@@ -1,0 +1,201 @@
+{
+	"name": "target",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "target"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "TargetDS",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "select4"
+				},
+				{
+					"name": "select5"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as string,",
+				"          job_id as string,",
+				"          salary as integer,",
+				"          commission_pct as double,",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as string,",
+				"          job_id as string,",
+				"          salary as double,",
+				"          commission_pct as double,",
+				"          manager_id as short,",
+				"          department_id as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"select2 derive(each(match(type=='string'), $$ = iifNull($$,'UNK',$$))) ~> derivedColumn1",
+				"source1 select(mapColumn(",
+				"          employee_id,",
+				"          first_name,",
+				"          last_name,",
+				"          email,",
+				"          phone_number,",
+				"          hire_date,",
+				"          job_id,",
+				"          salary,",
+				"          commission_pct,",
+				"          manager_id,",
+				"          department_id",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"derivedColumn1, target join(select2@employee_id == target@employee_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(select2@employee_id !=target@employee_id,",
+				"     select2@employee_id== target@employee_id && select2@manager_id!= target@manager_id,",
+				"     select2@employee_id== target@employee_id && select2@manager_id== target@manager_id,",
+				"     disjoint: false) ~> split1@(insert, update, existing)",
+				"split1@insert derive({created date} = currentDate(),",
+				"          {created by} = 'abhi',",
+				"          {updated date} = currentDate(),",
+				"          {updated by} = '-') ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          employee_id = split1@insert@employee_id,",
+				"          first_name = split1@insert@first_name,",
+				"          last_name = split1@insert@last_name,",
+				"          email = split1@insert@email,",
+				"          phone_number = split1@insert@phone_number,",
+				"          hire_date = split1@insert@hire_date,",
+				"          job_id = split1@insert@job_id,",
+				"          salary = split1@insert@salary,",
+				"          commission_pct = split1@insert@commission_pct,",
+				"          manager_id = split1@insert@manager_id,",
+				"          department_id = split1@insert@department_id,",
+				"          {created date},",
+				"          {created by},",
+				"          {updated date},",
+				"          {updated by}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3, select4, select5 union(byName: true)~> union1",
+				"split1@existing derive({created date} = currentDate(),",
+				"          {created by} = 'abhi',",
+				"          {updated date} = currentDate(),",
+				"          {updated by} = '-') ~> derivedColumn3",
+				"split1@update derive({created date} = currentDate(),",
+				"          {created by} = 'abhi',",
+				"          {updated date} = currentDate(),",
+				"          {updated by} = '-') ~> derivedColumn4",
+				"derivedColumn3 select(mapColumn(",
+				"          employee_id = split1@existing@employee_id,",
+				"          first_name = split1@existing@first_name,",
+				"          last_name = split1@existing@last_name,",
+				"          email = split1@existing@email,",
+				"          phone_number = split1@existing@phone_number,",
+				"          hire_date = split1@existing@hire_date,",
+				"          job_id = split1@existing@job_id,",
+				"          salary = split1@existing@salary,",
+				"          commission_pct = split1@existing@commission_pct,",
+				"          manager_id = split1@existing@manager_id,",
+				"          department_id = split1@existing@department_id,",
+				"          createdate = {created date},",
+				"          createdby = {created by},",
+				"          updateddate = {updated date},",
+				"          updatedby = {updated by}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"derivedColumn4 select(mapColumn(",
+				"          employee_id = split1@update@employee_id,",
+				"          first_name = split1@update@first_name,",
+				"          last_name = split1@update@last_name,",
+				"          email = split1@update@email,",
+				"          phone_number = split1@update@phone_number,",
+				"          hire_date = split1@update@hire_date,",
+				"          job_id = split1@update@job_id,",
+				"          salary = split1@update@salary,",
+				"          commission_pct = split1@update@commission_pct,",
+				"          manager_id = split1@update@manager_id,",
+				"          department_id = split1@update@department_id,",
+				"          createdate = {created date},",
+				"          createdby = {created by},",
+				"          updateddate = {updated date},",
+				"          updatedby = {updated by}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select5",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "DF_ADF_test1_I2025_RRameshQ2",
+	"properties": {
+		"folder": {
+			"name": "ADF_module_test1_I2025_RRamesh"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}

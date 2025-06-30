@@ -1,0 +1,127 @@
+{
+	"name": "PL_adf-test_Q1",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_Q1",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_adftest1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceQ1": {
+								"container": "adf-module-test-1-source",
+								"directory": "ModuleTest 1 Qn 1",
+								"filename": "ModuleTest 1.csv"
+							},
+							"sink1": {
+								"container": "adf-module-test1-target",
+								"directory": "I2025_MAbdul",
+								"filename": "TGT_Anime_I2025_MAbdul"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "CD-Q1-bb-sql",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "adf-module-test1-target",
+							"directory": "I2025_MAbdul",
+							"filename": "TGT_Anime_I2025_MAbdul"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SQL_ADF_TEST1_Q1",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "Intern_2025",
+							"schemaname": "I2025_MAbdul1",
+							"tablename": "TGT_Anime_I2025_MAbdul"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ADF-Module test 1-I2025_MAbdul1"
+		},
+		"annotations": []
+	}
+}

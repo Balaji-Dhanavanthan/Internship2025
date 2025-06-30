@@ -103,20 +103,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_Example",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"sheet": 0
-							},
-							"sink1": {
-								"container": "test-container",
-								"folder": "Target Folders/I2025_AMohamad/ADF",
-								"file": "Bask_modified"
-							}
-						}
-					},
-					"staging": {
-						"folderPath": "test-container/Target Folders/I2025_AMohamad"
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

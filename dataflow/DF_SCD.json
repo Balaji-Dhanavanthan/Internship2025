@@ -1,0 +1,99 @@
+{
+	"name": "DF_SCD",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_new_I2025SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "target"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "dcaudit"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          customer_id as short,",
+				"          name as string,",
+				"          email as string,",
+				"          address as string,",
+				"          phone as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          customer_id as short,",
+				"          name as string,",
+				"          email as string,",
+				"          address as string,",
+				"          phone as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"source1 derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK', $$)),",
+				"          each(match(type == 'double'), $$ = iifNull($#,0.00,$#)),",
+				"          each(match(type == 'integer'), $$ = iifNull($#,-1,$#)),",
+				"          createdby = 'I2025_SRangan1',",
+				"          created_at = currentDate(),",
+				"          updatedby = 'I2025_SRangan1',",
+				"          updated_at = currentDate()) ~> dcaudit",
+				"dcaudit keyGenerate(output({1} as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"target select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"surrogateKey1 lookup(customer_id == ERROR_FUNCTION(''),",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 split(ERROR_FUNCTION(''),",
+				"     disjoint: false) ~> update@(, )",
+				"update select(mapColumn(",
+				"          customer_id,",
+				"          name,",
+				"          email,",
+				"          address,",
+				"          phone,",
+				"          createdby,",
+				"          created_at,",
+				"          updatedby,",
+				"          updated_at,",
+				"          {1}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2"
+			]
+		}
+	}
+}

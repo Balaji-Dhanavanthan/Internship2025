@@ -1,0 +1,19 @@
+{
+	"name": "DS_SQL_Module1_Qn1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MSSQL",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_ADF_Module1"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "I2025_SKomala",
+			"table": "TGT_Anime_YourId"
+		}
+	}
+}

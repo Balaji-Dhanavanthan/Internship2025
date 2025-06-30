@@ -1,0 +1,52 @@
+{
+	"name": "DS_adf_modtest_EXCEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sheet_index": {
+				"type": "int",
+				"defaultValue": 0
+			},
+			"container_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			},
+			"directory_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ADF_module_test_1"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().directory_name",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container_name",
+					"type": "Expression"
+				}
+			},
+			"sheetIndex": {
+				"value": "@dataset().sheet_index",
+				"type": "Expression"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

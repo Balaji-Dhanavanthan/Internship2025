@@ -1,0 +1,46 @@
+{
+	"name": "DS rawanime 2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_ADF_Module1"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "raw_anime2",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "raw_anime2.xlsx",
+				"folderPath": "Module Test 1 Qn2",
+				"container": "adf-module-test-1-source"
+			}
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,118 @@
+{
+	"name": "DF_ADF_MODULE_QN 2",
+	"properties": {
+		"folder": {
+			"name": "DF_ADF_Module1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_raw_anime1",
+						"type": "DatasetReference"
+					},
+					"name": "SrcRawAnime1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS rawanime 2",
+						"type": "DatasetReference"
+					},
+					"name": "SrcRawAnime2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DSRawAnime3",
+						"type": "DatasetReference"
+					},
+					"name": "SrcRawAnime3"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "TGT_Raw_Anime_YourID",
+						"type": "DatasetReference"
+					},
+					"name": "TGTRawAnimeYourID"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RawAnime1JoinedRawAnime2"
+				},
+				{
+					"name": "RawAnime3JoinedWithRawAnime1and2"
+				},
+				{
+					"name": "AuditColumn"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as boolean,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcRawAnime1",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcRawAnime2",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcRawAnime3",
+				"SrcRawAnime1, SrcRawAnime2 join(SrcRawAnime1@anime_id == SrcRawAnime2@anime_id,",
+				"     joinType:'outer',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> RawAnime1JoinedRawAnime2",
+				"RawAnime1JoinedRawAnime2, SrcRawAnime3 join(SrcRawAnime1@anime_id == SrcRawAnime3@anime_id,",
+				"     joinType:'outer',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> RawAnime3JoinedWithRawAnime1and2",
+				"RawAnime3JoinedWithRawAnime1and2 derive({created at} = currentUTC(),",
+				"          {created by} = 'I2025_SKomala',",
+				"          filename = 'raw_anime 1&2&3') ~> AuditColumn",
+				"AuditColumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          anime_id as string,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as string,",
+				"          members as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> TGTRawAnimeYourID"
+			]
+		}
+	}
+}

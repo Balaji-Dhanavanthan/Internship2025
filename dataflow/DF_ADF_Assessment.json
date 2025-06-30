@@ -15,10 +15,33 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "OutputToCsv"
+				}
+			],
 			"transformations": [
 				{
 					"name": "alterGenres"
+				},
+				{
+					"name": "modifyingColNames"
+				},
+				{
+					"name": "modifyingAnimeTypeOVA"
+				},
+				{
+					"name": "modifyingAnimeTypeTV"
+				},
+				{
+					"name": "modifyingAnimeTypeMovie"
+				},
+				{
+					"name": "RemovingEmptyColsByType"
 				}
 			],
 			"scriptLines": [
@@ -34,9 +57,30 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(genre = replace(genre, ',', ':'),",
+				"modifyingColNames derive(genre = replace(genre, ',', ':'),",
 				"          rating = round(rating, 1),",
-				"          type = ERROR_FUNCTION('')) ~> alterGenres"
+				"          anime_type = replace(anime_type, 'ONA', 'Original Net Animation')) ~> alterGenres",
+				"source1 select(mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          anime_type = type,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> modifyingColNames",
+				"alterGenres derive(anime_type = replace(anime_type, 'OVA', 'Original video animation')) ~> modifyingAnimeTypeOVA",
+				"modifyingAnimeTypeOVA derive(anime_type = replace(anime_type, 'TV', 'Television')) ~> modifyingAnimeTypeTV",
+				"modifyingAnimeTypeTV derive(anime_type = replace(anime_type, 'Movie', 'Cinema')) ~> modifyingAnimeTypeMovie",
+				"modifyingAnimeTypeMovie filter(anime_type != '') ~> RemovingEmptyColsByType",
+				"RemovingEmptyColsByType sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['TGT_Anime_I2025_EStalin_Qn1.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> OutputToCsv"
 			]
 		}
 	}

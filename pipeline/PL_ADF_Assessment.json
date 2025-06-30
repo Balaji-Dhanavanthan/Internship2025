@@ -5,6 +5,8 @@
 			{
 				"name": "Copy_csv_to_sql",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -58,6 +60,37 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "DF_ADF_Assessment",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ADF_Assessment",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"OutputToCsv": {
+								"containerName": "adf-module-test1-target",
+								"dirName": "AD-Module-Test-1-I2025_EStalin",
+								"fileName": "TGT_Anime_I2025_EStalin_Qn1.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

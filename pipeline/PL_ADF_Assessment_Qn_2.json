@@ -1,6 +1,131 @@
 {
 	"name": "PL_ADF_Assessment_Qn_2",
 	"properties": {
+		"activities": [
+			{
+				"name": "DF_ADF_Assessment_Qn2",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ADF_Assessment_Qn2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"importAnime1": {
+								"containerName": "adf-module-test-1-source",
+								"dirName": "Module Test 1 Qn2",
+								"fileName": "raw_anime1.csv"
+							},
+							"importAnime2": {
+								"containerName": "adf-module-test-1-source",
+								"dirName": "Module Test 1 Qn2",
+								"fileName": "raw_anime2.xlsx"
+							},
+							"importAnime3": {
+								"containerName": "adf-module-test-1-source",
+								"dirName": "Module Test 1 Qn2",
+								"fileName": "raw_anime3.csv"
+							},
+							"sinkOutputToCsv": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "output.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "CopyMergedDataToSQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "DF_ADF_Assessment_Qn2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": "csvcontainer",
+							"dirName": "dumps",
+							"fileName": "output.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": "adf-module-test-1-target",
+							"dirName": "ADF-Module-Test-1-I2025_EStalin",
+							"fileName": "TGT_Raw_Anime_I2025_EStalin.csv"
+						}
+					}
+				]
+			}
+		],
 		"folder": {
 			"name": "ADF_Assessment"
 		},

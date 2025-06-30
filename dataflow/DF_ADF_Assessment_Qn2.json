@@ -29,7 +29,15 @@
 					"name": "importAnime3"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "sinkOutputToCsv"
+				}
+			],
 			"transformations": [
 				{
 					"name": "mergeAnime1n2"
@@ -76,7 +84,13 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> importAnime3",
 				"importAnime1, importAnime2 union(byName: true)~> mergeAnime1n2",
-				"mergeAnime1n2, importAnime3 union(byName: true)~> mergeAnime3"
+				"mergeAnime1n2, importAnime3 union(byName: true)~> mergeAnime3",
+				"mergeAnime3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['output.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkOutputToCsv"
 			]
 		}
 	}

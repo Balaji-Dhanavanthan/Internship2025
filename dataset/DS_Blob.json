@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Northwind_Customers.xlsx",
-				"folderPath": "Northwind",
-				"container": "test-container"
+				"fileName": "ModuleTest 1.csv",
+				"folderPath": "ModuleTest 1 Qn 1",
+				"container": "adf-module-test-1-source"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -21,7 +21,11 @@
 						"referenceName": "DS_adftest_Q1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "DS_Blob_storgare",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
@@ -97,8 +101,18 @@
 				"union1 filter(!(isNull(types))) ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['TGT_Anime_I2025_MAbdul.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          types,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     )) ~> sink1"
 			]
 		}
 	}

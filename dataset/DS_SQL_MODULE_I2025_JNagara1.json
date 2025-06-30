@@ -1,0 +1,17 @@
+{
+	"name": "DS_SQL_MODULE_I2025_JNagara1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sql_I2025_JNagara",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}

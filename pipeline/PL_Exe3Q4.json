@@ -200,7 +200,10 @@
 				"outputs": [
 					{
 						"referenceName": "DS_CSV_test",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "csvcontainer"
+						}
 					}
 				]
 			}

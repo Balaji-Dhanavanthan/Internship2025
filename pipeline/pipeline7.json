@@ -1,0 +1,126 @@
+{
+	"name": "pipeline7",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow3",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "adf-module-test-1-source",
+								"Folder": "Module Test 1 Qn2",
+								"FileName": "raw_anime1.csv"
+							},
+							"source2": {
+								"Container": "adf-module-test-1-source",
+								"Folder": "Module Test 1 Qn2",
+								"FileName": "raw_anime2.csv"
+							},
+							"source3": {
+								"Container": "adf-module-test-1-source",
+								"Folder": "Module Test 1 Qn2",
+								"FileName": "raw_anime3.csv"
+							},
+							"sink1": {
+								"Container": "adf-module-test1-target",
+								"Folder": "I2025_KUdayaku",
+								"FileName": "TGT_Raw_Anime_KUdayaku"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "adf-module-test1-target",
+							"Folder": "I2025_KUdayaku",
+							"FileName": "TGT_Raw_Anime_KUdayaku"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_KUdayaku",
+							"TableName": "TGT_Raw_Anime_KUdayaku",
+							"Database": "Intern_2025"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "adf_module_test_1"
+		},
+		"annotations": []
+	}
+}

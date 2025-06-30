@@ -20,6 +20,8 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "ModuleTest 1 Qn 1",
+							"wildcardFileName": " ModuleTest 1.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {

@@ -1,0 +1,87 @@
+{
+	"name": "DF_practice",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "source1",
+					"description": "Import data from baskISPQ.csv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"description": "Export data to baskISPQ.csv"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1",
+					"description": "Creating 'Name File'"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SurveyID as integer,",
+				"          FeedbackProgram as string,",
+				"          Firstname as string,",
+				"          Lastname as string,",
+				"          ContactName as string,",
+				"          Email as string,",
+				"          PHONENUMBER as long,",
+				"          ContactCountry as string,",
+				"          JobTitle as string,",
+				"          ContactDepartment as string,",
+				"          Language as string,",
+				"          Salutation as string,",
+				"          ShiptoCompany as string,",
+				"          ShipTo as long,",
+				"          SoldToCompany as string,",
+				"          SoldTo as integer,",
+				"          LeadContactOD as string,",
+				"          LeadContactGBURBU as string,",
+				"          LeadContactSBU as string,",
+				"          MainIndustry as string,",
+				"          Region as string,",
+				"          SalesChannel as string,",
+				"          CustomerNetwork as boolean,",
+				"          LeadContacTSegmentationOne as string,",
+				"          LeadContactSegmentationTwo as string,",
+				"          InvitationStatus as string,",
+				"          CreationDate as string,",
+				"          Invitationdate as string,",
+				"          LocalInvitationDate as string,",
+				"          SurveyStatus as string,",
+				"          Expiresondate as string,",
+				"          LocalExpirationDate as string,",
+				"          ReasonforScore as string,",
+				"          EaseofdoingBusiness as short,",
+				"          IssueResolution as short,",
+				"          ProductQuality as short,",
+				"          DeliveryReliability as short,",
+				"          UnderstandingYourBusinessNeeds as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     rowUrlColumn: 'NameOfFile') ~> source1",
+				"source1 derive() ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:[''],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

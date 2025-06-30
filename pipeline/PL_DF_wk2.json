@@ -3,49 +3,10 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DF_wk42",
+				"name": "DF_5trigger",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DF_wk42",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"Container": "test-container",
-								"Folder": "inputFolder",
-								"Filename": "bask.csv"
-							},
-							"sink1": {
-								"Container": "test-container",
-								"Folder": "I2025_RRamesh",
-								"Filename": "baskfinal.csv"
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
-				}
-			},
-			{
-				"name": "DF_5trigger",
-				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -65,6 +26,40 @@
 						"computeType": "General"
 					},
 					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_practice",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_practice",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "test-container",
+								"Folder": "I2025__RRamesh",
+								"Filename": "baskISPQ.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],

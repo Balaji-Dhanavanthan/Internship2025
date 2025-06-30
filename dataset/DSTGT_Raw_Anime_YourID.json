@@ -1,5 +1,5 @@
 {
-	"name": "TGT_Raw_Anime_YourID",
+	"name": "DSTGT_Raw_Anime_YourID",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

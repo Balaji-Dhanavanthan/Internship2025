@@ -16,7 +16,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DsRawAnime2",
+						"referenceName": "DS_raw_anime2",
 						"type": "DatasetReference"
 					},
 					"name": "SrcRawAnime2"
@@ -32,7 +32,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "TGT_Raw_Anime_YourID",
+						"referenceName": "DSTGT_Raw_Anime_YourID",
 						"type": "DatasetReference"
 					},
 					"name": "TGTRawAnimeYourID"
@@ -63,13 +63,13 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcRawAnime1",
 				"source(output(",
-				"          anime_id as integer,",
+				"          anime_id as string,",
 				"          name as string,",
 				"          genre as string,",
 				"          type as string,",
 				"          episodes as string,",
-				"          rating as double,",
-				"          members as integer",
+				"          rating as string,",
+				"          members as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",

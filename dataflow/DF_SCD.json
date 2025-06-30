@@ -1,0 +1,226 @@
+{
+	"name": "DF_SCD",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "SrcCus"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "tgt"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Null"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "union1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as integer,",
+				"          CustomerName as string,",
+				"          Email as string,",
+				"          Phone as string,",
+				"          City as string,",
+				"          UpdatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcCus",
+				"source(output(",
+				"          Customer_key as integer,",
+				"          CustomerID as integer,",
+				"          CustomerName as string,",
+				"          Email as string,",
+				"          Phone as string,",
+				"          City as string,",
+				"          CreatedDate as string,",
+				"          CreatedBy as string,",
+				"          UpdatedDate as string,",
+				"          UpdatedBy as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> tgt",
+				"SrcCus derive() ~> Null",
+				"join1 split(SrcCus@CustomerID!=tgt@CustomerID,",
+				"     (SrcCus@CustomerID==tgt@CustomerID) && (SrcCus@City!=tgt@City),",
+				"     disjoint: false) ~> split1@(Insert, Update, Existing)",
+				"split1@Insert derive(UpdatedBy = 'id',",
+				"          UpdatedDate = currentDate(),",
+				"          CreatedBy = 'id',",
+				"          CreatedDate = currentDate()) ~> derivedColumn1",
+				"split1@Update derive(UpdatedDate = currentDate(),",
+				"          UpdatedBy = 'id',",
+				"          City = split1@Update@City) ~> derivedColumn2",
+				"surrogateKey1, tgt join(SrcCus@CustomerID == tgt@CustomerID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"Null keyGenerate(output(Customer_key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"derivedColumn1 select(mapColumn(",
+				"          CustomerID = split1@Insert@CustomerID,",
+				"          CustomerName = split1@Insert@CustomerName,",
+				"          Email = split1@Insert@Email,",
+				"          Phone = split1@Insert@Phone,",
+				"          City = split1@Insert@City,",
+				"          UpdatedDate = split1@Insert@UpdatedDate,",
+				"          Customer_key = split1@Insert@Customer_key,",
+				"          column1 = UpdatedBy,",
+				"          column2 = UpdatedDate,",
+				"          column3 = CreatedBy,",
+				"          column4 = CreatedDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"derivedColumn2 select(mapColumn(",
+				"          City,",
+				"          Customer_key = split1@Update@Customer_key,",
+				"          CustomerID = split1@Update@CustomerID,",
+				"          CustomerName = split1@Update@CustomerName,",
+				"          Email = split1@Update@Email,",
+				"          Phone = split1@Update@Phone,",
+				"          CreatedDate,",
+				"          CreatedBy,",
+				"          column1 = UpdatedDate,",
+				"          column2 = UpdatedBy",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"split1@Existing select(mapColumn(",
+				"          Customer_key = split1@Existing@Customer_key,",
+				"          CustomerID = split1@Existing@CustomerID,",
+				"          CustomerName = split1@Existing@CustomerName,",
+				"          Email = split1@Existing@Email,",
+				"          Phone = split1@Existing@Phone,",
+				"          City = split1@Existing@City,",
+				"          CreatedDate,",
+				"          CreatedBy,",
+				"          UpdatedDate = split1@Existing@UpdatedDate,",
+				"          UpdatedBy",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select1, select2, select3 union(byName: true)~> union1",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Prop_0 as string,",
+				"          match_id as string,",
+				"          date as string,",
+				"          match_type as string,",
+				"          event_name as string,",
+				"          innings as string,",
+				"          batting_team as string,",
+				"          bowling_team as string,",
+				"          over as string,",
+				"          ball as string,",
+				"          ball_no as string,",
+				"          batter as string,",
+				"          bat_pos as string,",
+				"          runs_batter as string,",
+				"          balls_faced as string,",
+				"          bowler as string,",
+				"          valid_ball as string,",
+				"          runs_extras as string,",
+				"          runs_total as string,",
+				"          runs_bowler as string,",
+				"          runs_not_boundary as string,",
+				"          extra_type as string,",
+				"          non_striker as string,",
+				"          non_striker_pos as string,",
+				"          wicket_kind as string,",
+				"          player_out as string,",
+				"          fielders as string,",
+				"          runs_target as string,",
+				"          review_batter as string,",
+				"          team_reviewed as string,",
+				"          review_decision as string,",
+				"          umpire as string,",
+				"          umpires_call as string,",
+				"          player_of_match as string,",
+				"          match_won_by as string,",
+				"          win_outcome as string,",
+				"          toss_winner as string,",
+				"          toss_decision as string,",
+				"          venue as string,",
+				"          city as string,",
+				"          day as string,",
+				"          month as string,",
+				"          year as string,",
+				"          season as string,",
+				"          gender as string,",
+				"          team_type as string,",
+				"          superover_winner as string,",
+				"          result_type as string,",
+				"          method as string,",
+				"          balls_per_over as string,",
+				"          overs as string,",
+				"          event_match_no as string,",
+				"          stage as string,",
+				"          match_number as string,",
+				"          team_runs as string,",
+				"          team_balls as string,",
+				"          team_wicket as string,",
+				"          new_batter as string,",
+				"          batter_runs as string,",
+				"          batter_balls as string,",
+				"          bowler_wicket as string,",
+				"          batting_partners as string,",
+				"          next_batter as string,",
+				"          striker_out as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

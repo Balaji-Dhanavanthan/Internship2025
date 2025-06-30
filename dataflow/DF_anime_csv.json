@@ -85,6 +85,17 @@
 				"     partitionFileNames:['ADF_module_test_1_q1_sink.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          anime_type,",
+				"          episodes,",
+				"          rating,",
+				"          members,",
+				"          created_at,",
+				"          created_by",
+				"     ),",
 				"     partitionBy('hash', 1)) ~> sinkIntoBlob"
 			]
 		}

@@ -1,0 +1,52 @@
+{
+	"name": "DSSQLMODULEQN2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MSSQL",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_ADF_Module1"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "anime",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "genre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "episodes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rating",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 0
+			},
+			{
+				"name": "members",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "I2025_SKomala",
+			"table": "TGT_Raw_Anime_YourID"
+		}
+	}
+}

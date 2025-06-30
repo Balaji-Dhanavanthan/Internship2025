@@ -8,15 +8,15 @@
 		"parameters": {
 			"Container": {
 				"type": "string",
-				"defaultValue": "practice-adf"
+				"defaultValue": "rootfolders"
 			},
 			"Directory": {
 				"type": "string",
-				"defaultValue": "targetfolder"
+				"defaultValue": "adf-module-test-1-source"
 			},
 			"File": {
 				"type": "string",
-				"defaultValue": "locations"
+				"defaultValue": "ModuleTest 1 Qn 1"
 			}
 		},
 		"annotations": [],

@@ -30,6 +30,12 @@
 				},
 				{
 					"name": "Replaced"
+				},
+				{
+					"name": "RemoveBlank"
+				},
+				{
+					"name": "RoundRating"
 				}
 			],
 			"scriptLines": [
@@ -45,8 +51,10 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SRCModuleTest1",
-				"Replaced derive(type = ERROR_FUNCTION('upper(__NEW_LINE_R____NEW_LINE_N__    concat(__NEW_LINE_R____NEW_LINE_N__        substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__)[0],0,1),__NEW_LINE_R____NEW_LINE_N__        iif(size(substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__))>1, substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__)[1], 0,1),__NEW_LINE_R____NEW_LINE_N__        __NEW_LINE_R____NEW_LINE_N__        iif(size(substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__))>2,substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__)[2],0,1)__NEW_LINE_R____NEW_LINE_N__    )__NEW_LINE_R____NEW_LINE_N__)')) ~> AbbreviationForTypeColumn",
+				"RemoveBlank derive(type = ERROR_FUNCTION('upper(__NEW_LINE_R____NEW_LINE_N__    concat(__NEW_LINE_R____NEW_LINE_N__        substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__)[0],0,1),__NEW_LINE_R____NEW_LINE_N__        iif(size(substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__))>1, substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__)[1], 0,1),__NEW_LINE_R____NEW_LINE_N__        __NEW_LINE_R____NEW_LINE_N__        iif(size(substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__))>2,substring(split(type,__SINGLE_QUOTE__ __SINGLE_QUOTE__)[2],0,1)__NEW_LINE_R____NEW_LINE_N__    )__NEW_LINE_R____NEW_LINE_N__)')) ~> AbbreviationForTypeColumn",
 				"SRCModuleTest1 derive(genre = replace(genre,',',':')) ~> Replaced",
+				"RoundRating filter(isNull(type)) ~> RemoveBlank",
+				"Replaced derive(rating = round(rating, 0.0,1)) ~> RoundRating",
 				"AbbreviationForTypeColumn sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

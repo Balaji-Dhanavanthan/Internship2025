@@ -6,11 +6,46 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference"
+					},
+					"name": "source1",
+					"description": "Import data from q1"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     rowUrlColumn: 'FileName') ~> source1",
+				"source1 derive(each(match(type=='string'), $$ = iifNull($$,'UNKNOWN',$$)),",
+				"          each(match(type=='integer'), $$ = iifNull($$,0,$$)),",
+				"          each(match(type=='double'), $$ = iifNull($$,0.0,$$)),",
+				"          created_at = currentDate(),",
+				"          created_by = \"I2025_RRamesh\") ~> derivedColumn1",
+				"derivedColumn1 filter(round(rating,1)\r",
+				") ~> filter1"
 			]
 		}
 	}

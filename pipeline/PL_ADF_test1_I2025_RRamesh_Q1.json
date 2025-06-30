@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyToServer",
-				"type": "Copy",
+				"name": "DF_ADF_test1_I2025_RRamesh",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,56 +15,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": "ModuleTest 1 Qn 1",
-							"wildcardFileName": " ModuleTest 1.csv",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+					"dataflow": {
+						"referenceName": "DF_ADF_test1_I2025_RRamesh",
+						"type": "DataFlowReference"
 					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_blob_r",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "adf-module-test-1-source",
-							"Folder": "ModuleTest 1 Qn 1",
-							"Filename": " ModuleTest 1.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_SQLSERVER",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "I2025_RRamesh",
-							"TableName": "TGT_Anime_I2025_RRamesh"
-						}
-					}
-				]
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

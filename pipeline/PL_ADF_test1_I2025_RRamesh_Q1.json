@@ -17,13 +17,27 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_ADF_test1_I2025_RRamesh",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "adf-module-test-1-source",
+								"Folder": "ModuleTest 1 Qn 1 ",
+								"Filename": "ModuleTest 1.csv"
+							},
+							"sink1": {
+								"SchemaName": "I2025_RRamesh",
+								"TableName": "TGT_Anime_I2025_RRamesh"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],

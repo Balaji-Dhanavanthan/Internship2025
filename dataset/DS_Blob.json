@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "ModuleTest 1.csv",
 				"folderPath": "ModuleTest 1 Qn 1",
 				"container": "adf-module-test-1-source"
 			},

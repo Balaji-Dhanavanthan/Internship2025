@@ -1,0 +1,105 @@
+{
+	"name": "DF_adftest1",
+	"properties": {
+		"folder": {
+			"name": "ADF-Module test 1-I2025_MAbdul1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference"
+					},
+					"name": "sourceQ1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "transformation"
+				},
+				{
+					"name": "changingname"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "TVderivedColumn"
+				},
+				{
+					"name": "MOVIESderivedColumn"
+				},
+				{
+					"name": "ONAderivedColumn"
+				},
+				{
+					"name": "OVAderivedColumn"
+				},
+				{
+					"name": "NOTINderivedColumn"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceQ1",
+				"sourceQ1 derive(genre = replace(genre, ',', ':'),",
+				"          rating = round(rating, 2)) ~> transformation",
+				"transformation select(mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          types = type,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> changingname",
+				"changingname split(types == 'TV',",
+				"     types == 'OVA',",
+				"     types == 'ONA',",
+				"     types ==' Movies',",
+				"     types != 'OVA' && types != 'ONA' && types != 'TV' && types != 'Movies',",
+				"     disjoint: false) ~> split1@(TV, OVA, ONA, MOVIES, NOTIN)",
+				"split1@TV derive(types = replace(types,'TV','Television')) ~> TVderivedColumn",
+				"split1@MOVIES derive(types = replace(types,'Movie','Cinema')) ~> MOVIESderivedColumn",
+				"split1@ONA derive(types = replace(types,'ONA','Original Net Animation')) ~> ONAderivedColumn",
+				"split1@OVA derive(types = replace(types,'OVA','Original video animation')) ~> OVAderivedColumn",
+				"split1@NOTIN derive(types = types) ~> NOTINderivedColumn",
+				"TVderivedColumn, MOVIESderivedColumn, ONAderivedColumn, OVAderivedColumn, NOTINderivedColumn union(byName: true)~> union1",
+				"union1 filter(!(isNull(types))) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "I2025_RRamesh_q3p1.csv",
 				"folderPath": "I2025_RRamesh",
 				"container": "adf-module-test1-target"
 			},

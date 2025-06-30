@@ -5,6 +5,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -60,6 +62,68 @@
 							"Container": "adf-module-test1-target",
 							"Folder": "I2025_RRamesh",
 							"Filename": "I2025_RRamesh_q3p1.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "with cte as(\nselect row_number() over (order by members desc) as rw,\ngenre, type\nfrom TGT_Anime_I2025_RRamesh) \nselect * from cte\nwhere rw<21 and genre='Horror' and type = 'Original video animation';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_SQLSERVER",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_RRamesh",
+							"TableName": "TGT_Anime_I2025_RRamesh"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_blob_r",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "adf-module-test1-target",
+							"Folder": "I2025_RRamesh",
+							"Filename": "I2025_RRamesh_q3p2.csv"
 						}
 					}
 				]

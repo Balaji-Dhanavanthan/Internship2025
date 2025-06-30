@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "TgtAnimeYourID",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

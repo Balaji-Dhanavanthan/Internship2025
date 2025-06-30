@@ -16,7 +16,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DS rawanime 2",
+						"referenceName": "DsRawAnime2",
 						"type": "DatasetReference"
 					},
 					"name": "SrcRawAnime2"
@@ -96,8 +96,8 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> RawAnime3JoinedWithRawAnime1and2",
-				"RawAnime3JoinedWithRawAnime1and2 derive({created at} = currentUTC(),",
-				"          {created by} = 'I2025_SKomala',",
+				"RawAnime3JoinedWithRawAnime1and2 derive(createdat = currentUTC(),",
+				"          createdby = 'I2025_SKomala',",
 				"          filename = 'raw_anime 1&2&3') ~> AuditColumn",
 				"AuditColumn sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

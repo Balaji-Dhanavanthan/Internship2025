@@ -104,7 +104,14 @@
 			{
 				"name": "Filter1",
 				"type": "Filter",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -116,7 +123,14 @@
 			{
 				"name": "If Condition1",
 				"type": "IfCondition",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
@@ -202,6 +216,42 @@
 							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "TGT_Anime_your_id",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source2": {
+								"Container": "Root folder",
+								"Directory": "adf-module-test-1-source",
+								"File": "ModuleTest 1 Qn 1"
+							},
+							"source3": {
+								"Container": "Root folder",
+								"Directory": "adf-module-test-1-source",
+								"File": "ModuleTest 1 Qn 1"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],

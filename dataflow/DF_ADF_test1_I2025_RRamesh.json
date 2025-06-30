@@ -19,7 +19,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_tgt_customer_I2025RRamesh",
+						"referenceName": "DS_blob_r",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -58,12 +58,6 @@
 				"          type_Movies = iif(type=='Movie',replace(type,'Movie','Cinema'),type)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     truncate:true,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]

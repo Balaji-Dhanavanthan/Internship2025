@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "countries.csv",
+				"fileName": "part-00000-70f00f7e-b0d7-4318-b551-83ea0928d02a-c000.csv",
+				"folderPath": "Target Folders/I2025_JNagara1/Input",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

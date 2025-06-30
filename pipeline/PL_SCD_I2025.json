@@ -20,9 +20,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"sink1": {
-								"file": "scd.csv",
-								"contanier": "test-container",
-								"folder": "Target Folders"
+								"file": "scd.csv"
 							}
 						}
 					},

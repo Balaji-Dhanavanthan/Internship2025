@@ -5,8 +5,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -18,21 +16,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -46,23 +43,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-container",
-							"folder": "Target Folders/I2025_AMohamad/ADF",
-							"file": "part-00000-9c54fbfb-e1cf-4f26-b674-3559a6f064e7-c000.csv"
+							"schema": "I2025_AMohamad",
+							"tablename": "Employeestgt",
+							"database": "Intern_2025"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema": "I2025_AMohamad",
-							"tablename": "ADF",
-							"database": "Intern_2025"
+							"container": "test-container",
+							"folder": "Target Folders/I2025_AMohamad/SQL_SCD",
+							"file": "Employeestgt"
 						}
 					}
 				]

@@ -8,14 +8,90 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference"
+					},
+					"name": "rawAni1Src"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference"
+					},
+					"name": "rawAni3Src"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference"
+					},
+					"name": "rawAni2Src"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference"
+					},
+					"name": "sinkq2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "merge3Src"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawAni1Src",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawAni3Src",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawAni2Src",
+				"rawAni1Src, rawAni2Src, rawAni3Src union(byName: true)~> merge3Src",
+				"merge3Src derive(created_at = currentUTC(),",
+				"          created_by = 'I2025_JSenthil') ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['ADF_module_test_1_q2_sink.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkq2"
 			]
 		}
 	}

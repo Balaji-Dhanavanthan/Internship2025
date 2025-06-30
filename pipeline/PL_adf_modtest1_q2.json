@@ -15,12 +15,187 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_for_merge_animes",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"rawAni1Src": {
+								"container_name": "adf-module-test-1-source",
+								"directory_name": "Module Test 1 Qn2",
+								"file_name": "raw_anime1.csv"
+							},
+							"rawAni3Src": {
+								"container_name": "adf-module-test-1-source",
+								"directory_name": "Module Test 1 Qn2",
+								"file_name": "raw_anime3.csv"
+							},
+							"rawAni2Src": {
+								"container_name": "adf-module-test-1-source",
+								"directory_name": "Module Test 1 Qn2",
+								"file_name": "raw_anime2.csv"
+							},
+							"sinkq2": {
+								"container_name": "adf-module-test1-target",
+								"directory_name": "ADF_module_test_1_I2025_JSenthil",
+								"file_name": "ADF_module_test_1_q2_sink.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "fileNameAudit",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "MergeAnimes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "file_name",
+								"value": "$$FILEPATH"
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "adf-module-test1-target",
+							"directory_name": "ADF_module_test_1_I2025_JSenthil",
+							"file_name": "ADF_module_test_1_q2_sink.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "adf-module-test1-target",
+							"directory_name": "ADF_module_test_1_I2025_JSenthil",
+							"file_name": "ADF_module_test_1_q2_sink.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "CopytoSqlServer",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "fileNameAudit",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "adf-module-test1-target",
+							"directory_name": "ADF_module_test_1_I2025_JSenthil",
+							"file_name": "ADF_module_test_1_q2_sink.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADF_module_test1_SQL_SERVER",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "TGT_Raw_Anime_I2025_JSenthil"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

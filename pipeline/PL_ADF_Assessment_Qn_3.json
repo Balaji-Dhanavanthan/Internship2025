@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Script1",
-				"type": "Script",
+				"name": "CP_Sql_to_Blob",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -14,18 +14,55 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "LS_Reks_SQL_OnPrem",
-					"type": "LinkedServiceReference"
-				},
 				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query"
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "select \n\ttop 20\n\t* \nfrom \n\tTGT_anime_I2025_EStalin1\nwhere\n\tgenre like 'horror' or\n\tanime_type like 'Original video animation'\norder by \n\tmembers desc",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Reks_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_EStalin",
+							"TableName": "TGT_anime_I2025_EStalin1"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": "adf-module-test1-target",
+							"dirName": "AD-Module-Test-1-I2025_EStalin",
+							"fileName": "ADF_Module_Test_1_Q3.2_I2025_EStalin.csv"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

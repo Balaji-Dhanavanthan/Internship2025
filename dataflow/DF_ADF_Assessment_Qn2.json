@@ -16,7 +16,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DS_excel",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
 					"name": "importAnime2"
@@ -44,6 +44,9 @@
 				},
 				{
 					"name": "mergeAnime3"
+				},
+				{
+					"name": "addingAuditCols"
 				}
 			],
 			"scriptLines": [
@@ -85,7 +88,9 @@
 				"     ignoreNoFilesFound: false) ~> importAnime3",
 				"importAnime1, importAnime2 union(byName: true)~> mergeAnime1n2",
 				"mergeAnime1n2, importAnime3 union(byName: true)~> mergeAnime3",
-				"mergeAnime3 sink(allowSchemaDrift: true,",
+				"mergeAnime3 derive(createdAt = currentUTC(),",
+				"          createdBy = 'I2025_EStalin') ~> addingAuditCols",
+				"addingAuditCols sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['output.csv'],",
 				"     skipDuplicateMapInputs: true,",

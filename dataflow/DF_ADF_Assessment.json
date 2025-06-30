@@ -42,6 +42,9 @@
 				},
 				{
 					"name": "RemovingEmptyColsByType"
+				},
+				{
+					"name": "addingAuditCols"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +78,9 @@
 				"modifyingAnimeTypeOVA derive(anime_type = replace(anime_type, 'TV', 'Television')) ~> modifyingAnimeTypeTV",
 				"modifyingAnimeTypeTV derive(anime_type = replace(anime_type, 'Movie', 'Cinema')) ~> modifyingAnimeTypeMovie",
 				"modifyingAnimeTypeMovie filter(anime_type != '') ~> RemovingEmptyColsByType",
-				"RemovingEmptyColsByType sink(allowSchemaDrift: true,",
+				"RemovingEmptyColsByType derive(createdAt = currentUTC(),",
+				"          createdBy = 'I2025_EStalin') ~> addingAuditCols",
+				"addingAuditCols sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['TGT_Anime_I2025_EStalin_Qn1.csv'],",
 				"     skipDuplicateMapInputs: true,",

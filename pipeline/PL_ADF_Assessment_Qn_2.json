@@ -5,8 +5,6 @@
 			{
 				"name": "DF_ADF_Assessment_Qn2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -29,7 +27,7 @@
 							"importAnime2": {
 								"containerName": "adf-module-test-1-source",
 								"dirName": "Module Test 1 Qn2",
-								"fileName": "raw_anime2.xlsx"
+								"fileName": "raw_anime2.csv"
 							},
 							"importAnime3": {
 								"containerName": "adf-module-test-1-source",
@@ -53,6 +51,8 @@
 			{
 				"name": "CopyMergedDataToSQL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_ADF_Assessment_Qn2",
@@ -118,9 +118,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"containerName": "adf-module-test-1-target",
-							"dirName": "ADF-Module-Test-1-I2025_EStalin",
-							"fileName": "TGT_Raw_Anime_I2025_EStalin.csv"
+							"containerName": "adf-module-test1-target",
+							"dirName": "AD-Module-Test-1-I2025_EStalin",
+							"fileName": "ADF_"
 						}
 					}
 				]

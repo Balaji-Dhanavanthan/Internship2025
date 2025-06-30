@@ -41,6 +41,9 @@
 			"transformations": [
 				{
 					"name": "union1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -195,7 +198,8 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source3",
 				"source1, source2, source3 union(byName: true)~> union1",
-				"union1 sink(allowSchemaDrift: true,",
+				"union1 derive(episodes = replace(episodes, 'Unknown', '0')) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",

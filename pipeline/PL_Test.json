@@ -177,6 +177,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -282,8 +283,8 @@
 				}
 			},
 			{
-				"name": "Delete1",
-				"type": "Delete",
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -294,27 +295,37 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"containerName": "csvcontainer",
-							"dirName": "NorthwindTable",
-							"fileName": "dept.csv"
+					"dataflow": {
+						"referenceName": "DF_Test",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceTable": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "target_table.csv"
+							},
+							"targetTable": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "source_table.csv"
+							},
+							"sink1": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "res.csv"
+							},
+							"sink2": {
+								"containerName": "csvcontainer",
+								"dirName": "dumps",
+								"fileName": "res.csv"
+							}
 						}
 					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "DS_Blob_storgare",
-							"type": "LinkedServiceReference"
-						}
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
+					"traceLevel": "Fine"
 				}
 			}
 		],

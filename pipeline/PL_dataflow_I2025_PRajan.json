@@ -31,8 +31,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -45,6 +43,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "filename",
+								"value": "$$FILEPATH"
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
@@ -55,10 +59,15 @@
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -78,12 +87,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQLServer",
-						"type": "DatasetReference",
-						"parameters": {
-							"objectName": "I2025_PRajan",
-							"tableName": "final"
-						}
+						"referenceName": "DS_I2025_PRajan",
+						"type": "DatasetReference"
 					}
 				]
 			},

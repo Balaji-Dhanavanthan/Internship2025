@@ -19,11 +19,10 @@
 						"referenceName": "DS_copy_I2025_PRajan",
 						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

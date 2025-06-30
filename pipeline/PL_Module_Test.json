@@ -1,0 +1,118 @@
+{
+	"name": "PL_Module_Test",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Container": "adf-module-test-1-source",
+								"Folder": "ModuleTest 1 Qn 1",
+								"FileName": "ModuleTest 1.csv"
+							},
+							"sink1": {
+								"Container": "adf-module-test1-target",
+								"Folder": "I2025_MDinesh",
+								"FileName": "Blob_to_sql.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "adf-module-test1-target",
+							"Folder": "I2025_MDinesh",
+							"FileName": "Blob_to_sql.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MDinesh",
+							"TableName": "TGT_Anime_YourId",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ADF_Module_test"
+		},
+		"annotations": []
+	}
+}

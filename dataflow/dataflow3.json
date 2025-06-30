@@ -1,0 +1,90 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_Workshop",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_Workshop",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "split2"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"derivedColumn2, source2 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(isNull(source2.id),",
+				"     !isnull(tgt.id) && (\r",
+				"    src.name != tgt.name ||\r",
+				"    src.phoen != tgt.phoen\r",
+				"),",
+				"     disjoint: false) ~> split2@(insert, update, )",
+				"split2@insert derive(column1 = upper(\r",
+				"    concat(\r",
+				"        substring(split(col, ' ')[0], 0, 1),\r",
+				"        iif(size(split(col, ' ')) > 1, substring(split(col, ' ')[1], 0, 1), '')\r",
+				"    )\r",
+				")) ~> derivedColumn1",
+				"derivedColumn3 derive() ~> derivedColumn2",
+				"select1 derive() ~> derivedColumn3",
+				"derivedColumn1, derivedColumn4, source1 union(byName: true)~> union1",
+				"split2@update derive() ~> derivedColumn4",
+				"source1 select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

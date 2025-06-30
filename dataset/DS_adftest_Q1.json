@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "DS_adftest_Q1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

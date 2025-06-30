@@ -1,0 +1,56 @@
+{
+	"name": "ADF_module_test1_1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "Transformation"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     parameter1 as string (anime_id)",
+				"}",
+				"source(output(",
+				"          anime_id as string,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as string,",
+				"          members as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          type,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(anime_id = anime_id) ~> Transformation"
+			]
+		}
+	}
+}

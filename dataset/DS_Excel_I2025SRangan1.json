@@ -5,13 +5,22 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sheetname": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
+			"sheetName": {
+				"value": "@dataset().sheetname",
+				"type": "Expression"
+			},
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Workshop_source",
+				"fileName": "raw_anime2.xlsx",
+				"folderPath": "I2025_SRangan1",
 				"container": "test-container"
 			},
 			"firstRowAsHeader": true

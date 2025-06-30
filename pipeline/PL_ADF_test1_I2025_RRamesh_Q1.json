@@ -23,6 +23,11 @@
 								"Container": "adf-module-test-1-source",
 								"Folder": "ModuleTest 1 Qn 1 ",
 								"Filename": "ModuleTest 1.csv"
+							},
+							"sink1": {
+								"Container": "adf-module-test1-target",
+								"Folder": "I2025_RRamesh",
+								"Filename": "test1-tgt-Q1"
 							}
 						}
 					},

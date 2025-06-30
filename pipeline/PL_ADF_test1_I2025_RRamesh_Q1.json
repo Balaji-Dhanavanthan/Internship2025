@@ -99,7 +99,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_RRamesh",
-							"TableName": "test1-tgt-Q1"
+							"TableName": "test1-tgt-Q1.csv"
 						}
 					}
 				]

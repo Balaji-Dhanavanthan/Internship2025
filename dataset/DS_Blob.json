@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "scdnew.csv",
-				"folderPath": "scdnew",
-				"container": "test-container"
+				"fileName": "Q3.csv",
+				"folderPath": "ADF_MODULE_I2025_SRangan1",
+				"container": "adf-module-test1-target"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

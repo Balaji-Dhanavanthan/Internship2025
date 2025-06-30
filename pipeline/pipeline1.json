@@ -54,9 +54,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-container",
-							"directory": "I2025_PMahendi",
-							"file": "scd01"
+							"container": "test-container"
 						}
 					}
 				],
@@ -90,19 +88,30 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source1": {
-								"container": "test-container",
-								"directory": "I2025_PMahendi",
-								"file": "sql_to_blob"
+								"container": "test-container"
 							},
 							"target": {
-								"container": "test-container",
-								"directory": "I2025_PMahendi",
-								"file": "scd01"
+								"container": "test-container"
 							},
 							"sink1": {
-								"container": "test-container",
-								"directory": "I2025_PMahendi",
-								"file": "scd01"
+								"container": "test-container"
+							}
+						},
+						"linkedServiceParameters": {
+							"source1": {
+								"schemaLinkedService": {
+									"container": "test-container"
+								}
+							},
+							"target": {
+								"schemaLinkedService": {
+									"container": "test-container"
+								}
+							},
+							"sink1": {
+								"schemaLinkedService": {
+									"container": "test-container"
+								}
 							}
 						}
 					},

@@ -20,7 +20,6 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "test-container",
-							"folder": "I2025_PMahendi",
 							"file": "*"
 						}
 					},

@@ -20,7 +20,6 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "test-container",
-							"folder": "I2025_JSivakum",
 							"file": "*"
 						}
 					},
@@ -120,7 +119,6 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "test-container",
-										"folder": "I2025_PMahendi",
 										"file": "for_each_2"
 									}
 								}

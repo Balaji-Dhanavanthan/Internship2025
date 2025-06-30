@@ -19,12 +19,6 @@
 						"referenceName": "DF1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
-								"container": "test-container",
-								"directory": "Workshop_source",
-								"file": "BASK Invitation Dataset.xlsx",
-								"index": 0
-							},
 							"sink1": {
 								"container": "test-container",
 								"directory": "I2025_PMahendi",

@@ -7,16 +7,13 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string",
-				"defaultValue": "test-container"
+				"type": "string"
 			},
 			"directory": {
-				"type": "string",
-				"defaultValue": "I2025_PMahendi"
+				"type": "string"
 			},
 			"file": {
-				"type": "string",
-				"defaultValue": "sql_to_blob"
+				"type": "string"
 			}
 		},
 		"annotations": [],

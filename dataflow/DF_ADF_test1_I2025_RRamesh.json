@@ -51,15 +51,16 @@
 				"          created_by = \"I2025_RRamesh\",",
 				"          genre_new = replace(genre,',',':'),",
 				"          rating_new = round(rating,1),",
-				"          type_OVA = iif(type=='OVA',replace(type,'OVA','Original video animation'),type)\r",
-				",",
+				"          type_OVA = iif(type=='OVA',replace(type,'OVA','Original video animation'),type),",
 				"          type_ONA = iif(type=='ONA',replace(type,'ONA','Original Net Animation'),type),",
 				"          type_TV = iif(type=='TV',replace(type, 'TV','Television'),type),",
 				"          type_Movies = iif(type=='Movie',replace(type,'Movie','Cinema'),type)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:[''],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

@@ -1,0 +1,71 @@
+{
+	"name": "dataflow4",
+	"properties": {
+		"folder": {
+			"name": "DF_ADF"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DT1",
+						"type": "DatasetReference"
+					},
+					"name": "Souce"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SqlServerTable2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Souce",
+				"Souce derive(genre = replace(genre, ',', ':')) ~> derivedColumn1",
+				"derivedColumn1 derive(rating = round(rating,2)) ~> derivedColumn2",
+				"derivedColumn2 derive(type = iif(instr(type) ==  OVA , 'Original video animation') && iif(type == ONA,'Original Net Animation')&&\r",
+				"iif(type == TV,'Television')) ~> derivedColumn3",
+				"derivedColumn3 filter(split(' ', 'type')) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

@@ -17,6 +17,9 @@
 				"defaultValue": "csvcontainer"
 			}
 		},
+		"folder": {
+			"name": "prev"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

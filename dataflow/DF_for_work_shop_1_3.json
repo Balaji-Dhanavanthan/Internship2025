@@ -1,6 +1,9 @@
 {
 	"name": "DF_for_work_shop_1_3",
 	"properties": {
+		"folder": {
+			"name": "prev"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

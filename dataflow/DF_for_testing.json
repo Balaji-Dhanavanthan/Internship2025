@@ -1,6 +1,9 @@
 {
 	"name": "DF_for_testing",
 	"properties": {
+		"folder": {
+			"name": "prev"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

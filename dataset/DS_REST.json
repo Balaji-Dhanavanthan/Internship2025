@@ -5,6 +5,9 @@
 			"referenceName": "LS_REST",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "prev"
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"schema": []

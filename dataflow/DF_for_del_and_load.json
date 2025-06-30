@@ -1,6 +1,9 @@
 {
 	"name": "DF_for_del_and_load",
 	"properties": {
+		"folder": {
+			"name": "prev"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -88,7 +91,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> srcCsvSel",
-				"srcLeftJointgt alterRow(deleteIf(tgtCsv@emp_id == srcCsvSel@emp_id)) ~> deleteCommon",
+				"srcLeftJointgt alterRow(deleteIf(tgtCsv@emp_id==srcCsvSel@emp_id)) ~> deleteCommon",
 				"srcLeftJointgt alterRow(insertIf(isNull(tgtCsv@emp_id))) ~> loadTgt",
 				"loadTgt sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

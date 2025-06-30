@@ -16,6 +16,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "prev"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

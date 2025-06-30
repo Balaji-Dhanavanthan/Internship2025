@@ -1,6 +1,9 @@
 {
 	"name": "DF_SCD_1",
 	"properties": {
+		"folder": {
+			"name": "prev"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -75,10 +78,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> InnerOnId",
 				"InnerOnId alterRow(insertIf(isNull(tgtCSV@emp_id))) ~> alterRow1",
-				"InnerOnId alterRow(updateIf(tgtCSV@emp_id == srcCSV@emp_id && (\r",
-				"    tgtCSV@salary != srcCSV@salary ||\r",
-				"    srcCSV@update_date != tgtCSV@update_date\r",
-				"))) ~> alterRow2",
+				"InnerOnId alterRow(updateIf(tgtCSV@emp_id==srcCSV@emp_id&&(tgtCSV@salary!=srcCSV@salary||srcCSV@update_date!=tgtCSV@update_date))) ~> alterRow2",
 				"alterRow2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",

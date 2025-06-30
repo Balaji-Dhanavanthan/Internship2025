@@ -11,6 +11,9 @@
 				"defaultValue": 0
 			}
 		},
+		"folder": {
+			"name": "prev"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

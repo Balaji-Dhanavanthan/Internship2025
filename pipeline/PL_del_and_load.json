@@ -1,0 +1,127 @@
+{
+	"name": "PL_del_and_load",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_for_del_and_load",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_for_del_and_load",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"srcCsv": {
+								"file_name": "source_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"tgtCsv": {
+								"file_name": "new_target_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"sink1": {
+								"file_name": "new_target_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"sink2": {
+								"file_name": "new_target_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "target_employees.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "new_target_employees.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "workshops"
+		},
+		"annotations": []
+	}
+}

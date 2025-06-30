@@ -12,7 +12,15 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "select1"
@@ -23,7 +31,8 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     parameter1 as string (anime_id)",
+				"     parameter1 as string (iifNull(anime_id, type, episodes)\r",
+				")",
 				"}",
 				"source(output(",
 				"          anime_id as string,",
@@ -35,7 +44,7 @@
 				"          members as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				"     validateSchema: true,",
 				"     limit: 100,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 select(mapColumn(",
@@ -49,7 +58,20 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive(anime_id = anime_id) ~> Transformation"
+				"select1 derive(anime_id = anime_id) ~> Transformation",
+				"Transformation sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          anime_id as string,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as string,",
+				"          members as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

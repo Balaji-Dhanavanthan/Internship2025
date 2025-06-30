@@ -38,6 +38,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 derive(genre = replace(genre, ',', ':'),",
+				"          rating = round(rating,1),",
 				"          type = replace(type,'TV','Television')) ~> derivedColumn1",
 				"derivedColumn1 filter(ERROR_FUNCTION('')) ~> filter1"
 			]

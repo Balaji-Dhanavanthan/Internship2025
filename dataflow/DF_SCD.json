@@ -30,9 +30,6 @@
 			],
 			"transformations": [
 				{
-					"name": "Null"
-				},
-				{
 					"name": "split1"
 				},
 				{
@@ -87,7 +84,6 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> tgt",
-				"SrcCus derive() ~> Null",
 				"join1 split(SrcCus@CustomerID!=tgt@CustomerID,",
 				"     (SrcCus@CustomerID==tgt@CustomerID) && (SrcCus@City!=tgt@City),",
 				"     disjoint: false) ~> split1@(Insert, Update, Existing)",
@@ -103,7 +99,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"Null keyGenerate(output(Customer_key as long),",
+				"SrcCus keyGenerate(output(Customer_key as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
 				"derivedColumn1 select(mapColumn(",

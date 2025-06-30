@@ -19,7 +19,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_SQLSERVER",
+						"referenceName": "DS_tgt_customer_I2025RRamesh",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -58,11 +58,6 @@
 				"          type_Movies = iif(type=='Movie',replace(type,'Movie','Cinema'),type)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          Customer_Key as integer,",
-				"          Customer_Id as integer,",
-				"          Company_Name as string",
-				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",

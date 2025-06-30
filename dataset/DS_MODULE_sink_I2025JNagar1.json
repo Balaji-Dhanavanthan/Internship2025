@@ -5,6 +5,9 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ADF_Module_1_I2025_JNagara1"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "ADF_Module_1_I2025_JNagara1"
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": []

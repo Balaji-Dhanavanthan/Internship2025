@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -39,8 +42,8 @@
 				"          genre as string,",
 				"          type as string,",
 				"          episodes as integer,",
-				"          rating as double,",
-				"          members as integer",
+				"          rating as float,",
+				"          members as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -62,11 +65,39 @@
 				"   type == 'ONA','Original Net Animation',\r",
 				"   type == 'TV','Television',\r",
 				"   type == 'Movies','Cinema',type)\r",
-				") ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				",",
+				"          created_by = 'I2025_JNagara1',",
+				"          created_time = currentTimestamp()) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          type,",
+				"          episodes,",
+				"          rating,",
+				"          members,",
+				"          created_by,",
+				"          created_time",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Q1.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          type,",
+				"          episodes,",
+				"          rating,",
+				"          members,",
+				"          created_by,",
+				"          created_time",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

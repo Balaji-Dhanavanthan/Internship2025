@@ -15,6 +15,10 @@
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "I2025_JNagara1",
+			"table": "TGT_Anime_I2025_JNagara1"
+		}
 	}
 }

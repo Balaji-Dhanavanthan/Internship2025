@@ -13,9 +13,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Q1_csv.csv",
+				"fileName": "Q1.csv",
 				"folderPath": "ADF_MODULE_I2025_JNagara1",
-				"container": "adf-module-test-1-target"
+				"container": "adf-module-test1-target"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

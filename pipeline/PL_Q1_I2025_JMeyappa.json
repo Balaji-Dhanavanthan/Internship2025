@@ -91,9 +91,15 @@
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -110,7 +116,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "adf-module-test1-target",
+							"Container": "adf-module-test1-",
 							"Folder": "I2025_JMeyappa",
 							"Filename": "target.csv"
 						}
@@ -118,13 +124,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"TableName": "TGT_Anime_YourId",
-							"SchemaName": "I2025_JMeyappa",
-							"DatabaseName": "Intern_2025"
-						}
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
 					}
 				]
 			}

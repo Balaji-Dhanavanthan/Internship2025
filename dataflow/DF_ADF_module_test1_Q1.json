@@ -32,10 +32,7 @@
 					"name": "Transformation"
 				},
 				{
-					"name": "TypeAbbreviation"
-				},
-				{
-					"name": "NullHandling"
+					"name": "NullHandlingAndAuditColumns"
 				}
 			],
 			"scriptLines": [
@@ -64,10 +61,11 @@
 				"     skipDuplicateMapOutputs: true) ~> SelectType",
 				"Source derive(genre = replace(genre, ',', ':'),",
 				"          rating = round(rating, 1)) ~> Transformation",
-				"SelectType derive(mode = iif(mode=='TV', 'Television','')\r",
-				") ~> TypeAbbreviation",
-				"TypeAbbreviation filter(iifNull(mode, '')) ~> NullHandling",
-				"NullHandling sink(allowSchemaDrift: true,",
+				"SelectType derive(mode = iif(mode=='TV', 'Television',iif(mode=='OVA', 'Original video animation', iif(mode=='ONA', 'Original Net Animation', iif(mode == 'Movie', 'Cinema', iifNull('')))))\r",
+				",",
+				"          Created_at = currentDate(),",
+				"          Created_by = 'I2025_PMahendi') ~> NullHandlingAndAuditColumns",
+				"NullHandlingAndAuditColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",
@@ -135,7 +133,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['ADF_module_test1_I2025_PMahendi'],",
+				"     partitionFileNames:['ADF_module_test1_Qn1_I2025_PMahendi'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> Sink"

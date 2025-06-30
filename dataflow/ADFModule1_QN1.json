@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "transformations"
+				},
+				{
+					"name": "Nullhandling"
 				}
 			],
 			"scriptLines": [
@@ -39,7 +42,7 @@
 				"          genre as string,",
 				"          type as string,",
 				"          episodes as integer,",
-				"          rating as double,",
+				"          rating as float,",
 				"          members as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -59,7 +62,8 @@
 				"select1 derive(genre = replace(genre,',',':'),",
 				"          rating = round(rating,1),",
 				"          type = iif(type=='OVA','Original video animation',iif(type=='ONA','Original Net Animation',iif(type=='TV','Television',iif(type=='Movie','Cinema',type))))) ~> transformations",
-				"transformations sink(allowSchemaDrift: true,",
+				"transformations derive(type = iif(isNull(type),'UNK',type)) ~> Nullhandling",
+				"Nullhandling sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",

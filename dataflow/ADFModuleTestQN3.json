@@ -1,0 +1,43 @@
+{
+	"name": "ADFModuleTestQN3",
+	"properties": {
+		"folder": {
+			"name": "ADFModuleTest1_I2025_MSyed"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as short,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(Created_At = currentDate(),",
+				"          {Created_By } = 'I2025_MSyed',",
+				"          FileName = TGT_Anime_I2025_MSyed) ~> derivedColumn1"
+			]
+		}
+	}
+}

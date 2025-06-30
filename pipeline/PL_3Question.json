@@ -68,7 +68,14 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -83,9 +90,9 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source1": {
-								"container": "adf-module-test-1-source",
-								"folder": "ModuleTest 1 Qn 1",
-								"file": "ModuleTest 1.csv"
+								"container": "adf-module-test1-target",
+								"folder": "ADF_MODULE_TEST-1_I2025_AMohamad",
+								"file": "TGT_Anime_I2025_AMohamad"
 							}
 						}
 					},

@@ -1,0 +1,42 @@
+{
+	"name": "DS_sqlservertest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"database": {
+				"type": "string"
+			},
+			"tablename": {
+				"type": "string"
+			},
+			"schemaname": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "adf-module-test-I2025_KRavi"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schemaname",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
+	}
+}

@@ -67,8 +67,6 @@
 			{
 				"name": "Delete1",
 				"type": "Delete",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -83,9 +81,9 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-container",
-							"folder": "Target Folders/I2025_AMohamad/ADF",
-							"file": "part-00000-cb5b1942-d268-4840-b5c2-ae7a6d11a61a-c000.csv"
+							"container": "adf-module-test1-target",
+							"folder": "ADF_MODULE_TEST-1_I2025_AMohamad",
+							"file": "part-00000-b053464b-393b-41a4-8d0b-8673fc681734-c000.csv"
 						}
 					},
 					"logStorageSettings": {

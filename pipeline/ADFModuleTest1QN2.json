@@ -1,0 +1,95 @@
+{
+	"name": "ADFModuleTest1QN2",
+	"properties": {
+		"activities": [
+			{
+				"name": "QN2_raw_anime1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "adf-module-test-1-source",
+							"Directory": "Module Test 1 Qn2",
+							"filename": "raw_anime1.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "adf-module-test1-target",
+							"Directory": "I2025_MSyed",
+							"filename": "be TGT_Raw_Anime_I2025_MSyed.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "QN2_raw_anime 2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			}
+		],
+		"folder": {
+			"name": "ADFModuleTest1_I2025_MSyed"
+		},
+		"annotations": []
+	}
+}

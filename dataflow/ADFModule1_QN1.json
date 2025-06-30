@@ -127,6 +127,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     rowUrlColumn:'',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]

@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "output.parquet",
-				"folderPath": "ck",
-				"container": "asrj"
+				"fileName": "ModuleTest 1.csv",
+				"folderPath": "ModuleTest 1 Qn 1",
+				"container": "adf-module-test-1-source"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

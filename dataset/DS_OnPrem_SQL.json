@@ -2,15 +2,11 @@
 	"name": "DS_OnPrem_SQL",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_OnPrem_SQLServer",
+			"referenceName": "LS_Intern_SQLServer",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "countries"
-		}
+		"schema": []
 	}
 }

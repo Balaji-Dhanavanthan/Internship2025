@@ -55,6 +55,17 @@
 				]
 			}
 		],
+		"parameters": {
+			"CONTAINER_NAME": {
+				"type": "string"
+			},
+			"FOLDER": {
+				"type": "string"
+			},
+			"FILE": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ADF Module test 1"
 		},

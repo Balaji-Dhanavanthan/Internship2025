@@ -26,16 +26,60 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "Moduletest2",
+						"type": "DatasetReference",
+						"parameters": {
+							"CONTAINER": {
+								"value": "@pipeline().parameters.CONTAINER",
+								"type": "Expression"
+							},
+							"FOLDER": {
+								"value": "@pipeline().parameters.FOLDER",
+								"type": "Expression"
+							},
+							"FILE_NAME": {
+								"value": "@pipeline().parameters.FILE",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"parameters": {
+			"CONTAINER": {
+				"type": "string"
+			},
+			"FOLDER": {
+				"type": "string"
+			},
+			"FILE": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ADF Module test 1"
 		},

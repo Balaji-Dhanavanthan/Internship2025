@@ -58,6 +58,9 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -99,7 +102,18 @@
 				"split1@NOTIN derive(types = types) ~> NOTINderivedColumn",
 				"TVderivedColumn, MOVIESderivedColumn, ONAderivedColumn, OVAderivedColumn, NOTINderivedColumn union(byName: true)~> union1",
 				"union1 filter(!(isNull(types))) ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"filter1 select(mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          types,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['TGT_Anime_I2025_MAbdul.csv'],",
 				"     skipDuplicateMapInputs: true,",

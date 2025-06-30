@@ -9,21 +9,21 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_adftest_Q1",
+						"referenceName": "CSV_adf_Q2",
 						"type": "DatasetReference"
 					},
 					"name": "rawanime1"
 				},
 				{
 					"dataset": {
-						"referenceName": "DS_adftest_Q1",
+						"referenceName": "CSV_adf_Q2",
 						"type": "DatasetReference"
 					},
 					"name": "rawanime2"
 				},
 				{
 					"dataset": {
-						"referenceName": "DS_adftest_Q1",
+						"referenceName": "CSV_adf_Q2",
 						"type": "DatasetReference"
 					},
 					"name": "rawanime3"

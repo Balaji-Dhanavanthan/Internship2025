@@ -1,0 +1,40 @@
+{
+	"name": "CSV_adf_Q2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"CONTAINER": {
+				"type": "String"
+			},
+			"FILENAME": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "ADF-Module test 1-I2025_MAbdul1"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FILENAME",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().CONTAINER",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

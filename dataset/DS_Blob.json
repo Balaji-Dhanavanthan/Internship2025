@@ -12,11 +12,11 @@
 			},
 			"Directory": {
 				"type": "string",
-				"defaultValue": "aabidh"
+				"defaultValue": "targetfolder"
 			},
 			"File": {
 				"type": "string",
-				"defaultValue": "job_history"
+				"defaultValue": "locations"
 			}
 		},
 		"annotations": [],

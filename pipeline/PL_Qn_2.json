@@ -20,7 +20,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "adf-module-test-1-source",
-							"Folder": "Module Test 1 Qn2"
+							"Folder": "Module Test 1 Qn2",
+							"FileName": "raw_anime1.csv"
 						}
 					},
 					"fieldList": [
@@ -41,8 +42,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -71,8 +70,55 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"enableStaging": false
-							}
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "adf-module-test-1-source",
+										"Folder": "Module Test 1 Qn2",
+										"FileName": "raw_anime1.csv"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"SchemaName": "I2025_MDinesh",
+										"TableName": "Table Name must be TGT_Raw_Anime_YourID",
+										"database": "Intern_2025"
+									}
+								}
+							]
 						}
 					]
 				}

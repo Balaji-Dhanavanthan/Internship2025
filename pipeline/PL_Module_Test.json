@@ -74,7 +74,8 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -93,7 +94,7 @@
 						"parameters": {
 							"Container": "adf-module-test1-target",
 							"Folder": "I2025_MDinesh",
-							"FileName": "Blob_to_sql.csv"
+							"FileName": "part-00000-1535aaed-1036-46ab-9271-ed4a1de251e8-c000.csv"
 						}
 					}
 				],
@@ -103,7 +104,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_MDinesh",
-							"TableName": "TGT_Anime_YourId",
+							"TableName": "TGT_Anime_YourId1",
 							"database": "Intern_2025"
 						}
 					}

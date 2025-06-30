@@ -8,7 +8,7 @@
 		"parameters": {
 			"Container": {
 				"type": "string",
-				"defaultValue": "rootfolders"
+				"defaultValue": "Root folder"
 			},
 			"Directory": {
 				"type": "string",

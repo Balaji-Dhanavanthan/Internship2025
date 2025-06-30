@@ -1,6 +1,12 @@
 {
 	"name": "pipeline2",
 	"properties": {
+		"parameters": {
+			"tgt": {
+				"type": "string",
+				"defaultValue": "yes"
+			}
+		},
 		"variables": {
 			"intg": {
 				"type": "Array",
@@ -13,7 +19,14 @@
 				]
 			},
 			"itc": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": [
+					1,
+					2,
+					3,
+					4,
+					5
+				]
 			}
 		},
 		"annotations": []

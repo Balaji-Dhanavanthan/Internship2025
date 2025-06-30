@@ -89,7 +89,7 @@
 						"parameters": {
 							"Container": "adf-module-test1-target",
 							"Folder": "I2025_RRamesh",
-							"Filename": "test1-tgt-Q1"
+							"Filename": "test1-tgt-Q1.csv"
 						}
 					}
 				],
@@ -99,7 +99,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_RRamesh",
-							"TableName": "test1-tgt-Q1.csv"
+							"TableName": "test1-tgt-Q1"
 						}
 					}
 				]

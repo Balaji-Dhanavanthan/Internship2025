@@ -1,0 +1,42 @@
+{
+	"name": "DS_SQL_ADF_TEST1_Q1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_OnPrem_SQLServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"database": {
+				"type": "String"
+			},
+			"schemaname": {
+				"type": "string"
+			},
+			"tablename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ADF-Module test 1-I2025_MAbdul1"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schemaname",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
+	}
+}

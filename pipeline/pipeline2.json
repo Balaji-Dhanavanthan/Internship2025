@@ -3,6 +3,112 @@
 	"properties": {
 		"activities": [
 			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source": {
+								"container": "test-container",
+								"directory": "I2025_PArul"
+							},
+							"target": {
+								"container": "test-container",
+								"folder": "I2025_PArul",
+								"filename": "employee_target"
+							},
+							"sink1": {
+								"container": "test-container",
+								"directory": "I2025_PArul"
+							},
+							"sink2": {
+								"container": "test-container",
+								"directory": "I2025_PArul"
+							}
+						},
+						"linkedServiceParameters": {
+							"source": {
+								"schemaLinkedService": {
+									"container": "test-container",
+									"directory": "I2025_PArul"
+								}
+							},
+							"target": {
+								"schemaLinkedService": {
+									"container": "test-container",
+									"folder": "I2025_PArul",
+									"filename": "employee_target"
+								}
+							},
+							"sink1": {
+								"schemaLinkedService": {
+									"container": "test-container",
+									"directory": "I2025_PArul"
+								}
+							},
+							"sink2": {
+								"schemaLinkedService": {
+									"container": "test-container",
+									"directory": "I2025_PArul"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"directory": "I2025_PArul"
+						}
+					}
+				}
+			},
+			{
 				"name": "Copy data1",
 				"type": "Copy",
 				"dependsOn": [
@@ -36,133 +142,12 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "first_name",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "first_name",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "last_name",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "last_name",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "email",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "email",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "phone_number",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "phone_number",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "hire_date",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "hire_date",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"source": {
-									"name": "job_id",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "job_id",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "salary",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "salary",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "commission_pct",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "commission_pct",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "manager_id",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "manager_id",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "department",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "department",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							}
-						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -176,7 +161,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "test-container",
-							"folder": "I2025_PArul"
+							"folder": "I2025_PArul",
+							"filename": "employee_target"
 						}
 					}
 				],
@@ -186,51 +172,6 @@
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "SCD_1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source": {
-								"container": "test-container",
-								"folder": "I2025_PArul"
-							},
-							"target": {
-								"filename": "employees.csv",
-								"container": "test-container",
-								"directory": "I2025_PArul"
-							},
-							"sink1": {
-								"container": "test-container",
-								"directory": "I2025_PArul",
-								"filename": "employees_target"
-							},
-							"sink2": {
-								"container": "test-container",
-								"directory": "I2025_PArul",
-								"filename": "employees_target"
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
-				}
 			}
 		],
 		"annotations": []

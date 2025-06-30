@@ -1,0 +1,35 @@
+{
+	"name": "ADF_ModuleTest_11",
+	"properties": {
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "input1"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     order: 0,",
+				"     allowSchemaDrift: true) ~> input1",
+				"input1 derive(genre = replace(genre, ',', ':'),",
+				"          rating = round(rating, 1, 1),",
+				"          type = iif(type=='OVA', 'Original video animation', iif(type=='ONA', 'Original Net Animation', iif(type=='TV', 'Television', iif(type=='Movie', 'Cinema', type)))),",
+				"          each(match(type=='string'), $$ = iif(isNull($$),'Unknown',$$))) ~> derivedColumn1"
+			]
+		}
+	}
+}

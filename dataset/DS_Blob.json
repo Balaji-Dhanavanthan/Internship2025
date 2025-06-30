@@ -5,30 +5,14 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"container": {
-				"type": "string",
-				"defaultValue": "test-container"
-			},
-			"folder": {
-				"type": "string",
-				"defaultValue": "I2025_PArul"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "employee_target",
-				"folderPath": {
-					"value": "@dataset().folder",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().container",
-					"type": "Expression"
-				}
+				"fileName": "raw_anime1.csv",
+				"folderPath": "Module Test 1 Qn2",
+				"container": "adf-module-test-1-source"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

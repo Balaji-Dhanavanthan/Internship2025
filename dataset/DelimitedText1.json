@@ -1,5 +1,5 @@
 {
-	"name": "DS_csv",
+	"name": "DelimitedText1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "raw_anime3.csv",
-				"folderPath": "Module Test 1 Qn2",
-				"container": "adf-module-test-1-source"
+				"fileName": "TGT_Raw_Anime_YourID.csv",
+				"folderPath": "I2025_PArul",
+				"container": "adf-module-test1-target"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -1,0 +1,128 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "target"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "insert"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as date,",
+				"          job_id as string,",
+				"          salary as integer,",
+				"          commission_pct as integer,",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as date,",
+				"          job_id as string,",
+				"          salary as integer,",
+				"          commission_pct as integer,",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"source select(mapColumn(",
+				"          employee_id,",
+				"          first_name,",
+				"          last_name,",
+				"          email,",
+				"          phone_number,",
+				"          hire_date,",
+				"          job_id,",
+				"          salary,",
+				"          commission_pct,",
+				"          manager_id,",
+				"          department_id",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1, derivedColumn3 join(select1@employee_id == derivedColumn3@employee_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 alterRow(updateIf(select1@employee_id==derivedColumn3@employee_id &&(select1@salary!=derivedColumn3@salary))) ~> update",
+				"join1 alterRow(insertIf(isNull(derivedColumn3@employee_id))) ~> insert",
+				"insert derive(created_by = 'I2025_PArul',",
+				"          created_date = currentDate()) ~> derivedColumn2",
+				"target derive(each(match(type =='integer'), $$ = iif(isNull($$),0,$$)),",
+				"          each(match(type =='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn3",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"update sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
+			]
+		}
+	}
+}

@@ -51,7 +51,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_csv_I2025_PArul",
+						"referenceName": "DS_csv",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "test-container",

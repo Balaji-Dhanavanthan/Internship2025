@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "I2025_PArul",
-			"table": "employee_target"
+			"table": "TGT_Raw_Anime_YourID"
 		}
 	}
 }

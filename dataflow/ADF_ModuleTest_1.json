@@ -1,0 +1,131 @@
+{
+	"name": "ADF_ModuleTest_1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "TGTAnimeYourId"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "rawanime1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_csv",
+						"type": "DatasetReference"
+					},
+					"name": "rawanime2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Intern_2025_csv_files",
+						"type": "DatasetReference"
+					},
+					"name": "rawanime3"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTGT"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedTGT"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "derivedColumn2"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TGTAnimeYourId",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawanime1",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawanime2",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> rawanime3",
+				"TGTAnimeYourId derive(type = iif(type=='OVA', 'Original video animation', iif(type=='ONA', 'Original Net Animation', iif(type=='TV', 'Television', iif(type=='Movies', 'Cinema', type)))),",
+				"          rating = round(rating, 1, 1),",
+				"          genre = replace(genre, ',', ':'),",
+				"          created_at = currentDate(),",
+				"          created_by = 'I2025_PArul') ~> derivedTGT",
+				"rawanime1, rawanime2, rawanime3 union(byName: true)~> union1",
+				"union1 derive(created_at = currentDate(),",
+				"          created_by = 'I2025_PArul') ~> derivedColumn2",
+				"derivedTGT sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkTGT",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          anime_id,",
+				"          name,",
+				"          genre,",
+				"          type,",
+				"          episodes,",
+				"          rating,",
+				"          members",
+				"     )) ~> sink2"
+			]
+		}
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"name": "DF_Q1_I2025_JMeyappa",
+	"properties": {
+		"folder": {
+			"name": "ADF-ModuleTest-1-I2025_JMeyappa"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "TGTAnimeYourIdSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "DCQ1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TGTAnimeYourIdSource",
+				"TGTAnimeYourIdSource derive(genre = replace(genre, ',',':'),",
+				"          rating = ERROR_FUNCTION('')) ~> DCQ1"
+			]
+		}
+	}
+}

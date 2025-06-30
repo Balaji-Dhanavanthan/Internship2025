@@ -18,7 +18,7 @@
 			},
 			"tablename": {
 				"type": "string",
-				"defaultValue": "stg"
+				"defaultValue": "TGT_Anime_I2025_JSivakum"
 			},
 			"database": {
 				"type": "string",

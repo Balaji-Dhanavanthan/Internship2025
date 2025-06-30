@@ -8,15 +8,14 @@
 		"parameters": {
 			"container": {
 				"type": "string",
-				"defaultValue": "test-container"
+				"defaultValue": "adf-module-test-1-source"
 			},
 			"folder": {
 				"type": "string",
-				"defaultValue": "I2025_JSivakum"
+				"defaultValue": "Module Test 1 Qn2"
 			},
 			"file": {
-				"type": "string",
-				"defaultValue": "select_col"
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -24,18 +23,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().file",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().folder",
-					"type": "Expression"
-				},
-				"container": {
-					"value": "@dataset().container",
-					"type": "Expression"
-				}
+				"fileName": "ModuleTest 1.csv",
+				"folderPath": "ModuleTest 1 Qn 1",
+				"container": "adf-module-test-1-source"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

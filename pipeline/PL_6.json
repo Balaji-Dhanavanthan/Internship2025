@@ -110,15 +110,7 @@
 							"outputs": [
 								{
 									"referenceName": "test1",
-									"type": "DatasetReference",
-									"parameters": {
-										"report": "test-container",
-										"foldername": "I2025_JSivakum",
-										"filename": {
-											"value": "@item().name\n",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
@@ -224,15 +216,7 @@
 				"outputs": [
 					{
 						"referenceName": "test1",
-						"type": "DatasetReference",
-						"parameters": {
-							"report": "test-container",
-							"foldername": "I2025_JSivakum",
-							"filename": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				]
 			},
@@ -333,15 +317,7 @@
 							"outputs": [
 								{
 									"referenceName": "test1",
-									"type": "DatasetReference",
-									"parameters": {
-										"report": "test-container",
-										"foldername": "I2025_JSivakum",
-										"filename": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}

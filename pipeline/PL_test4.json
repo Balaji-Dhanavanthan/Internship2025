@@ -17,12 +17,7 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "test1",
-						"type": "DatasetReference",
-						"parameters": {
-							"report": "test-container",
-							"foldername": "I2025_JSivakum",
-							"filename": "file1.csv"
-						}
+						"type": "DatasetReference"
 					},
 					"logStorageSettings": {
 						"linkedServiceName": {

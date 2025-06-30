@@ -119,12 +119,7 @@
 							"outputs": [
 								{
 									"referenceName": "test1",
-									"type": "DatasetReference",
-									"parameters": {
-										"report": "practice-adf",
-										"foldername": "jc_try",
-										"filename": "if_copy_activity"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}

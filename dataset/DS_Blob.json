@@ -8,14 +8,15 @@
 		"parameters": {
 			"container": {
 				"type": "string",
-				"defaultValue": "test-container"
+				"defaultValue": "adf-module-test-1-source"
 			},
 			"folder": {
 				"type": "string",
-				"defaultValue": "Target Folders/I2025_AMohamad"
+				"defaultValue": "ModuleTest 1 Qn 1"
 			},
 			"file": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ModuleTest 1.csv"
 			}
 		},
 		"annotations": [],

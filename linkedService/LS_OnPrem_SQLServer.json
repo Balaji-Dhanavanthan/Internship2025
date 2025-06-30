@@ -10,8 +10,8 @@
 			"encrypt": "optional",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
-			"userName": "trainer",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhZWNhMzcyYy00MmJjLTRhNWQtYTBhMC0zZTYwZjI4ZDIxYjciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "IS2025_SBachu",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5OGQyMmY2Yy1iZjNmLTQ0NTUtYjQzNC04YzNiNGRjM2I2OGMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",

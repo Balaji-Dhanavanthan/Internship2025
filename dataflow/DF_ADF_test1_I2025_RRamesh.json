@@ -57,7 +57,7 @@
 				"          type_Movies = iif(type=='Movie',replace(type,'Movie','Cinema'),type)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['test1-tgt-Q1'],",
+				"     partitionFileNames:['test1-tgt-Q1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink1"

@@ -5,8 +5,6 @@
 			{
 				"name": "DF_ADF_test1_I2025_RRamesh",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -29,7 +27,7 @@
 							"sink1": {
 								"Container": "adf-module-test1-target",
 								"Folder": "I2025_RRamesh",
-								"Filename": "test1-tgt-Q1"
+								"Filename": "test1-tgt-Q1.csv"
 							}
 						}
 					},
@@ -46,6 +44,8 @@
 			{
 				"name": "CopyToServer",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

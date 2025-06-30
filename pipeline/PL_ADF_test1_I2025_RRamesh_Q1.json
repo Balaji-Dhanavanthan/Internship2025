@@ -21,7 +21,7 @@
 						"datasetParameters": {
 							"source1": {
 								"Container": "adf-module-test-1-source",
-								"Folder": "ModuleTest 1 Qn 1 ",
+								"Folder": "ModuleTest 1 Qn 1",
 								"Filename": "ModuleTest 1.csv"
 							},
 							"sink1": {

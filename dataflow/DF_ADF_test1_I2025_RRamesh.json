@@ -54,7 +54,7 @@
 				"          type_OVA = iif(type=='OVA',replace(type,'OVA','Original video animation'),type),",
 				"          type_ONA = iif(type=='ONA',replace(type,'ONA','Original Net Animation'),type),",
 				"          type_TV = iif(type=='TV',replace(type, 'TV','Television'),type),",
-				"          type_Movies = iif(type=='Movie',replace(type,'Movie','Cinema'),type)) ~> derivedColumn1",
+				"          type_Movie = iif(type=='Movie',replace(type,'Movie','Cinema'),type)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['test1-tgt-Q1.csv'],",

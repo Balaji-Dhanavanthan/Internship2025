@@ -33,7 +33,20 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -42,7 +55,17 @@
 						"parameters": {
 							"container_name": "adf-module-test-1-target",
 							"directory_name": "ADF_module_test_1_I2025_JSenthil",
-							"file_name": "ADF_module_test_1_q1_sink"
+							"file_name": "ADF_module_test_1_q1_sink.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADF_module_test1_SQL_SERVER",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "TGT_Anime_I2025_JSenthil"
 						}
 					}
 				]
@@ -62,7 +85,19 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_anime_csv",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"animeCsv": {
+								"container_name": "adf-module-test-1-source",
+								"directory_name": "ModuleTest 1 Qn 1",
+								"file_name": "ModuleTest 1.csv"
+							},
+							"sinkIntoBlob": {
+								"container_name": "adf-module-test-1-target",
+								"directory_name": "ADF_module_test_1_I2025_JSenthil",
+								"file_name": "ADF_module_test_1_q1_sink.csv"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,

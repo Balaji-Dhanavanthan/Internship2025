@@ -1,0 +1,34 @@
+{
+	"name": "DS_ADF_module_test1_SQL_SERVER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_server",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DatabaseObject": {
+				"type": "string",
+				"defaultValue": "I2025_JSenthil"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ADF_module_test_1"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().DatabaseObject",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

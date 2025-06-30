@@ -42,6 +42,9 @@
 				},
 				{
 					"name": "filterAnimeType"
+				},
+				{
+					"name": "addingAudit"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +78,9 @@
 				"changeONA derive(anime_type = case(anime_type == 'TV', 'Television', anime_type)) ~> changeTV",
 				"changeTV derive(anime_type = case(anime_type == 'Movie', 'Cinema', anime_type)) ~> changeMovie",
 				"changeMovie filter(!isNull(anime_type)) ~> filterAnimeType",
-				"filterAnimeType sink(allowSchemaDrift: true,",
+				"filterAnimeType derive(created_at = currentUTC(),",
+				"          created_by = 'I2025_JSenthil') ~> addingAudit",
+				"addingAudit sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['ADF_module_test_1_q1_sink.csv'],",
 				"     skipDuplicateMapInputs: true,",

@@ -27,6 +27,15 @@
 			"transformations": [
 				{
 					"name": "assert1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -170,7 +179,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source3",
-				"source1 assert(expectTrue(ERROR_FUNCTION(''), false, 'assert1', ERROR_FUNCTION('@equals9variables(__SINGLE_QUOTE__status__SINGLE_QUOTE__,__SINGLE_QUOTE__yes__SINGLE_QUOTE__)'))) ~> assert1"
+				"source1 assert(expectTrue(ERROR_FUNCTION(''), false, 'assert1', ERROR_FUNCTION('@equals9variables(__SINGLE_QUOTE__status__SINGLE_QUOTE__,__SINGLE_QUOTE__yes__SINGLE_QUOTE__)'))) ~> assert1",
+				"source3 select(mapColumn(",
+				"          each(match(/* All input columns */ true()),",
+				"               /* Input name */ $$ = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 alterRow() ~> alterRow1",
+				"alterRow1 aggregate() ~> aggregate1"
 			]
 		}
 	}

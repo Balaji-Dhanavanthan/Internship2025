@@ -29,18 +29,68 @@
 					"name": "rawanime3"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_adftest_Q1",
+						"type": "DatasetReference"
+					},
+					"name": "sink",
+					"rejectedDataLinkedService": {
+						"referenceName": "DS_Blob_storgare",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "joiningall"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> rawanime1",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> rawanime2",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> rawanime3"
+				"     ignoreNoFilesFound: false) ~> rawanime3",
+				"rawanime1, rawanime2, rawanime3 union(byName: true)~> joiningall",
+				"joiningall sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['TGT_Raw_Anime_I2025_MAbdul'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink"
 			]
 		}
 	}

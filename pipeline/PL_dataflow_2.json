@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "PL_dataflow_2",
 	"properties": {
 		"activities": [
 			{
@@ -15,6 +15,27 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ADF_ModuleTest1-QN2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"container": "adf-module-test-1-source",
+								"folder": "Module Test 1 Qn2",
+								"file": "raw_anime1.csv"
+							},
+							"source2": {
+								"container": "adf-module-test-1-source",
+								"folder": "Module Test 1 Qn2",
+								"file": "raw_anime2.csv"
+							},
+							"source3": {
+								"container": "adf-module-test-1-source",
+								"folder": "Module Test 1 Qn2",
+								"file": "raw_anime3.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -71,13 +92,8 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"folder": "I2025_JSivakum",
-							"file": "stg"
-						}
+						"referenceName": "DS_CSV_3",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -86,13 +102,16 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "I2025_JSivakum",
-							"tablename": "stg1",
+							"tablename": "TGT_Raw_Anime_I2025_JSivakum",
 							"database": "Intern_2025"
 						}
 					}
 				]
 			}
 		],
+		"folder": {
+			"name": "workshop_1"
+		},
 		"annotations": []
 	}
 }

@@ -15,23 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"container": "test-container",
-								"folder": "Workshop_source",
-								"filename": "BASK Invitation Dataset.xlsx",
-								"index": 0
-							},
-							"source2": {
-								"container": "test-container",
-								"folder": "I2025_JSivakum",
-								"file": "stg"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

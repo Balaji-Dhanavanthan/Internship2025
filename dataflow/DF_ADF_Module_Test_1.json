@@ -26,9 +26,6 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
-				},
-				{
 					"name": "select1"
 				}
 			],
@@ -45,9 +42,6 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"select1 derive(genre = replace(genre, ',', ':'),",
-				"          rating = round(rating, 1, 1),",
-				"          type = iif(type=='OVA ', 'Original video animation',iif(type=='ONA', 'Original Net Animation', iif(type=='TV', 'Television', iif(type=='Movies', 'Cinema ', type))))) ~> derivedColumn1",
 				"source1 select(mapColumn(",
 				"          anime_id,",
 				"          name,",
@@ -59,7 +53,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",

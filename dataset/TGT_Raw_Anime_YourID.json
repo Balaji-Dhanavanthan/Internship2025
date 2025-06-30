@@ -14,8 +14,8 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "TGT_Raw_Anime_YourID.csv",
-				"folderPath": "adf-module-test1-I2025_KRavi",
-				"container": "adf-module-test-1-target"
+				"folderPath": "adf-module-test1-I2025_SKomala",
+				"container": "adf-module-test1-target"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

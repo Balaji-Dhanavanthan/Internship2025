@@ -1,0 +1,539 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"DS_Blob_storgare": {
+			"type": "string"
+		},
+		"MSSQL": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ADF_Module_Qn 2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DF_Module_Qn2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_ADF_MODULE_QN 2",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "CDSqlToCsv",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "DF_Module_Qn2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DSTGT_Raw_Anime_YourID",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DSSQLMODULEQN2",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "PL_ADF_Module1"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DF_ADF_MODULE_QN 2')]",
+				"[concat(variables('factoryId'), '/datasets/DSTGT_Raw_Anime_YourID')]",
+				"[concat(variables('factoryId'), '/datasets/DSSQLMODULEQN2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_ADF_MODULE_QN 2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "DF_ADF_Module1"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_raw_anime1",
+								"type": "DatasetReference"
+							},
+							"name": "SrcRawAnime1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_raw_anime2",
+								"type": "DatasetReference"
+							},
+							"name": "SrcRawAnime2"
+						},
+						{
+							"dataset": {
+								"referenceName": "DSRawAnime3",
+								"type": "DatasetReference"
+							},
+							"name": "SrcRawAnime3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DSTGT_Raw_Anime_YourID",
+								"type": "DatasetReference"
+							},
+							"name": "TGTRawAnimeYourID"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RawAnime1JoinedRawAnime2"
+						},
+						{
+							"name": "RawAnime3JoinedWithRawAnime1and2"
+						},
+						{
+							"name": "AuditColumn"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          anime_id as integer,",
+						"          name as string,",
+						"          genre as string,",
+						"          type as string,",
+						"          episodes as string,",
+						"          rating as boolean,",
+						"          members as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> SrcRawAnime1",
+						"source(output(",
+						"          anime_id as integer,",
+						"          name as string,",
+						"          genre as string,",
+						"          type as string,",
+						"          episodes as string,",
+						"          rating as double,",
+						"          members as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> SrcRawAnime2",
+						"source(output(",
+						"          anime_id as integer,",
+						"          name as string,",
+						"          genre as string,",
+						"          type as string,",
+						"          episodes as string,",
+						"          rating as double,",
+						"          members as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> SrcRawAnime3",
+						"SrcRawAnime1, SrcRawAnime2 join(SrcRawAnime1@anime_id == SrcRawAnime2@anime_id,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> RawAnime1JoinedRawAnime2",
+						"RawAnime1JoinedRawAnime2, SrcRawAnime3 join(SrcRawAnime1@anime_id == SrcRawAnime3@anime_id,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> RawAnime3JoinedWithRawAnime1and2",
+						"RawAnime3JoinedWithRawAnime1and2 derive(createdat = currentUTC(),",
+						"          createdby = 'I2025_SKomala',",
+						"          filename = 'raw_anime 1&2&3') ~> AuditColumn",
+						"AuditColumn sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          anime_id as string,",
+						"          name as string,",
+						"          genre as string,",
+						"          type as string,",
+						"          episodes as string,",
+						"          rating as string,",
+						"          members as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> TGTRawAnimeYourID"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_raw_anime1')]",
+				"[concat(variables('factoryId'), '/datasets/DS_raw_anime2')]",
+				"[concat(variables('factoryId'), '/datasets/DSRawAnime3')]",
+				"[concat(variables('factoryId'), '/datasets/DSTGT_Raw_Anime_YourID')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DSTGT_Raw_Anime_YourID')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('DS_Blob_storgare')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DS_ADF_Module1"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "TGT_Raw_Anime_YourID.csv",
+						"folderPath": "adf-module-test1-I2025_SKomala",
+						"container": "adf-module-test1-target"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "anime_id",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "genre",
+						"type": "String"
+					},
+					{
+						"name": "type",
+						"type": "String"
+					},
+					{
+						"name": "episodes",
+						"type": "String"
+					},
+					{
+						"name": "rating",
+						"type": "String"
+					},
+					{
+						"name": "members",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DSSQLMODULEQN2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('MSSQL')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DS_ADF_Module1"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "anime",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "genre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "episodes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rating",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 0
+					},
+					{
+						"name": "members",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "I2025_SKomala",
+					"table": "TGT_Raw_Anime_YourID"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_raw_anime1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('DS_Blob_storgare')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DS_ADF_Module1"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "raw_anime1.csv",
+						"folderPath": "Module Test 1 Qn2",
+						"container": "adf-module-test-1-source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "anime_id",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "genre",
+						"type": "String"
+					},
+					{
+						"name": "type",
+						"type": "String"
+					},
+					{
+						"name": "episodes",
+						"type": "String"
+					},
+					{
+						"name": "rating",
+						"type": "String"
+					},
+					{
+						"name": "members",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_raw_anime2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('DS_Blob_storgare')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DS_ADF_Module1"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "raw_anime2.csv",
+						"folderPath": "Module Test 1 Qn2",
+						"container": "adf-module-test-1-source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "anime_id",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "genre",
+						"type": "String"
+					},
+					{
+						"name": "type",
+						"type": "String"
+					},
+					{
+						"name": "episodes",
+						"type": "String"
+					},
+					{
+						"name": "rating",
+						"type": "String"
+					},
+					{
+						"name": "members",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DSRawAnime3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('DS_Blob_storgare')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DS_ADF_Module1"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "raw_anime3.csv",
+						"folderPath": "Module Test 1 Qn2",
+						"container": "adf-module-test-1-source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "anime_id",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "genre",
+						"type": "String"
+					},
+					{
+						"name": "type",
+						"type": "String"
+					},
+					{
+						"name": "episodes",
+						"type": "String"
+					},
+					{
+						"name": "rating",
+						"type": "String"
+					},
+					{
+						"name": "members",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}

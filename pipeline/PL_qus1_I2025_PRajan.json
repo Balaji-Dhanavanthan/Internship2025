@@ -1,0 +1,167 @@
+{
+	"name": "PL_qus1_I2025_PRajan",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_qus1_I2025_PRajan",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_QUS1_I2025_PRajan",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Source": {
+								"container": "adf-module-test-1-source",
+								"folder": "ModuleTest 1 Qn 1",
+								"filename": "ModuleTest 1.csv"
+							},
+							"sink1": {
+								"container": "adf-module-test1-target",
+								"folder": "ModuleTest 1 Qn 1",
+								"filename": "Qn1_I2025_PRajan"
+							}
+						},
+						"linkedServiceParameters": {
+							"Source": {
+								"schemaLinkedService": {
+									"container": "adf-module-test1-target",
+									"folder": "ModuleTest 1 Qn 1",
+									"filename": "Qn1_I2025_PRajan"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "PL_qus1_I2025_PRajan_copy1",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_QUS1_I2025_PRajan",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Source": {
+								"container": "adf-module-test-1-source",
+								"folder": "ModuleTest 1 Qn 1",
+								"filename": "ModuleTest 1.csv"
+							},
+							"sink1": {
+								"container": "adf-module-test1-target",
+								"folder": "ModuleTest 1 Qn 1",
+								"filename": "Qn1_I2025_PRajan.csv"
+							}
+						},
+						"linkedServiceParameters": {
+							"sink1": {
+								"schemaLinkedService": {
+									"container": "adf-module-test1-target",
+									"folder": "ModuleTest 1 Qn 1",
+									"filename": "Qn1_I2025_PRajan.csv"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "adf-module-test1-target",
+							"folder": "ModuleTest 1 Qn 1",
+							"filename": "Qn_1_I2025_PRajan"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SQLServer_I2025_PRajan",
+						"type": "DatasetReference",
+						"parameters": {
+							"objectName": "I2025_PRajan",
+							"tableName": "TGT_Anime_I2025_PRajan"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PL_ADFModuleTest1"
+		},
+		"annotations": []
+	}
+}

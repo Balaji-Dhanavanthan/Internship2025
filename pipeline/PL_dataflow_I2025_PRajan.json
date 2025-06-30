@@ -156,7 +156,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_SQLServer",
+						"referenceName": "DS_SQLServer_I2025_PRajan",
 						"type": "DatasetReference",
 						"parameters": {
 							"objectName": "I2025_PRajan",
@@ -166,7 +166,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQLServer",
+						"referenceName": "DS_SQLServer_I2025_PRajan",
 						"type": "DatasetReference",
 						"parameters": {
 							"objectName": "I2025_PRajan",
@@ -254,7 +254,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQLServer",
+						"referenceName": "DS_SQLServer_I2025_PRajan",
 						"type": "DatasetReference",
 						"parameters": {
 							"objectName": "I2025_PRajan",

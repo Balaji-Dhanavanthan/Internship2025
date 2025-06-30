@@ -1,0 +1,72 @@
+{
+	"name": "PL_qus3_I2025_PRajan",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_SQLServer_I2025_PRajan",
+						"type": "DatasetReference",
+						"parameters": {
+							"objectName": "I2025_PRajan",
+							"tableName": "TGT_NEW "
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "adf-module-test1-target",
+							"folder": "ModuleTest_I2025_PRajan",
+							"filename": "Qn_3_I2025_PRajan"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PL_ADFModuleTest1"
+		},
+		"annotations": []
+	}
+}

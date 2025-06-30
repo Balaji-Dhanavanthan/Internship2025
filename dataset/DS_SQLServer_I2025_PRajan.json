@@ -1,5 +1,5 @@
 {
-	"name": "DS_SQLServer",
+	"name": "DS_SQLServer_I2025_PRajan",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_I2025_PRajan",
@@ -14,6 +14,9 @@
 				"type": "string",
 				"defaultValue": "employees"
 			}
+		},
+		"folder": {
+			"name": "DS_ADFModuleTest1"
 		},
 		"annotations": [],
 		"type": "SqlServerTable",

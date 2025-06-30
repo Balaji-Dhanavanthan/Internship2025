@@ -27,7 +27,7 @@
 							"sink1": {
 								"Container": "adf-module-test1-target",
 								"Folder": "I2025_KUdayaku",
-								"FileName": "TGT_Anime_I2025_KUdayaku.csv"
+								"FileName": "TGT_Anime_KUdayaku"
 							}
 						}
 					},
@@ -91,7 +91,7 @@
 						"parameters": {
 							"Container": "adf-module-test1-target",
 							"Folder": "I2025_KUdayaku",
-							"FileName": "TGT_Anime_I2025_KUdayaku.csv"
+							"FileName": "TGT_Anime_KUdayaku"
 						}
 					}
 				],

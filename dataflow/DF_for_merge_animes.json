@@ -85,10 +85,11 @@
 				"     ignoreNoFilesFound: false) ~> rawAni2Src",
 				"rawAni1Src, rawAni2Src, rawAni3Src union(byName: true)~> merge3Src",
 				"merge3Src derive(created_at = currentUTC(),",
-				"          created_by = 'I2025_JSenthil') ~> derivedColumn1",
+				"          created_by = 'I2025_JSenthil',",
+				"          rating = round(rating, 2)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['ADF_module_test_1_q2_sink.csv'],",
+				"     partitionFileNames:['ADF_module_test_1_q2_sink_2.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sinkq2"

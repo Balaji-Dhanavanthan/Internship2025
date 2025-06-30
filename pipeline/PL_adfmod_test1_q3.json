@@ -1,0 +1,73 @@
+{
+	"name": "PL_adfmod_test1_q3",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT TOP 20 rating\nfrom TGT_Anime_I2025_JSenthil",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ADF_module_test1_SQL_SERVER",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "TGT_Anime_I2025_JSenthil"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_adf_module_test_1_q1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "adf-module-test1-target",
+							"directory_name": "ADF_module_test_1_I2025_JSenthil",
+							"file_name": "ADF_module_test1q3_top20.csv"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ADF_module_test_1"
+		},
+		"annotations": []
+	}
+}

@@ -5,6 +5,8 @@
 			{
 				"name": "MergeAnimes",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -37,7 +39,7 @@
 							"sinkq2": {
 								"container_name": "adf-module-test1-target",
 								"directory_name": "ADF_module_test_1_I2025_JSenthil",
-								"file_name": "ADF_module_test_1_q2_sink.csv"
+								"file_name": "ADF_module_test_1_q2_sink_2.csv"
 							}
 						}
 					},
@@ -51,6 +53,8 @@
 			{
 				"name": "fileNameAudit",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "MergeAnimes",
@@ -113,7 +117,7 @@
 						"parameters": {
 							"container_name": "adf-module-test1-target",
 							"directory_name": "ADF_module_test_1_I2025_JSenthil",
-							"file_name": "ADF_module_test_1_q2_sink.csv"
+							"file_name": "ADF_module_test_1_q2_sink_2.csv"
 						}
 					}
 				],
@@ -124,7 +128,7 @@
 						"parameters": {
 							"container_name": "adf-module-test1-target",
 							"directory_name": "ADF_module_test_1_I2025_JSenthil",
-							"file_name": "ADF_module_test_1_q2_sink.csv"
+							"file_name": "ADF_module_test_1_q2_sink_2.csv"
 						}
 					}
 				]
@@ -182,7 +186,7 @@
 						"parameters": {
 							"container_name": "adf-module-test1-target",
 							"directory_name": "ADF_module_test_1_I2025_JSenthil",
-							"file_name": "ADF_module_test_1_q2_sink.csv"
+							"file_name": "ADF_module_test_1_q2_sink_2.csv"
 						}
 					}
 				],

@@ -1,0 +1,43 @@
+{
+	"name": "DF_ADF_Assessment",
+	"properties": {
+		"folder": {
+			"name": "ADF_Assessment_DataFlow"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADF_CSV_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "alterGenres"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          anime_id as integer,",
+				"          name as string,",
+				"          genre as string,",
+				"          type as string,",
+				"          episodes as string,",
+				"          rating as double,",
+				"          members as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(genre = replace(genre, ',', ':'),",
+				"          rating = round(rating, 1),",
+				"          type = ERROR_FUNCTION('')) ~> alterGenres"
+			]
+		}
+	}
+}

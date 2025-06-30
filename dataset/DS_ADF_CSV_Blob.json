@@ -1,0 +1,27 @@
+{
+	"name": "DS_ADF_CSV_Blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ADF_Assessment_Datasets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ModuleTest 1.csv",
+				"folderPath": "ModuleTest 1 Qn 1",
+				"container": "adf-module-test-1-source"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

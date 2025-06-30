@@ -23,11 +23,6 @@
 								"Container": "rootfolder",
 								"Directory": "adf-module-test-1-source",
 								"File": "module test qn 1"
-							},
-							"sink1": {
-								"Container": "rootfolders",
-								"Directory": "adf-module-test-1-source",
-								"File": "module-test-Qn-1"
 							}
 						}
 					},
@@ -105,6 +100,18 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@equals(variables('tgt'),'yes')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"folder": {

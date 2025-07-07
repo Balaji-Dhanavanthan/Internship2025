@@ -1,9 +1,9 @@
 {
-	"name": "PL_CopyFile_I2025SRangan1",
+	"name": "PL_SCD_I2025SRangan1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "SCD1_source",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,15 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -49,13 +43,17 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference"
+						"referenceName": "DS_sql_I2025SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "I2025_SRangan1",
+							"filename": "customer_source"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					}
 				]

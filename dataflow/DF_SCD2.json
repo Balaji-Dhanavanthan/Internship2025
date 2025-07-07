@@ -1,0 +1,81 @@
+{
+	"name": "DF_SCD2",
+	"properties": {
+		"folder": {
+			"name": "DF_scd2"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "Target"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "surrogateKey1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          customer_id as integer,",
+				"          customer_name as string,",
+				"          customer_city as string,",
+				"          load_date as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          customer_sk as integer,",
+				"          customer_id as integer,",
+				"          customer_name as string,",
+				"          customer_city as string,",
+				"          start_date as date,",
+				"          end_date as date,",
+				"          is_current as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Target",
+				"Target derive(created_by = 'aabidh',",
+				"          created_at = currentTimestamp(),",
+				"          modified_by = 'aabidh',",
+				"          modified_at = currentTimestamp()) ~> derivedColumn1",
+				"surrogateKey1, derivedColumn1 lookup(source@customer_id == Target@customer_id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 split(source@customer_id != Target@customer_id,",
+				"     source@customer_id == Target@customer_id && (source@customer_name != Target@customer_name || source@customer_city != Target@customer_city),",
+				"     source@customer_id == Target@customer_id && (source@customer_name == Target@customer_name || source@customer_city == Target@customer_city),",
+				"     source@customer_id == Target@customer_id && (source@customer_name != Target@customer_name || source@customer_city != Target@customer_city),",
+				"     disjoint: false) ~> split1@(INSERTNEW, UPDATE, EXISTING, ADD)",
+				"source keyGenerate(output(customer__sk as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1"
+			]
+		}
+	}
+}

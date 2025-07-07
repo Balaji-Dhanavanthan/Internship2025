@@ -13,6 +13,9 @@
 			"Directory": {
 				"type": "string",
 				"defaultValue": "Asrar"
+			},
+			"FileName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],

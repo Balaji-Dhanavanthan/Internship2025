@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "TSDG_SCD1",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -17,6 +17,32 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ADF_SCD_1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceData": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SCD_source_date"
+							},
+							"targetData": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SCD_Target_data"
+							},
+							"SCD1FinalData": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SCD1FinalData.csv"
+							},
+							"SCD1FinalData1": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SCD1FinalData.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -167,6 +193,8 @@
 			{
 				"name": "SCD_Target_data",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -358,6 +386,76 @@
 							"container": "practice-adf",
 							"Directory": "Asrar",
 							"FileName": "SCD_Target_data"
+						}
+					}
+				]
+			},
+			{
+				"name": "scd1toonprem",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "TSDG_SCD1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar",
+							"FileName": "SCD1FinalData.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "SCD1FinalData.csv",
+							"databasename": "Intern_2025"
 						}
 					}
 				]

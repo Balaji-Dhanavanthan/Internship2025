@@ -1,5 +1,5 @@
 {
-	"name": "PL_SCD_2",
+	"name": "PL_SCD_1",
 	"properties": {
 		"activities": [
 			{
@@ -82,7 +82,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_SCD2",
+						"referenceName": "DF_scdd1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source": {
@@ -238,7 +238,7 @@
 			}
 		],
 		"folder": {
-			"name": "SCD-2"
+			"name": "SCD-1"
 		},
 		"annotations": []
 	}

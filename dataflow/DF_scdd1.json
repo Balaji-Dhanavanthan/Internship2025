@@ -1,8 +1,8 @@
 {
-	"name": "DF_SCD2",
+	"name": "DF_scdd1",
 	"properties": {
 		"folder": {
-			"name": "DF_scd2"
+			"name": "DF_scd1"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

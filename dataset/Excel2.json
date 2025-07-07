@@ -19,6 +19,9 @@
 				"type": "int"
 			}
 		},
+		"folder": {
+			"name": "Practice"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

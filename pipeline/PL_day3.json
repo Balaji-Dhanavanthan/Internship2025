@@ -177,22 +177,8 @@
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "DS_northexs",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "DS_OnPrem_SQL",
@@ -231,6 +217,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -381,6 +368,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Practice"
+		},
 		"annotations": []
 	}
 }

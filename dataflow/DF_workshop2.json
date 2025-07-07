@@ -1,6 +1,9 @@
 {
 	"name": "DF_workshop2",
 	"properties": {
+		"folder": {
+			"name": "practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -71,8 +74,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(in(['Completed'], {Invitation Status}) && {Product Quality} < 6\r",
-				") ~> filter1",
+				"source1 filter(in(['Completed'], {Invitation Status}) && {Product Quality} < 6) ~> filter1",
 				"filter1 derive(each(match(type=='string'), $$ = coalesce($$,'UNK')),",
 				"          each(match(type=='integer'), $$ = coalesce($$,0))) ~> derivedColumn1",
 				"derivedColumn1 keyGenerate(output({Survey ID} as long),",

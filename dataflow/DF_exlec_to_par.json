@@ -1,6 +1,9 @@
 {
 	"name": "DF_exlec_to_par",
 	"properties": {
+		"folder": {
+			"name": "practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

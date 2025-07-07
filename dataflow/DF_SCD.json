@@ -1,6 +1,9 @@
 {
 	"name": "DF_SCD",
 	"properties": {
+		"folder": {
+			"name": "practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

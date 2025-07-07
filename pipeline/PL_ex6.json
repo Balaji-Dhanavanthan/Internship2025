@@ -167,6 +167,9 @@
 				"defaultValue": []
 			}
 		},
+		"folder": {
+			"name": "Practice"
+		},
 		"annotations": []
 	}
 }

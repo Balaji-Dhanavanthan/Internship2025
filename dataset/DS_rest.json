@@ -5,6 +5,9 @@
 			"referenceName": "LS_restapi",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Practice"
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"schema": []

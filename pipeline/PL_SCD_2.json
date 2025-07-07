@@ -69,8 +69,6 @@
 			{
 				"name": "DF_SCD_2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -81,6 +79,32 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_SCD2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source": {
+								"container": "test-adf",
+								"folder": "aabidh",
+								"filename": "stg_customer_scd2.csv"
+							},
+							"Target": {
+								"container": "test-adf",
+								"folder": "aabidh",
+								"filename": "dim_customer_scd2.csv"
+							},
+							"sink1": {
+								"container": "test-adf",
+								"folder": "aabidh",
+								"filename": "target_1.csv"
+							},
+							"sink2": {
+								"container": "test-adf",
+								"folder": "aabidh",
+								"filename": "target_1.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -91,6 +115,8 @@
 			{
 				"name": "Copy data2",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -146,6 +172,69 @@
 							"container": "test-adf",
 							"folder": "aabidh",
 							"filename": "stg_customer_scd2.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data3",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-adf",
+							"folder": "aabidh",
+							"filename": "target_1.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MAbdul1",
+							"TableName": "target_1",
+							"database": "Intern_2025"
 						}
 					}
 				]

@@ -49,25 +49,19 @@
 					"name": "join1"
 				},
 				{
-					"name": "insert"
-				},
-				{
-					"name": "update"
-				},
-				{
-					"name": "derivedColumn2"
-				},
-				{
-					"name": "derivedColumn3"
+					"name": "split1"
 				},
 				{
 					"name": "select2"
 				},
 				{
+					"name": "derivedColumn2"
+				},
+				{
 					"name": "select3"
 				},
 				{
-					"name": "cast1"
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -109,22 +103,13 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 alterRow(insertIf(isNull(Target@customer_id))) ~> insert",
-				"join1 alterRow(updateIf(select1@customer_id==Target@customer_id&&(select1@customer_city!=Target@customer_city))) ~> update",
-				"update derive(modified_at = currentTimestamp(),",
-				"          modified_by = 'asrar') ~> derivedColumn2",
-				"insert derive(created_by = 'aabidh',",
-				"          created_at = currentTimestamp(),",
-				"          modified_by = 'aabidh',",
-				"          modified_at = currentTimestamp(),",
-				"          customer_sk = 3,",
-				"          start_date = currentTimestamp(),",
-				"          end_date = '9999-12-31',",
-				"          is_current = 'y') ~> derivedColumn3",
-				"derivedColumn2 select(mapColumn(",
-				"          customer_id = select1@customer_id,",
-				"          customer_name = select1@customer_name,",
-				"          customer_city = select1@customer_city,",
+				"join1 split(isNull(Target@customer_id),",
+				"     !isNull(Target@customer_id) && (select1@customer_id==Target@customer_id) && (select1@customer_city!=Target@customer_city),",
+				"     disjoint: false) ~> split1@(INSERT, UPDATE)",
+				"split1@INSERT select(mapColumn(",
+				"          customer_id = split1@INSERT@customer_id,",
+				"          customer_name = split1@INSERT@customer_name,",
+				"          customer_city = split1@INSERT@customer_city,",
 				"          customer_sk,",
 				"          start_date,",
 				"          end_date,",
@@ -136,10 +121,18 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"derivedColumn3 select(mapColumn(",
-				"          customer_id = select1@customer_id,",
-				"          customer_name = select1@customer_name,",
-				"          customer_city = select1@customer_city,",
+				"select2 derive(customer_sk = 3,",
+				"          start_date = currentTimestamp(),",
+				"          end_date = '9999-12-31',",
+				"          is_current = 'Y',",
+				"          created_by = 'AABIDH',",
+				"          created_at = currentTimestamp(),",
+				"          modified_by = 'AABIDH',",
+				"          modified_at = currentTimestamp()) ~> derivedColumn2",
+				"split1@UPDATE select(mapColumn(",
+				"          customer_id = split1@UPDATE@customer_id,",
+				"          customer_name = split1@UPDATE@customer_name,",
+				"          customer_city = split1@UPDATE@customer_city,",
 				"          customer_sk,",
 				"          start_date,",
 				"          end_date,",
@@ -151,11 +144,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 cast(output(",
-				"          is_current as boolean",
-				"     ),",
-				"     errors: true) ~> cast1",
-				"select2 sink(allowSchemaDrift: true,",
+				"select3 derive(modified_by = 'ASRAR',",
+				"          modified_at = '2025-07-08') ~> derivedColumn3",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",
@@ -223,9 +214,11 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['TGT.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1",
-				"cast1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",
@@ -293,8 +286,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['TGT.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink2"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
 			]
 		}
 	}

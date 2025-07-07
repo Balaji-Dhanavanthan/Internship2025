@@ -1,0 +1,179 @@
+{
+	"name": "DF_SCD1_I2025_SRangan1",
+	"properties": {
+		"folder": {
+			"name": "TDSG Day 5 Training"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_new_I2025SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "target"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "nullhandling"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "dcaudit"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "dcaudit1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          customer_id as short,",
+				"          name as string,",
+				"          email as string,",
+				"          address as string,",
+				"          phone as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          customer_id as short,",
+				"          name as string,",
+				"          email as string,",
+				"          address as string,",
+				"          phone as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"select1 derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK')),",
+				"          each(match(type == 'Integer'), $$ = iifNull($#, -1))) ~> nullhandling",
+				"nullhandling, target join({s.customer_id} == customer_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"split1@insert derive(updatedby = 'I2025_SRangan1',",
+				"          updated_date = currentDate()) ~> dcaudit",
+				"join1 split(isNull(customer_id),",
+				"     disjoint: false) ~> split1@(insert, update)",
+				"split1@update alterRow(updateIf({s.name}!=name || {s.email} !=email)) ~> alterRow1",
+				"source select(mapColumn(",
+				"          {s.customer_id} = customer_id,",
+				"          {s.name} = name,",
+				"          {s.email} = email,",
+				"          {s.address} = address,",
+				"          {s.phone} = phone",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"dcaudit select(mapColumn(",
+				"          {s.customer_id},",
+				"          {s.name},",
+				"          {s.email},",
+				"          {s.address},",
+				"          {s.phone},",
+				"          customer_id,",
+				"          name,",
+				"          email,",
+				"          address,",
+				"          phone,",
+				"          updatedby,",
+				"          updated_date",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"dcaudit1 select(mapColumn(",
+				"          {s.customer_id},",
+				"          {s.name},",
+				"          {s.email},",
+				"          {s.address},",
+				"          {s.phone},",
+				"          customer_id,",
+				"          name,",
+				"          email,",
+				"          address,",
+				"          phone,",
+				"          updated_by,",
+				"          updated_by = updated_date",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3, select2 union(byName: true)~> union1",
+				"alterRow1 derive(updated_by = 'I2025_SRangan1',",
+				"          updated_date = currentDate()) ~> dcaudit1",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          MakeFlag as string,",
+				"          FinishedGoodsFlag as string,",
+				"          Color as string,",
+				"          SafetyStockLevel as string,",
+				"          ReorderPoint as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as string,",
+				"          ProductLine as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ProductSubcategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          DiscontinuedDate as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     partitionFileNames:['scd1.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

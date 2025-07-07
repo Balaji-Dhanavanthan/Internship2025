@@ -22,9 +22,7 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation",
-				"fileName": "countries.csv",
-				"container": "test-container"
+				"type": "AzureBlobStorageLocation"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -1,0 +1,106 @@
+{
+	"name": "ADF_SCD2",
+	"properties": {
+		"folder": {
+			"name": "TDSG_ADF_DataFlow"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "sourceData"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "targetData"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "SourceSelect"
+				},
+				{
+					"name": "TargetSelect"
+				},
+				{
+					"name": "GetActiveRecords"
+				},
+				{
+					"name": "LookupChanges"
+				},
+				{
+					"name": "DtectChanges"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          BusinessKey as string,",
+				"          Email as string,",
+				"          Phone as string,",
+				"          Designation as string,",
+				"          Salary as double,",
+				"          LastModified as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceData",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          BusinessKey as string,",
+				"          Email as string,",
+				"          Phone as string,",
+				"          Designation as string,",
+				"          Salary as double,",
+				"          EffectiveDate as date,",
+				"          ExpiryDate as date,",
+				"          IsActive as boolean,",
+				"          CreatedDate as date,",
+				"          ModifiedDate as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> targetData",
+				"sourceData select(mapColumn(",
+				"          BusinessKey,",
+				"          Email,",
+				"          Phone,",
+				"          Designation,",
+				"          Salary,",
+				"          LastModified",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SourceSelect",
+				"targetData select(mapColumn(",
+				"          EmployeeID,",
+				"          BusinessKey,",
+				"          Email,",
+				"          Phone,",
+				"          Designation,",
+				"          Salary,",
+				"          EffectiveDate,",
+				"          ExpiryDate,",
+				"          IsActive,",
+				"          CreatedDate,",
+				"          ModifiedDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> TargetSelect",
+				"TargetSelect filter(IsActive==true()) ~> GetActiveRecords",
+				"SourceSelect, GetActiveRecords lookup(SourceSelect@BusinessKey == TargetSelect@BusinessKey,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupChanges",
+				"LookupChanges split(isNull(TargetSelect@BusinessKey),",
+				"     disjoint: false) ~> DtectChanges@(NewRecords)"
+			]
+		}
+	}
+}

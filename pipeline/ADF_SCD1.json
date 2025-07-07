@@ -5,8 +5,6 @@
 			{
 				"name": "TSDG_SCD1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -51,7 +49,7 @@
 				}
 			},
 			{
-				"name": "SCD_source_date",
+				"name": "SCD1_source_date",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -191,7 +189,7 @@
 				]
 			},
 			{
-				"name": "SCD_Target_data",
+				"name": "SCD1_Target_data",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -393,8 +391,6 @@
 			{
 				"name": "scd1toonprem",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TSDG_SCD1",
@@ -426,8 +422,7 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -570,6 +565,70 @@
 							"schemaname": "I2025_MSyed",
 							"tablename": "TargetEmployees",
 							"databasename": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "SCD2_target_data",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "TargetEmployees1",
+							"databasename": "Intern_2025"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar",
+							"FileName": "SCD2_target_data"
 						}
 					}
 				]

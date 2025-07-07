@@ -1,6 +1,9 @@
 {
 	"name": "DF_WORKSHOP_I2025_JNagara1",
 	"properties": {
+		"folder": {
+			"name": "practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

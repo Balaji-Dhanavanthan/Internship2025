@@ -5,6 +5,9 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

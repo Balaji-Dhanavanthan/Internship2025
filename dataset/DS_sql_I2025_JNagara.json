@@ -15,6 +15,9 @@
 				"defaultValue": "employee"
 			}
 		},
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [

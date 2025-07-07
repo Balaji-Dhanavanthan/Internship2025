@@ -179,10 +179,7 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_Excel1_I2025JNagara1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "*"
-						}
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -254,13 +251,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_Excel1_I2025JNagara1",
-									"type": "DatasetReference",
-									"parameters": {
-										"filename": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -517,6 +508,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": []
 	}
 }

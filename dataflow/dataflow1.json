@@ -1,6 +1,9 @@
 {
 	"name": "dataflow1",
 	"properties": {
+		"folder": {
+			"name": "practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -164,8 +167,8 @@
 				"          created_time = currentTimestamp(),",
 				"          file_name = 'BASK Invitation Dataset.xlsx',",
 				"          first = concat(left({Contact Name}, 4),right({Job Title}, 2))) ~> derivedColumn1",
-				"source2 derive(each(match(type == 'integer'), $$ = iifNull($$, 0)),",
-				"          each(match(type == 'string'), $$ = iifNull($$, 'zzzzz'))) ~> derivedColumn2",
+				"source2 derive(each(match(type=='integer'), $$ = iifNull($$, 0)),",
+				"          each(match(type=='string'), $$ = iifNull($$, 'zzzzz'))) ~> derivedColumn2",
 				"aggregate1, derivedColumn2 union(byName: true)~> union1",
 				"derivedColumn1 aggregate(groupBy({Job Title}),",
 				"     count = ERROR_FUNCTION('')) ~> aggregate1",

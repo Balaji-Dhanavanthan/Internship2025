@@ -36,6 +36,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": []
 	}
 }

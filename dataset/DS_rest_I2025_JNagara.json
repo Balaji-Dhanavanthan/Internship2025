@@ -5,6 +5,9 @@
 			"referenceName": "LS_rest_I2025_JNagara",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"schema": []

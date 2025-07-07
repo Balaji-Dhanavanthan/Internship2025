@@ -109,6 +109,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": []
 	}
 }

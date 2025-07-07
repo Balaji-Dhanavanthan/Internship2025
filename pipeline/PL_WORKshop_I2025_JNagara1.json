@@ -19,13 +19,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_WORKSHOP_I2025_JNagara1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink2": {
-								"object": "I2025_JNagara1",
-								"table": "employee"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -1077,6 +1071,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "practice"
+		},
 		"annotations": []
 	}
 }

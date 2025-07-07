@@ -5,6 +5,9 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "day5"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

@@ -37,7 +37,7 @@
 					"name": "LookupChanges"
 				},
 				{
-					"name": "DtectChanges"
+					"name": "Records"
 				}
 			],
 			"scriptLines": [
@@ -99,7 +99,8 @@
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LookupChanges",
 				"LookupChanges split(isNull(TargetSelect@BusinessKey),",
-				"     disjoint: false) ~> DtectChanges@(NewRecords)"
+				"     ERROR_FUNCTION('SourceSelect@BusinessKey==TargetSelect@BusinessKey && (SourceSelect@Email!TargetSelect@Email||SourceSelect@Designation||TargetSelect@Designation||SourceSelect@Salary||TargetSelect@Salary)'),",
+				"     disjoint: false) ~> Records@(NewRecords, ChangedRecords)"
 			]
 		}
 	}

@@ -5,6 +5,8 @@
 			{
 				"name": "TSDG_SCD1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -391,6 +393,8 @@
 			{
 				"name": "scd1toonprem",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TSDG_SCD1",

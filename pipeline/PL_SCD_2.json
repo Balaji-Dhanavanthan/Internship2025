@@ -69,6 +69,8 @@
 			{
 				"name": "DF_SCD_2",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -96,12 +98,7 @@
 							"sink1": {
 								"container": "test-adf",
 								"folder": "aabidh",
-								"filename": "target_1.csv"
-							},
-							"sink2": {
-								"container": "test-adf",
-								"folder": "aabidh",
-								"filename": "target_1.csv"
+								"filename": "tgt.csv"
 							}
 						}
 					},
@@ -223,7 +220,7 @@
 						"parameters": {
 							"container": "test-adf",
 							"folder": "aabidh",
-							"filename": "target_1.csv"
+							"filename": "tgt.csv"
 						}
 					}
 				],
@@ -233,7 +230,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_MAbdul1",
-							"TableName": "target_1",
+							"TableName": "target_3",
 							"database": "Intern_2025"
 						}
 					}

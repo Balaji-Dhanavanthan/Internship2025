@@ -59,6 +59,9 @@
 				},
 				{
 					"name": "Update"
+				},
+				{
+					"name": "sourceauditcolumn"
 				}
 			],
 			"scriptLines": [
@@ -108,7 +111,6 @@
 				"          Salary,",
 				"          EffectiveDate,",
 				"          ExpiryDate,",
-				"          IsActive,",
 				"          CreatedDate,",
 				"          ModifiedDate",
 				"     ),",
@@ -122,8 +124,11 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> Join",
 				"Join alterRow(insertIf(isNull(TargetNullHanding@BusinessKey))) ~> Insert",
-				"Join alterRow(updateIf(SourceNullHanding@BusinessKey==TargetNullHanding@BusinessKey&&(SourceNullHanding@Email!=TargetNullHanding@Email && SourceNullHanding@Phone!=TargetNullHanding@Phone && SourceNullHanding@Designation!=TargetNullHanding@Designation && SourceSelect@Salary!=TargetSelect@Salary))) ~> Update",
-				"Update sink(allowSchemaDrift: true,",
+				"Join alterRow(updateIf(SourceNullHanding@BusinessKey==TargetNullHanding@BusinessKey&&(SourceNullHanding@Email!=TargetNullHanding@Email&&SourceNullHanding@Phone!=TargetNullHanding@Phone&&SourceNullHanding@Designation!=TargetNullHanding@Designation&&SourceSelect@Salary!=TargetSelect@Salary))) ~> Update",
+				"Update derive(EffectiveDate = currentDate(),",
+				"          CreatedDate = currentDate(),",
+				"          ModifiedDate = currentDate()) ~> sourceauditcolumn",
+				"sourceauditcolumn sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",

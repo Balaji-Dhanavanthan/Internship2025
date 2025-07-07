@@ -1,0 +1,33 @@
+{
+	"name": "DS_CSV_Sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Blob_storgare",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "sink.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": "Target Folders/I2025_JNagara1",
+				"container": "test-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

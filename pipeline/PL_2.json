@@ -398,6 +398,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "sample_pipeline"
+		},
 		"annotations": []
 	}
 }

@@ -239,6 +239,9 @@
 				"defaultValue": 0
 			}
 		},
+		"folder": {
+			"name": "sample_pipeline"
+		},
 		"annotations": []
 	}
 }

@@ -100,7 +100,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joining",
-				"select1 split(!isNull(tgt_BusinessKey),",
+				"select1 split(isNull(tgt_BusinessKey),",
 				"     disjoint: false) ~> split1@(INSERT)",
 				"joining select(mapColumn(",
 				"          src_BusinessKey = Sourceselect@BusinessKey,",

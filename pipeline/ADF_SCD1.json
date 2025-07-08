@@ -787,18 +787,23 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "ADF_SCD1",
+						"referenceName": "SCD_1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SCD2Source": {
+							"source1": {
 								"container": "practice-adf",
 								"Directory": "SCD Source Files",
-								"FileName": "DIM_EmployeeMaster_SCD.csv"
+								"FileName": "DIM_EmployeeMaster_SCD1_Updated.csv"
 							},
-							"SourceSink": {
+							"target": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
 								"FileName": "SCD2TargetData.csv"
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SCD1.csv"
 							}
 						}
 					},

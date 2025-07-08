@@ -388,6 +388,8 @@
 			{
 				"name": "scd1toonprem",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TSDG_SCD1",
@@ -770,6 +772,42 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "scd2Dataflow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ADF_SCD_2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SCD2Source": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "DIM_EmployeeMaster_SCD.csv"
+							},
+							"SourceSink": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SCD2TargetData.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

@@ -1,0 +1,140 @@
+{
+	"name": "DF_for_scd_1",
+	"properties": {
+		"folder": {
+			"name": "SCD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "productsourceSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "productdestiSrc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "SinkDestiInserted"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "SinkDestiUpdated"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LeftJoinSourceOnDesti"
+				},
+				{
+					"name": "insertNewRows"
+				},
+				{
+					"name": "selectingOnlySourceCols"
+				},
+				{
+					"name": "DCForCreatedDate"
+				},
+				{
+					"name": "UpdateExisitingRows"
+				},
+				{
+					"name": "SelectSrcCols"
+				},
+				{
+					"name": "DCForCreatedAndLastUpdatedDate"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          product_id as short,",
+				"          product_name as string,",
+				"          category as string,",
+				"          price as double,",
+				"          supplier_id as integer,",
+				"          supplier_name as string,",
+				"          last_updated as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> productsourceSrc",
+				"source(output(",
+				"          product_id as short,",
+				"          product_name as string,",
+				"          category as string,",
+				"          price as double,",
+				"          supplier_id as integer,",
+				"          supplier_name as string,",
+				"          created_date as timestamp,",
+				"          last_updated as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> productdestiSrc",
+				"productsourceSrc, productdestiSrc join(productsourceSrc@product_id == productdestiSrc@product_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> LeftJoinSourceOnDesti",
+				"LeftJoinSourceOnDesti alterRow(insertIf((isNull(productdestiSrc@product_id)))) ~> insertNewRows",
+				"insertNewRows select(mapColumn(",
+				"          product_id = productsourceSrc@product_id,",
+				"          product_name = productsourceSrc@product_name,",
+				"          category = productsourceSrc@category,",
+				"          price = productsourceSrc@price,",
+				"          supplier_id = productsourceSrc@supplier_id,",
+				"          supplier_name = productsourceSrc@supplier_name,",
+				"          created_date,",
+				"          last_updated = productsourceSrc@last_updated",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectingOnlySourceCols",
+				"selectingOnlySourceCols derive(created_date = currentUTC()) ~> DCForCreatedDate",
+				"LeftJoinSourceOnDesti alterRow(updateIf((productsourceSrc@product_name != productdestiSrc@product_name) ||\r",
+				"(productsourceSrc@price != productdestiSrc@price) ||\r",
+				"(productsourceSrc@supplier_name != productdestiSrc@supplier_name) ||\r",
+				"(productsourceSrc@supplier_id != productdestiSrc@supplier_id))) ~> UpdateExisitingRows",
+				"UpdateExisitingRows select(mapColumn(",
+				"          product_id = productsourceSrc@product_id,",
+				"          product_name = productsourceSrc@product_name,",
+				"          category = productsourceSrc@category,",
+				"          price = productsourceSrc@price,",
+				"          supplier_id = productsourceSrc@supplier_id,",
+				"          supplier_name = productsourceSrc@supplier_name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectSrcCols",
+				"SelectSrcCols derive(created_date = currentUTC(),",
+				"          last_updated = currentUTC()) ~> DCForCreatedAndLastUpdatedDate",
+				"DCForCreatedDate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['product_destination.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SinkDestiInserted",
+				"DCForCreatedAndLastUpdatedDate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['product_destination.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SinkDestiUpdated"
+			]
+		}
+	}
+}

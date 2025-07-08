@@ -1,6 +1,636 @@
 {
 	"name": "PL_SCD_one",
 	"properties": {
+		"activities": [
+			{
+				"name": "Delete_source_tgt_emp",
+				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "target_employees.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DS_Blob_storgare",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "CD_source_tgt_tables_into_blob",
+				"description": "copy updated data from sql server before performing SCD1",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "product_id",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "product_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "product_name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "product_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "category",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "category",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "price",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 10
+								},
+								"sink": {
+									"name": "price",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "supplier_id",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "supplier_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "supplier_name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "supplier_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "last_updated",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								},
+								"sink": {
+									"name": "last_updated",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "product_source"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "productt_source.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					}
+				]
+			},
+			{
+				"name": "DF_scd1",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_for_scd_1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"productsourceSrc": {
+								"file_name": "productt_source.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"productdestiSrc": {
+								"file_name": "product_destination.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"SinkDestiInserted": {
+								"file_name": "product_destination.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"SinkDestiUpdated": {
+								"file_name": "product_destination.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "CreateAuditCols",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "file_name",
+								"value": "$$FILEPATH"
+							},
+							{
+								"name": "created_by",
+								"value": {
+									"value": "'I2025_JSenthil'",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "product_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "product_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "product_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "product_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "category",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "category",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "price",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "price",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "supplier_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "supplier_id",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "supplier_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "supplier_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "created_date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "last_updated",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "last_updated",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "file_name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "file_name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "created_by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_by",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "product_destination.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "product_destination.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					}
+				]
+			},
+			{
+				"name": "CDToSqlServer",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "product_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "product_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "product_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "product_name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "category",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "category",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "price",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "price",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "supplier_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "supplier_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "supplier_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "supplier_name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "created_date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "last_updated",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "last_updated",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "file_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "file_name",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "created_by",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "created_by",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "product_destination.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "product_destination_from_ADF"
+						}
+					}
+				]
+			}
+		],
 		"folder": {
 			"name": "SCD"
 		},

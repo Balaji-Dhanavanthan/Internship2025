@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "part-00000-70f00f7e-b0d7-4318-b551-83ea0928d02a-c000.csv",
-				"folderPath": "Target Folders/I2025_JNagara1/Input",
+				"fileName": "emp_target",
+				"folderPath": "Target Folders/I2025_JNagara1",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

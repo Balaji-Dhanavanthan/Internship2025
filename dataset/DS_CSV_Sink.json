@@ -11,6 +11,9 @@
 				"defaultValue": "sink.csv"
 			}
 		},
+		"folder": {
+			"name": "day5"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

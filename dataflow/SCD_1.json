@@ -31,7 +31,7 @@
 					"name": "join1"
 				},
 				{
-					"name": "insert"
+					"name": "split"
 				},
 				{
 					"name": "update1"
@@ -92,8 +92,8 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 split(isNull(target@EmployeeID),",
-				"     disjoint: false) ~> insert@(Insert, Update)",
-				"insert@Update alterRow() ~> update1"
+				"     disjoint: false) ~> split@(Insert, Update1)",
+				"split@Update1 alterRow(updateIf((split@Update1@EmployeeID==split@Update1@EmployeeID) && ((split@Update1@Department!=split@Update1@Department)||(split@Update1@JobTitle!=split@Update1@JobTitle)||(split@Update1@Salary!=split@Update1@Salary)||(split@Update1@PhoneNumber!=split@Update1@PhoneNumber)||(split@Update1@MaritalStatus!=split@Update1@MaritalStatus)))) ~> update1"
 			]
 		}
 	}

@@ -568,18 +568,206 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"preCopyScript": "truncate table employee_target;",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true,
-							"keys": [
-								"EmployeeID"
-							]
-						},
+						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EmployeeID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EmployeeID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Gender",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gender",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DateOfBirth",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateOfBirth",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "JobTitle",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "JobTitle",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Salary",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Salary",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "HireDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "HireDate",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Address",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Address",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PhoneNumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PhoneNumber",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MaritalStatus",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaritalStatus",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "EffectiveDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EffectiveDate",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "EndDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EndDate",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "createBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "createBy",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "time",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "time",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -592,7 +780,7 @@
 						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "emp_target"
+							"filename": "emp_target2.csv"
 						}
 					}
 				],

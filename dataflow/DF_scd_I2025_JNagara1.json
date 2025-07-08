@@ -194,7 +194,7 @@
 				"select4, select3 union(byName: true)~> union1",
 				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['emp_target'],",
+				"     partitionFileNames:['emp_target2.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",

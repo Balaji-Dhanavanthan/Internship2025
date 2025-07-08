@@ -25,13 +25,6 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_Sample",
-						"type": "DatasetReference"
-					},
-					"name": "UpdateSink"
-				},
-				{
-					"dataset": {
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
@@ -56,6 +49,12 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -139,13 +138,20 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"split1@UPDATE sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     partitionFileNames:['SCD1FinalReport.csv'],",
+				"select1, split1@UPDATE union(byName: true)~> union1",
+				"union1 select(mapColumn(",
+				"          src_BusinessKey,",
+				"          src_Email,",
+				"          src_Phone,",
+				"          src_Designation,",
+				"          src_Salary,",
+				"          created_by,",
+				"          created_at,",
+				"          src_LastModified",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> UpdateSink",
-				"select1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",
@@ -213,7 +219,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['SCD1FinalReport.csv'],",
+				"     partitionFileNames:['SCD1FinalReport1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> InsertSink"

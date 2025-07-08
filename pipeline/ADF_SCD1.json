@@ -31,11 +31,6 @@
 								"Directory": "Asrar",
 								"FileName": "SCD_Target_data"
 							},
-							"UpdateSink": {
-								"Container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "SCD1FinalReport.csv"
-							},
 							"InsertSink": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
@@ -434,7 +429,7 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "BusinessKey",
+									"name": "src_BusinessKey",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -446,7 +441,7 @@
 							},
 							{
 								"source": {
-									"name": "Email",
+									"name": "src_Email",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -458,7 +453,7 @@
 							},
 							{
 								"source": {
-									"name": "Phone",
+									"name": "src_Phone",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -470,7 +465,7 @@
 							},
 							{
 								"source": {
-									"name": "Designation",
+									"name": "src_Designation",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -482,7 +477,7 @@
 							},
 							{
 								"source": {
-									"name": "Salary",
+									"name": "src_Salary",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -496,19 +491,7 @@
 							},
 							{
 								"source": {
-									"name": "EffectiveDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "EffectiveDate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
-								}
-							},
-							{
-								"source": {
-									"name": "ExpiryDate",
+									"name": "src_LastModified",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -520,24 +503,12 @@
 							},
 							{
 								"source": {
-									"name": "CreatedDate",
+									"name": "created_at",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
 									"name": "CreatedDate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
-								}
-							},
-							{
-								"source": {
-									"name": "ModifiedDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ModifiedDate",
 									"type": "DateTime",
 									"physicalType": "datetime2"
 								}
@@ -557,7 +528,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "SCD1FinalReport.csv"
+							"FileName": "SCD1FinalReport1.csv"
 						}
 					}
 				],
@@ -640,6 +611,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -810,6 +783,35 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_OnPrem_SQLServer",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"Database": "HR"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "select * from dbo.countries"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"folder": {

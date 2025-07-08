@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "departments.csv",
-				"folderPath": "aabidh/ex1",
-				"container": "test-adf"
+				"fileName": "target.csv",
+				"folderPath": "aabidh",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

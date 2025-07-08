@@ -157,8 +157,6 @@
 			{
 				"name": "DF_scd1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -170,26 +168,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_for_scd_1",
+						"referenceName": "DF_scd_1_1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"productsourceSrc": {
-								"file_name": "productt_source.csv",
-								"folder_name": "ETL_stuff",
+							"empSrc": {
+								"file_name": "DIM_EmployeeMaster_SCD.csv",
+								"folder_name": "SCD Source Files",
 								"container_name": "csvcontainer"
 							},
-							"productdestiSrc": {
-								"file_name": "product_destination.csv",
-								"folder_name": "ETL_stuff",
-								"container_name": "csvcontainer"
-							},
-							"SinkDestiInserted": {
-								"file_name": "product_destination.csv",
-								"folder_name": "ETL_stuff",
-								"container_name": "csvcontainer"
-							},
-							"SinkDestiUpdated": {
-								"file_name": "product_destination.csv",
+							"empFullSink": {
+								"file_name": "emp_target.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							}
@@ -205,6 +193,8 @@
 			{
 				"name": "CDToSqlServer",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

@@ -45,13 +45,16 @@
 					"name": "tgtselect2"
 				},
 				{
-					"name": "derivedColumn1"
-				},
-				{
 					"name": "selectReq"
 				},
 				{
 					"name": "union1"
+				},
+				{
+					"name": "derived2Res"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -131,9 +134,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> tgtselect2",
-				"selectReq derive(modified_at = currentUTC(),",
-				"          modified_by = 'I2025_JSenthil') ~> derivedColumn1",
-				"UpdateExistingRows select(mapColumn(",
+				"derivedColumn2 select(mapColumn(",
 				"          EmployeeID = empUpdatedSrc@EmployeeID,",
 				"          Name = empUpdatedSrc@Name,",
 				"          Gender = empUpdatedSrc@Gender,",
@@ -155,7 +156,11 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectReq",
-				"derivedColumn1, tgtselect2 union(byName: true)~> union1",
+				"selectReq, derived2Res union(byName: true)~> union1",
+				"tgtselect2 derive(created_at = currentUTC(),",
+				"          created_by = 'I2025_JSenthil') ~> derived2Res",
+				"UpdateExistingRows derive(modified_at = iif(isNull(EmpTargetSrc@EmployeeID), currentUTC()),",
+				"          modified_by = iif(isNull(EmpTargetSrc@EmployeeID), 'I2025_JSenthil')) ~> derivedColumn2",
 				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['emp_target.csv'],",

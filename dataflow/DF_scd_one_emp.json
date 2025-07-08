@@ -1,0 +1,177 @@
+{
+	"name": "DF_scd_one_emp",
+	"properties": {
+		"folder": {
+			"name": "SCD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "empUpdatedSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "EmpTargetSrc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "insSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "UpdSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "InsertNewRows"
+				},
+				{
+					"name": "UpdateExistingRows"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "selectReq"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as date,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as date,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as date,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> empUpdatedSrc",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as date,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as date,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as date,",
+				"          EndDate as string,",
+				"          created_at as timestamp,",
+				"          created_by as string,",
+				"          modified_at as string,",
+				"          modified_by as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmpTargetSrc",
+				"empUpdatedSrc, EmpTargetSrc join(empUpdatedSrc@EmployeeID == EmpTargetSrc@EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 alterRow(insertIf(isNull(EmpTargetSrc@EmployeeID))) ~> InsertNewRows",
+				"join1 alterRow(updateIf((empUpdatedSrc@EmployeeID == EmpTargetSrc@EmployeeID) && \r",
+				"(EmpTargetSrc@Department != empUpdatedSrc@Department) ||\r",
+				"(EmpTargetSrc@JobTitle != empUpdatedSrc@JobTitle) ||\r",
+				"(EmpTargetSrc@Salary != empUpdatedSrc@Salary) ||\r",
+				"(EmpTargetSrc@PhoneNumber != empUpdatedSrc@PhoneNumber) ||\r",
+				"(EmpTargetSrc@MaritalStatus != empUpdatedSrc@MaritalStatus))) ~> UpdateExistingRows",
+				"InsertNewRows select(mapColumn(",
+				"          EmployeeID = empUpdatedSrc@EmployeeID,",
+				"          Name = empUpdatedSrc@Name,",
+				"          Gender = empUpdatedSrc@Gender,",
+				"          DateOfBirth = empUpdatedSrc@DateOfBirth,",
+				"          Department = empUpdatedSrc@Department,",
+				"          JobTitle = empUpdatedSrc@JobTitle,",
+				"          Salary = empUpdatedSrc@Salary,",
+				"          HireDate = empUpdatedSrc@HireDate,",
+				"          Address = empUpdatedSrc@Address,",
+				"          Email = empUpdatedSrc@Email,",
+				"          PhoneNumber = empUpdatedSrc@PhoneNumber,",
+				"          MaritalStatus = empUpdatedSrc@MaritalStatus,",
+				"          EffectiveDate = empUpdatedSrc@EffectiveDate,",
+				"          EndDate = empUpdatedSrc@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"selectReq derive(modified_at = currentUTC(),",
+				"          modified_by = 'I2025_JSenthil') ~> derivedColumn1",
+				"UpdateExistingRows select(mapColumn(",
+				"          EmployeeID = empUpdatedSrc@EmployeeID,",
+				"          Name = empUpdatedSrc@Name,",
+				"          Gender = empUpdatedSrc@Gender,",
+				"          DateOfBirth = empUpdatedSrc@DateOfBirth,",
+				"          Department = empUpdatedSrc@Department,",
+				"          JobTitle = empUpdatedSrc@JobTitle,",
+				"          Salary = empUpdatedSrc@Salary,",
+				"          HireDate = empUpdatedSrc@HireDate,",
+				"          Address = empUpdatedSrc@Address,",
+				"          Email = empUpdatedSrc@Email,",
+				"          PhoneNumber = empUpdatedSrc@PhoneNumber,",
+				"          MaritalStatus = empUpdatedSrc@MaritalStatus,",
+				"          EffectiveDate = empUpdatedSrc@EffectiveDate,",
+				"          EndDate = empUpdatedSrc@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectReq",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['emp_target.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> insSink",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['emp_target.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> UpdSink"
+			]
+		}
+	}
+}

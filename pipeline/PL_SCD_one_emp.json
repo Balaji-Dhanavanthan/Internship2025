@@ -1,10 +1,12 @@
 {
-	"name": "PL_SCD_one_1",
+	"name": "PL_SCD_one_emp",
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_for_full_load",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -41,6 +43,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -75,6 +79,55 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Data flow2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_scd_one_emp",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"empUpdatedSrc": {
+								"container_name": "csvcontainer"
+							},
+							"EmpTargetSrc": {
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"insSink": {
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"UpdSink": {
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							}
+						},
+						"linkedServiceParameters": {
+							"empUpdatedSrc": {
+								"schemaLinkedService": {
+									"folder_name": "ETL_stuff",
+									"container_name": "csvcontainer"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []

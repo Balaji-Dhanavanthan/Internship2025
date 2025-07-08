@@ -34,7 +34,7 @@
 							"InsertSink": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "SCD1FinalReport.csv"
+								"FileName": "SCD1FinalReport2.csv"
 							}
 						}
 					},
@@ -526,7 +526,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "SCD1FinalReport1.csv"
+							"FileName": "SCD1FinalReport12.csv"
 						}
 					}
 				],
@@ -781,35 +781,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "Script1",
-				"type": "Script",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "LS_OnPrem_SQLServer",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"Database": "HR"
-					}
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query",
-							"text": "select * from dbo.countries"
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
 			}
 		],
 		"folder": {

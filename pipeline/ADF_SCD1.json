@@ -388,8 +388,6 @@
 			{
 				"name": "scd1toonprem",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TSDG_SCD1",

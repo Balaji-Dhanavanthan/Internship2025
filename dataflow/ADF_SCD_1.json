@@ -219,7 +219,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['SCD1FinalReport1.csv'],",
+				"     partitionFileNames:['SCD1FinalReport2.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> InsertSink"

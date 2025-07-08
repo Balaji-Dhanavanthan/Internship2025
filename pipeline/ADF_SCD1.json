@@ -498,18 +498,6 @@
 									"type": "DateTime",
 									"physicalType": "datetime2"
 								}
-							},
-							{
-								"source": {
-									"name": "created_at",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CreatedDate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
-								}
 							}
 						],
 						"typeConversion": true,
@@ -526,7 +514,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "SCD1FinalReport12.csv"
+							"FileName": "SCD1FinalReport2.csv"
 						}
 					}
 				],

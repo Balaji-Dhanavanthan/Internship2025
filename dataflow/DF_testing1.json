@@ -2,7 +2,7 @@
 	"name": "DF_testing1",
 	"properties": {
 		"folder": {
-			"name": "prev"
+			"name": "old/prev"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

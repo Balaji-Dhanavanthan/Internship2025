@@ -2,7 +2,7 @@
 	"name": "DF_for_workshop_1_4",
 	"properties": {
 		"folder": {
-			"name": "prev"
+			"name": "old/prev"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

@@ -2,7 +2,7 @@
 	"name": "DF_anime_csv",
 	"properties": {
 		"folder": {
-			"name": "ADF_module_test_1"
+			"name": "old/ADF_module_test_1"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

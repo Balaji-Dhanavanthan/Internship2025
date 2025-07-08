@@ -2,7 +2,7 @@
 	"name": "DF_for_del_and_load",
 	"properties": {
 		"folder": {
-			"name": "prev"
+			"name": "old/prev"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

@@ -17,7 +17,7 @@
 			}
 		},
 		"folder": {
-			"name": "prev"
+			"name": "old/prev"
 		},
 		"annotations": [],
 		"type": "Parquet",

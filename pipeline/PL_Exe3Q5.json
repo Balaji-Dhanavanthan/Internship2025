@@ -204,6 +204,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -213,7 +214,7 @@
 			}
 		],
 		"folder": {
-			"name": "Exercise Day 3 E2"
+			"name": "old/Exercise Day 3 E2"
 		},
 		"annotations": []
 	}

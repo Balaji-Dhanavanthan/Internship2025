@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "prev"
+			"name": "old/prev"
 		},
 		"annotations": [],
 		"type": "RestResource",

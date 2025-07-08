@@ -828,7 +828,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source": {
-								"filename": "DIM_EmployeeMaster_SCD.csv"
+								"filename": " DIM_EmployeeMaster_SCD1_Updated.csv"
 							},
 							"target": {
 								"filename": "targetSCD.csv"

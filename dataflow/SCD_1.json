@@ -32,6 +32,9 @@
 				},
 				{
 					"name": "insert"
+				},
+				{
+					"name": "update1"
 				}
 			],
 			"scriptLines": [
@@ -88,8 +91,9 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 split(ERROR_FUNCTION(''),",
-				"     disjoint: false) ~> insert@(, )"
+				"join1 split(isNull(target@EmployeeID),",
+				"     disjoint: false) ~> insert@(Insert, Update)",
+				"insert@Update alterRow() ~> update1"
 			]
 		}
 	}

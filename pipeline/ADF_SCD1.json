@@ -787,12 +787,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "ADF_SCD_2",
+						"referenceName": "ADF_SCD1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SCD2Source": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
+								"Directory": "SCD Source Files",
 								"FileName": "DIM_EmployeeMaster_SCD.csv"
 							},
 							"SourceSink": {

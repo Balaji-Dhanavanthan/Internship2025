@@ -1,5 +1,5 @@
 {
-	"name": "ADF_SCD_2",
+	"name": "ADF_SCD1",
 	"properties": {
 		"folder": {
 			"name": "TDSG_ADF_DataFlow"
@@ -49,9 +49,10 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SCD2Source",
-				"SCD2Source derive(version = 1,",
-				"          created_by = 'I2025_MSyed',",
-				"          Created_at = currentDate()) ~> SCD2dDerivedColumn",
+				"SCD2Source derive(created_by = 'I2025_MSyed',",
+				"          created_at = currentDate(),",
+				"          modified_by = '',",
+				"          modified_at = '') ~> SCD2dDerivedColumn",
 				"SCD2dDerivedColumn sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

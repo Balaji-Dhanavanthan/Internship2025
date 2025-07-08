@@ -28,13 +28,6 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference"
 					},
-					"name": "insSink"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_CSV_test",
-						"type": "DatasetReference"
-					},
 					"name": "UpdSink"
 				}
 			],
@@ -49,13 +42,16 @@
 					"name": "UpdateExistingRows"
 				},
 				{
-					"name": "select2"
+					"name": "tgtselect2"
 				},
 				{
 					"name": "derivedColumn1"
 				},
 				{
 					"name": "selectReq"
+				},
+				{
+					"name": "union1"
 				}
 			],
 			"scriptLines": [
@@ -95,7 +91,7 @@
 				"          EndDate as string,",
 				"          created_at as timestamp,",
 				"          created_by as string,",
-				"          modified_at as string,",
+				"          modified_at as timestamp,",
 				"          modified_by as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -134,7 +130,7 @@
 				"          modified_by",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> tgtselect2",
 				"selectReq derive(modified_at = currentUTC(),",
 				"          modified_by = 'I2025_JSenthil') ~> derivedColumn1",
 				"UpdateExistingRows select(mapColumn(",
@@ -159,13 +155,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectReq",
-				"select2 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     partitionFileNames:['emp_target.csv'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> insSink",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1, tgtselect2 union(byName: true)~> union1",
+				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['emp_target.csv'],",
 				"     skipDuplicateMapInputs: true,",

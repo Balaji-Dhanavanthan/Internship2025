@@ -55,6 +55,9 @@
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -151,6 +154,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
+				"split1@UPDATE derive(created_by = ERROR_FUNCTION('')) ~> derivedColumn2",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

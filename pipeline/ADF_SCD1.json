@@ -418,6 +418,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "truncate table I2025_MSyed.TargetEmployees1;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},

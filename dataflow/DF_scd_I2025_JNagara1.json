@@ -12,14 +12,14 @@
 						"referenceName": "DS_Source",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "source"
 				},
 				{
 					"dataset": {
 						"referenceName": "DS_Source",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "target"
 				}
 			],
 			"sinks": [
@@ -33,10 +33,10 @@
 			],
 			"transformations": [
 				{
-					"name": "select1"
+					"name": "Targetselect"
 				},
 				{
-					"name": "select2"
+					"name": "sourceSelect"
 				},
 				{
 					"name": "join1"
@@ -54,10 +54,10 @@
 					"name": "select4"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "auditSource"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "auditTarget"
 				},
 				{
 					"name": "union1"
@@ -82,7 +82,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     ignoreNoFilesFound: false) ~> source",
 				"source(output(",
 				"          EmplyeeID as integer,",
 				"          Name as string,",
@@ -100,8 +100,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source2",
-				"source2 select(mapColumn(",
+				"     ignoreNoFilesFound: false) ~> target",
+				"target select(mapColumn(",
 				"          {s.EmployeeID} = EmplyeeID,",
 				"          {s.Name} = Name,",
 				"          {s.Gender} = Gender,",
@@ -117,8 +117,8 @@
 				"          {s.EndDate} = EndDate",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source1 select(mapColumn(",
+				"     skipDuplicateMapOutputs: true) ~> Targetselect",
+				"source select(mapColumn(",
 				"          EmployeeID,",
 				"          Name,",
 				"          Gender,",
@@ -135,8 +135,8 @@
 				"          EndDate",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"derivedColumn1, derivedColumn2 join(EmployeeID == {s.EmployeeID},",
+				"     skipDuplicateMapOutputs: true) ~> sourceSelect",
+				"auditSource, auditTarget join(EmployeeID == {s.EmployeeID},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -184,10 +184,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select4",
-				"select2 derive(createBy = 'jaya',",
-				"          time = currentTimestamp()) ~> derivedColumn1",
-				"select1 derive(createdBy = 'jaya',",
-				"          time = currentTimestamp()) ~> derivedColumn2",
+				"sourceSelect derive(createBy = 'jaya',",
+				"          time = currentTimestamp()) ~> auditSource",
+				"Targetselect derive(createdBy = 'jaya',",
+				"          time = currentTimestamp()) ~> auditTarget",
 				"select4, select3 union(byName: true)~> union1",
 				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

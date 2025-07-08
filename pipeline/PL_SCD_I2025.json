@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "source",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -227,17 +227,17 @@
 						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "sink.csv"
+							"filename": "source.csv"
 						}
 					}
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "target",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "source",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -274,12 +274,12 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "EmplyeeID",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "EmployeeID",
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "EmplyeeID",
+									"name": "EmployeeID",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -311,11 +311,23 @@
 							{
 								"source": {
 									"name": "DateOfBirth",
-									"type": "DateTime",
-									"physicalType": "date"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"name": "DateOfBirth",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Department",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -335,8 +347,8 @@
 							{
 								"source": {
 									"name": "Salary",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"name": "Salary",
@@ -347,8 +359,8 @@
 							{
 								"source": {
 									"name": "HireDate",
-									"type": "DateTime",
-									"physicalType": "date"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"name": "HireDate",
@@ -407,8 +419,8 @@
 							{
 								"source": {
 									"name": "EffectiveDate",
-									"type": "DateTime",
-									"physicalType": "date"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"name": "EffectiveDate",
@@ -419,11 +431,35 @@
 							{
 								"source": {
 									"name": "EndDate",
-									"type": "DateTime",
-									"physicalType": "date"
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"name": "EndDate",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "createBy",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "createBy",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "time",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "time",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -451,17 +487,17 @@
 						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "sink2.csv"
+							"filename": "target.csv"
 						}
 					}
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "Data flow",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Copy data2",
+						"activity": "target",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -480,10 +516,10 @@
 						"referenceName": "DF_scd_I2025_JNagara1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
+							"source": {
 								"filename": "sink.csv"
 							},
-							"source2": {
+							"target": {
 								"filename": "sink2.csv"
 							},
 							"sink1": {
@@ -499,11 +535,11 @@
 				}
 			},
 			{
-				"name": "Copy data3",
+				"name": "toSQL",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "Data flow",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -532,7 +568,13 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"preCopyScript": "drop table employee_target;",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"EmployeeID"
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate"
 					},

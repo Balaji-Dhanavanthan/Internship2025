@@ -257,7 +257,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['SCD1.csv'],",
+				"     partitionFileNames:['SCD2TargetData.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink1"

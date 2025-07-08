@@ -803,7 +803,7 @@
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "SCD1.csv"
+								"FileName": "SCD2TargetData.csv"
 							}
 						}
 					},

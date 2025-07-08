@@ -81,7 +81,7 @@
 				]
 			},
 			{
-				"name": "Data flow2",
+				"name": "DF_scd1_emp",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -98,27 +98,24 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"empUpdatedSrc": {
-								"container_name": "csvcontainer"
+								"file_name": "DIM_EmployeeMaster_SCD1_Updated.csv",
+								"folder_name": "SCD Source Files",
+								"container_name": "practice-adf"
 							},
 							"EmpTargetSrc": {
+								"file_name": "emp_target.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							},
 							"insSink": {
+								"file_name": "emp_target.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							},
 							"UpdSink": {
+								"file_name": "emp_target.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
-							}
-						},
-						"linkedServiceParameters": {
-							"empUpdatedSrc": {
-								"schemaLinkedService": {
-									"folder_name": "ETL_stuff",
-									"container_name": "csvcontainer"
-								}
 							}
 						}
 					},

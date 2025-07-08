@@ -5,6 +5,8 @@
 			{
 				"name": "source",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -235,6 +237,8 @@
 			{
 				"name": "target",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "source",
@@ -495,6 +499,8 @@
 			{
 				"name": "Data flow",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "target",
@@ -520,10 +526,17 @@
 								"filename": "sink.csv"
 							},
 							"target": {
-								"filename": "sink2.csv"
+								"filename": "sink.csv"
 							},
 							"sink1": {
 								"filename": "sink3.csv"
+							}
+						},
+						"linkedServiceParameters": {
+							"target": {
+								"schemaLinkedService": {
+									"filename": "sink.csv"
+								}
 							}
 						}
 					},
@@ -537,6 +550,8 @@
 			{
 				"name": "toSQL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Data flow",
@@ -791,6 +806,65 @@
 						"parameters": {
 							"object": "I2025_JNagara1",
 							"table": "employee_target"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "I2025_JNagara1",
+							"table": "employee_target"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "targetSCD.csv"
 						}
 					}
 				]

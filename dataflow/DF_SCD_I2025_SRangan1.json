@@ -23,17 +23,33 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "nullhandling"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          EmployeeID as integer,",
+				"          EmployeeID as string,",
 				"          Name as string,",
 				"          Gender as string,",
-				"          DateOfBirth as date,",
+				"          DateOfBirth as string,",
 				"          Department as string,",
 				"          JobTitle as string,",
 				"          Salary as integer,",
-				"          HireDate as date,",
+				"          HireDate as string,",
 				"          Address as string,",
 				"          Email as string,",
 				"          PhoneNumber as string,",
@@ -45,26 +61,64 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source",
 				"source(output(",
-				"          EmployeeID as short,",
+				"          EmployeeID as integer,",
 				"          Name as string,",
-				"          DateOfBirth as date,",
+				"          DateOfBirth as string,",
 				"          Department as string,",
 				"          JobTitle as string,",
 				"          Salary as integer,",
-				"          HireDate as date,",
+				"          HireDate as string,",
 				"          Address as string,",
 				"          Email as string,",
 				"          PhoneNumber as string,",
 				"          MaritalStatus as string,",
 				"          EffectiveDate as date,",
-				"          EndDate as string,",
+				"          EndDate as date,",
 				"          surr_key as short,",
 				"          createBy as string,",
 				"          time as date",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> target"
+				"     ignoreNoFilesFound: false) ~> target",
+				"source derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK')),",
+				"          each(match(type == 'Integer'), $$ = iifNull($#, -1)),",
+				"          each(match(type == 'float'), $$ = iifNull($#, 0)),",
+				"          DateOfBirth = toDate(DateOfBirth, 'yyyy-MM-dd')) ~> nullhandling",
+				"nullhandling, target join(source@EmployeeID == target@EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(isNull(target@EmployeeID),",
+				"     disjoint: false) ~> split1@(insert, update)",
+				"split1@insert select(mapColumn(",
+				"          EmployeeID = split1@insert@EmployeeID,",
+				"          Name = split1@insert@Name,",
+				"          DateOfBirth = split1@insert@DateOfBirth,",
+				"          Department = split1@insert@Department,",
+				"          JobTitle = split1@insert@JobTitle,",
+				"          Salary = split1@insert@Salary,",
+				"          HireDate = split1@insert@HireDate,",
+				"          Address = split1@insert@Address,",
+				"          Email = split1@insert@Email,",
+				"          PhoneNumber = split1@insert@PhoneNumber,",
+				"          MaritalStatus = split1@insert@MaritalStatus,",
+				"          EffectiveDate = split1@insert@EffectiveDate,",
+				"          EndDate = split1@insert@EndDate,",
+				"          surr_key,",
+				"          createBy,",
+				"          time",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"split1@update select(mapColumn(",
+				"          surr_key,",
+				"          createBy,",
+				"          time",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2"
 			]
 		}
 	}

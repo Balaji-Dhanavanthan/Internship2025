@@ -47,9 +47,6 @@
 				},
 				{
 					"name": "select2"
-				},
-				{
-					"name": "update1"
 				}
 			],
 			"scriptLines": [
@@ -163,11 +160,12 @@
 				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn2",
 				"target derive(EmployeeID = toInteger(EmployeeID),",
 				"          DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
-				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
-				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
-				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> targetderived",
+				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
+				"          EffectiveDate = toDate(EffectiveDate,'yyyy-MM-dd'),",
+				"          EndDate = toDate(EndDate,'yyyy-MM-dd')) ~> targetderived",
 				"join1 split(isNull(EmployeeID),",
-				"     disjoint: false) ~> insert@(INSERT, UPDATE)",
+				"     (src_EmployeeID==EmployeeID) && ((src_Department!=Department)||(src_JobTitle!=JobTitle)||(src_Salary!=Salary)||(src_PhoneNumber!=PhoneNumber)||(src_MaritalStatus!=MaritalStatus)),",
+				"     disjoint: false) ~> insert@(INSERT, update, existing)",
 				"targetderived select(mapColumn(",
 				"          EmployeeID,",
 				"          Name,",
@@ -189,9 +187,7 @@
 				"          modified_at",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"insert@UPDATE split(src_EmployeeID==EmployeeID||src_Department!={Department}||src_JobTitle!={JobTitle}||src_Salary!={Salary}||src_PhoneNumber!={PhoneNumber}||src_MaritalStatus!={MaritalStatus},",
-				"     disjoint: false) ~> update1@(Update, existing)"
+				"     skipDuplicateMapOutputs: true) ~> select2"
 			]
 		}
 	}

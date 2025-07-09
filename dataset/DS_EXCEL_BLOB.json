@@ -28,11 +28,23 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Excel Workshop.xlsx",
-				"folderPath": "Excel Workshop",
-				"container": "practice-adf"
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().dir_name",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container_name",
+					"type": "Expression"
+				}
 			},
-			"sheetIndex": 0,
+			"sheetIndex": {
+				"value": "@dataset().sheet_index",
+				"type": "Expression"
+			},
 			"firstRowAsHeader": true
 		},
 		"schema": []

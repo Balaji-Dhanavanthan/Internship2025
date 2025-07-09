@@ -94,20 +94,25 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_scd_one_emp",
+						"referenceName": "DF_scd_one_new",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"empUpdatedSrc": {
+							"UpdatedSrc": {
 								"file_name": "DIM_EmployeeMaster_SCD1_Updated.csv",
 								"folder_name": "SCD Source Files",
 								"container_name": "practice-adf"
 							},
-							"EmpTargetSrc": {
+							"targetSrc": {
 								"file_name": "emp_target.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							},
-							"UpdSink": {
+							"sourceTwo": {
+								"file_name": "DIM_EmployeeMaster_SCD1_Updated.csv",
+								"folder_name": "SCD Source Files",
+								"container_name": "practice-adf"
+							},
+							"finalSink": {
 								"file_name": "emp_target.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"

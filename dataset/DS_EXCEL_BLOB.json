@@ -41,10 +41,6 @@
 					"type": "Expression"
 				}
 			},
-			"sheetIndex": {
-				"value": "@dataset().sheet_index",
-				"type": "Expression"
-			},
 			"firstRowAsHeader": true
 		},
 		"schema": []

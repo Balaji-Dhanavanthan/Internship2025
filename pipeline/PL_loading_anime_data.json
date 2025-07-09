@@ -19,10 +19,15 @@
 						"referenceName": "DS_EXCEL_BLOB",
 						"type": "DatasetReference",
 						"parameters": {
-							"sheet_index": 0
+							"sheet_index": 0,
+							"container_name": "practice-adf",
+							"dir_name": "Excel Workshop",
+							"file_name": "Excel Workshop.xlsx"
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
@@ -36,7 +41,7 @@
 			}
 		},
 		"folder": {
-			"name": "SCD"
+			"name": "SCD + more"
 		},
 		"annotations": []
 	}

@@ -16,14 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "DF_SCD_11",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
-								"container": "practice-adf",
-								"folder": "SCD Source Files",
-								"filename": "DIM_EmployeeMaster_SCD.csv"
-							},
 							"sink1": {
 								"container": "practice-adf",
 								"folder": "aabidh",

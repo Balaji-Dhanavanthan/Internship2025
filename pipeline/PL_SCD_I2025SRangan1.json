@@ -63,8 +63,6 @@
 			{
 				"name": "SCD1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -76,7 +74,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_SCD1_I2025_SRangan1",
+						"referenceName": "DF_SCD_I2025_SRangan1",
 						"type": "DataFlowReference"
 					},
 					"compute": {

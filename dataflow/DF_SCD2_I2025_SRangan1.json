@@ -13,14 +13,74 @@
 						"type": "DatasetReference"
 					},
 					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "Target"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "srccast"
+				},
+				{
+					"name": "tgtcast"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          EmployeeID as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source"
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          EmployeeID as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          Name as string,",
+				"          DateOfBirth as date,",
+				"          Department as string,",
+				"          HireDate as date,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as date,",
+				"          EndDate as string,",
+				"          surr_key as short,",
+				"          createBy as string,",
+				"          time as date,",
+				"          modifiedby as string,",
+				"          modified_date as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Target",
+				"source derive(EmployeeID = toInteger(EmployeeID),",
+				"          DateOfBirth = toDate(DateOfBirth, 'dd-MM-yyyy'),",
+				"          HireDate = toDate(HireDate, 'dd-MM-yyyy'),",
+				"          PhoneNumber = toInteger(PhoneNumber),",
+				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> srccast",
+				"Target derive() ~> tgtcast"
 			]
 		}
 	}

@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DIM_EmployeeMaster_SCD1_Updated.csv",
-				"folderPath": "SCD Source Files",
-				"container": "practice-adf"
+				"fileName": "targetSCD2.csv",
+				"folderPath": "Target Folders/I2025_JNagara1",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

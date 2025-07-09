@@ -9,24 +9,30 @@
 			"sheet_index": {
 				"type": "int",
 				"defaultValue": 0
+			},
+			"container_name": {
+				"type": "string"
+			},
+			"dir_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "old/prev"
+			"name": "SCD"
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "BASK Invitation Dataset.xlsx",
-				"folderPath": "Workshop_source",
-				"container": "test-container"
+				"fileName": "Excel Workshop.xlsx",
+				"folderPath": "Excel Workshop",
+				"container": "practice-adf"
 			},
-			"sheetIndex": {
-				"value": "@dataset().sheet_index",
-				"type": "Expression"
-			},
+			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": []

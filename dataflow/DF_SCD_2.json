@@ -74,6 +74,9 @@
 				},
 				{
 					"name": "derivedColumn4"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -238,10 +241,18 @@
 				"     skipDuplicateMapOutputs: true) ~> select3",
 				"select1, select2, select3 union(byName: true)~> union1",
 				"split1@existing derive(modified_at = toDate('')) ~> derivedColumn3",
-				"Targetinsert derive(EmployeeID = ERROR_FUNCTION(''),",
-				"          DateOfBirth = ERROR_FUNCTION(''),",
-				"          Salary = ERROR_FUNCTION(''),",
-				"          HireDate = ERROR_FUNCTION('')) ~> derivedColumn4",
+				"Targetinsert derive(EmployeeID = toInteger(EmployeeID),",
+				"          DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
+				"          Salary = toInteger(Salary),",
+				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
+				"          EffectiveDate = toDate(EffectiveDate,'yyyy-MM-dd'),",
+				"          EndDate = toDate(EndDate,'yyyy-MM-dd'),",
+				"          created_at = currentDate(),",
+				"          created_by = 'asar',",
+				"          modified_at = toDate(''),",
+				"          modified_by = '',",
+				"          flag = 1) ~> derivedColumn4",
+				"derivedColumn4 filter(ERROR_FUNCTION('')) ~> filter1",
 				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

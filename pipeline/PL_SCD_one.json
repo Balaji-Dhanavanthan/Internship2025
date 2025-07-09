@@ -174,10 +174,10 @@
 							"empSrc": {
 								"file_name": "DIM_EmployeeMaster_SCD.csv",
 								"folder_name": "SCD Source Files",
-								"container_name": "csvcontainer"
+								"container_name": "practice-adf"
 							},
 							"empFullSink": {
-								"file_name": "emp_target.csv",
+								"file_name": "emp_target_v2.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							}

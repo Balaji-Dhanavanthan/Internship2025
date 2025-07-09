@@ -55,7 +55,7 @@
 				"          modified_by = '') ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['emp_target_v1.csv'],",
+				"     partitionFileNames:['emp_target_v2.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> empFullSink"

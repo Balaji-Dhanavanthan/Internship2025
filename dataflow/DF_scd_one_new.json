@@ -29,7 +29,15 @@
 					"name": "sourceTwo"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "finalSink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -48,6 +56,18 @@
 				},
 				{
 					"name": "filterOnlyUpdated"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "dcForModifiedat"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -87,7 +107,7 @@
 				"          EndDate as string,",
 				"          created_at as timestamp,",
 				"          created_by as string,",
-				"          modified_at as string,",
+				"          modified_at as timestamp,",
 				"          modified_by as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -119,7 +139,7 @@
 				"     broadcast: 'auto')~> join1",
 				"UpdatedSrc select(mapColumn(",
 				"          src_EmployeeID = EmployeeID,",
-				"          scr_Name = Name,",
+				"          src_Name = Name,",
 				"          src_Gender = Gender,",
 				"          src_DateOfBirth = DateOfBirth,",
 				"          src_Department = Department,",
@@ -166,7 +186,38 @@
 				"(src_Salary != Salary) ||\r",
 				"(PhoneNumber != src_PhoneNumber) ||\r",
 				"(src_MaritalStatus != MaritalStatus))\r",
-				") ~> filterOnlyUpdated"
+				") ~> filterOnlyUpdated",
+				"filterOnuInsert derive(created_at = currentUTC(),",
+				"          created_by = 'I2025_JSenthil') ~> derivedColumn1",
+				"filterOnlyUpdated derive(modified_at = currentUTC(),",
+				"          modified_by = 'I2025_JSenthil') ~> dcForModifiedat",
+				"derivedColumn1, dcForModifiedat union(byName: true)~> union1",
+				"union1 select(mapColumn(",
+				"          src_EmployeeID,",
+				"          src_Name,",
+				"          src_Gender,",
+				"          src_DateOfBirth,",
+				"          src_Department,",
+				"          src_JobTitle,",
+				"          src_Salary,",
+				"          src_HireDate,",
+				"          src_Address,",
+				"          src_Email,",
+				"          src_PhoneNumber,",
+				"          src_MaritalStatus,",
+				"          src_EffectiveDate,",
+				"          src_EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> finalSink"
 			]
 		}
 	}

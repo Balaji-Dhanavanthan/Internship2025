@@ -8,13 +8,14 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
+			"sheetName": "raw_anime1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "BASK Invitation Dataset.xlsx",
-				"folderPath": "Workshop_source",
-				"container": "test-container"
-			}
+				"fileName": "Excel Workshop.xlsx",
+				"folderPath": "Excel Workshop",
+				"container": "practice-adf"
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

@@ -26,6 +26,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +78,8 @@
 				"sourceData derive(DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
 				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
 				"          column3 = ERROR_FUNCTION(''),",
-				"          column4 = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"          column4 = ERROR_FUNCTION('')) ~> derivedColumn1",
+				"target derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy')) ~> derivedColumn2"
 			]
 		}
 	}

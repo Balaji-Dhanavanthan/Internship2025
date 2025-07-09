@@ -35,9 +35,6 @@
 				},
 				{
 					"name": "LookupChanges"
-				},
-				{
-					"name": "Records"
 				}
 			],
 			"scriptLines": [
@@ -97,10 +94,7 @@
 				"SourceSelect, GetActiveRecords lookup(SourceSelect@BusinessKey == TargetSelect@BusinessKey,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> LookupChanges",
-				"LookupChanges split(isNull(TargetSelect@BusinessKey),",
-				"     SourceSelect@BusinessKey==TargetSelect@BusinessKey && (SourceSelect@Email!TargetSelect@Email||SourceSelect@Designation||TargetSelect@Designation||SourceSelect@Salary||TargetSelect@Salary),",
-				"     disjoint: false) ~> Records@(NewRecords, ChangedRecords)"
+				"     broadcast: 'auto')~> LookupChanges"
 			]
 		}
 	}

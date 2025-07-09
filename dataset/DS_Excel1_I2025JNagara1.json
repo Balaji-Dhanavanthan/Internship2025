@@ -5,6 +5,11 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sheetss": {
+				"type": "int"
+			}
+		},
 		"folder": {
 			"name": "practice"
 		},
@@ -16,6 +21,10 @@
 				"fileName": "Excel Workshop.xlsx",
 				"folderPath": "Excel Workshop",
 				"container": "practice-adf"
+			},
+			"sheetIndex": {
+				"value": "@dataset().sheetss",
+				"type": "Expression"
 			},
 			"firstRowAsHeader": true
 		},

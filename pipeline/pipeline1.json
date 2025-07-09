@@ -19,6 +19,16 @@
 						"referenceName": "DF_SCD_11",
 						"type": "DataFlowReference",
 						"datasetParameters": {
+							"source": {
+								"container": "practice-adf",
+								"folder": "SCD Source Files",
+								"filename": "DIM_EmployeeMaster_SCD1_Updated.csv"
+							},
+							"Target": {
+								"container": "practice-adf",
+								"folder": "aabidh",
+								"filename": "target.csv"
+							},
 							"sink1": {
 								"container": "practice-adf",
 								"folder": "aabidh",

@@ -12,62 +12,50 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "source"
+					"name": "empmastersource"
 				},
 				{
 					"dataset": {
 						"referenceName": "I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "Target"
+					"name": "empmasterTarget"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "castinsrc"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "tgtcast"
 				},
 				{
-					"name": "join1"
+					"name": "leftouterjoin"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "nullhandlingsrc"
 				},
 				{
-					"name": "select1"
+					"name": "split1"
+				},
+				{
+					"name": "tgtselect"
+				},
+				{
+					"name": "split2"
+				},
+				{
+					"name": "dcaudit"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "tgtdcaudit"
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          EmployeeID as string,",
-				"          Name as string,",
-				"          Gender as string,",
-				"          DateOfBirth as date,",
-				"          Department as string,",
-				"          JobTitle as string,",
-				"          Salary as integer,",
-				"          HireDate as date,",
-				"          Address as string,",
-				"          Email as string,",
-				"          PhoneNumber as string,",
-				"          MaritalStatus as string,",
-				"          EffectiveDate as date,",
-				"          EndDate as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source",
 				"source(output(",
 				"          EmployeeID as string,",
 				"          Name as string,",
@@ -82,82 +70,77 @@
 				"          PhoneNumber as string,",
 				"          MaritalStatus as string,",
 				"          EffectiveDate as string,",
-				"          EndDate as string,",
-				"          createBy as string,",
-				"          time as string",
+				"          EndDate as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Target",
-				"source derive(EmployeeID = toInteger(EmployeeID),",
-				"          EndDate = toDate(EndDate, 'dd-MM-yyyy')) ~> derivedColumn1",
-				"Target derive(EmployeeID = toInteger(EmployeeID),",
-				"          DateOfBirth = toDate(DateOfBirth, 'yyyy-MM-dd'),",
-				"          Salary = toDecimal(10,2),",
-				"          HireDate = toDate(HireDate, 'yyyy-MM-dd'),",
-				"          EffectiveDate = toDate(EffectiveDate, 'yyyy-MM-dd'),",
-				"          EndDate = toDate(EndDate, 'yyyy-MM-dd'),",
-				"          time = toDate(time, 'yyyy-MM-dd')) ~> derivedColumn2",
-				"derivedColumn1, derivedColumn2 join(derivedColumn1@EmployeeID == derivedColumn2@EmployeeID,",
+				"     ignoreNoFilesFound: false) ~> empmastersource",
+				"source(output(",
+				"          EmployeeID as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as date,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as date,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as date,",
+				"          EndDate as string,",
+				"          createBy as string,",
+				"          time as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> empmasterTarget",
+				"empmastersource derive(EmployeeID = toInteger(EmployeeID),",
+				"          DateOfBirth = toDate(DateOfBirth, 'dd-MM-yyyy'),",
+				"          Salary = toInteger(Salary),",
+				"          HireDate = toDate(HireDate, 'dd-MM-yyyy'),",
+				"          EffectiveDate = toDate(EffectiveDate, 'dd-MM-yyyy'),",
+				"          EndDate = toDate(EndDate, 'dd-MM-yyyy')) ~> castinsrc",
+				"empmasterTarget derive(EmployeeID = toInteger(EmployeeID),",
+				"          EndDate = toDate(EndDate, 'yyyy-MM-dd')) ~> tgtcast",
+				"nullhandlingsrc, tgtselect join(EmployeeID == {t.EmployeeID},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 derive(createBy = 'I2025_SRangan1',",
-				"          time = currentTimestamp()) ~> derivedColumn3",
-				"derivedColumn3 select(mapColumn(",
-				"          EmployeeID = derivedColumn1@EmployeeID,",
-				"          Name = source@Name,",
-				"          Gender = source@Gender,",
-				"          DateOfBirth = source@DateOfBirth,",
-				"          Department = source@Department,",
-				"          JobTitle = source@JobTitle,",
-				"          Salary = source@Salary,",
-				"          HireDate = source@HireDate,",
-				"          Address = source@Address,",
-				"          Email = source@Email,",
-				"          PhoneNumber = source@PhoneNumber,",
-				"          MaritalStatus = source@MaritalStatus,",
-				"          EffectiveDate = source@EffectiveDate,",
-				"          EndDate = derivedColumn1@EndDate,",
-				"          createBy,",
-				"          time",
+				"     broadcast: 'auto')~> leftouterjoin",
+				"castinsrc derive(each(match(type == 'Integer'), $$ = iifNull($#, -1)),",
+				"          each(match(type == 'Float'), $$ = iifNull($#, 0))) ~> nullhandlingsrc",
+				"leftouterjoin split(isNull({t.EmployeeID}),",
+				"     disjoint: false) ~> split1@(insert, update)",
+				"tgtcast select(mapColumn(",
+				"          {t.EmployeeID} = EmployeeID,",
+				"          {t.Name} = Name,",
+				"          {t.Gender} = Gender,",
+				"          {t.DateOfBirth} = DateOfBirth,",
+				"          {t.Department} = Department,",
+				"          {t.JobTitle} = JobTitle,",
+				"          {t.Salary} = Salary,",
+				"          {t.HireDate} = HireDate,",
+				"          {t.Address} = Address,",
+				"          {t.Email} = Email,",
+				"          {t.PhoneNumber} = PhoneNumber,",
+				"          {t.MaritalStatus} = MaritalStatus,",
+				"          {t.EffectiveDate} = EffectiveDate,",
+				"          {t.EndDate} = EndDate,",
+				"          {t.createBy} = createBy,",
+				"          {t.time} = time",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          ProductID as string,",
-				"          Name as string,",
-				"          ProductNumber as string,",
-				"          MakeFlag as string,",
-				"          FinishedGoodsFlag as string,",
-				"          Color as string,",
-				"          SafetyStockLevel as string,",
-				"          ReorderPoint as string,",
-				"          StandardCost as string,",
-				"          ListPrice as string,",
-				"          Size as string,",
-				"          SizeUnitMeasureCode as string,",
-				"          WeightUnitMeasureCode as string,",
-				"          Weight as string,",
-				"          DaysToManufacture as string,",
-				"          ProductLine as string,",
-				"          Class as string,",
-				"          Style as string,",
-				"          ProductSubcategoryID as string,",
-				"          ProductModelID as string,",
-				"          SellStartDate as string,",
-				"          SellEndDate as string,",
-				"          DiscontinuedDate as string,",
-				"          rowguid as string,",
-				"          ModifiedDate as string",
-				"     ),",
-				"     partitionFileNames:['target_scd2.csv'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> tgtselect",
+				"split1@update split((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}),",
+				"     disjoint: false) ~> split2@(updating, exisiting)",
+				"split1@insert derive({t.createBy} = 'I2025_SRangan1',",
+				"          {t.time} = currentTimestamp(),",
+				"          flag = 'active') ~> dcaudit",
+				"tgtdcaudit alterRow(updateIf((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}))) ~> alterRow1",
+				"split2@updating derive(modifiedby = 'I2025_SRangan1',",
+				"          modified_date = currentTimestamp()) ~> tgtdcaudit"
 			]
 		}
 	}

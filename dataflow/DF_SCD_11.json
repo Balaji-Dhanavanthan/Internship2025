@@ -37,7 +37,25 @@
 					"name": "split1"
 				},
 				{
-					"name": "split2"
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -95,11 +113,87 @@
 				"          Salary = toInteger(Salary),",
 				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
 				"          EffectiveDate = toDate(EffectiveDate,'yyyy-MM-dd'),",
-				"          EndDate = toDate(EndDate,'yyyy-MM-dd')) ~> TARGETone",
+				"          EndDate = toDate(EndDate,'yyyy-MM-dd'),",
+				"          created_at = currentTimestamp(),",
+				"          created_by = 'aabidh',",
+				"          modified_at = '',",
+				"          modified_by = '') ~> TARGETone",
 				"join1 split(isNull(TARGETone@EmployeeID),",
-				"     disjoint: false) ~> split1@(INSERT, UPDATE)",
-				"split1@UPDATE split((split1@UPDATE@EmployeeID != split1@UPDATE@EmployeeID) || (split1@UPDATE@Department != split1@UPDATE@Department || split1@UPDATE@JobTitle != split1@UPDATE@JobTitle || split1@UPDATE@Salary != split1@UPDATE@Salary || split1@UPDATE@MaritalStatus!= split1@UPDATE@MaritalStatus),",
-				"     disjoint: false) ~> split2@(Updates, existing)"
+				"     SOURCEone@EmployeeID == TARGETone@EmployeeID && (source@Department != Target@Department || source@JobTitle != Target@JobTitle || SOURCEone@Salary != TARGETone@Salary || source@MaritalStatus != Target@MaritalStatus),",
+				"     disjoint: false) ~> split1@(INSERT, updates, existing)",
+				"split1@updates derive(modified_at = currentTimestamp(),",
+				"          modified_by = 'asrar') ~> derivedColumn1",
+				"split1@INSERT derive(created_at = currentTimestamp(),",
+				"          created_by = 'aabidh',",
+				"          modified_at = toDate('')) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          EmployeeID = split1@INSERT@EmployeeID,",
+				"          Name = split1@INSERT@Name,",
+				"          Gender = split1@INSERT@Gender,",
+				"          DateOfBirth = split1@INSERT@DateOfBirth,",
+				"          Department = split1@INSERT@Department,",
+				"          JobTitle = split1@INSERT@JobTitle,",
+				"          Salary = split1@INSERT@Salary,",
+				"          HireDate = split1@INSERT@HireDate,",
+				"          Address = split1@INSERT@Address,",
+				"          Email = split1@INSERT@Email,",
+				"          PhoneNumber = split1@INSERT@PhoneNumber,",
+				"          MaritalStatus = split1@INSERT@MaritalStatus,",
+				"          EffectiveDate = split1@INSERT@EffectiveDate,",
+				"          EndDate = split1@INSERT@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"derivedColumn1 select(mapColumn(",
+				"          EmployeeID = split1@updates@EmployeeID,",
+				"          Name = split1@updates@Name,",
+				"          Gender = split1@updates@Gender,",
+				"          DateOfBirth = split1@updates@DateOfBirth,",
+				"          Department = split1@updates@Department,",
+				"          JobTitle = split1@updates@JobTitle,",
+				"          Salary = split1@updates@Salary,",
+				"          HireDate = split1@updates@HireDate,",
+				"          Address = split1@updates@Address,",
+				"          Email = split1@updates@Email,",
+				"          PhoneNumber = split1@updates@PhoneNumber,",
+				"          MaritalStatus = split1@updates@MaritalStatus,",
+				"          EffectiveDate = split1@updates@EffectiveDate,",
+				"          EndDate = split1@updates@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"derivedColumn3 select(mapColumn(",
+				"          EmployeeID = split1@existing@EmployeeID,",
+				"          Name = split1@existing@Name,",
+				"          Gender = split1@existing@Gender,",
+				"          DateOfBirth = split1@existing@DateOfBirth,",
+				"          Department = split1@existing@Department,",
+				"          JobTitle = split1@existing@JobTitle,",
+				"          Salary = split1@existing@Salary,",
+				"          HireDate = split1@existing@HireDate,",
+				"          Address = split1@existing@Address,",
+				"          Email = split1@existing@Email,",
+				"          PhoneNumber = split1@existing@PhoneNumber,",
+				"          MaritalStatus = split1@existing@MaritalStatus,",
+				"          EffectiveDate = split1@existing@EffectiveDate,",
+				"          EndDate = split1@existing@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select1, select2, select3 union(byName: true)~> union1",
+				"split1@existing derive(modified_at = toDate('')) ~> derivedColumn3"
 			]
 		}
 	}

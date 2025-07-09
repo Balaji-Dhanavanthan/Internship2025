@@ -1,6 +1,9 @@
 {
-	"name": "dataflow2",
+	"name": "DF_SCD2",
 	"properties": {
+		"folder": {
+			"name": "day7"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -9,13 +12,73 @@
 						"referenceName": "DS_Source",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "target"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
+					"name": "Targetselect"
+				},
+				{
+					"name": "sourceSelect"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "select4"
+				},
+				{
+					"name": "union1"
+				},
+				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "insertedrow"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "castTGT"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "split2"
+				},
+				{
+					"name": "union2"
+				},
+				{
+					"name": "select5"
 				}
 			],
 			"scriptLines": [
@@ -37,8 +100,193 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(column1 = toInteger(EmployeeID)) ~> derivedColumn1"
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          EmployeeID as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as string,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string,",
+				"          createBy as string,",
+				"          time as string,",
+				"          modifiedBy as string,",
+				"          modifiedTime as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"castTGT select(mapColumn(",
+				"          {s.EmplyeeID} = EmployeeID,",
+				"          {s.Name} = Name,",
+				"          {s.Gender} = Gender,",
+				"          {s.DateOfBirth} = DateOfBirth,",
+				"          {s.JobTitle} = JobTitle,",
+				"          {s.Salary} = Salary,",
+				"          {s.HireDate} = HireDate,",
+				"          {s.Address} = Address,",
+				"          {s.Email} = Email,",
+				"          {s.PhoneNumber} = PhoneNumber,",
+				"          {s.MaritalStatus} = MaritalStatus,",
+				"          {s.EffectiveDate} = EffectiveDate,",
+				"          {s.EndDate} = EndDate,",
+				"          {s.createBy} = createBy,",
+				"          {s.createdtime} = time",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Targetselect",
+				"derivedColumn4 select(mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sourceSelect",
+				"sourceSelect, derivedColumn3 join(EmployeeID == {s.EmplyeeID},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(isNull({s.EmplyeeID}),",
+				"     disjoint: false) ~> split1@(insert, update)",
+				"split2@updated alterRow(updateIf(EmployeeID!={s.EmplyeeID}||Name!={s.Name}||{s.Gender}!=Gender||DateOfBirth!={s.DateOfBirth}||{s.JobTitle}!=JobTitle||Salary!={s.Salary}||{s.Address}!=Address||{s.Email}!=Email||PhoneNumber!={s.PhoneNumber})) ~> alterRow1",
+				"alterRow1 select(mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          modifiedBy,",
+				"          modifiedTime,",
+				"          flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"derivedColumn2, insertedrow union(byName: true)~> union1",
+				"split1@insert derive(createBy = 'I2025_JNagara1',",
+				"          flag = toBinary(0),",
+				"          createdtime = currentTimestamp()) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          createBy,",
+				"          createdtime,",
+				"          flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> insertedrow",
+				"select4 derive(modifiedBy = 'I2025_JNagara1',",
+				"          modifiedTime = currentTimestamp(),",
+				"          flag = toBinary(1)) ~> derivedColumn2",
+				"Targetselect derive(modifiedBy = 'unk',",
+				"          modifiedTime = toTimestamp('2999-12-31 00:00:00.000', 'yyyy-MM-dd HH:mm:ss.SSS'),",
+				"          flag = toBinary(0)) ~> derivedColumn3",
+				"target derive(EmployeeID = toInteger(EmployeeID),",
+				"          DateOfBirth = toDate(DateOfBirth, 'yyyy-MM-dd'),",
+				"          Salary = toDecimal(Salary, 10, 2),",
+				"          PhoneNumber = toInteger(PhoneNumber),",
+				"          EffectiveDate = toDate(EffectiveDate, 'yyyy-MM-dd'),",
+				"          modifiedTime = toTimestamp(modifiedTime, 'yyyy-MM-dd HH:mm:ss'),",
+				"          HireDate = toDate(HireDate, 'yyyy-MM-dd'),",
+				"          createdtime = toTimestamp(time, 'yyyy-MM-dd HH:mm:ss')) ~> castTGT",
+				"source derive(EmployeeID = toInteger(EmployeeID),",
+				"          DateOfBirth = toDate(DateOfBirth, 'dd-MM-yyyy'),",
+				"          Salary = toDecimal(Salary, 10, 2),",
+				"          HireDate = toDate(HireDate, 'dd-MM-yyyy'),",
+				"          PhoneNumber = toInteger(PhoneNumber),",
+				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy')) ~> derivedColumn4",
+				"split1@update split(EmployeeID!={s.EmplyeeID}||Name!={s.Name}||{s.Gender}!=Gender||DateOfBirth!={s.DateOfBirth}\r",
+				"||{s.JobTitle}!=JobTitle||Salary!={s.Salary}||{s.Address}!=Address||{s.Email}!=Email||PhoneNumber!={s.PhoneNumber},",
+				"     disjoint: false) ~> split2@(updated, existing)",
+				"union1, select5 union(byName: true)~> union2",
+				"split2@existing select(mapColumn(",
+				"          EmployeeID = {s.EmplyeeID},",
+				"          Name = {s.Name},",
+				"          Gender = {s.Gender},",
+				"          DateOfBirth = {s.DateOfBirth},",
+				"          JobTitle = {s.JobTitle},",
+				"          Salary = {s.Salary},",
+				"          HireDate = {s.HireDate},",
+				"          Address = {s.Address},",
+				"          Email = {s.Email},",
+				"          PhoneNumber = {s.PhoneNumber},",
+				"          MaritalStatus = {s.MaritalStatus},",
+				"          EffectiveDate = {s.EffectiveDate},",
+				"          EndDate = {s.EndDate},",
+				"          createBy = {s.createBy},",
+				"          createdtime = {s.createdtime},",
+				"          modifiedBy,",
+				"          modifiedTime,",
+				"          flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select5",
+				"union2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['targetSCD.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          modifiedBy,",
+				"          modifiedTime,",
+				"          createBy,",
+				"          createdtime",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

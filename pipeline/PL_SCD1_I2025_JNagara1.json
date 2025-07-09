@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "PL_SCD1_I2025_JNagara1",
 	"properties": {
 		"activities": [
 			{
@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source": {
-								"filename": "DIM_EmployeeMaster_SCD.csv"
+								"filename": " DIM_EmployeeMaster_SCD1_Updated.csv"
 							},
 							"target": {
 								"filename": "targetSCD.csv"

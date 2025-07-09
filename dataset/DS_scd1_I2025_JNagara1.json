@@ -13,9 +13,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "emp_target",
-				"folderPath": "Target Folders/I2025_JNagara1",
-				"container": "test-container"
+				"fileName": "Excel Workshop.xlsx",
+				"folderPath": "Excel Workshop",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

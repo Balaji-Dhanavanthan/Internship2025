@@ -1,0 +1,173 @@
+{
+	"name": "DF_scd_one_new",
+	"properties": {
+		"folder": {
+			"name": "SCD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "targetSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTwo"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "changingSrcColNames"
+				},
+				{
+					"name": "filterOnuInsert"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "chgSrcNames"
+				},
+				{
+					"name": "filterOnlyUpdated"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> UpdatedSrc",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string,",
+				"          created_at as timestamp,",
+				"          created_by as string,",
+				"          modified_at as string,",
+				"          modified_by as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> targetSrc",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceTwo",
+				"changingSrcColNames, targetSrc join(src_EmployeeID == EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"UpdatedSrc select(mapColumn(",
+				"          src_EmployeeID = EmployeeID,",
+				"          scr_Name = Name,",
+				"          src_Gender = Gender,",
+				"          src_DateOfBirth = DateOfBirth,",
+				"          src_Department = Department,",
+				"          src_JobTitle = JobTitle,",
+				"          src_Salary = Salary,",
+				"          src_HireDate = HireDate,",
+				"          src_Address = Address,",
+				"          src_Email = Email,",
+				"          src_PhoneNumber = PhoneNumber,",
+				"          src_MaritalStatus = MaritalStatus,",
+				"          src_EffectiveDate = EffectiveDate,",
+				"          src_EndDate = EndDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> changingSrcColNames",
+				"join1 filter(isNull(EmployeeID)\r",
+				") ~> filterOnuInsert",
+				"chgSrcNames, targetSrc join(src_EmployeeID == EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"sourceTwo select(mapColumn(",
+				"          src_EmployeeID = EmployeeID,",
+				"          src_Name = Name,",
+				"          src_Gender = Gender,",
+				"          src_DateOfBirth = DateOfBirth,",
+				"          src_Department = Department,",
+				"          src_JobTitle = JobTitle,",
+				"          src_Salary = Salary,",
+				"          src_HireDate = HireDate,",
+				"          src_Address = Address,",
+				"          src_Email = Email,",
+				"          src_PhoneNumber = PhoneNumber,",
+				"          src_MaritalStatus = MaritalStatus,",
+				"          src_EffectiveDate = EffectiveDate,",
+				"          src_EndDate = EndDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> chgSrcNames",
+				"join2 filter((src_EmployeeID == EmployeeID) && \r",
+				"((src_Department != Department) ||\r",
+				"(JobTitle != src_JobTitle) ||\r",
+				"(src_Salary != Salary) ||\r",
+				"(PhoneNumber != src_PhoneNumber) ||\r",
+				"(src_MaritalStatus != MaritalStatus))\r",
+				") ~> filterOnlyUpdated"
+			]
+		}
+	}
+}

@@ -8,19 +8,189 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedSrc"
 				},
 				{
-					"name": "source2"
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "TargetSrc"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "CombinedSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SrcLeftJoinTgt"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "selectingReqCols"
+				},
+				{
+					"name": "SelectReqCols2"
+				},
+				{
+					"name": "SelectReqCols1"
+				},
+				{
+					"name": "UpdateModifiedByAndAt"
+				},
+				{
+					"name": "UpdateCreatedAtByModifiedByAt"
+				},
+				{
+					"name": "combineAll3"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source2"
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> UpdatedSrc",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string,",
+				"          created_at as string,",
+				"          created_by as string,",
+				"          modified_at as string,",
+				"          modified_by as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TargetSrc",
+				"UpdatedSrc, TargetSrc join(UpdatedSrc@EmployeeID == TargetSrc@EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> SrcLeftJoinTgt",
+				"SrcLeftJoinTgt split(isNull(TargetSrc@EmployeeID),",
+				"     (UpdatedSrc@EmployeeID == TargetSrc@EmployeeID) && \r",
+				"(\r",
+				"    UpdatedSrc@Department != TargetSrc@Department\r",
+				"    || TargetSrc@JobTitle != UpdatedSrc@JobTitle\r",
+				"    || UpdatedSrc@Salary != TargetSrc@Salary \r",
+				"    || TargetSrc@MaritalStatus != UpdatedSrc@MaritalStatus\r",
+				"),",
+				"     disjoint: false) ~> split1@(Inserted, Updated, Existing)",
+				"split1@Updated select(mapColumn(",
+				"          EmployeeID = split1@Updated@EmployeeID,",
+				"          Name = split1@Updated@Name,",
+				"          Gender = split1@Updated@Gender,",
+				"          DateOfBirth = split1@Updated@DateOfBirth,",
+				"          Department = split1@Updated@Department,",
+				"          JobTitle = split1@Updated@JobTitle,",
+				"          Salary = split1@Updated@Salary,",
+				"          HireDate = split1@Updated@HireDate,",
+				"          Address = split1@Updated@Address,",
+				"          Email = split1@Updated@Email,",
+				"          PhoneNumber = split1@Updated@PhoneNumber,",
+				"          MaritalStatus = split1@Updated@MaritalStatus,",
+				"          EffectiveDate = split1@Updated@EffectiveDate,",
+				"          EndDate = split1@Updated@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectingReqCols",
+				"split1@Existing select(mapColumn(",
+				"          EmployeeID = split1@Existing@EmployeeID,",
+				"          Name = split1@Existing@Name,",
+				"          Gender = split1@Existing@Gender,",
+				"          DateOfBirth = split1@Existing@DateOfBirth,",
+				"          Department = split1@Existing@Department,",
+				"          JobTitle = split1@Existing@JobTitle,",
+				"          Salary = split1@Existing@Salary,",
+				"          HireDate = split1@Existing@HireDate,",
+				"          Address = split1@Existing@Address,",
+				"          Email = split1@Existing@Email,",
+				"          PhoneNumber = split1@Existing@PhoneNumber,",
+				"          MaritalStatus = split1@Existing@MaritalStatus,",
+				"          EffectiveDate = split1@Existing@EffectiveDate,",
+				"          EndDate = split1@Existing@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectReqCols2",
+				"split1@Inserted select(mapColumn(",
+				"          EmployeeID = split1@Inserted@EmployeeID,",
+				"          Name = split1@Inserted@Name,",
+				"          Gender = split1@Inserted@Gender,",
+				"          DateOfBirth = split1@Inserted@DateOfBirth,",
+				"          Department = split1@Inserted@Department,",
+				"          JobTitle = split1@Inserted@JobTitle,",
+				"          Salary = split1@Inserted@Salary,",
+				"          HireDate = split1@Inserted@HireDate,",
+				"          Address = split1@Inserted@Address,",
+				"          Email = split1@Inserted@Email,",
+				"          PhoneNumber = split1@Inserted@PhoneNumber,",
+				"          MaritalStatus = split1@Inserted@MaritalStatus,",
+				"          EffectiveDate = split1@Inserted@EffectiveDate,",
+				"          EndDate = split1@Inserted@EndDate,",
+				"          created_at,",
+				"          created_by,",
+				"          modified_at,",
+				"          modified_by",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectReqCols1",
+				"selectingReqCols derive(modified_at = toString(currentUTC()),",
+				"          modified_by = 'I2025_JSenthil') ~> UpdateModifiedByAndAt",
+				"SelectReqCols1 derive(created_at = toString(currentUTC()),",
+				"          created_by = 'I2025_JSenthil') ~> UpdateCreatedAtByModifiedByAt",
+				"UpdateCreatedAtByModifiedByAt, UpdateModifiedByAndAt, SelectReqCols2 union(byName: true)~> combineAll3",
+				"combineAll3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['emp_target_v2.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> CombinedSink"
 			]
 		}
 	}

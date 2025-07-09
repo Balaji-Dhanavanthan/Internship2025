@@ -21,7 +21,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "SourceSink"
+					"name": "scd2Target"
 				}
 			],
 			"transformations": [
@@ -49,7 +49,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SCD2Source",
-				"SCD2Source derive(created_by = 'I2025_MSyed',",
+				"SCD2Source derive(IsCurrent = 1,",
+				"          created_by = 'I2025_MSyed',",
 				"          created_at = currentDate(),",
 				"          modified_by = '',",
 				"          modified_at = '') ~> SCD2dDerivedColumn",
@@ -124,7 +125,7 @@
 				"     partitionFileNames:['scd1.1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> SourceSink"
+				"     partitionBy('hash', 1)) ~> scd2Target"
 			]
 		}
 	}

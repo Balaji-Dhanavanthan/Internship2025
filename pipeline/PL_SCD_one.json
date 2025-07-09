@@ -168,15 +168,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_scd_1_1",
+						"referenceName": "DS_scd1_one_fin",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"empSrc": {
-								"file_name": "DIM_EmployeeMaster_SCD.csv",
+							"UpdatedSrc": {
+								"file_name": "DIM_EmployeeMaster_SCD1_Updated.csv",
 								"folder_name": "SCD Source Files",
 								"container_name": "practice-adf"
 							},
-							"empFullSink": {
+							"TargetSrc": {
+								"file_name": "emp_target_v2.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"CombinedSink": {
 								"file_name": "emp_target_v2.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"

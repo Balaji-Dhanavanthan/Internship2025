@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "target.csv",
+				"fileName": "targetscd2.csv",
 				"folderPath": "aabidh",
 				"container": "practice-adf"
 			},

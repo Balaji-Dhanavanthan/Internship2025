@@ -5,6 +5,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -69,6 +71,52 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "DF_SCD2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_SCD_2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source": {
+								"container": "practice-adf",
+								"folder": "SCD Source Files",
+								"filename": "DIM_EmployeeMaster_SCD1_Updated.csv"
+							},
+							"Target": {
+								"container": "practice-adf",
+								"folder": "aabidh",
+								"filename": "targetscd2.csv"
+							},
+							"Targetinsert": {
+								"container": "practice-adf",
+								"folder": "aabidh",
+								"filename": "targetscd2.csv"
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"folder": "aabidh",
+								"filename": "targetscd2.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []

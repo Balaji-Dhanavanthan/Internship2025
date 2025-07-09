@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "CF_Excel_to_sql",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {

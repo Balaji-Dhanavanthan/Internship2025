@@ -121,7 +121,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['SCD2TargetData.csv'],",
+				"     partitionFileNames:['scd1.1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> SourceSink"

@@ -801,11 +801,42 @@
 								"container": "practice-adf",
 								"Directory": "Asrar",
 								"FileName": "SCD2TargetData.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ADF_SCD1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SCD2Source": {
+								"container": "practice-adf",
+								"Directory": "SCD Source Files",
+								"FileName": "DIM_EmployeeMaster_SCD.csv"
 							},
-							"sink1": {
+							"SourceSink": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "SCD2TargetData.csv"
+								"FileName": "SCD1.1.CSV"
 							}
 						}
 					},

@@ -5,15 +5,23 @@
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"index": {
+				"type": "int"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "raw_anime1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Excel Workshop.xlsx",
 				"folderPath": "Excel Workshop",
 				"container": "practice-adf"
+			},
+			"sheetIndex": {
+				"value": "@dataset().index",
+				"type": "Expression"
 			},
 			"firstRowAsHeader": true
 		},

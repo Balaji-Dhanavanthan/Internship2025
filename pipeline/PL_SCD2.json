@@ -15,6 +15,21 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_SCD2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source": {
+								"filename": "DIM_EmployeeMaster_SCD.csv"
+							},
+							"target": {
+								"filename": "targetSCD2.csv"
+							},
+							"sink1": {
+								"filename": "targetSCD2.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

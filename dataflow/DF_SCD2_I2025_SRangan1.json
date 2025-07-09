@@ -1,0 +1,27 @@
+{
+	"name": "DF_SCD2_I2025_SRangan1",
+	"properties": {
+		"folder": {
+			"name": "TDSG Day 5 Training"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source"
+			]
+		}
+	}
+}

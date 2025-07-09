@@ -75,11 +75,14 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> target",
-				"sourceData derive(DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
-				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
-				"          column3 = ERROR_FUNCTION(''),",
-				"          column4 = ERROR_FUNCTION('')) ~> derivedColumn1",
-				"target derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy')) ~> derivedColumn2"
+				"sourceData derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
+				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
+				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn1",
+				"target derive(DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
+				"          column1 = ERROR_FUNCTION(''),",
+				"          column2 = ERROR_FUNCTION(''),",
+				"          column3 = ERROR_FUNCTION('')) ~> derivedColumn2"
 			]
 		}
 	}

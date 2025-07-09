@@ -7,21 +7,21 @@
 		},
 		"parameters": {
 			"sheetname": {
-				"type": "string"
+				"type": "int"
 			}
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": {
-				"value": "@dataset().sheetname",
-				"type": "Expression"
-			},
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "raw_anime2.xlsx",
-				"folderPath": "I2025_SRangan1",
-				"container": "test-container"
+				"fileName": "Excel Workshop.xlsx",
+				"folderPath": "Excel Workshop",
+				"container": "practice-adf"
+			},
+			"sheetIndex": {
+				"value": "@dataset().sheetname",
+				"type": "Expression"
 			},
 			"firstRowAsHeader": true
 		},

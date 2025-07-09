@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "targetSCD2.csv",
-				"folderPath": "Target Folders/I2025_JNagara1",
-				"container": "test-container"
+				"fileName": "DIM_EmployeeMaster_SCD.csv",
+				"folderPath": "SCD Source Files",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

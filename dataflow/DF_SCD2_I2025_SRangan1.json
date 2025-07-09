@@ -23,14 +23,7 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [
-				{
-					"name": "srccast"
-				},
-				{
-					"name": "tgtcast"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          EmployeeID as string,",
@@ -73,14 +66,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Target",
-				"source derive(EmployeeID = toInteger(EmployeeID),",
-				"          DateOfBirth = toDate(DateOfBirth, 'dd-MM-yyyy'),",
-				"          HireDate = toDate(HireDate, 'dd-MM-yyyy'),",
-				"          PhoneNumber = toInteger(PhoneNumber),",
-				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
-				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> srccast",
-				"Target derive() ~> tgtcast"
+				"     ignoreNoFilesFound: false) ~> Target"
 			]
 		}
 	}

@@ -3,41 +3,107 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
+				"name": "ForEach1",
+				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_EXCEL_BLOB",
-						"type": "DatasetReference",
-						"parameters": {
-							"sheet_index": 0,
-							"container_name": "practice-adf",
-							"dir_name": "Excel Workshop",
-							"file_name": "Excel Workshop.xlsx"
-						}
+					"items": {
+						"value": "@variables('sheet_array')",
+						"type": "Expression"
 					},
-					"fieldList": [
-						"childItems"
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"enablePartitionDiscovery": false
-					}
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "CopyAllAnime",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_EXCEL_BLOB",
+									"type": "DatasetReference",
+									"parameters": {
+										"container_name": "practice-adf",
+										"dir_name": "Excel Workshop",
+										"file_name": "Excel Workshop.xlsx"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_Sql_server_intern",
+									"type": "DatasetReference",
+									"parameters": {
+										"DatabaseObject": "I2025_JSenthil",
+										"TableName": "Full_anime"
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"timeout": "0.12:00:00"
 				}
 			}
 		],
 		"variables": {
-			"0": {
-				"type": "Integer"
+			"sheet_array": {
+				"type": "Array",
+				"defaultValue": [
+					0,
+					1,
+					2
+				]
+			},
+			"count": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"tmpCount": {
+				"type": "String",
+				"defaultValue": "0"
 			}
 		},
 		"folder": {

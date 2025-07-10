@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "targetscd2.csv",
-				"folderPath": "aabidh",
+				"fileName": "transactions_base.csv",
+				"folderPath": "Incremental Load",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

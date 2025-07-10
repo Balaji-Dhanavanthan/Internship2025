@@ -16,11 +16,7 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [
-				{
-					"name": "derivedColumn1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          transaction_id as short,",
@@ -31,8 +27,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(transaction_date = toDate(transaction_date,'dd-MM-yyyy')) ~> derivedColumn1"
+				"     ignoreNoFilesFound: false) ~> source1"
 			]
 		}
 	}

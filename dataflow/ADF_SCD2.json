@@ -163,10 +163,10 @@
 				"insert@Insert derive(IsCurrent = 1,",
 				"          created_by = 'I2025_MSyed',",
 				"          created_at = currentDate(),",
-				"          modified_at = toDate(modified_at,'dd-MM-yyyy')) ~> insertDerived",
+				"          modified_at = toDate('')) ~> insertDerived",
 				"insert@UPDATE derive(EndDate = currentDate(),",
 				"          IsCurrent = 0,",
-				"          modified_at = toDate(modified_at,'dd-MM-yyyy')) ~> derivedColumn1",
+				"          modified_at = toDate('')) ~> derivedColumn1",
 				"derivedColumn1 select(mapColumn(",
 				"          EmployeeID = insert@UPDATE@EmployeeID,",
 				"          Name = insert@UPDATE@Name,",
@@ -274,7 +274,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select4",
 				"select4, source1, select3, select2 union(byName: true)~> union1",
-				"insert@existing derive(modified_at = toDate(modified_at,'dd-MM-yyyy')) ~> derivedColumn4"
+				"insert@existing derive(modified_at = toDate('')) ~> derivedColumn4"
 			]
 		}
 	}

@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataFlowFullLoad",
+				"name": "DF_for_SCD2",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,15 +16,25 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_for_scd2_full_load",
+						"referenceName": "DF_for_scd_two",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"scd2Src": {
-								"file_name": "DIM_EmployeeMaster_SCD.csv",
+							"UpdatedSource": {
+								"file_name": "DIM_EmployeeMaster_SCD1_Updated.csv",
 								"folder_name": "SCD Source Files",
 								"container_name": "practice-adf"
 							},
-							"scd2fullSink": {
+							"TargetSource": {
+								"file_name": "DIM_scd2_target_employees.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"UpdatedSrc1": {
+								"file_name": "DIM_EmployeeMaster_SCD1_Updated.csv",
+								"folder_name": "SCD Source Files",
+								"container_name": "practice-adf"
+							},
+							"finSink": {
 								"file_name": "DIM_scd2_target_employees.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"

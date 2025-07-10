@@ -22,10 +22,18 @@
 					"name": "empmasterTarget"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
-					"name": "castinsrc"
+					"name": "castSource"
 				},
 				{
 					"name": "tgtcast"
@@ -43,16 +51,46 @@
 					"name": "tgtselect"
 				},
 				{
-					"name": "split2"
-				},
-				{
 					"name": "dcaudit"
 				},
 				{
-					"name": "alterRow1"
+					"name": "alterRowUpdate"
 				},
 				{
-					"name": "tgtdcaudit"
+					"name": "dcauditt"
+				},
+				{
+					"name": "selectTarget"
+				},
+				{
+					"name": "selectSource"
+				},
+				{
+					"name": "selectSrc"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "split2"
+				},
+				{
+					"name": "unionUpdate"
+				},
+				{
+					"name": "unionInsert"
+				},
+				{
+					"name": "unionExisting"
+				},
+				{
+					"name": "selectTgt"
+				},
+				{
+					"name": "auditFlag"
+				},
+				{
+					"name": "sortEmpID"
 				}
 			],
 			"scriptLines": [
@@ -101,16 +139,16 @@
 				"          Salary = toInteger(Salary),",
 				"          HireDate = toDate(HireDate, 'dd-MM-yyyy'),",
 				"          EffectiveDate = toDate(EffectiveDate, 'dd-MM-yyyy'),",
-				"          EndDate = toDate(EndDate, 'dd-MM-yyyy')) ~> castinsrc",
+				"          EndDate = toTimestamp(EndDate, 'yyyy-MM-dd HH:mm:ss')) ~> castSource",
 				"empmasterTarget derive(EmployeeID = toInteger(EmployeeID),",
-				"          EndDate = toDate(EndDate, 'yyyy-MM-dd')) ~> tgtcast",
+				"          EndDate = toTimestamp(EndDate, 'yyyy-MM-dd HH:mm:ss')) ~> tgtcast",
 				"nullhandlingsrc, tgtselect join(EmployeeID == {t.EmployeeID},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> leftouterjoin",
-				"castinsrc derive(each(match(type == 'Integer'), $$ = iifNull($#, -1)),",
-				"          each(match(type == 'Float'), $$ = iifNull($#, 0))) ~> nullhandlingsrc",
+				"castSource derive(each(match(type=='Integer'), $$ = iifNull($#, -1)),",
+				"          each(match(type=='Float'), $$ = iifNull($#, 0))) ~> nullhandlingsrc",
 				"leftouterjoin split(isNull({t.EmployeeID}),",
 				"     disjoint: false) ~> split1@(insert, update)",
 				"tgtcast select(mapColumn(",
@@ -133,14 +171,136 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> tgtselect",
-				"split1@update split((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}),",
-				"     disjoint: false) ~> split2@(updating, exisiting)",
 				"split1@insert derive({t.createBy} = 'I2025_SRangan1',",
 				"          {t.time} = currentTimestamp(),",
 				"          flag = 'active') ~> dcaudit",
-				"tgtdcaudit alterRow(updateIf((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}))) ~> alterRow1",
-				"split2@updating derive(modifiedby = 'I2025_SRangan1',",
-				"          modified_date = currentTimestamp()) ~> tgtdcaudit"
+				"split2@updated alterRow(updateIf((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}))) ~> alterRowUpdate",
+				"selectTarget derive(modifiedby = 'I2025_SRangan1',",
+				"          modified_date = currentTimestamp(),",
+				"          flag = 'deactive',",
+				"          EndDate = currentTimestamp()) ~> dcauditt",
+				"alterRowUpdate select(mapColumn(",
+				"          EmployeeID,",
+				"          Name = {t.Name},",
+				"          Gender = {t.Gender},",
+				"          DateOfBirth = {t.DateOfBirth},",
+				"          Department = {t.Department},",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate = {t.HireDate},",
+				"          Address = {t.Address},",
+				"          Email = {t.Email},",
+				"          PhoneNumber = {t.PhoneNumber},",
+				"          MaritalStatus = {t.MaritalStatus},",
+				"          EffectiveDate = {t.EffectiveDate},",
+				"          EndDate = {t.EndDate},",
+				"          createBy = {t.createBy},",
+				"          time = {t.time}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectTarget",
+				"dcaudit select(mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          createBy = {t.createBy},",
+				"          time = {t.time},",
+				"          flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectSource",
+				"alterRowUpdate select(mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          createBy = {t.createBy},",
+				"          time = {t.time}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectSrc",
+				"selectSrc derive(flag = 'active') ~> derivedColumn2",
+				"split1@update split((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}),",
+				"     disjoint: false) ~> split2@(updated, existing)",
+				"derivedColumn2, dcauditt union(byName: true)~> unionUpdate",
+				"unionUpdate, selectSource union(byName: true)~> unionInsert",
+				"unionInsert, auditFlag union(byName: true)~> unionExisting",
+				"split2@existing select(mapColumn(",
+				"          EmployeeID = {t.EmployeeID},",
+				"          Name = {t.Name},",
+				"          Gender = {t.Gender},",
+				"          DateOfBirth = {t.DateOfBirth},",
+				"          Department = {t.Department},",
+				"          JobTitle = {t.JobTitle},",
+				"          Salary = {t.Salary},",
+				"          HireDate = {t.HireDate},",
+				"          Address = {t.Address},",
+				"          Email = {t.Email},",
+				"          PhoneNumber = {t.PhoneNumber},",
+				"          MaritalStatus = {t.MaritalStatus},",
+				"          EffectiveDate = {t.EffectiveDate},",
+				"          EndDate = {t.EndDate},",
+				"          createBy = {t.createBy},",
+				"          time = {t.time}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectTgt",
+				"selectTgt derive(flag = 'active') ~> auditFlag",
+				"unionExisting sort(asc(EmployeeID, true)) ~> sortEmpID",
+				"sortEmpID sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          MakeFlag as string,",
+				"          FinishedGoodsFlag as string,",
+				"          Color as string,",
+				"          SafetyStockLevel as string,",
+				"          ReorderPoint as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as string,",
+				"          ProductLine as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ProductSubcategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          DiscontinuedDate as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     partitionFileNames:['target_scd2.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

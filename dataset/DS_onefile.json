@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "transactions_base.csv",
+				"fileName": "transactions_increment_1.csv",
 				"folderPath": "Incremental Load",
 				"container": "practice-adf"
 			},

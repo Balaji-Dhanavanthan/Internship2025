@@ -1,0 +1,145 @@
+{
+	"name": "DF_for_scd_two",
+	"properties": {
+		"folder": {
+			"name": "SCD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "TargetSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "renamingSrcCols"
+				},
+				{
+					"name": "LeftJoinSrcOnTgt"
+				},
+				{
+					"name": "ConditionalSplit"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "selectingSrcColsAndRenamingAsTgtCols"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> UpdatedSource",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as string,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as string,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as string,",
+				"          EndDate as string,",
+				"          version as integer,",
+				"          created_by as string,",
+				"          created_at as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TargetSource",
+				"UpdatedSource select(mapColumn(",
+				"          s_EmployeeID = EmployeeID,",
+				"          s_Name = Name,",
+				"          s_Gender = Gender,",
+				"          s_DateOfBirth = DateOfBirth,",
+				"          s_Department = Department,",
+				"          s_JobTitle = JobTitle,",
+				"          s_Salary = Salary,",
+				"          s_HireDate = HireDate,",
+				"          s_Address = Address,",
+				"          s_Email = Email,",
+				"          s_PhoneNumber = PhoneNumber,",
+				"          s_MaritalStatus = MaritalStatus,",
+				"          s_EffectiveDate = EffectiveDate,",
+				"          s_EndDate = EndDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> renamingSrcCols",
+				"renamingSrcCols, TargetSource join(s_EmployeeID == EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> LeftJoinSrcOnTgt",
+				"LeftJoinSrcOnTgt split(isNull(EmployeeID),",
+				"     (s_EmployeeID == EmployeeID) && (  \r",
+				"    s_Department !=Department \r",
+				"    || JobTitle != s_JobTitle \r",
+				"    || s_Salary != Salary \r",
+				"    || MaritalStatus != s_MaritalStatus \r",
+				"    || EndDate != s_EndDate \r",
+				"    || s_PhoneNumber != PhoneNumber\r",
+				"),",
+				"     disjoint: false) ~> ConditionalSplit@(Insert, updated, remaining)",
+				"selectingSrcColsAndRenamingAsTgtCols derive(version = 0,",
+				"          created_by = 'I2025_JSenthil',",
+				"          created_at = toString(currentDate())) ~> derivedColumn1",
+				"ConditionalSplit@Insert select(mapColumn(",
+				"          EmployeeID = s_EmployeeID,",
+				"          Name = s_Name,",
+				"          Gender = s_Gender,",
+				"          DateOfBirth = s_DateOfBirth,",
+				"          Department = s_Department,",
+				"          JobTitle = s_JobTitle,",
+				"          Salary = s_Salary,",
+				"          HireDate = s_HireDate,",
+				"          Address = s_Address,",
+				"          Email = s_Email,",
+				"          PhoneNumber = s_PhoneNumber,",
+				"          MaritalStatus = s_MaritalStatus,",
+				"          EffectiveDate = s_EffectiveDate,",
+				"          EndDate = s_EndDate,",
+				"          version,",
+				"          created_by,",
+				"          created_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectingSrcColsAndRenamingAsTgtCols"
+			]
+		}
+	}
+}

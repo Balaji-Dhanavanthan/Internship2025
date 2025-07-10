@@ -54,6 +54,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "join2"
 				}
 			],
 			"scriptLines": [
@@ -167,7 +170,12 @@
 				"source1 derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
 				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
 				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
-				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn2"
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn2",
+				"derivedColumn2, targetderived join(source1@EmployeeID == target@EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2"
 			]
 		}
 	}

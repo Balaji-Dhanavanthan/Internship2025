@@ -3,10 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "copy_full_data_from_src_to_tgt",
+				"name": "append_data_into_src",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -110,7 +108,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "transactions_base.csv",
+							"file_name": "transactions_increment_4.csv",
 							"folder_name": "Incremental Load",
 							"container_name": "practice-adf"
 						}
@@ -128,9 +126,16 @@
 				]
 			},
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"dependsOn": [],
+				"name": "CD_from_src_to_target",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "append_data_into_src",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -142,20 +147,46 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT MAX(transaction_date)\nFROM src_inc_load;",
+						"sqlReaderQuery": "SELECT *\nFROM src_inc_load\nWHERE transaction_date > (\n    SELECT MAX(transaction_date) \n    FROM target_inc_load\n)",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"dataset": {
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "src_inc_load"
+						}
+					}
+				],
+				"outputs": [
+					{
 						"referenceName": "DS_Sql_server_intern",
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
 							"TableName": "target_inc_load"
 						}
-					},
-					"firstRowOnly": false
-				}
+					}
+				]
 			}
 		],
 		"folder": {

@@ -3,10 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
+				"name": "Copy data1",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -18,29 +16,119 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT MAX(transaction_date) AS MaxDate FROM IncrementalLoad\n",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
-					"dataset": {
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "transaction_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "transaction_id",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "customer_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "customer_id",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "amount",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "transaction_date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "transaction_date",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "status",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Incremental_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "transactions_increment_4.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
 							"object": "I2025_JNagara1",
-							"table": "IncrementalLoad"
+							"table": "transactions_increment_1"
 						}
 					}
-				}
+				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "Copy data2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Copy data1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -57,10 +145,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": {
-							"value": "SELECT * FROM transactions_increment_1\nWHERE transaction_date > CAST('@{activity('Lookup1').output.firstRow.MaxDate}' AS DATE)\n\n\n",
-							"type": "Expression"
-						},
+						"sqlReaderQuery": "SELECT * FROM transactions_increment_1\nWHERE transaction_date >(SELECT MAX(transaction_date) FROM IncrementalLoad)",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -96,382 +181,6 @@
 						"parameters": {
 							"object": "I2025_JNagara1",
 							"table": "IncrementalLoad"
-						}
-					}
-				]
-			},
-			{
-				"name": "Lookup1_copy1",
-				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT MAX(transaction_date) AS MaxDate FROM IncrementalLoad\n",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "IncrementalLoad"
-						}
-					}
-				}
-			},
-			{
-				"name": "MaxDateToControlTable",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "LoadCondition",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": {
-							"value": "INSERT INTO control_table (table_name, Load_date)\nSELECT 'transactions_increment_3', MAX(transaction_date)\nFROM IncrementalLoad;\n\n\n",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "IncrementalLoad"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "control_table"
-						}
-					}
-				]
-			},
-			{
-				"name": "MaxOfControlTable",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "select max(Load_date) as max_date\nfrom control_table\n",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "control_table"
-						}
-					}
-				}
-			},
-			{
-				"name": "LoadCondition",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "MaxOfControlTable",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": {
-							"value": "activity('MaxOfControlTable').outputactivity('MaxOfControlTable').outputSELECT * FROM transactions_increment_4\nWHERE transaction_date > CAST('@{activity('MaxOfControlTable').output.firstRow.max_date}' AS DATE)\n",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "transactions_increment_4"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "IncrementalLoad"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data5",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Incremental_source",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "transactions_increment_2.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "transactions_increment_2"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data6",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Incremental_source",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "transactions_increment_3.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "transactions_increment_3"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data7",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Incremental_source",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "transactions_increment_4.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"object": "I2025_JNagara1",
-							"table": "transactions_increment_4"
 						}
 					}
 				]

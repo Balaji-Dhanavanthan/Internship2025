@@ -56,10 +56,7 @@
 					"name": "SelectRemaining"
 				},
 				{
-					"name": "select2"
-				},
-				{
-					"name": "UpdateVersions"
+					"name": "selectupdatedone"
 				},
 				{
 					"name": "CombineAll3Src"
@@ -72,6 +69,21 @@
 				},
 				{
 					"name": "SelelectExisting"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "innerJoin"
+				},
+				{
+					"name": "selectNothing"
+				},
+				{
+					"name": "selectMaxVersCols"
+				},
+				{
+					"name": "IncrementVersions"
 				}
 			],
 			"scriptLines": [
@@ -242,9 +254,8 @@
 				"          created_at",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 derive(version = version + 1) ~> UpdateVersions",
-				"derivedColumn1, UpdateVersions, SelectRemaining, SelelectExisting union(byName: true)~> CombineAll3Src",
+				"     skipDuplicateMapOutputs: true) ~> selectupdatedone",
+				"derivedColumn1, IncrementVersions, SelectRemaining, SelelectExisting union(byName: true)~> CombineAll3Src",
 				"UpdatedSrc1, TargetSource join(UpdatedSrc1@EmployeeID == TargetSource@EmployeeID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -278,6 +289,57 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelelectExisting",
+				"selectupdatedone aggregate(groupBy(EmployeeID),",
+				"     version = max(version)) ~> aggregate1",
+				"aggregate1, selectNothing join(aggregate1@EmployeeID == selectNothing@EmployeeID",
+				"     && aggregate1@version == selectNothing@version,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> innerJoin",
+				"selectupdatedone select(mapColumn(",
+				"          EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          version,",
+				"          created_by,",
+				"          created_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectNothing",
+				"innerJoin select(mapColumn(",
+				"          EmployeeID = selectNothing@EmployeeID,",
+				"          Name,",
+				"          Gender,",
+				"          DateOfBirth,",
+				"          Department,",
+				"          JobTitle,",
+				"          Salary,",
+				"          HireDate,",
+				"          Address,",
+				"          Email,",
+				"          PhoneNumber,",
+				"          MaritalStatus,",
+				"          EffectiveDate,",
+				"          EndDate,",
+				"          version = selectNothing@version,",
+				"          created_by,",
+				"          created_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectMaxVersCols",
+				"selectMaxVersCols derive(version = version + 1) ~> IncrementVersions",
 				"CombineAll3Src sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['DIM_scd2_target_employees.csv'],",

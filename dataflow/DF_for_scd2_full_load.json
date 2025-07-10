@@ -54,7 +54,7 @@
 				"          created_at = currentUTC()) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['DIM_scd2_target_employees_v1.csv'],",
+				"     partitionFileNames:['DIM_scd2_target_employees_v3.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> scd2fullSink"

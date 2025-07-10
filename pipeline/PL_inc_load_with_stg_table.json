@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "append_data_into_src",
+				"name": "CP_append_data_into_src",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -126,11 +126,11 @@
 				]
 			},
 			{
-				"name": "CD_from_src_to_target",
+				"name": "CP_from_src_to_target",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "append_data_into_src",
+						"activity": "CP_append_data_into_src",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -147,7 +147,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT *\nFROM src_inc_load\nWHERE transaction_date > (\n    SELECT MAX(transaction_date) \n    FROM target_inc_load\n)",
+						"sqlReaderQuery": "SELECT *\nFROM src_inc_load\nWHERE transaction_date > (\n    \n)\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

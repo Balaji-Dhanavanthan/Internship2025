@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CSVtoSQL",
+				"name": "CD_CSVtoSQL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -124,11 +124,11 @@
 				]
 			},
 			{
-				"name": "SQLSourceToTarget",
+				"name": "CD_SQLSourceToTarget",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "CSVtoSQL",
+						"activity": "CD_CSVtoSQL",
 						"dependencyConditions": [
 							"Succeeded"
 						]

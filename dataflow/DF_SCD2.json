@@ -39,55 +39,55 @@
 					"name": "sourceSelect"
 				},
 				{
-					"name": "join1"
+					"name": "LeftJoinSourceTarget"
 				},
 				{
-					"name": "split1"
+					"name": "SliptInsertUdate"
 				},
 				{
-					"name": "union1"
+					"name": "unionInsert"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "FlagForInsert"
 				},
 				{
-					"name": "insertedrow"
+					"name": "SelectSourceColumn"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "setFlag"
 				},
 				{
 					"name": "castTGT"
 				},
 				{
-					"name": "derivedColumn4"
+					"name": "castSource"
 				},
 				{
-					"name": "union2"
+					"name": "unionExist"
 				},
 				{
-					"name": "alterRow2"
+					"name": "UpdateBranch"
 				},
 				{
-					"name": "select6"
+					"name": "selectSourceForUpdate"
 				},
 				{
-					"name": "derivedColumn5"
+					"name": "ActiveAndDate"
 				},
 				{
-					"name": "union3"
+					"name": "unionUpdate"
 				},
 				{
-					"name": "select7"
+					"name": "selectTargetColumn"
 				},
 				{
-					"name": "derivedColumn6"
+					"name": "DeactiveFlag"
 				},
 				{
 					"name": "split2"
 				},
 				{
-					"name": "select8"
+					"name": "TargetColumns"
 				}
 			],
 			"scriptLines": [
@@ -153,7 +153,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> Targetselect",
-				"derivedColumn4 select(mapColumn(",
+				"castSource select(mapColumn(",
 				"          EmployeeID,",
 				"          Name,",
 				"          Gender,",
@@ -171,18 +171,18 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sourceSelect",
-				"sourceSelect, derivedColumn3 join(EmployeeID == {s.EmplyeeID},",
+				"sourceSelect, setFlag join(EmployeeID == {s.EmplyeeID},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 split(isNull({s.EmplyeeID}),",
-				"     disjoint: false) ~> split1@(insert, update)",
-				"union3, insertedrow union(byName: true)~> union1",
-				"split1@insert derive(createBy = 'I2025_JNagara1',",
+				"     broadcast: 'auto')~> LeftJoinSourceTarget",
+				"LeftJoinSourceTarget split(isNull({s.EmplyeeID}),",
+				"     disjoint: false) ~> SliptInsertUdate@(insert, updateAndExisting)",
+				"unionUpdate, SelectSourceColumn union(byName: true)~> unionInsert",
+				"SliptInsertUdate@insert derive(createBy = 'I2025_JNagara1',",
 				"          createdtime = currentTimestamp(),",
-				"          flag = 'active') ~> derivedColumn1",
-				"derivedColumn1 select(mapColumn(",
+				"          flag = 'active') ~> FlagForInsert",
+				"FlagForInsert select(mapColumn(",
 				"          EmployeeID,",
 				"          Name,",
 				"          Gender,",
@@ -199,13 +199,15 @@
 				"          EndDate,",
 				"          createBy,",
 				"          createdtime,",
+				"          modifiedBy,",
+				"          modifiedTime,",
 				"          flag",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> insertedrow",
+				"     skipDuplicateMapOutputs: true) ~> SelectSourceColumn",
 				"Targetselect derive(modifiedBy = 'unk',",
 				"          modifiedTime = toTimestamp('2999-12-31 00:00:00.000', 'yyyy-MM-dd HH:mm:ss.SSS'),",
-				"          flag = 'active') ~> derivedColumn3",
+				"          flag = 'active') ~> setFlag",
 				"target derive(EmployeeID = toInteger(EmployeeID),",
 				"          DateOfBirth = toDate(DateOfBirth, 'yyyy-MM-dd'),",
 				"          Salary = toDecimal(Salary, 10, 2),",
@@ -221,10 +223,10 @@
 				"          HireDate = toDate(HireDate, 'dd-MM-yyyy'),",
 				"          PhoneNumber = toLong((replace(replace(replace(PhoneNumber, '-', ''), '+', ''), ' ', ''))),",
 				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
-				"          EndDate = toTimestamp(EndDate,'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn4",
-				"union1, select8 union(byName: true)~> union2",
-				"split2@updateddddd alterRow(updateIf((EmployeeID=={s.EmplyeeID})&&(JobTitle!={s.JobTitle}||Salary!={s.Salary}))) ~> alterRow2",
-				"alterRow2 select(mapColumn(",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> castSource",
+				"unionInsert, TargetColumns union(byName: true)~> unionExist",
+				"split2@update alterRow(updateIf((EmployeeID=={s.EmplyeeID})&&(JobTitle!={s.JobTitle}||Salary!={s.Salary}))) ~> UpdateBranch",
+				"UpdateBranch select(mapColumn(",
 				"          EmployeeID = {s.EmplyeeID},",
 				"          Name = {s.Name},",
 				"          Gender = {s.Gender},",
@@ -246,11 +248,11 @@
 				"          flag",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select6",
-				"select6 derive(flag = 'active',",
-				"          EffectiveDate = currentDate()) ~> derivedColumn5",
-				"derivedColumn5, derivedColumn6 union(byName: true)~> union3",
-				"alterRow2 select(mapColumn(",
+				"     skipDuplicateMapOutputs: true) ~> selectSourceForUpdate",
+				"selectSourceForUpdate derive(flag = 'active',",
+				"          EffectiveDate = currentDate()) ~> ActiveAndDate",
+				"ActiveAndDate, DeactiveFlag union(byName: true)~> unionUpdate",
+				"UpdateBranch select(mapColumn(",
 				"          EmployeeID,",
 				"          Name,",
 				"          Gender,",
@@ -272,13 +274,13 @@
 				"          flag",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select7",
-				"select7 derive(flag = 'deactive',",
-				"          EndDate = currentTimestamp(),",
+				"     skipDuplicateMapOutputs: true) ~> selectTargetColumn",
+				"selectTargetColumn derive(flag = 'deactive',",
+				"          EndDate = currentDate(),",
 				"          modifiedTime = currentTimestamp(),",
-				"          modifiedBy = 'I2025_jaya') ~> derivedColumn6",
-				"split1@update split((EmployeeID=={s.EmplyeeID})&&(JobTitle!={s.JobTitle}||Salary!={s.Salary}),",
-				"     disjoint: false) ~> split2@(updateddddd, exist)",
+				"          modifiedBy = 'I2025_jaya') ~> DeactiveFlag",
+				"SliptInsertUdate@updateAndExisting split((EmployeeID=={s.EmplyeeID})&&(JobTitle!={s.JobTitle}||Salary!={s.Salary}),",
+				"     disjoint: false) ~> split2@(update, exist)",
 				"split2@exist select(mapColumn(",
 				"          EmployeeID = {s.EmplyeeID},",
 				"          Name = {s.Name},",
@@ -288,6 +290,7 @@
 				"          Salary = {s.Salary},",
 				"          HireDate = {s.HireDate},",
 				"          Address = {s.Address},",
+				"          Department,",
 				"          Email = {s.Email},",
 				"          PhoneNumber = {s.PhoneNumber},",
 				"          MaritalStatus = {s.MaritalStatus},",
@@ -300,8 +303,8 @@
 				"          flag",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select8",
-				"union2 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> TargetColumns",
+				"unionExist sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['targetSCD2.csv'],",
 				"     skipDuplicateMapInputs: true,",

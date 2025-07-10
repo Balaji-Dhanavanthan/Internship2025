@@ -20,6 +20,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "target"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -90,6 +97,25 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> target",
+				"source(output(",
+				"          EmployeeID as short,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          DateOfBirth as date,",
+				"          Department as string,",
+				"          JobTitle as string,",
+				"          Salary as integer,",
+				"          HireDate as date,",
+				"          Address as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          MaritalStatus as string,",
+				"          EffectiveDate as date,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
 				"sourceData derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
 				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
 				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",

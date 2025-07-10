@@ -134,6 +134,8 @@
 			{
 				"name": "Copy data3_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Lookup1_copy1",

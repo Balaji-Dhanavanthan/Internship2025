@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT *\nFROM src_inc_load_ct\nWHERE transaction_date > (\n    SELECT MAX(modified_date)\n    FROM inc_load_ct\n) AND table_name = 'tgt_inc_load_ct'",
+						"sqlReaderQuery": "SELECT *\nFROM src_inc_load_ct\nWHERE transaction_date > (\n    SELECT MAX(modified_date)\n    FROM inc_load_ct\n    WHERE  table_name = 'tgt_inc_load_ct'\n)",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -109,7 +109,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "transactions_increment_1.csv",
+							"file_name": "transactions_increment_4.csv",
 							"folder_name": "Incremental Load",
 							"container_name": "practice-adf"
 						}

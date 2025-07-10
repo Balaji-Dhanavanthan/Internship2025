@@ -57,6 +57,9 @@
 				},
 				{
 					"name": "join2"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -175,7 +178,9 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2"
+				"     broadcast: 'auto')~> join2",
+				"join2 split(source1@EmployeeID == target@EmployeeID && (source1@Department != target@Department || source1@JobTitle != target@JobTitle || source1@Salary != target@Salary || source1@MaritalStatus != target@MaritalStatus),",
+				"     disjoint: false) ~> split1@(update, Existing)"
 			]
 		}
 	}

@@ -273,7 +273,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select4",
-				"select4, source1, select3, select2 union(byName: true)~> union1",
+				"select4, select1, select3, select2 union(byName: true)~> union1",
 				"insert@existing derive(modified_at = toDate('')) ~> derivedColumn4"
 			]
 		}

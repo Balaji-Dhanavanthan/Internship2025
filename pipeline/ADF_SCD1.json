@@ -814,6 +814,8 @@
 			{
 				"name": "finalScd1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -908,7 +910,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "scd1.1.csv"
+							"FileName": "scd1.3.csv"
 						}
 					}
 				],
@@ -918,7 +920,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "scd1",
+							"tablename": "scd1.3.csv",
 							"databasename": "Intern_2025"
 						}
 					}

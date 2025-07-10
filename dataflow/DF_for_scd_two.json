@@ -342,7 +342,7 @@
 				"selectMaxVersCols derive(version = version + 1) ~> IncrementVersions",
 				"CombineAll3Src sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['DIM_scd2_target_employees.csv'],",
+				"     partitionFileNames:['DIM_scd2_target_employees_v1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> finSink"

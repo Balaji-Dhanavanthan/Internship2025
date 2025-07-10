@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DIM_EmployeeMaster_SCD1_Updated.csv",
-				"folderPath": "SCD Source Files",
+				"fileName": "transactions_increment_1.csv",
+				"folderPath": "Incremental Load",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

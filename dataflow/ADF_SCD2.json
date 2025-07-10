@@ -51,6 +51,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -101,16 +104,16 @@
 				"          EmployeeID as short,",
 				"          Name as string,",
 				"          Gender as string,",
-				"          DateOfBirth as date,",
+				"          DateOfBirth as string,",
 				"          Department as string,",
 				"          JobTitle as string,",
 				"          Salary as integer,",
-				"          HireDate as date,",
+				"          HireDate as string,",
 				"          Address as string,",
 				"          Email as string,",
 				"          PhoneNumber as string,",
 				"          MaritalStatus as string,",
-				"          EffectiveDate as date,",
+				"          EffectiveDate as string,",
 				"          EndDate as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -160,7 +163,11 @@
 				"          modified_at",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1 derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
+				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
+				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn2"
 			]
 		}
 	}

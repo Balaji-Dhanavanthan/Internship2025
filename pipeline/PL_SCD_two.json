@@ -18,7 +18,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_for_scd_2",
+						"referenceName": "DF_for_scd2_full_load",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"scd2Src": {
@@ -27,7 +27,7 @@
 								"container_name": "practice-adf"
 							},
 							"scd2fullSink": {
-								"file_name": "DIM_Employee_I2025_JSenthil.csv",
+								"file_name": "DIM_scd2_target_employees.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							}

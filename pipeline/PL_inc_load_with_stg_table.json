@@ -147,7 +147,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT *\nFROM src_inc_load\nWHERE transaction_date > (\n    \n)\n",
+						"sqlReaderQuery": "SELECT *\nFROM src_inc_load\nWHERE transaction_date > (\n    SELECT MAX(transaction_date)\n    FROM target_inc_load\n    \n)\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

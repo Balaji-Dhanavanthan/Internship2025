@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "PL_Incremental_ControlTable",
 	"properties": {
 		"activities": [
 			{
@@ -250,7 +250,7 @@
 			}
 		],
 		"folder": {
-			"name": "day5"
+			"name": "day8"
 		},
 		"annotations": []
 	}

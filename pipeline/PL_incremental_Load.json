@@ -31,8 +31,7 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -49,7 +48,7 @@
 						"referenceName": "DS_Incremental_source",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "transactions_base.csv"
+							"filename": "transactions_increment_1.csv"
 						}
 					}
 				],
@@ -59,7 +58,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"object": "I2025_JNagara1",
-							"table": "IncrementalLoad"
+							"table": "transactions_increment_1"
 						}
 					}
 				]
@@ -172,21 +171,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "\nINSERT INTO IncrementalLoad\nSELECT *\nFROM transactions_increment_1\nWHERE transaction_date > (SELECT MAX(Load_date) FROM control_table)\n",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -200,10 +193,11 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Incremental_source",
+						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "transactions_increment_1.csv"
+							"object": "I2025_JNagara1",
+							"table": "transactions_increment_1"
 						}
 					}
 				],
@@ -213,7 +207,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"object": "I2025_JNagara1",
-							"table": "transactions_increment_1"
+							"table": "IncrementalLoad"
 						}
 					}
 				]
@@ -240,7 +234,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "insert into control_table(table_name,Load_date)\nselect 'IncrementalLoad', max(transaction_date) \nfrom IncrementalLoad ;\n",
+						"sqlReaderQuery": {
+							"value": "@select * from [transactions_increment_1] where transaction_date > activity('Lookup1').output.firstRow",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -265,7 +262,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"object": "I2025_JNagara1",
-							"table": "IncrementalLoad"
+							"table": "transactions_increment_1"
 						}
 					}
 				],
@@ -275,7 +272,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"object": "I2025_JNagara1",
-							"table": "control_table"
+							"table": "IncrementalLoad"
 						}
 					}
 				]

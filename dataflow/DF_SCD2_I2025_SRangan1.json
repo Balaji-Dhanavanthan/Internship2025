@@ -69,7 +69,7 @@
 					"name": "selectSrc"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "dcauditFlag"
 				},
 				{
 					"name": "split2"
@@ -240,10 +240,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectSrc",
-				"selectSrc derive(flag = 'active') ~> derivedColumn2",
+				"selectSrc derive(flag = 'active') ~> dcauditFlag",
 				"split1@update split((EmployeeID=={t.EmployeeID})&&(JobTitle!={t.JobTitle}||Salary!={t.Salary}),",
 				"     disjoint: false) ~> split2@(updated, existing)",
-				"derivedColumn2, dcauditt union(byName: true)~> unionUpdate",
+				"dcauditFlag, dcauditt union(byName: true)~> unionUpdate",
 				"unionUpdate, selectSource union(byName: true)~> unionInsert",
 				"unionInsert, auditFlag union(byName: true)~> unionExisting",
 				"split2@existing select(mapColumn(",

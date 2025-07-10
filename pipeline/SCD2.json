@@ -21,19 +21,23 @@
 						"datasetParameters": {
 							"sourceData": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "SCD Source Files",
+								"FileName": "DIM_EmployeeMaster_SCD1_Updated.csv"
 							},
 							"target": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"FileName": "scd2.1.csv"
 							},
 							"source1": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"FileName": "scd2.1.csv"
 							},
 							"sink1": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"FileName": "scd2.2.csv"
 							}
 						}
 					},

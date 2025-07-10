@@ -359,8 +359,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['scd2.2.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

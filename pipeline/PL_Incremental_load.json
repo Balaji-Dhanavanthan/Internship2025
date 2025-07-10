@@ -64,7 +64,16 @@
 			{
 				"name": "CP_Source_to_Target",
 				"type": "Copy",
-				"dependsOn": [],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Blob_to_Source",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -76,7 +85,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT * FROM \ntransactions_base\nWHERE transaction_date >(SELECT MAX(transaction_date) FROM target_table)",
+						"sqlReaderQuery": "SELECT * FROM \ntransactions_base\nWHERE transaction_date >(SELECT MAX(load_date) FROM control_table)\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -113,6 +122,72 @@
 						"parameters": {
 							"SchemaName": "I2025_MAbdul1",
 							"TableName": "target_table",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_Updating_controltable",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Source_to_Target",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "INSERT INTO control_table (table_name, load_date)\nSELECT 'transactions_base', MAX(transaction_date)\nFROM transactions_base;\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MAbdul1",
+							"TableName": "transactions_base",
+							"database": "Intern_2025"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MAbdul1",
+							"TableName": "control_table",
 							"database": "Intern_2025"
 						}
 					}

@@ -1,5 +1,5 @@
 {
-	"name": "PL_inc_load_with_stg_table",
+	"name": "PL_inc_load",
 	"properties": {
 		"activities": [
 			{

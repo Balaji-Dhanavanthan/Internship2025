@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Source",
+				"name": "CP_Source",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -59,11 +59,11 @@
 				]
 			},
 			{
-				"name": "Target",
+				"name": "CP_Target",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Source",
+						"activity": "CP_Source",
 						"dependencyConditions": [
 							"Succeeded"
 						]

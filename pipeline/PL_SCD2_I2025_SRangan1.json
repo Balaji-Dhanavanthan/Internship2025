@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "SCD 2",
+				"name": "DF_SCD 2",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {

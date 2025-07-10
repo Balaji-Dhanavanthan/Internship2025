@@ -3,8 +3,10 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CP_BLOB_SRC",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -65,11 +67,13 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "CP_SRE_TGT",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "CP_BLOB_SRC",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -129,11 +133,13 @@
 				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "CP_TGT_CONTROL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data2",
+						"activity": "CP_SRE_TGT",
 						"dependencyConditions": [
 							"Succeeded"
 						]

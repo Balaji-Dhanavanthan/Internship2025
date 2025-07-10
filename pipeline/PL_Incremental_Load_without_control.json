@@ -48,7 +48,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Incremental Load",
-							"FileName": "transactions_increment_1.csv"
+							"FileName": "transactions_increment_4.csv"
 						}
 					}
 				],
@@ -67,9 +67,14 @@
 			{
 				"name": "Copy data2",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -126,9 +131,14 @@
 			{
 				"name": "Copy data3",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -140,7 +150,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "INSERT INTO control_tableadf (table_name, max_date, load_date)\nSELECT \n    'load1' AS table_name,\n    MAX(transaction_date) AS max_date,\n    GETDATE() AS load_date\nFROM target_table;\n",
+						"sqlReaderQuery": "INSERT INTO control_tableadf (table_name, max_date, load_date)\nSELECT \n    'load5' AS table_name,\n    MAX(transaction_date) AS max_date,\n    GETDATE() AS load_date\nFROM target_table;\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

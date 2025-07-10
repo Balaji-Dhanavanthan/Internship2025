@@ -60,6 +60,9 @@
 				},
 				{
 					"name": "split1"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -180,7 +183,10 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
 				"join2 split(source1@EmployeeID == target@EmployeeID && (source1@Department != target@Department || source1@JobTitle != target@JobTitle || source1@Salary != target@Salary || source1@MaritalStatus != target@MaritalStatus),",
-				"     disjoint: false) ~> split1@(update, Existing)"
+				"     disjoint: false) ~> split1@(update, Existing)",
+				"split1@update derive(IsCurrent = 1,",
+				"          modified_by = 'I2025_MSyed',",
+				"          modified_at = currentDate()) ~> derivedColumn3"
 			]
 		}
 	}

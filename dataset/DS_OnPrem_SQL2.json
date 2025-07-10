@@ -5,19 +5,26 @@
 			"referenceName": "LS_OnPrem_SQLServer",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"Database": {
-					"value": "@dataset().database",
-					"type": "Expression"
-				}
+				"Database": "Intern_2025"
 			}
 		},
 		"parameters": {
 			"database": {
 				"type": "String"
+			},
+			"tablename": {
+				"type": "String"
 			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "I2025_MAbdul1",
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
 	}
 }

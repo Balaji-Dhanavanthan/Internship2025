@@ -132,13 +132,11 @@
 				}
 			},
 			{
-				"name": "Copy data3_copy1",
+				"name": "MaxDateToControlTable",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Lookup1_copy1",
+						"activity": "LoadCondition",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -199,10 +197,8 @@
 				]
 			},
 			{
-				"name": "Lookup2",
+				"name": "MaxOfControlTable",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -230,13 +226,11 @@
 				}
 			},
 			{
-				"name": "Copy data4",
+				"name": "LoadCondition",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Lookup2",
+						"activity": "MaxOfControlTable",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -254,7 +248,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "SELECT * FROM transactions_increment_4\nWHERE transaction_date > CAST('@{activity('Lookup2').output.firstRow.max_date}' AS DATE)\n",
+							"value": "activity('MaxOfControlTable').outputactivity('MaxOfControlTable').outputSELECT * FROM transactions_increment_4\nWHERE transaction_date > CAST('@{activity('MaxOfControlTable').output.firstRow.max_date}' AS DATE)\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",

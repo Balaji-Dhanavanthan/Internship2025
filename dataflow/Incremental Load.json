@@ -1,0 +1,39 @@
+{
+	"name": "Incremental Load",
+	"properties": {
+		"folder": {
+			"name": "TDSG_ADF_DataFlow"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          transaction_id as short,",
+				"          customer_id as string,",
+				"          amount as double,",
+				"          transaction_date as string,",
+				"          status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(transaction_date = toDate(transaction_date,'dd-MM-yyyy')) ~> derivedColumn1"
+			]
+		}
+	}
+}

@@ -25,10 +25,25 @@
 			"sinks": [],
 			"transformations": [
 				{
+					"name": "sourcederived"
+				},
+				{
+					"name": "targetderived"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "insert"
+				},
+				{
+					"name": "insertDerived"
+				},
+				{
 					"name": "derivedColumn1"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -55,16 +70,16 @@
 				"          EmployeeID as short,",
 				"          Name as string,",
 				"          Gender as string,",
-				"          DateOfBirth as date,",
+				"          DateOfBirth as string,",
 				"          Department as string,",
 				"          JobTitle as string,",
 				"          Salary as integer,",
-				"          HireDate as date,",
+				"          HireDate as string,",
 				"          Address as string,",
 				"          Email as string,",
 				"          PhoneNumber as string,",
 				"          MaritalStatus as string,",
-				"          EffectiveDate as date,",
+				"          EffectiveDate as string,",
 				"          EndDate as string,",
 				"          IsCurrent as boolean,",
 				"          created_by as string,",
@@ -78,11 +93,48 @@
 				"sourceData derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
 				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
 				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
-				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn1",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> sourcederived",
 				"target derive(DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
-				"          column1 = ERROR_FUNCTION(''),",
-				"          column2 = ERROR_FUNCTION(''),",
-				"          column3 = ERROR_FUNCTION('')) ~> derivedColumn2"
+				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
+				"          EffectiveDate = toDate(EffectiveDate,'yyyy-MM-dd'),",
+				"          EndDate = toDate(EndDate,'yyyy-MM-dd'),",
+				"          IsCurrent = 1) ~> targetderived",
+				"sourcederived, targetderived join(sourceData@EmployeeID == target@EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(isNull(target@EmployeeID),",
+				"     sourceData@EmployeeID == target@EmployeeID && (sourceData@Department != target@Department || sourceData@JobTitle != target@JobTitle || sourceData@Salary != target@Salary || sourceData@MaritalStatus != target@MaritalStatus),",
+				"     disjoint: false) ~> insert@(Insert, UPDATE, existing)",
+				"insert@Insert derive(IsCurrent = 1,",
+				"          created_by = 'I2025_MSyed',",
+				"          created_at = currentDate()) ~> insertDerived",
+				"insert@UPDATE derive(EndDate = currentDate(),",
+				"          IsCurrent = 0) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          EmployeeID = insert@UPDATE@EmployeeID,",
+				"          Name = insert@UPDATE@Name,",
+				"          Gender = insert@UPDATE@Gender,",
+				"          DateOfBirth = insert@UPDATE@DateOfBirth,",
+				"          Department = insert@UPDATE@Department,",
+				"          JobTitle = insert@UPDATE@JobTitle,",
+				"          Salary = insert@UPDATE@Salary,",
+				"          HireDate = insert@UPDATE@HireDate,",
+				"          Address = insert@UPDATE@Address,",
+				"          Email = insert@UPDATE@Email,",
+				"          PhoneNumber = insert@UPDATE@PhoneNumber,",
+				"          MaritalStatus = insert@UPDATE@MaritalStatus,",
+				"          EffectiveDate = insert@UPDATE@EffectiveDate,",
+				"          EndDate,",
+				"          IsCurrent,",
+				"          created_by,",
+				"          created_at,",
+				"          modified_by,",
+				"          modified_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}

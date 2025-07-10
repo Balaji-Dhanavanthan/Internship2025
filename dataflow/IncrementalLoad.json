@@ -1,5 +1,5 @@
 {
-	"name": "Incremental Load",
+	"name": "IncrementalLoad",
 	"properties": {
 		"folder": {
 			"name": "TDSG_ADF_DataFlow"
@@ -13,21 +13,51 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "target"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "targetderived"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          transaction_id as short,",
+				"          transaction_id as string,",
 				"          customer_id as string,",
-				"          amount as double,",
+				"          amount as string,",
 				"          transaction_date as string,",
 				"          status as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          transaction_id as string,",
+				"          customer_id as string,",
+				"          amount as string,",
+				"          transaction_date as string,",
+				"          status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"source1 derive(transaction_id = toInteger(transaction_id),",
+				"          amount = toInteger(amount),",
+				"          transaction_date = toDate(transaction_date,'yyyy-MM-dd')) ~> derivedColumn1",
+				"target derive(transaction_id = toInteger(transaction_id),",
+				"          amount = toInteger(amount),",
+				"          transaction_date = toDate(transaction_date,'yyyy-MM-dd')) ~> targetderived"
 			]
 		}
 	}

@@ -302,7 +302,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "DIM_scd2_target_employees.csv",
+							"file_name": "DIM_scd2_target_employees_v1.csv",
 							"folder_name": "ETL_stuff",
 							"container_name": "csvcontainer"
 						}
@@ -314,7 +314,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "scd2_aftersecond_update"
+							"TableName": "scd2_first_update"
 						}
 					}
 				]

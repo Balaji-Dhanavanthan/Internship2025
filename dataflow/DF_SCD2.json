@@ -2,7 +2,7 @@
 	"name": "DF_SCD2",
 	"properties": {
 		"folder": {
-			"name": "day7"
+			"name": "day5SCD"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -88,6 +88,9 @@
 				},
 				{
 					"name": "TargetColumns"
+				},
+				{
+					"name": "sort"
 				}
 			],
 			"scriptLines": [
@@ -304,7 +307,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> TargetColumns",
-				"unionExist sink(allowSchemaDrift: true,",
+				"unionExist sort(asc(EmployeeID, true)) ~> sort",
+				"sort sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['targetSCD2.csv'],",
 				"     skipDuplicateMapInputs: true,",

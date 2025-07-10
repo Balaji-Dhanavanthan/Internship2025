@@ -1,0 +1,74 @@
+{
+	"name": "IncrementalLoad",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Incremental Load",
+							"FileName": "transactions_base.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "incremental_load_target",
+							"databasename": "Intern_2025"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "TDSG_ADF_Pipeline"
+		},
+		"annotations": []
+	}
+}

@@ -47,10 +47,10 @@
 					"name": "select1"
 				},
 				{
-					"name": "CleanedSrc"
+					"name": "Transformation"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "NullHandling"
 				}
 			],
 			"scriptLines": [
@@ -132,8 +132,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"derivedColumn2 derive(PTNT_CD = toInteger(split(PTNT_CD, '_')[0])) ~> CleanedSrc",
-				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn2"
+				"NullHandling derive() ~> Transformation",
+				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling"
 			]
 		}
 	}

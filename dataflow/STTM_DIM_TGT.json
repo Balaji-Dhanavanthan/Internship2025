@@ -149,7 +149,8 @@
 				"          PHRMCY_ADDR_CITY_NM = iif(size(split(trim(PHRMCY_ADDR_CITY_NM), ' ')) > 1,        concat(upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 1), 1)), upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 2), 1))),        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))    )  ,",
 				"          PHRMCY_ADDR_ZIP_CD = lpad(toString(PHRMCY_ADDR_ZIP_CD), 5, '0')\r",
 				",",
-				"          column1 = ERROR_FUNCTION('')) ~> Transformation",
+				"          PSCB_EMAIL_ID = concat(left(PSCB_FIRST_NM,toInteger(round(length(PSCB_FIRST_NM) / 2.0))),left(PSCB_LAST_NM, 1),'@UN.com')\r",
+				") ~> Transformation",
 				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling"
 			]
 		}

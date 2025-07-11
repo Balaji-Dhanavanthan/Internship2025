@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "target.csv",
-				"folderPath": "Target Folders/I2025_JNagara1",
-				"container": "test-container"
+				"fileName": "status.csv",
+				"folderPath": "Workshop 2/SRC_Pharmacy",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

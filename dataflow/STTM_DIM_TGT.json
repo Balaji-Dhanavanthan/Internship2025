@@ -129,7 +129,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> CleanedSrc"
+				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$)),",
+				"          PTNT_CD = toInteger(split(PTNT_CD, '_')[0])) ~> CleanedSrc"
 			]
 		}
 	}

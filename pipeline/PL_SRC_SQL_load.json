@@ -3,9 +3,16 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CP_phrmcy",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -225,8 +232,8 @@
 								},
 								"sink": {
 									"name": "PHRMCY_SYS_IVR_DTA_STRT_DT",
-									"type": "DateTime",
-									"physicalType": "datetime"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							}
 						],
@@ -239,10 +246,10 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Dim_STTM_source",
+						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "src_phrmcy.csv"
+							"filename": "SRC_prmchy.csv"
 						}
 					}
 				],
@@ -258,8 +265,10 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "CP_Status",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -343,8 +352,10 @@
 				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "CP_language",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -438,6 +449,40 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_SRC_null_handle",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "src_phrmcy.csv"
+							},
+							"sink1": {
+								"filename": "SRC_prmchy.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

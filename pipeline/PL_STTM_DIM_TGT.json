@@ -1,0 +1,57 @@
+{
+	"name": "PL_STTM_DIM_TGT",
+	"properties": {
+		"activities": [
+			{
+				"name": "InitialLoad",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_STTM_DIM_TGT",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"phrmcysrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "src_phrmcy.csv"
+							},
+							"langsrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "language.csv"
+							},
+							"statussrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "status.csv"
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "DIM_PTNT.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "TDSG_ADF_Pipeline"
+		},
+		"annotations": []
+	}
+}

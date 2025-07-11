@@ -1,5 +1,5 @@
 {
-	"name": "dataflow3",
+	"name": "DF_STTM",
 	"properties": {
 		"folder": {
 			"name": "STTM"
@@ -12,13 +12,21 @@
 						"referenceName": "DS_onefile",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "phrmcy"
 				},
 				{
-					"name": "source2"
+					"dataset": {
+						"referenceName": "DS_onefile1",
+						"type": "DatasetReference"
+					},
+					"name": "status"
 				},
 				{
-					"name": "source3"
+					"dataset": {
+						"referenceName": "DS_onefile2",
+						"type": "DatasetReference"
+					},
+					"name": "language"
 				}
 			],
 			"sinks": [],
@@ -32,11 +40,13 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     ignoreNoFilesFound: false) ~> phrmcy",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source2",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> status",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source3"
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> language"
 			]
 		}
 	}

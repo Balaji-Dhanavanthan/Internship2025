@@ -48,6 +48,9 @@
 				},
 				{
 					"name": "SelectingRequiredCols"
+				},
+				{
+					"name": "FilterUSandPRZone"
 				}
 			],
 			"scriptLines": [
@@ -189,7 +192,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"AllTransformations select(mapColumn(",
+				"FilterUSandPRZone select(mapColumn(",
 				"          PTNT_KEY,",
 				"          PTNT_ID,",
 				"          PTNT_CD,",
@@ -218,7 +221,8 @@
 				"          END_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectingRequiredCols"
+				"     skipDuplicateMapOutputs: true) ~> SelectingRequiredCols",
+				"AllTransformations filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')) ~> FilterUSandPRZone"
 			]
 		}
 	}

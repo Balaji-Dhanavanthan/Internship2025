@@ -61,13 +61,13 @@
 					"name": "NullHandling"
 				},
 				{
-					"name": "filter1"
+					"name": "FiltUsPr"
 				},
 				{
-					"name": "select2"
+					"name": "SelReqCol"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "AuditColumns"
 				}
 			],
 			"scriptLines": [
@@ -189,8 +189,8 @@
 				"          START_DATE = currentUTC(),",
 				"          END_DATE = '') ~> Transformation",
 				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling",
-				"Transformation filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')) ~> filter1",
-				"filter1 select(mapColumn(",
+				"Transformation filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')) ~> FiltUsPr",
+				"FiltUsPr select(mapColumn(",
 				"          PTNT_KEY,",
 				"          PTNT_ID,",
 				"          PTNT_CD,",
@@ -219,14 +219,14 @@
 				"          END_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 derive(PTNT_KEY = toInteger(PTNT_KEY),",
+				"     skipDuplicateMapOutputs: true) ~> SelReqCol",
+				"SelReqCol derive(PTNT_KEY = toInteger(PTNT_KEY),",
 				"          PHRMCY_NAT_PROV_ID_NBR = toString(PHRMCY_NAT_PROV_ID_NBR),",
 				"          START_DATE = toDate(START_DATE),",
 				"          END_DATE = toDate(END_DATE),",
 				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS),",
-				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == '0NULL', 'UNK', PHRMCY_ADDR_ZIP_CD)) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == '0NULL', 'UNK', PHRMCY_ADDR_ZIP_CD)) ~> AuditColumns",
+				"AuditColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",

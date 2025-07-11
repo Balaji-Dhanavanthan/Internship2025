@@ -74,7 +74,11 @@
 				"     ignoreNoFilesFound: false) ~> language",
 				"phrmcy derive(PTNT_CD = toInteger(split(PTNT_CD, '_')[1])\r",
 				",",
-				"          PHRMCY_NCPDP_NBR = toString(right(PHRMCY_NCPDP_NBR,4))) ~> derivedColumn1"
+				"          PHRMCY_NCPDP_NBR = toString(right(PHRMCY_NCPDP_NBR,4)),",
+				"          PHRMCY_NAT_PROV_ID_NBR = iif(isNull(PHRMCY_NAT_PROV_ID_NBR) || PHRMCY_NAT_PROV_ID_NBR == 'NULL', 'UNK', PHRMCY_NAT_PROV_ID_NBR),",
+				"          PHRMCY_NM = regexReplace(PHRMCY_NM, '[-&,\\']', ' '),",
+				"          PHRMCY_ADDR_CITY_NM = ERROR_FUNCTION(''),",
+				"          PHRMCY_ADDR_ST_NAME = ERROR_FUNCTION('')) ~> derivedColumn1"
 			]
 		}
 	}

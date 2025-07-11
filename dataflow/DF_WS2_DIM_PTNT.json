@@ -32,16 +32,13 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "NullHandling"
-				},
-				{
 					"name": "innerJoinPharmStatus"
 				},
 				{
 					"name": "InnerJoinPrevLang"
 				},
 				{
-					"name": "FinalTransfomrationsWithDefaultValues"
+					"name": "AddDefaultValuesAndAdd"
 				},
 				{
 					"name": "AddsurrogateKey"
@@ -87,11 +84,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> statusSrc",
-				"PharmSrc derive(PHRMCY_NAT_PROV_ID_NBR = iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', -1, toInteger(PHRMCY_NAT_PROV_ID_NBR)),",
-				"          PHRMCY_NCPDP_NBR = iif(PHRMCY_NCPDP_NBR == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR)),",
-				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', -1, toInteger(PHRMCY_ADDR_ZIP_CD)),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toDate(iif(PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL', '31-12-2999 00:00', PHRMCY_SYS_IVR_DTA_STRT_DT), 'DD-MMM-YYYY')) ~> NullHandling",
-				"NullHandling, statusSrc join(PharmSrc@DEAL_ID == statusSrc@deal_id,",
+				"PharmSrc, statusSrc join(PharmSrc@DEAL_ID == statusSrc@deal_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -104,7 +97,18 @@
 				"AddsurrogateKey derive(PHRMCY_ADDR_CITY_NM = iif(PHRMCY_ADDR_CITY_NM == 'NULL', 'UNK', PHRMCY_ADDR_CITY_NM),",
 				"          PHRMCY_ADDR_ST_NAME = iif(PHRMCY_ADDR_ST_NAME == 'NULL', 'UNK', PHRMCY_ADDR_ST_NAME),",
 				"          PHRMCY_ADDR_ZNE_NM = iif(PHRMCY_ADDR_ZNE_NM == 'NULL', 'UNK', PHRMCY_ADDR_ZNE_NM),",
-				"          column1 = ERROR_FUNCTION('')) ~> FinalTransfomrationsWithDefaultValues",
+				"          PTNT_ID = toInteger(at(split(PTNT_CD, '_'), 1)),",
+				"          PTNT_CD = right(PTNT_CD, 4),",
+				"          PHRMCY_NAT_PROV_ID_NBR = iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', 'UNK', PHRMCY_NAT_PROV_ID_NBR),",
+				"          PHARMACY_NM = replace(replace(replace(PHRMCY_NM, '_', ' '), '-', ' '), \"'\", ' '),",
+				"          PHARMACY_ADDR_CITY_NM = iif(PHRMCY_ADDR_CITY_NM == 'NULL', 'UNK', \r",
+				"    iif(size(split(trim(PHRMCY_ADDR_CITY_NM), ' ')) > 1, \r",
+				"        concat(upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ''), 1), 1)), upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ''), 2), 1))), \r",
+				"        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))\r",
+				"    )\r",
+				")\r",
+				",",
+				"          column1 = ERROR_FUNCTION('')) ~> AddDefaultValuesAndAdd",
 				"select1 keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> AddsurrogateKey",

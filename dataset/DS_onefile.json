@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "transactions_increment_4.csv",
-				"folderPath": "Incremental Load",
+				"fileName": "src_phrmcy.csv",
+				"folderPath": "Workshop 2/SRC_Pharmacy",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

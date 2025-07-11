@@ -78,12 +78,10 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> statussrc",
-				"phrmcysrc derive(PHRMCY_NCPDP_NBR = toInteger(PHRMCY_NCPDP_NBR),",
-				"          PHRMCY_NAT_PROV_ID_NBR = toInteger(PHRMCY_NAT_PROV_ID_NBR),",
-				"          PHRMCY_ADDR_ZIP_CD = toInteger(PHRMCY_ADDR_ZIP_CD),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toDate(PHRMCY_SYS_IVR_DTA_STRT_DT,'dd-MM-yyyy'),",
-				"          each(match(type =='Integer'), $$ = iif(isNull($$),-1,$#)),",
-				"          each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> PhrmcyDerived",
+				"phrmcysrc derive(PHRMCY_NCPDP_NBR = iif(PHRMCY_NCPDP_NBR == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR)),",
+				"          PHRMCY_NAT_PROV_ID_NBR = iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', -1, toInteger(PHRMCY_NAT_PROV_ID_NBR)),",
+				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', -1, toInteger(PHRMCY_ADDR_ZIP_CD)),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toDate(iif(PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL', '31-12-2999 00:00', PHRMCY_SYS_IVR_DTA_STRT_DT), 'dd-MM-yyyy')) ~> PhrmcyDerived",
 				"langsrc derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> LangDerived",
 				"statussrc derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> StatusDerived"
 			]

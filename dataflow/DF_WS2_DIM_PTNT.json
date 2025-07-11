@@ -38,13 +38,16 @@
 					"name": "InnerJoinPrevLang"
 				},
 				{
-					"name": "AddDefaultValuesAndAdd"
+					"name": "AllTransformations"
 				},
 				{
 					"name": "AddsurrogateKey"
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "SelectingRequiredCols"
 				}
 			],
 			"scriptLines": [
@@ -155,9 +158,9 @@
 				"          DEAL_NUMBER = substring(deal_nbr, 3, length(deal_nbr)),",
 				"          LANG_CD = iif(LANG_CD == 'NULL', 'UNK', LANG_CD),",
 				"          RCD_CRT_TMS = currentUTC(),",
-				"          RCD_MOD_TMS = ERROR_FUNCTION(''),",
+				"          RCD_MOD_TMS = 'NULL',",
 				"          START_DATE = currentUTC(),",
-				"          END_DATE = ERROR_FUNCTION('')) ~> AddDefaultValuesAndAdd",
+				"          END_DATE = 'NULL') ~> AllTransformations",
 				"select1 keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> AddsurrogateKey",
@@ -185,7 +188,37 @@
 				"          LANG_DESC",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"AllTransformations select(mapColumn(",
+				"          PTNT_KEY,",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NM = PHRMCY_ADDR_ST_NAME,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID = select1@deal_id,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          RCD_MOD_TMS,",
+				"          START_DATE,",
+				"          END_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectingRequiredCols"
 			]
 		}
 	}

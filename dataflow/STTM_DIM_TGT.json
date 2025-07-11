@@ -57,6 +57,9 @@
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -208,7 +211,12 @@
 				"          END_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 derive(PTNT_KEY = toInteger(PTNT_KEY),",
+				"          PHRMCY_NAT_PROV_ID_NBR = toString(PHRMCY_NAT_PROV_ID_NBR),",
+				"          START_DATE = toDate(START_DATE),",
+				"          END_DATE = toDate(END_DATE),",
+				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS)) ~> derivedColumn1"
 			]
 		}
 	}

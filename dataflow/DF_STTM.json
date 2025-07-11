@@ -29,7 +29,11 @@
 					"name": "language"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
@@ -63,6 +67,9 @@
 				},
 				{
 					"name": "select3"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -252,7 +259,12 @@
 				"          END_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3"
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3 derive(PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', 'UNK',PHRMCY_ADDR_ZIP_CD )) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

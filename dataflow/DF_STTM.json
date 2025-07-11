@@ -33,6 +33,18 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "Nullhandling"
+				},
+				{
+					"name": "Leftjoin"
+				},
+				{
+					"name": "leftjoins"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -72,14 +84,52 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> language",
-				"phrmcy derive(PTNT_ID = toInteger(split(PTNT_CD, '_')[1])\r",
-				",",
-				"          PTNT_CD = right(PHRMCY_NCPDP_NBR,4),",
+				"phrmcy derive(PTNT_ID = toInteger(split(PTNT_CD, '_')[1]),",
+				"          PTNT_CD = right(split(PTNT_CD, '_')[2], 4),",
 				"          PHRMCY_NAT_PROV_ID_NBR = iif(isNull(PHRMCY_NAT_PROV_ID_NBR) || PHRMCY_NAT_PROV_ID_NBR == 'NULL', 'UNK', PHRMCY_NAT_PROV_ID_NBR),",
-				"          PHRMCY_NM = regexReplace(PHRMCY_NM, '[-&,\\']', ' '),",
+				"          PHRMCY_NM = regexReplace(PHRMCY_NM, '[-&,\\']', ' ') ,",
 				"          PHRMCY_ADDR_ST_NAME = initCap(PHRMCY_ADDR_ST_NAME),",
 				"          PHRMCY_ADDR_ZNE_NM = initCap(PHRMCY_ADDR_ZNE_NM),",
-				"          PHRMCY_ADDR_ZIP_CD = lpad(PHRMCY_ADDR_ZIP_CD, 5, '0')) ~> derivedColumn1"
+				"          PHRMCY_ADDR_ZIP_CD = lpad(PHRMCY_ADDR_ZIP_CD, 5, '0'),",
+				"          PSCB_EMAIL_ID = concat(\r",
+				"    left(trim(PSCB_FIRST_NM), toInteger(round(length(trim(PSCB_FIRST_NM)) * 1/2))),\r",
+				"    left(trim(PSCB_LAST_NM), 1),\r",
+				"    '@UN.com'\r",
+				")\r",
+				" ,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toString(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT,'dd-MM-yyyy'),'dd-MMM-yyyy'),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = concat(iif(month(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy')) <= 3, 'Q1',\r",
+				"           iif(month(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy')) <= 6, 'Q2',\r",
+				"               iif(month(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy')) <= 9, 'Q3', 'Q4'))), \r",
+				"       '-', \r",
+				"       toString(year(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy')))),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy'))),",
+				"          PHRMCY_AGE = year(currentDate()) - year(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy')),",
+				"          PHRMCY_ADDR_CITY_NM = iif(PHRMCY_ADDR_CITY_NM == 'NULL', 'UNK',\r",
+				"    iif(size(split(trim(PHRMCY_ADDR_CITY_NM), ' ')) > 1,\r",
+				"        concat(\r",
+				"            upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 1), 1)),\r",
+				"            upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 2), 1))\r",
+				"        ),\r",
+				"        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))\r",
+				"    )\r",
+				")\r",
+				" ) ~> derivedColumn1",
+				"derivedColumn1 derive(each(match(type == 'string'), $$ = coalesce($$,'UNK')),",
+				"          each(match(type == 'integer'), $$ = coalesce($$,-1)),",
+				"          each(match(type == 'date'), $$ = coalesce($$,'2999-12-31'))) ~> Nullhandling",
+				"Nullhandling, status join(Nullhandling@DEAL_ID == status@deal_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Leftjoin",
+				"Leftjoin, language join(Nullhandling@LANG_CD == language@LANG_CD,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> leftjoins",
+				"leftjoins derive(DEAL_TYPE_CD = substring(deal_nbr,1,2),",
+				"          DEAL_NUMBER = substring(deal_nbr,3,length(deal_nbr))) ~> derivedColumn2"
 			]
 		}
 	}

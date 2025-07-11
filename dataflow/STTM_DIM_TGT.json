@@ -164,6 +164,7 @@
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(PHRMCY_SYS_IVR_DTA_STRT_DT)),",
 				"          PHRMCY_AGE = year(currentUTC()) - year(PHRMCY_SYS_IVR_DTA_STRT_DT)\r",
 				",",
+				"          deal_id = ERROR_FUNCTION(''),",
 				"          DEAL_TYPE_CD = left(deal_nbr,2),",
 				"          DEAL_NUMBER = substring(deal_nbr,3)\r",
 				") ~> Transformation",

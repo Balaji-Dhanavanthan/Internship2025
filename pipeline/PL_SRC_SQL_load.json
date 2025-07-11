@@ -34,6 +34,202 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PHRMCY_NAT_PROV_ID_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_NAT_PROV_ID_NBR",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 7
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_NCPDP_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_NCPDP_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_FIRST_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_FIRST_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_LAST_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_LAST_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LANG_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LANG_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DEAL_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DEAL_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ST_ADDR_LINE1_TXT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ST_ADDR_LINE1_TXT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ADDR_ZIP_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ADDR_ZIP_CD",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ADDR_CITY_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ADDR_CITY_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ADDR_ST_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ADDR_ST_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ADDR_ST_NAME",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ADDR_ST_NAME",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ADDR_ZNE_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ADDR_ZNE_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_ADDR_ZNE_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_ADDR_ZNE_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_SYS_IVR_DTA_STRT_DT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_SYS_IVR_DTA_STRT_DT",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -93,6 +289,32 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "deal_nbr",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "deal_nbr",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "deal_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "deal_id",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -115,7 +337,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"object": "I2025_JNagara1",
-							"table": "employee"
+							"table": "SRC_STATUS"
 						}
 					}
 				]
@@ -133,8 +355,89 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "LANG_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LANG_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "LANG_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LANG_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LANG_DESC",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LANG_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Dim_STTM_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "language.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "I2025_JNagara1",
+							"table": "SRC_LU_LANGUAGE"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

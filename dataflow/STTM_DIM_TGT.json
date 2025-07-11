@@ -157,8 +157,14 @@
 				"          PHRMCY_ADDR_ST_NAME = initCap(PHRMCY_ADDR_ST_NAME)\r",
 				",",
 				"          PHRMCY_ADDR_ZNE_NM = initCap(PHRMCY_ADDR_ZNE_NM),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT = year(currentUTC()) - year(PHRMCY_SYS_IVR_DTA_STRT_DT)\r",
-				") ~> Transformation",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toString(PHRMCY_SYS_IVR_DTA_STRT_DT,'dd-MMM-yyyy')\r",
+				" ,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = concat(iif(month(PHRMCY_SYS_IVR_DTA_STRT_DT) <= 3, 'Q1',iif(month(PHRMCY_SYS_IVR_DTA_STRT_DT) <= 6, 'Q2',               \r",
+				"iif(month(PHRMCY_SYS_IVR_DTA_STRT_DT) <= 9, 'Q3', 'Q4'))),'-',toString(year(PHRMCY_SYS_IVR_DTA_STRT_DT))),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(PHRMCY_SYS_IVR_DTA_STRT_DT)),",
+				"          PHRMCY_AGE = year(currentUTC()) - year(PHRMCY_SYS_IVR_DTA_STRT_DT)\r",
+				",",
+				"          DEAL_TYPE_CD = left(deal_nbr,2)) ~> Transformation",
 				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling"
 			]
 		}

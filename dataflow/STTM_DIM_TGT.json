@@ -149,10 +149,16 @@
 				"          PHRMCY_ADDR_CITY_NM = iif(size(split(trim(PHRMCY_ADDR_CITY_NM), ' ')) > 1,        concat(upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 1), 1)), upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 2), 1))),        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))    )  ,",
 				"          PHRMCY_ADDR_ZIP_CD = lpad(toString(PHRMCY_ADDR_ZIP_CD), 5, '0')\r",
 				",",
-				"          PSCB_EMAIL_ID = concat(left(PSCB_FIRST_NM, toInteger(round(length(PSCB_FIRST_NM)/2.0))), left(PSCB_LAST_NM, 1), '@UN.com'),",
+				"          PSCB_EMAIL_ID = concat(\r",
+				"    left(trim(PSCB_FIRST_NM), toInteger(round(length(trim(PSCB_FIRST_NM)) * 1/2))),\r",
+				"    left(trim(PSCB_LAST_NM), 1),\r",
+				"    '@UN.com'\r",
+				"),",
 				"          PHRMCY_ADDR_ST_NAME = initCap(PHRMCY_ADDR_ST_NAME)\r",
 				",",
-				"          PHRMCY_ADDR_ZNE_NM = initCap(PHRMCY_ADDR_ZNE_NM)) ~> Transformation",
+				"          PHRMCY_ADDR_ZNE_NM = initCap(PHRMCY_ADDR_ZNE_NM),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = year(currentUTC()) - year(PHRMCY_SYS_IVR_DTA_STRT_DT)\r",
+				") ~> Transformation",
 				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling"
 			]
 		}

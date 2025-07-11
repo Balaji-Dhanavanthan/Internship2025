@@ -29,7 +29,15 @@
 					"name": "statusSrc"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "finSink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "LeftJoinPharmStatus"
@@ -44,13 +52,16 @@
 					"name": "AddsurrogateKey"
 				},
 				{
-					"name": "select1"
+					"name": "SelectForSurrogateKey"
 				},
 				{
 					"name": "SelectingRequiredCols"
 				},
 				{
 					"name": "FilterUSandPRZone"
+				},
+				{
+					"name": "forFinalDTypeConversion"
 				}
 			],
 			"scriptLines": [
@@ -112,9 +123,7 @@
 				"        ), \r",
 				"        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))\r",
 				"    )\r",
-				")\r",
-				"\r",
-				",",
+				"),",
 				"          PHRMCY_ADDR_ST_NAME = iif(isNull(PHRMCY_ADDR_ST_NAME) || PHRMCY_ADDR_ST_NAME == 'NULL', 'UNK', initCap(PHRMCY_ADDR_ST_NAME)),",
 				"          PHRMCY_ADDR_ZNE_NM = iif(isNull(PHRMCY_ADDR_ZNE_NM) || PHRMCY_ADDR_ZNE_NM == 'NULL', 'UNK', initCap(PHRMCY_ADDR_ZNE_NM)),",
 				"          PHRMCY_ADDR_ZIP_CD = iif(isNull(PHRMCY_ADDR_ZIP_CD) || PHRMCY_ADDR_ZIP_CD == 'NULL', 'UNK', \r",
@@ -150,12 +159,11 @@
 				"    'UNK',\r",
 				"    toString(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy'), 'yyyy')\r",
 				"),",
-				"          PHRMCY_AGE = \r",
-				"iif(isNull(PHRMCY_SYS_IVR_DTA_STRT_DT) || PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL', -1,\r",
+				"          PHRMCY_AGE = iif(isNull(PHRMCY_SYS_IVR_DTA_STRT_DT) || PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL', -1,\r",
 				"    year(currentDate()) - year(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy'))\r",
 				"),",
-				"          DEAL_ID = iif(deal_nbr == 'NULL' || select1@deal_id == 'NULL' || isNull(deal_nbr) || isNull(select1@deal_id), 'UNK', select1@deal_id),",
-				"          DEAL_TYPE_CD = iif(select1@deal_id == 'NULL' || isNull(select1@deal_id), 'UNK',\r",
+				"          DEAL_ID = iif(deal_nbr == 'NULL' || SelectForSurrogateKey@deal_id == 'NULL' || isNull(deal_nbr) || isNull(SelectForSurrogateKey@deal_id), 'UNK', SelectForSurrogateKey@deal_id),",
+				"          DEAL_TYPE_CD = iif(SelectForSurrogateKey@deal_id == 'NULL' || isNull(SelectForSurrogateKey@deal_id), 'UNK',\r",
 				"    left(deal_nbr, 2)\r",
 				"),",
 				"          DEAL_NUMBER = iif(isNull(deal_nbr), 'UNK',\r",
@@ -163,10 +171,10 @@
 				"),",
 				"          LANG_CD = iif(isNull(LANG_CD) || LANG_CD == 'NULL', 'UNK', LANG_CD),",
 				"          RCD_CRT_TMS = currentUTC(),",
-				"          RCD_MOD_TMS = 'NULL',",
+				"          RCD_MOD_TMS = toDate(''),",
 				"          START_DATE = currentUTC(),",
-				"          END_DATE = 'NULL') ~> AllTransformations",
-				"select1 keyGenerate(output(PTNT_KEY as long),",
+				"          END_DATE = toDate('')) ~> AllTransformations",
+				"SelectForSurrogateKey keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> AddsurrogateKey",
 				"LeftJoinPrevLang select(mapColumn(",
@@ -193,7 +201,7 @@
 				"          LANG_DESC",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> SelectForSurrogateKey",
 				"FilterUSandPRZone select(mapColumn(",
 				"          PTNT_KEY,",
 				"          PTNT_ID,",
@@ -224,7 +232,16 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectingRequiredCols",
-				"AllTransformations filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')) ~> FilterUSandPRZone"
+				"AllTransformations filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')) ~> FilterUSandPRZone",
+				"SelectingRequiredCols derive(PTNT_KEY = iif(isNull(PTNT_KEY) || toString(PTNT_KEY) == 'NULL', -1, toInteger(PTNT_KEY)),",
+				"          PTNT_ID = iif(isNull(PTNT_ID) || toString(PTNT_ID) == 'NULL', -1, toInteger(PTNT_ID)),",
+				"          PHRMCY_NCPDP_NBR = iif(isNull(PHRMCY_NCPDP_NBR) || toString(PHRMCY_NCPDP_NBR) == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR))) ~> forFinalDTypeConversion",
+				"forFinalDTypeConversion sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['DIM_PTNT_I2025_JSenthil.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> finSink"
 			]
 		}
 	}

@@ -1,0 +1,82 @@
+{
+	"name": "DF_WS2_DIM_PTNT",
+	"properties": {
+		"folder": {
+			"name": "Workshop"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "PharmSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "LangSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "statusSrc"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PHRMCY_NCPDP_NBR as string,",
+				"          PTNT_CD as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          LANG_CD as string,",
+				"          DEAL_ID as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ST_ADDR_LINE1_TXT as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_CD as string,",
+				"          PHRMCY_ADDR_ST_NAME as string,",
+				"          PHRMCY_ADDR_ZNE_CD as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> PharmSrc",
+				"source(output(",
+				"          LANG_ID as integer,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> LangSrc",
+				"source(output(",
+				"          deal_id as string,",
+				"          deal_nbr as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> statusSrc",
+				"PharmSrc derive(PHRMCY_NAT_PROV_ID_NBR = toInteger(iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', -1, toInteger(PHRMCY_NAT_PROV_ID_NBR))),",
+				"          PHRMCY_NCPDP_NBR = toInteger(iif(PHRMCY_NCPDP_NBR == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR))),",
+				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', -1, toInteger(PHRMCY_ADDR_ZIP_CD)),",
+				"          column1 = ERROR_FUNCTION('')) ~> derivedColumn1"
+			]
+		}
+	}
+}

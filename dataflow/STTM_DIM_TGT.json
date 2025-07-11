@@ -54,6 +54,9 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -167,7 +170,6 @@
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(PHRMCY_SYS_IVR_DTA_STRT_DT)),",
 				"          PHRMCY_AGE = year(currentUTC()) - year(PHRMCY_SYS_IVR_DTA_STRT_DT)\r",
 				",",
-				"          deal_id = iif(!isNull(deal_id) && !isNull(status.deal_id) && deal_id == status.deal_id || !isNull(deal_nbr) && !isNull(status.deal_nbr) && deal_nbr == status.deal_nbr,'Exists','Not Exists'),",
 				"          DEAL_TYPE_CD = left(deal_nbr,2),",
 				"          DEAL_NUMBER = substring(deal_nbr,3)\r",
 				",",
@@ -176,7 +178,37 @@
 				"          START_DATE = currentUTC(),",
 				"          END_DATE = '') ~> Transformation",
 				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling",
-				"Transformation filter(equals(PHRMCY_ADDR_ZNE_CD =='US') || equals(PHRMCY_ADDR_ZNE_CD =='PR')) ~> filter1"
+				"Transformation filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')) ~> filter1",
+				"filter1 select(mapColumn(",
+				"          PTNT_KEY,",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NAME,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          deal_id,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          RCD_MOD_TMS,",
+				"          START_DATE,",
+				"          END_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2"
 			]
 		}
 	}

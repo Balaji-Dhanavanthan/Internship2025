@@ -45,6 +45,15 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -129,7 +138,50 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> leftjoins",
 				"leftjoins derive(DEAL_TYPE_CD = substring(deal_nbr,1,2),",
-				"          DEAL_NUMBER = substring(deal_nbr,3,length(deal_nbr))) ~> derivedColumn2"
+				"          DEAL_NUMBER = substring(deal_nbr,3,length(deal_nbr)),",
+				"          RCD_CRT_TMS = currentDate(),",
+				"          RCD_MOD_TMS = toDate('','dd-MM-yyyy'),",
+				"          START_DATE = currentDate(),",
+				"          END_DATE = toDate('','dd-MM-yyyy')) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NM = PHRMCY_ADDR_ST_NAME,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID = Nullhandling@DEAL_ID,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD = Nullhandling@LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          RCD_MOD_TMS,",
+				"          START_DATE,",
+				"          PHRMCY_NM,",
+				"          END_DATE,",
+				"          PHRMCY_ST_ADDR_LINE1_TXT,",
+				"          PHRMCY_ADDR_ST_CD,",
+				"          PHRMCY_ADDR_ZNE_CD,",
+				"          LANG_ID,",
+				"          LANG_CD = language@LANG_CD",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(equals(PHRMCY_ADDR_ZNE_CD, 'US') || equals(PHRMCY_ADDR_ZNE_CD, 'PR')",
+				" ) ~> filter1",
+				"filter1 derive(each(match(type == 'string'), $$ = coalesce($$,'UNK')),",
+				"          each(match(type == 'integer'), $$ = coalesce($$,-1)),",
+				"          each(match(type == 'date'), $$ = coalesce($$,'2999-12-31'))) ~> derivedColumn3"
 			]
 		}
 	}

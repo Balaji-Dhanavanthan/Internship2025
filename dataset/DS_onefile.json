@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DIM_PTNT.csv",
-				"folderPath": "aabidh",
+				"fileName": "src_phrmcy.csv",
+				"folderPath": "Workshop 2/SRC_Pharmacy",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

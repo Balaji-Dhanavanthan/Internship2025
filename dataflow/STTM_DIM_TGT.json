@@ -51,6 +51,9 @@
 				},
 				{
 					"name": "NullHandling"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -164,11 +167,23 @@
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(PHRMCY_SYS_IVR_DTA_STRT_DT)),",
 				"          PHRMCY_AGE = year(currentUTC()) - year(PHRMCY_SYS_IVR_DTA_STRT_DT)\r",
 				",",
-				"          deal_id = ERROR_FUNCTION(''),",
+				"          deal_id = iif(\r",
+				"    !isNull(deal_id) && !isNull(select1@deal_id) && deal_id == select1@deal_id ||\r",
+				"    !isNull(deal_nbr) && !isNull(select1@deal_nbr) && deal_nbr == select1@deal_nbr,\r",
+				"    'Exists',\r",
+				"    'Not Exists'\r",
+				")\r",
+				"\r",
+				",",
 				"          DEAL_TYPE_CD = left(deal_nbr,2),",
 				"          DEAL_NUMBER = substring(deal_nbr,3)\r",
-				") ~> Transformation",
-				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling"
+				",",
+				"          RCD_CRT_TMS = currentUTC(),",
+				"          RCD_MOD_TMS = '',",
+				"          START_DATE = currentUTC(),",
+				"          END_DATE = '') ~> Transformation",
+				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling",
+				"Transformation filter(equals(PHRMCY_ADDR_ZNE_CD =='US') || equals(PHRMCY_ADDR_ZNE_CD =='PR')) ~> filter1"
 			]
 		}
 	}

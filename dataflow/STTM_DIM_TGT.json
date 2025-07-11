@@ -146,15 +146,10 @@
 				"  '\\'', ' '\r",
 				")\r",
 				",",
-				"          PHRMCY_ADDR_CITY_NM = iif(PHRMCY_ADDR_CITY_NM == 'NULL', 'UNK',\r",
-				"    iif(size(split(trim(PHRMCY_ADDR_CITY_NM), ' ')) > 1,\r",
-				"        concat(upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ''), 1), 1)), upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ''), 2), 1))),\r",
-				"        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))\r",
-				"    )\r",
-				")\r",
-				" \r",
-				" ,",
-				"          PHRMCY_ADDR_ZIP_CD = right(concat('00000', toString(PHRMCY_ADDR_ZIP_CD)), 5)) ~> Transformation",
+				"          PHRMCY_ADDR_CITY_NM = iif(size(split(trim(PHRMCY_ADDR_CITY_NM), ' ')) > 1,        concat(upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 1), 1)), upper(left(at(split(trim(PHRMCY_ADDR_CITY_NM), ' '), 2), 1))),        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))    )  ,",
+				"          PHRMCY_ADDR_ZIP_CD = lpad(toString(PHRMCY_ADDR_ZIP_CD), 5, '0')\r",
+				",",
+				"          column1 = ERROR_FUNCTION('')) ~> Transformation",
 				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> NullHandling"
 			]
 		}

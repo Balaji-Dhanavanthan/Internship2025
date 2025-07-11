@@ -238,7 +238,7 @@
 				"          PHRMCY_NCPDP_NBR = iif(isNull(PHRMCY_NCPDP_NBR) || toString(PHRMCY_NCPDP_NBR) == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR))) ~> forFinalDTypeConversion",
 				"forFinalDTypeConversion sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['DIM_PTNT_I2025_JSenthil.csv'],",
+				"     partitionFileNames:['DIM_PTNT_I2025_JSenthil_v1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> finSink"

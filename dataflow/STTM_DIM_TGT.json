@@ -48,6 +48,9 @@
 				},
 				{
 					"name": "CleanedSrc"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -91,7 +94,7 @@
 				"          PHRMCY_NAT_PROV_ID_NBR = iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', -1, toInteger(PHRMCY_NAT_PROV_ID_NBR)),",
 				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', -1, toInteger(PHRMCY_ADDR_ZIP_CD)),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toDate(iif(PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL', '31-12-2999 00:00', PHRMCY_SYS_IVR_DTA_STRT_DT), 'dd-MM-yyyy')) ~> PhrmcyDerived",
-				"PhrmcyDerived, statussrc join(phrmcysrc@DEAL_ID == statussrc@deal_id,",
+				"derivedColumn1, statussrc join(ERROR_FUNCTION('') == statussrc@deal_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -129,8 +132,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"surrogateKey1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$)),",
-				"          PTNT_CD = toInteger(split(PTNT_CD, '_')[0])) ~> CleanedSrc"
+				"surrogateKey1 derive(PTNT_CD = toInteger(split(PTNT_CD, '_')[0])) ~> CleanedSrc",
+				"PhrmcyDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1"
 			]
 		}
 	}

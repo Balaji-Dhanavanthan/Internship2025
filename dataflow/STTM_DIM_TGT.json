@@ -39,6 +39,15 @@
 				},
 				{
 					"name": "join2"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "CleanedSrc"
 				}
 			],
 			"scriptLines": [
@@ -91,7 +100,60 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2"
+				"     broadcast: 'auto')~> join2",
+				"select1 keyGenerate(output(PTNT_KEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"join2 select(mapColumn(",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PTNT_CD,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          LANG_CD = phrmcysrc@LANG_CD,",
+				"          DEAL_ID = phrmcysrc@DEAL_ID,",
+				"          PHRMCY_NM,",
+				"          PHRMCY_ST_ADDR_LINE1_TXT,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_CD,",
+				"          PHRMCY_ADDR_ST_NAME,",
+				"          PHRMCY_ADDR_ZNE_CD,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          deal_id = statussrc@deal_id,",
+				"          deal_nbr,",
+				"          LANG_ID,",
+				"          LANG_CD = langsrc@LANG_CD,",
+				"          LANG_DESC",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"surrogateKey1 select(mapColumn(",
+				"          PTNT_KEY,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PTNT_CD,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          LANG_CD,",
+				"          DEAL_ID = select1@DEAL_ID,",
+				"          PHRMCY_NM,",
+				"          PHRMCY_ST_ADDR_LINE1_TXT,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_CD,",
+				"          PHRMCY_ADDR_ST_NAME,",
+				"          PHRMCY_ADDR_ZNE_CD,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          deal_id = select1@deal_id,",
+				"          deal_nbr,",
+				"          LANG_ID,",
+				"          LANG_DESC",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanedSrc"
 			]
 		}
 	}

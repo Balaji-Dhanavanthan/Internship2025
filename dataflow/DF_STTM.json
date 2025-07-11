@@ -53,7 +53,16 @@
 					"name": "filter1"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "Nullhandlings"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "select3"
 				}
 			],
 			"scriptLines": [
@@ -99,7 +108,7 @@
 				"          PHRMCY_NM = regexReplace(PHRMCY_NM, '[-&,\\']', ' ') ,",
 				"          PHRMCY_ADDR_ST_NAME = initCap(PHRMCY_ADDR_ST_NAME),",
 				"          PHRMCY_ADDR_ZNE_NM = initCap(PHRMCY_ADDR_ZNE_NM),",
-				"          PHRMCY_ADDR_ZIP_CD = lpad(PHRMCY_ADDR_ZIP_CD, 5, '0'),",
+				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', 'NULL', lpad(PHRMCY_ADDR_ZIP_CD, 5, '0')),",
 				"          PSCB_EMAIL_ID = concat(\r",
 				"    left(trim(PSCB_FIRST_NM), toInteger(round(length(trim(PSCB_FIRST_NM)) * 1/2))),\r",
 				"    left(trim(PSCB_LAST_NM), 1),\r",
@@ -181,7 +190,69 @@
 				" ) ~> filter1",
 				"filter1 derive(each(match(type == 'string'), $$ = coalesce($$,'UNK')),",
 				"          each(match(type == 'integer'), $$ = coalesce($$,-1)),",
-				"          each(match(type == 'date'), $$ = coalesce($$,'2999-12-31'))) ~> derivedColumn3"
+				"          each(match(type == 'date'), $$ = coalesce($$,toDate('2999-12-31','yyyy-MM-dd')))) ~> Nullhandlings",
+				"Nullhandlings select(mapColumn(",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NM,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          RCD_MOD_TMS,",
+				"          START_DATE,",
+				"          PHRMCY_NM,",
+				"          END_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 keyGenerate(output(PTNT_KEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 select(mapColumn(",
+				"          PTNT_KEY,",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NM,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          RCD_MOD_TMS,",
+				"          START_DATE,",
+				"          PHRMCY_NM,",
+				"          END_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3"
 			]
 		}
 	}

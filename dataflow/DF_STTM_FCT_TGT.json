@@ -23,7 +23,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          DOC_ID as boolean,",
@@ -96,7 +100,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> SrcYears"
+				"     ignoreNoFilesFound: false) ~> SrcYears",
+				"SrcPint derive(PHRMCY_NAT_PROV_ID_NBR = ERROR_FUNCTION('')) ~> derivedColumn1"
 			]
 		}
 	}

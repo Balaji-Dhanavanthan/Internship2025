@@ -1,0 +1,116 @@
+{
+	"name": "DF_SCD2",
+	"properties": {
+		"folder": {
+			"name": "STTM"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "Target"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "sourcetype"
+				},
+				{
+					"name": "targettype"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PTNT_KEY as string,",
+				"          PTNT_ID as string,",
+				"          PTNT_CD as string,",
+				"          PHRMCY_NCPDP_NBR as string,",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_NM as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PSCB_EMAIL_ID as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR as string,",
+				"          PHRMCY_AGE as short,",
+				"          DEAL_ID as string,",
+				"          DEAL_TYPE_CD as string,",
+				"          DEAL_NUMBER as string,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string,",
+				"          RCD_CRT_TMS as string,",
+				"          RCD_MOD_TMS as string,",
+				"          START_DATE as string,",
+				"          PHRMCY_NM as string,",
+				"          END_DATE as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          PTNT_KEY as string,",
+				"          PTNT_ID as string,",
+				"          PTNT_CD as string,",
+				"          PHRMCY_NCPDP_NBR as string,",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_NM as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PSCB_EMAIL_ID as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR as string,",
+				"          PHRMCY_AGE as string,",
+				"          DEAL_ID as string,",
+				"          DEAL_TYPE_CD as string,",
+				"          DEAL_NUMBER as string,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string,",
+				"          RCD_CRT_TMS as string,",
+				"          RCD_MOD_TMS as string,",
+				"          START_DATE as string,",
+				"          END_DATE as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Target",
+				"source derive(PTNT_KEY = toInteger(PTNT_KEY),",
+				"          PTNT_ID = toInteger(PTNT_ID),",
+				"          PHRMCY_NCPDP_NBR = toInteger(PHRMCY_NCPDP_NBR),",
+				"          PHRMCY_AGE = toInteger(PHRMCY_AGE),",
+				"          RCD_CRT_TMS = toDate(RCD_CRT_TMS,'yyyy-MM-dd'),",
+				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS,'yyyy-MM-dd'),",
+				"          START_DATE = toDate(START_DATE,'yyyy-MM-dd'),",
+				"          END_DATE = toDate(END_DATE,'yyyy-MM-dd')) ~> sourcetype",
+				"Target derive(PTNT_KEY = toInteger(PTNT_KEY),",
+				"          PTNT_ID = toInteger(PTNT_ID),",
+				"          PHRMCY_NCPDP_NBR = toInteger(PHRMCY_NCPDP_NBR),",
+				"          PHRMCY_AGE = toInteger(PHRMCY_AGE),",
+				"          RCD_CRT_TMS = toDate(RCD_CRT_TMS,'yyyy-MM-dd'),",
+				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS,'yyyy-MM-dd'),",
+				"          START_DATE = toDate(START_DATE,'yyyy-MM-dd'),",
+				"          END_DATE = toDate(END_DATE,'yyyy-MM-dd')) ~> targettype"
+			]
+		}
+	}
+}

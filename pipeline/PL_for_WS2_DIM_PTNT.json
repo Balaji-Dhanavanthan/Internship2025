@@ -21,11 +21,6 @@
 						"referenceName": "DF_WS2_DIM_PTNT",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"PharmSrc": {
-								"file_name": "src_phrmcy.csv",
-								"folder_name": "Workshop 2/SRC_Pharmacy",
-								"container_name": "practice-adf"
-							},
 							"LangSrc": {
 								"file_name": "language.csv",
 								"folder_name": "Workshop 2/SRC_Pharmacy",
@@ -36,8 +31,13 @@
 								"folder_name": "Workshop 2/SRC_Pharmacy",
 								"container_name": "practice-adf"
 							},
-							"finSink": {
-								"file_name": "DIM_PTNT_I2025_JSenthil_v1.csv",
+							"PharmSrcNew": {
+								"file_name": "src_phrmcy.csv",
+								"folder_name": "Workshop 2/SRC_Pharmacy",
+								"container_name": "practice-adf"
+							},
+							"DimSink": {
+								"file_name": "DIM_PTMT_I2025_JSenthil_v2.csv",
 								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							}
@@ -51,11 +51,18 @@
 				}
 			},
 			{
-				"name": "firstLoad",
+				"name": "CP_to_SQL_tgt_table",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "initialLoad",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -79,8 +86,7 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -97,7 +103,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "DIM_PTNT_I2025_JSenthil.csv",
+							"file_name": "DIM_PTMT_I2025_JSenthil_v2.csv",
 							"folder_name": "ETL_stuff",
 							"container_name": "csvcontainer"
 						}
@@ -109,7 +115,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "DIM_PTNT_I2025_JSenthil"
+							"TableName": "DIM_PTNT"
 						}
 					}
 				]

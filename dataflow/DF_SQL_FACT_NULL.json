@@ -95,7 +95,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn1",
+				"source1 derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()),like($$, ' '),toString(null()),$$))) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['SRC_PTNT.csv'],",

@@ -1,20 +1,17 @@
 {
-	"name": "DS_Excel1_I2025JNagara1",
+	"name": "DS_Fact_STTM_SRC",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"sheetss": {
-				"type": "int"
+			"FILENAME": {
+				"type": "string"
 			}
 		},
-		"folder": {
-			"name": "practice"
-		},
 		"annotations": [],
-		"type": "Excel",
+		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
@@ -22,11 +19,10 @@
 				"folderPath": "Workshop 2/SRC_Pharmacy",
 				"container": "practice-adf"
 			},
-			"sheetIndex": {
-				"value": "@dataset().sheetss",
-				"type": "Expression"
-			},
-			"firstRowAsHeader": true
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
 		},
 		"schema": []
 	}

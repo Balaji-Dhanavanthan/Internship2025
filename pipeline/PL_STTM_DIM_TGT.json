@@ -37,7 +37,7 @@
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "DIM_PTNT.csv"
+								"FileName": "DIM_PTNT_SRC.csv"
 							}
 						}
 					},

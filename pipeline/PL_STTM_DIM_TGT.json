@@ -53,8 +53,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -109,7 +107,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "DIM_PTNT"
+							"FileName": "DIM_PTNT.csv"
 						}
 					}
 				]
@@ -117,6 +115,8 @@
 			{
 				"name": "Delete1",
 				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

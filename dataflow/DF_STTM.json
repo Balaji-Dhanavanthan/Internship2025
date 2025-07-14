@@ -177,7 +177,7 @@
 				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
 				"          PHRMCY_AGE,",
-				"          DEAL_ID,",
+				"          DEAL_ID = Nullhandling@DEAL_ID,",
 				"          DEAL_TYPE_CD,",
 				"          DEAL_NUMBER,",
 				"          LANG_CD = Nullhandling@LANG_CD,",

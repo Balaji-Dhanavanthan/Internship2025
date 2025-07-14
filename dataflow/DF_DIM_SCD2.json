@@ -146,7 +146,7 @@
 				"          RCD_CRT_TMS as string,",
 				"          RCD_MOD_TMS as string,",
 				"          START_DATE as string,",
-				"          END_TIME as string",
+				"          END_DATE as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",

@@ -5,6 +5,8 @@
 			{
 				"name": "CP_YEARS_SRC",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -94,11 +96,12 @@
 							"yearsSink": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "yearsSink.scv"
+								"FileName": "yearsSink.csv"
 							},
 							"phrmcyfact": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar",
+								"FileName": "phrmcyfact.csv"
 							}
 						}
 					},

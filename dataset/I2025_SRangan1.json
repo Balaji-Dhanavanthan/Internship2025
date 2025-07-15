@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "src.year.csv",
-				"folderPath": "I2025_SRangan1/year",
+				"fileName": "src.ptnt.csv",
+				"folderPath": "I2025_SRangan1/PTNT",
 				"container": "test-container"
 			},
 			"columnDelimiter": ",",

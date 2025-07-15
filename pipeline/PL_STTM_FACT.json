@@ -63,6 +63,51 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_STTM_FACT",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"phrmyFact": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "SRC PTNT.csv"
+							},
+							"yearssrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "Year.csv"
+							},
+							"yearsSink": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "yearsSink.scv"
+							},
+							"phrmcyfact": {
+								"container": "practice-adf",
+								"Directory": "Asrar"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

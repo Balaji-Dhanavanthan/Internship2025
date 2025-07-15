@@ -1,0 +1,101 @@
+{
+	"name": "DF_src_ptnt_casting",
+	"properties": {
+		"folder": {
+			"name": "Day 9_Training_I2025_SRangan1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "SrcPTNT"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "casting"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          DOC_ID as string,",
+				"          DOC_VER as string,",
+				"          SFTWR_VENDR as string,",
+				"          PHRMCY_NCPDP_ID as string,",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PTNT_CD as string,",
+				"          PTNT_YR_OF_BRTH as string,",
+				"          PTNT_GNDR as string,",
+				"          PTNT_ZIP_CD as string,",
+				"          PTNT_LANG_CD as string,",
+				"          PTNT_LOC_CD as string,",
+				"          NURSING_HOME_FAC_NM as string,",
+				"          RX_ENROLL_IN_AUTOFILL as string,",
+				"          RX_ENROLL_IN_RFIL as string,",
+				"          RX_ENROLL_IN_CNTR_FILL as string,",
+				"          PSCB_NPI as string,",
+				"          PSCB_DEA_ID as string,",
+				"          PSCB_ST_LIC_ID as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          OUT_PSCB_ZIP_CD as string,",
+				"          RX_NBR as string,",
+				"          TRANS_NBR as string,",
+				"          RX_TYP as string,",
+				"          DT_WRT as string,",
+				"          DT_FILL as string,",
+				"          TM_FILL as string,",
+				"          OUT_MTRC_DSPN_QTY as string,",
+				"          DAY_SPLY as string,",
+				"          FILL_NBR as string,",
+				"          RFIL_ORIGLY_AUTH as string,",
+				"          RFIL_RMN as string,",
+				"          DAW_CD as string,",
+				"          OUT_INV_QTY_AFT_FILL as string,",
+				"          PRC_OVRD as string,",
+				"          DLV as string,",
+				"          CMPND_IND as string,",
+				"          PROD_ID as string,",
+				"          RX_ORIG_IND as string,",
+				"          PMT_TYP as string,",
+				"          BAS_OF_INGRD_CST_REIMB as string,",
+				"          REIMB_AMT as string,",
+				"          COPAY_AMT as string,",
+				"          INGRD_CST_AMT as string,",
+				"          OUT_TOT_AMT_PD_BY_PTNT as string,",
+				"          TOT_RX_PRC_COLL as string,",
+				"          OUT_DSPN_FEE_PD as string,",
+				"          COGS_AMT as string,",
+				"          USUAL_AND_CSTMARY as string,",
+				"          OUT_AWP_AMT as string,",
+				"          OUT_DCT_AMT as string,",
+				"          OUT_SLS_TAX as string,",
+				"          PTY3_BIN as string,",
+				"          PTY3_PCN as string,",
+				"          PLN_ID as string,",
+				"          GRP_ID as string,",
+				"          NTWK_REIMB_ID as string,",
+				"          PAYR_ID_QLFY as string,",
+				"          PAYR_ID as string,",
+				"          PTY3_CLM_REF_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcPTNT",
+				"SrcPTNT derive(DOC_ID = toInteger(DOC_ID),",
+				"          DOC_VER = ERROR_FUNCTION(''),",
+				"          column2 = ERROR_FUNCTION(''),",
+				"          column3 = ERROR_FUNCTION(''),",
+				"          column4 = ERROR_FUNCTION(''),",
+				"          column5 = ERROR_FUNCTION(''),",
+				"          column6 = ERROR_FUNCTION(''),",
+				"          column7 = ERROR_FUNCTION('')) ~> casting"
+			]
+		}
+	}
+}

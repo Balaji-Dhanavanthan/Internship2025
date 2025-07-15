@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "SRC_YEAR",
+				"name": "CD_SRC_YEAR",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -45,7 +45,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				],
@@ -61,7 +61,7 @@
 				]
 			},
 			{
-				"name": "SRC_Phrmcy",
+				"name": "CD_SRC_Phrmcy",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -117,6 +117,32 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "DF_Year",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Src_Year",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

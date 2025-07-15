@@ -29,6 +29,12 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -105,7 +111,9 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> yearssrc",
 				"phrmyFact derive(each(match(type!='string'), $$ = toString($$))) ~> derivedColumn1",
-				"yearssrc derive(each(match(type !='string'), $$ = ERROR_FUNCTION(''))) ~> derivedColumn2"
+				"yearssrc derive(each(match(type !='string'), $$ = toString($$))) ~> derivedColumn2",
+				"derivedColumn2 derive() ~> derivedColumn3",
+				"derivedColumn1 derive(each(match(type=='string'), $$ = ERROR_FUNCTION(''))) ~> derivedColumn4"
 			]
 		}
 	}

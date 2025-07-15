@@ -189,8 +189,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['SRC PTNT.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -259,8 +261,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['Year.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink2"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
 			]
 		}
 	}

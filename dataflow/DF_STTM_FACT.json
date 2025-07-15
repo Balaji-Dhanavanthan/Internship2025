@@ -26,6 +26,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -101,7 +104,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> yearssrc",
-				"phrmyFact derive(each(match(type!='string'), $$ = ERROR_FUNCTION(''))) ~> derivedColumn1"
+				"phrmyFact derive(each(match(type!='string'), $$ = toString($$))) ~> derivedColumn1",
+				"yearssrc derive(each(match(type !='string'), $$ = ERROR_FUNCTION(''))) ~> derivedColumn2"
 			]
 		}
 	}

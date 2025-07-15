@@ -190,6 +190,880 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "CP_Year_csv",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "YEAR_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "YEAR_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "Year.csv",
+							"folder_name": "Workshop 2/SRC_Pharmacy",
+							"container_name": "practice-adf"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "year_src"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_ptnt_csv",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DOC_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DOC_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DOC_VER",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DOC_VER",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SFTWR_VENDR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SFTWR_VENDR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_NCPDP_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_NCPDP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PHRMCY_NAT_PROV_ID_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PHRMCY_NAT_PROV_ID_NBR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_ZIP_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_ZIP_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_LANG_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_LANG_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_LOC_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_LOC_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NURSING_HOME_FAC_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "NURSING_HOME_FAC_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RX_ENROLL_IN_AUTOFILL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RX_ENROLL_IN_AUTOFILL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RX_ENROLL_IN_RFIL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RX_ENROLL_IN_RFIL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RX_ENROLL_IN_CNTR_FILL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RX_ENROLL_IN_CNTR_FILL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_NPI",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_NPI",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_DEA_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_DEA_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_ST_LIC_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_ST_LIC_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_LAST_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_LAST_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PSCB_FIRST_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PSCB_FIRST_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_PSCB_ZIP_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_PSCB_ZIP_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RX_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RX_NBR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANS_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TRANS_NBR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RX_TYP",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RX_TYP",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DT_WRT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DT_WRT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DT_FILL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DT_FILL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TM_FILL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TM_FILL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_MTRC_DSPN_QTY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_MTRC_DSPN_QTY",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_SPLY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DAY_SPLY",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FILL_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FILL_NBR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RFIL_ORIGLY_AUTH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RFIL_ORIGLY_AUTH",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RFIL_RMN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RFIL_RMN",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DAW_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DAW_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_INV_QTY_AFT_FILL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_INV_QTY_AFT_FILL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PRC_OVRD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PRC_OVRD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DLV",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DLV",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CMPND_IND",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CMPND_IND",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RX_ORIG_IND",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RX_ORIG_IND",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PMT_TYP",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PMT_TYP",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BAS_OF_INGRD_CST_REIMB",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BAS_OF_INGRD_CST_REIMB",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "REIMB_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "REIMB_AMT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COPAY_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "COPAY_AMT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "INGRD_CST_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "INGRD_CST_AMT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_TOT_AMT_PD_BY_PTNT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_TOT_AMT_PD_BY_PTNT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TOT_RX_PRC_COLL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TOT_RX_PRC_COLL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_DSPN_FEE_PD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_DSPN_FEE_PD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COGS_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "COGS_AMT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "USUAL_AND_CSTMARY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "USUAL_AND_CSTMARY",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_AWP_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_AWP_AMT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_DCT_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_DCT_AMT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OUT_SLS_TAX",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "OUT_SLS_TAX",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTY3_BIN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTY3_BIN",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTY3_PCN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTY3_PCN",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PLN_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PLN_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "GRP_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "GRP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NTWK_REIMB_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "NTWK_REIMB_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYR_ID_QLFY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PAYR_ID_QLFY",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYR_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PAYR_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTY3_CLM_REF_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTY3_CLM_REF_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "SRC PTNT.csv",
+							"folder_name": "Workshop 2/SRC_Pharmacy",
+							"container_name": "practice-adf"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "patient_src"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

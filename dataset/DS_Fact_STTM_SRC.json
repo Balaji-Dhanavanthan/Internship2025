@@ -15,7 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC PTNT.csv",
+				"fileName": {
+					"value": "@dataset().FILENAME",
+					"type": "Expression"
+				},
 				"folderPath": "Workshop 2/SRC_Pharmacy",
 				"container": "practice-adf"
 			},

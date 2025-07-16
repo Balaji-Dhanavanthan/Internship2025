@@ -20,18 +20,40 @@
 						"type": "DatasetReference"
 					},
 					"name": "SrcLanguage"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_new_I2025SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SrcStatus"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "convertNull"
+					"name": "DCconvertNull"
 				},
 				{
-					"name": "selectName"
+					"name": "PhrmcyName"
 				},
 				{
-					"name": "PhrmcyCast"
+					"name": "DCPhrmcyCast"
+				},
+				{
+					"name": "LanguageName"
+				},
+				{
+					"name": "StatusName"
+				},
+				{
+					"name": "PhrLeftJoinLang"
+				},
+				{
+					"name": "PhrLeftJoinStatus"
+				},
+				{
+					"name": "filter"
 				}
 			],
 			"scriptLines": [
@@ -57,15 +79,22 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
 				"source(output(",
-				"          LANG_ID as short,",
+				"          LANG_ID as string,",
 				"          LANG_CD as string,",
 				"          LANG_DESC as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcLanguage",
-				"SrcPhrmcy derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()),$$))) ~> convertNull",
-				"convertNull select(mapColumn(",
+				"source(output(",
+				"          deal_id as string,",
+				"          deal_nbr as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcStatus",
+				"SrcPhrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()),$$))) ~> DCconvertNull",
+				"DCconvertNull select(mapColumn(",
 				"          {p.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
 				"          {p.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
 				"          {p.PTNT_CD} = PTNT_CD,",
@@ -84,11 +113,36 @@
 				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectName",
-				"selectName derive({p.PHRMCY_NAT_PROV_ID_NBR} = toInteger({p.PHRMCY_NAT_PROV_ID_NBR}),",
+				"     skipDuplicateMapOutputs: true) ~> PhrmcyName",
+				"PhrmcyName derive({p.PHRMCY_NAT_PROV_ID_NBR} = toDecimal({p.PHRMCY_NAT_PROV_ID_NBR}, 10,0),",
 				"          {p.PHRMCY_NCPDP_NBR} = toInteger({p.PHRMCY_NCPDP_NBR}),",
 				"          {p.PHRMCY_ADDR_ZIP_CD} = toInteger({p.PHRMCY_ADDR_ZIP_CD}),",
-				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT})) ~> PhrmcyCast"
+				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = toDate({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm')) ~> DCPhrmcyCast",
+				"SrcLanguage select(mapColumn(",
+				"          {l.LANG_ID} = LANG_ID,",
+				"          {l.LANG_CD} = LANG_CD,",
+				"          {l.LANG_DESC} = LANG_DESC",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> LanguageName",
+				"SrcStatus select(mapColumn(",
+				"          {s.deal_id} = deal_id,",
+				"          {s.deal_nbr} = deal_nbr",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> StatusName",
+				"DCPhrmcyCast, LanguageName join({p.LANG_CD} == {l.LANG_CD},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> PhrLeftJoinLang",
+				"PhrLeftJoinLang, StatusName join({p.DEAL_ID} == {s.deal_id}",
+				"     && {p.DEAL_ID} == {s.deal_nbr},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> PhrLeftJoinStatus",
+				"PhrLeftJoinStatus filter(ERROR_FUNCTION('')) ~> filter"
 			]
 		}
 	}

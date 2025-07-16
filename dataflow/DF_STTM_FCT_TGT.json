@@ -45,6 +45,9 @@
 				},
 				{
 					"name": "Trnsformation"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -191,7 +194,9 @@
 				")\r",
 				",",
 				"          COGS_AMT = toInteger(divide(toInteger(COGS_AMT),100)),",
-				"          REIMB_AMT = toInteger(COGS_AMT)+toInteger(REIMB_AMT)) ~> Trnsformation"
+				"          REIMB_AMT = toInteger(COGS_AMT)+toInteger(REIMB_AMT)) ~> Trnsformation",
+				"Trnsformation aggregate({PTNT_COPAY_AMT(COL1)} = toInteger(avg(toInteger(COPAY_AMT)))\r",
+				") ~> aggregate1"
 			]
 		}
 	}

@@ -54,6 +54,9 @@
 				},
 				{
 					"name": "filter"
+				},
+				{
+					"name": "DCTransformations"
 				}
 			],
 			"scriptLines": [
@@ -142,7 +145,8 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> PhrLeftJoinStatus",
-				"PhrLeftJoinStatus filter(ERROR_FUNCTION('')) ~> filter"
+				"PhrLeftJoinStatus filter(in(['US', 'PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter",
+				"filter derive({p.PTNT_CD} = ERROR_FUNCTION('isNull(toInteger({p.PTNT_CD})),-1)')) ~> DCTransformations"
 			]
 		}
 	}

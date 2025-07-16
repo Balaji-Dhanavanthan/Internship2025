@@ -45,6 +45,9 @@
 				},
 				{
 					"name": "Trnsformation"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -203,7 +206,8 @@
 				"    TOT_RX_PRC_COLL > USUAL_AND_CSTMARY,\r",
 				"    'Y',\r",
 				"    'N'\r",
-				"))) ~> Trnsformation"
+				"))) ~> Trnsformation",
+				"Trnsformation derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1"
 			]
 		}
 	}

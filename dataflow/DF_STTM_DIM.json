@@ -114,7 +114,7 @@
 					"name": "union3"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -266,6 +266,8 @@
 				"          RCD_CRT_TMS = currentTimestamp(),",
 				"          START_DATE = currentTimestamp()) ~> DCTransition",
 				"DCTransition derive(each(match(type=='string'), $$ = iif(isNull($$), 'UNK', $$)),",
+				"          RCD_MOD_TMS = toTimestamp('01-01-1900','dd-MM-yyyy'),",
+				"          END_DATE = toTimestamp('01-01-1900','dd-MM-yyyy'),",
 				"          each(match(type=='integer'), $$ = iif(isNull($$), -1, $$))) ~> derivedColumn1",
 				"select2 derive({t.PTNT_KEY} = toInteger({t.PTNT_KEY}),",
 				"          {t.PTNT_ID} = toInteger({t.PTNT_ID}),",
@@ -280,7 +282,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join3",
-				"join3 split(isNull({t.PTNT_CD}),",
+				"join3 split(isNull({t.PTNT_CD})&& isNull({t.RCD_MOD_TMS}),",
 				"     disjoint: false) ~> split1@(insert, UpdateAndExists)",
 				"DimPtnt select(mapColumn(",
 				"          {t.PTNT_KEY} = PTNT_KEY,",
@@ -333,13 +335,15 @@
 				"          {s.DEAL_TYPE_CD} = DEAL_TYPE_CD,",
 				"          {s.DEAL_NUMBER} = DEAL_NUMBER,",
 				"          {s.LANG_CD} = LANG_CD,",
+				"          {s.RCD_MOD_TMS} = RCD_MOD_TMS,",
+				"          {s.END_DATE} = END_DATE,",
 				"          {s.LANG_DESC} = LANG_DESC,",
 				"          {s.RCD_CRT_TMS} = RCD_CRT_TMS,",
 				"          {s.START_DATE} = START_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"split1@UpdateAndExists split({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD},",
+				"split1@UpdateAndExists split({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD}&& isNull({t.RCD_MOD_TMS}),",
 				"     disjoint: false) ~> split2@(updated, exists)",
 				"split2@updated alterRow(upsertIf({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD})) ~> update",
 				"update derive({t.RCD_MOD_TMS} = currentTimestamp(),",
@@ -459,9 +463,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select6",
-				"derivedColumn2, union2 union(byName: true)~> union3",
-				"select6 derive(RCD_MOD_TMS = toTimestamp('01-01-1900','dd-MM-yyyy'),",
-				"          END_DATE = toTimestamp('01-01-1900','dd-MM-yyyy')) ~> derivedColumn2"
+				"select6, union2 union(byName: true)~> union3",
+				"union3 keyGenerate(output(PTNT_KEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1"
 			]
 		}
 	}

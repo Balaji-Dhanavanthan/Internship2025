@@ -210,8 +210,7 @@
 				"Trnsformation window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
 				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window1",
-				"SrcYears filter(isMatch(YEAR_ID, '^[a-zA-Z0-9]+$')\r",
-				") ~> filter1"
+				"SrcYears filter(regexMatch(YEAR_ID, '[A-Za-z]\\\\d+{4}')) ~> filter1"
 			]
 		}
 	}

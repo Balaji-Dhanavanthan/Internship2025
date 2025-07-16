@@ -32,7 +32,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "PintDerived"
 				}
 			],
 			"scriptLines": [
@@ -102,7 +102,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPint",
 				"source(output(",
-				"          YEAR_ID as string,",
+				"          YEAR_ID as integer,",
 				"          YEAR_DESC as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
@@ -129,7 +129,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
-				"SrcPint derive(PHRMCY_NAT_PROV_ID_NBR = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"SrcPint derive(each(match(type=='string'), $$ = ERROR_FUNCTION(''))) ~> PintDerived"
 			]
 		}
 	}

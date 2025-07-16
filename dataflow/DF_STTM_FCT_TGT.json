@@ -45,9 +45,6 @@
 				},
 				{
 					"name": "Trnsformation"
-				},
-				{
-					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -193,10 +190,12 @@
 				"    iif(PMT_TYP == '1', 'On-Line', iif(PMT_TYP == '2', 'Cash', 'Others'))\r",
 				")\r",
 				",",
-				"          COGS_AMT = toInteger(divide(toInteger(COGS_AMT),100)),",
-				"          REIMB_AMT = toInteger(COGS_AMT)+toInteger(REIMB_AMT)) ~> Trnsformation",
-				"Trnsformation aggregate({PTNT_COPAY_AMT(COL1)} = toInteger(avg(toInteger(COPAY_AMT)))\r",
-				") ~> aggregate1"
+				"          COGS_AMT = \r",
+				"    toDecimal(divide(toInteger(COGS_AMT), 100), 12, 2)\r",
+				"\r",
+				",",
+				"          REIMB_AMT = toDecimal(toInteger(COGS_AMT)+toInteger(REIMB_AMT), 12 ,2),",
+				"          {TOTAL_AMT(COL 3)} = toDecimal((toInteger(COGS_AMT) * toInteger(REIMB_AMT)), 12 , 2)) ~> Trnsformation"
 			]
 		}
 	}

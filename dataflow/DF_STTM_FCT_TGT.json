@@ -62,7 +62,7 @@
 					"name": "select1"
 				},
 				{
-					"name": "select2"
+					"name": "ChangingName"
 				},
 				{
 					"name": "window2"
@@ -228,8 +228,8 @@
 				"          DOC_VER,",
 				"          SFTWR_VENDR,",
 				"          PHRMCY_NCPDP_ID,",
-				"          PHRMCY_NAT_PROV_ID_NBR = derivedColumn1@PHRMCY_NAT_PROV_ID_NBR,",
-				"          PTNT_CD = derivedColumn1@PTNT_CD,",
+				"          PHRMCY_NAT_PROV_ID_NBR = PtntDerived@PHRMCY_NAT_PROV_ID_NBR,",
+				"          PTNT_CD = PtntDerived@PTNT_CD,",
 				"          PTNT_YR_OF_BRTH,",
 				"          PTNT_GNDR,",
 				"          PTNT_ZIP_CD,",
@@ -242,8 +242,8 @@
 				"          PSCB_NPI,",
 				"          PSCB_DEA_ID,",
 				"          PSCB_ST_LIC_ID,",
-				"          PSCB_LAST_NM = derivedColumn1@PSCB_LAST_NM,",
-				"          PSCB_FIRST_NM = derivedColumn1@PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM = PtntDerived@PSCB_LAST_NM,",
+				"          PSCB_FIRST_NM = PtntDerived@PSCB_FIRST_NM,",
 				"          OUT_PSCB_ZIP_CD,",
 				"          RX_NBR,",
 				"          TRANS_NBR,",
@@ -284,11 +284,11 @@
 				"          PAYR_ID_QLFY,",
 				"          PAYR_ID,",
 				"          PTY3_CLM_REF_ID,",
-				"          PHRMCY_NAT_PROV_ID_NBR = SrcPhrmcy@PHRMCY_NAT_PROV_ID_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR = {SrcPhrmcy@PHRMCY_NAT_PROV_ID_NBR},",
 				"          PHRMCY_NCPDP_NBR,",
-				"          PTNT_CD = SrcPhrmcy@PTNT_CD,",
-				"          PSCB_FIRST_NM = SrcPhrmcy@PSCB_FIRST_NM,",
-				"          PSCB_LAST_NM = SrcPhrmcy@PSCB_LAST_NM,",
+				"          PTNT_CD = {SrcPhrmcy@PTNT_CD},",
+				"          PSCB_FIRST_NM = {SrcPhrmcy@PSCB_FIRST_NM},",
+				"          PSCB_LAST_NM = {SrcPhrmcy@PSCB_LAST_NM},",
 				"          LANG_CD,",
 				"          DEAL_ID,",
 				"          PHRMCY_NM,",
@@ -310,7 +310,7 @@
 				"               $$+'_tgt' = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> ChangingName",
 				"window1 window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
 				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> window2",
@@ -318,8 +318,7 @@
 				"    {PTNT_COPAY_AMT(COL1)} > 0,\r",
 				"    divide({PTNT_COPAY_AMT(COL1)}, {TOTAL_AMT(COL 3)}),\r",
 				"    multiply({TOTAL_AMT(COL 3)}, 0.20)\r",
-				"),12,2)\r",
-				") ~> derivedColumn4"
+				"),12,2)) ~> derivedColumn4"
 			]
 		}
 	}

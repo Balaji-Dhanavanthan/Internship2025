@@ -51,9 +51,6 @@
 				},
 				{
 					"name": "derivedColumn2"
-				},
-				{
-					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -204,9 +201,7 @@
 				",",
 				"          REIMB_AMT = toDecimal(toInteger(COGS_AMT)+toInteger(REIMB_AMT), 12 ,2),",
 				"          {TOTAL_AMT(COL 3)} = toDecimal((toInteger(COGS_AMT) * toInteger(REIMB_AMT)), 12 , 2),",
-				"          INGRD_CST_AMT = \r",
-				"    toDecimal(divide(toInteger(INGRD_CST_AMT), 100), 12, 2)\r",
-				",",
+				"          INGRD_CST_AMT = toDecimal(divide(toInteger(INGRD_CST_AMT), 100), 12, 2),",
 				"          FILLED_DATE = iif(isNull(DT_FILL),toDate('1900-01-01', 'yyyy-MM-dd'),toDate(DT_FILL, 'yyyyMMdd')),",
 				"          PAYR_CNTRCT_FLG = toString(iif(\r",
 				"    TOT_RX_PRC_COLL > USUAL_AND_CSTMARY,\r",
@@ -214,8 +209,7 @@
 				"    'N'\r",
 				"))) ~> Trnsformation",
 				"PtntDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1",
-				"Trnsformation derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2",
-				"derivedColumn2 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn3"
+				"Trnsformation derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2"
 			]
 		}
 	}

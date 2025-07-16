@@ -57,6 +57,12 @@
 				},
 				{
 					"name": "DCTransition"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -170,11 +176,41 @@
 				"          PHRMCY_AGE = toInteger(minus(currentDate(),PHRMCY_SYS_IVR_DTA_STRT_DT)/365)\r",
 				"\r",
 				",",
-				"          DEAL_ID = ERROR_FUNCTION('{p.DEAL_ID}in '),",
-				"          DEAL_TYPE_CD = {d.deal_nbr},",
-				"          DEAL_NUMBER = {d.deal_nbr},",
-				"          LANG_CD = {l.LANG_DESC},",
-				"          LANG_DESC = {l.LANG_DESC}) ~> DCTransition"
+				"          DEAL_ID = case(in([{d.deal_id},{d.deal_nbr}], {p.DEAL_ID}), 'Exists', 'Not exists'),",
+				"          DEAL_TYPE_CD = left({d.deal_nbr},2),",
+				"          DEAL_NUMBER = substring({d.deal_nbr}, 2, length({d.deal_nbr})),",
+				"          LANG_CD = {l.LANG_CD},",
+				"          LANG_DESC = {l.LANG_DESC},",
+				"          RCD_CRT_TMS = currentTimestamp()) ~> DCTransition",
+				"DCTransition select(mapColumn(",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_NM,",
+				"          {PHRMCY_ADDR_CITY_NM },",
+				"          PHRMCY_ADDR_ST_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          {PHRMCY_ADDR_ZIP_CD },",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(each(match(type=='string'), $$ = iif(isNull($$), 'UNK', $$)),",
+				"          each(match(type=='integer'), $$ = iif(isNull($$), -1, $$))) ~> derivedColumn1"
 			]
 		}
 	}

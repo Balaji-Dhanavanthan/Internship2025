@@ -146,7 +146,7 @@
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
 				"SrcPtnt derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PtntDerived",
 				"SrcPhrmcy derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PhrmcyDerived",
-				"PtntDerived, SrcPhrmcy join(PtntDerived@PTNT_CD == SrcPhrmcy@PTNT_CD,",
+				"derivedColumn1, SrcPhrmcy join(PtntDerived@PTNT_CD == SrcPhrmcy@PTNT_CD,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -207,7 +207,7 @@
 				"    'Y',\r",
 				"    'N'\r",
 				"))) ~> Trnsformation",
-				"Trnsformation derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1"
+				"PtntDerived derive(each(match(type=='string'), ERROR_FUNCTION('') = ERROR_FUNCTION(''))) ~> derivedColumn1"
 			]
 		}
 	}

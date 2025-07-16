@@ -176,7 +176,8 @@
 				"    toDate(toString(DT_WRT), 'yyyyMMdd')\r",
 				")\r",
 				"\r",
-				") ~> Trnsformation"
+				",",
+				"          PROD_ID = iif(isNull(PROD_ID), 'UNK' , PROD_ID)) ~> Trnsformation"
 			]
 		}
 	}

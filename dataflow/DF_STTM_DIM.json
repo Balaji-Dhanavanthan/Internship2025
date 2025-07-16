@@ -1,0 +1,95 @@
+{
+	"name": "DF_STTM_DIM",
+	"properties": {
+		"folder": {
+			"name": "Day 9_Training_I2025_SRangan1"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "SrcPhrmcy"
+				},
+				{
+					"dataset": {
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SrcLanguage"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "convertNull"
+				},
+				{
+					"name": "selectName"
+				},
+				{
+					"name": "PhrmcyCast"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PHRMCY_NCPDP_NBR as string,",
+				"          PTNT_CD as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          LANG_CD as string,",
+				"          DEAL_ID as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ST_ADDR_LINE1_TXT as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_CD as string,",
+				"          PHRMCY_ADDR_ST_NAME as string,",
+				"          PHRMCY_ADDR_ZNE_CD as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
+				"source(output(",
+				"          LANG_ID as short,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcLanguage",
+				"SrcPhrmcy derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()),$$))) ~> convertNull",
+				"convertNull select(mapColumn(",
+				"          {p.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
+				"          {p.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
+				"          {p.PTNT_CD} = PTNT_CD,",
+				"          {p.PSCB_FIRST_NM} = PSCB_FIRST_NM,",
+				"          {p.PSCB_LAST_NM} = PSCB_LAST_NM,",
+				"          {p.LANG_CD} = LANG_CD,",
+				"          {p.DEAL_ID} = DEAL_ID,",
+				"          {p.PHRMCY_NM} = PHRMCY_NM,",
+				"          {p.PHRMCY_ST_ADDR_LINE1_TXT} = PHRMCY_ST_ADDR_LINE1_TXT,",
+				"          {p.PHRMCY_ADDR_ZIP_CD} = PHRMCY_ADDR_ZIP_CD,",
+				"          {p.PHRMCY_ADDR_CITY_NM} = PHRMCY_ADDR_CITY_NM,",
+				"          {p.PHRMCY_ADDR_ST_CD} = PHRMCY_ADDR_ST_CD,",
+				"          {p.PHRMCY_ADDR_ST_NAME} = PHRMCY_ADDR_ST_NAME,",
+				"          {p.PHRMCY_ADDR_ZNE_CD} = PHRMCY_ADDR_ZNE_CD,",
+				"          {p.PHRMCY_ADDR_ZNE_NM} = PHRMCY_ADDR_ZNE_NM,",
+				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectName",
+				"selectName derive({p.PHRMCY_NAT_PROV_ID_NBR} = toInteger({p.PHRMCY_NAT_PROV_ID_NBR}),",
+				"          {p.PHRMCY_NCPDP_NBR} = toInteger({p.PHRMCY_NCPDP_NBR}),",
+				"          {p.PHRMCY_ADDR_ZIP_CD} = toInteger({p.PHRMCY_ADDR_ZIP_CD}),",
+				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT})) ~> PhrmcyCast"
+			]
+		}
+	}
+}

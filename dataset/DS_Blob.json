@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC PTNT.csv",
+				"fileName": "src_phrmcy.csv",
 				"folderPath": "Workshop 2/SRC_Pharmacy",
 				"container": "practice-adf"
 			},

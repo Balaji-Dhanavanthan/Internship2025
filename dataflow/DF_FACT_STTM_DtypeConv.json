@@ -45,6 +45,24 @@
 				},
 				{
 					"name": "LeftOnYear"
+				},
+				{
+					"name": "SelectReqs"
+				},
+				{
+					"name": "AddTransKey"
+				},
+				{
+					"name": "AllTransformations"
+				},
+				{
+					"name": "WindowForCopayAmt"
+				},
+				{
+					"name": "WindowForMaxCopayAmt"
+				},
+				{
+					"name": "FinalTransformation"
 				}
 			],
 			"scriptLines": [
@@ -153,7 +171,86 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> LeftOnYear"
+				"     broadcast: 'auto')~> LeftOnYear",
+				"LeftOnYear select(mapColumn(",
+				"          PHRMCY_NAT_PROV_ID_NBR = HandleStrNulls1@PHRMCY_NAT_PROV_ID_NBR,",
+				"          PTNT_CD = HandleStrNulls1@PTNT_CD,",
+				"          PTNT_YR_OF_BRTH,",
+				"          PTNT_GNDR,",
+				"          DT_WRT,",
+				"          DT_FILL,",
+				"          PROD_ID,",
+				"          PMT_TYP,",
+				"          REIMB_AMT,",
+				"          COPAY_AMT,",
+				"          INGRD_CST_AMT,",
+				"          COGS_AMT,",
+				"          USUAL_AND_CSTMARY,",
+				"          PHRMCY_NAT_PROV_ID_NBR = HandleStrNulls2@PHRMCY_NAT_PROV_ID_NBR,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          LANG_CD,",
+				"          DEAL_ID,",
+				"          YEAR_ID,",
+				"          YEAR_DESC,",
+				"          TRANS_NBR,",
+				"          PHRMCY_NM,",
+				"          GRP_ID,",
+				"          TOT_RX_PRC_COLL",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectReqs",
+				"SelectReqs keyGenerate(output(TRANS_KEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> AddTransKey",
+				"AddTransKey derive(TRANS_NBR = iif(isNull(TRANS_NBR), -1, toInteger(TRANS_NBR)),",
+				"          PTNT_CD = split(PTNT_CD, '_')[2],",
+				"          PTNT_NM = iif(isNull(PHRMCY_NM), 'UNK', replace(replace(replace(replace(PHRMCY_NM, '-', ' '), ',', ' '), '&', ' '), \"'\", ' ')),",
+				"          PTNT_YR_OF_BRTH = iif(isNull(PTNT_YR_OF_BRTH), '1900', PTNT_YR_OF_BRTH),",
+				"          PTNT_AGE = iif(isNull(PTNT_YR_OF_BRTH), 0, minus(year(currentDate()), year(toDate(PTNT_YR_OF_BRTH)))),",
+				"          PTNT_GNDR = iif(isNull(PTNT_GNDR), 'UNK',\r",
+				"    iif(PTNT_GNDR == 'M', 'Male', \r",
+				"        iif(PTNT_GNDR == 'F', 'Female', 'UNK'))\r",
+				"),",
+				"          TRANS_DATE = iif(isNull(DT_WRT), toDate('01-01-1900', 'dd-MM-yyyy'), toDate(DT_WRT, 'yyyyMMdd')),",
+				"          PROD_ID = iif(isNull(PROD_ID), '-1', PROD_ID),",
+				"          PROD_GROUP_ID = iif(isNull(GRP_ID) || trim(GRP_ID) == '', 'UNK', \r",
+				"    left(trim(GRP_ID), 2) + right(trim(GRP_ID), 2)\r",
+				"),",
+				"          PAYMENT_TYPE = iif(isNull(PMT_TYP), 'UNK', \r",
+				"    iif(PMT_TYP == '1', 'On-Line', \r",
+				"        iif(PMT_TYP == '2', 'Cash', 'Others')\r",
+				"    )\r",
+				"),",
+				"          COGS_AMT = iif(isNull(COGS_AMT), toDecimal(-1, 12, 2), \r",
+				"    toDecimal(toInteger(COGS_AMT) / 100, 12, 2)\r",
+				"),",
+				"          REIMB_AMT = iif(isNull(COGS_AMT) || isNull(REIMB_AMT), -1, \r",
+				"    toInteger(COGS_AMT) + toInteger(REIMB_AMT)\r",
+				")\r",
+				"\r",
+				",",
+				"          TOTAL_AMT = iif(isNull(COGS_AMT) || isNull(REIMB_AMT), -1, \r",
+				"    toInteger(COGS_AMT) * toInteger(REIMB_AMT)\r",
+				"),",
+				"          DCT_AMT = 1,",
+				"          INGRD_CST_AMT = iif(isNull(INGRD_CST_AMT), -1,\r",
+				"    toInteger(INGRD_CST_AMT) / 100\r",
+				"),",
+				"          FILLED_DATE = iif(isNull(DT_FILL), toDate('01-01-1900', 'dd-MM-yyy'), toDate(DT_FILL, 'yyyyMMdd')),",
+				"          PAYR_CNTRCT_FLG = iif(isNull(TOT_RX_PRC_COLL) || isNull(USUAL_AND_CSTMARY), 'UNK',\r",
+				"    iif(toInteger(TOT_RX_PRC_COLL) > toInteger(USUAL_AND_CSTMARY), 'Y', 'N')\r",
+				"),",
+				"          YEAR_DESC = iif(isNull(YEAR_DESC), 'UNK', YEAR_DESC),",
+				"          dummy = toString(null())) ~> AllTransformations",
+				"AllTransformations window(over(PROD_ID),",
+				"     asc(dummy, true),",
+				"     PTNT_COPAY_AMT = toDecimal(avg(toInteger(COPAY_AMT)), 12, 2)) ~> WindowForCopayAmt",
+				"WindowForCopayAmt window(asc(dummy, true),",
+				"     SLS_TAX_AMT = max(PTNT_COPAY_AMT)) ~> WindowForMaxCopayAmt",
+				"WindowForMaxCopayAmt derive(DCT_AMT = iif(PTNT_COPAY_AMT > 0 && TOTAL_AMT != -1, \r",
+				"    toDecimal(PTNT_COPAY_AMT / TOTAL_AMT, 12, 2), \r",
+				"    toDecimal(TOTAL_AMT * 0.2, 12, 2)\r",
+				")) ~> FinalTransformation"
 			]
 		}
 	}

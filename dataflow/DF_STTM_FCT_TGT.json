@@ -48,6 +48,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -146,7 +149,7 @@
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
 				"SrcPtnt derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PtntDerived",
 				"SrcPhrmcy derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PhrmcyDerived",
-				"derivedColumn1, SrcPhrmcy join(PtntDerived@PTNT_CD == SrcPhrmcy@PTNT_CD,",
+				"derivedColumn1, SrcPhrmcy join(derivedColumn1@PTNT_CD == SrcPhrmcy@PTNT_CD,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -207,7 +210,8 @@
 				"    'Y',\r",
 				"    'N'\r",
 				"))) ~> Trnsformation",
-				"PtntDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1"
+				"derivedColumn2 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1",
+				"PtntDerived derive() ~> derivedColumn2"
 			]
 		}
 	}

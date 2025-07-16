@@ -207,7 +207,7 @@
 				"    'Y',\r",
 				"    'N'\r",
 				"))) ~> Trnsformation",
-				"PtntDerived derive(each(match(type=='string'), ERROR_FUNCTION('') = ERROR_FUNCTION(''))) ~> derivedColumn1"
+				"PtntDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1"
 			]
 		}
 	}

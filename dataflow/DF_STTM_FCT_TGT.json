@@ -66,6 +66,9 @@
 				},
 				{
 					"name": "window2"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -310,7 +313,13 @@
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"window1 window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
-				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> window2"
+				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> window2",
+				"derivedColumn2 derive(DCT_AMT = toDecimal(iif(\r",
+				"    {PTNT_COPAY_AMT(COL1)} > 0,\r",
+				"    divide({PTNT_COPAY_AMT(COL1)}, {TOTAL_AMT(COL 3)}),\r",
+				"    multiply({TOTAL_AMT(COL 3)}, 0.20)\r",
+				"),12,2)\r",
+				") ~> derivedColumn4"
 			]
 		}
 	}

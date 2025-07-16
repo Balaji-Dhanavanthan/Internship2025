@@ -211,7 +211,7 @@
 				"    'N'\r",
 				"))) ~> Trnsformation",
 				"PtntDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1",
-				"Trnsformation derive(each(match(type=='Integer'), ERROR_FUNCTION('') = ERROR_FUNCTION(''))) ~> derivedColumn2"
+				"Trnsformation derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2"
 			]
 		}
 	}

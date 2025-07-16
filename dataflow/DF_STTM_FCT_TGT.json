@@ -214,7 +214,7 @@
 				"     asc(PROD_ID, true),",
 				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window1",
 				"SrcYears filter(regexMatch(YEAR_ID, '[A-Za-z]\\\\d+{4}')) ~> filter1",
-				"join2 derive(each(match(type=='string'), ERROR_FUNCTION('') = ERROR_FUNCTION(''))) ~> derivedColumn3"
+				"join2 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn3"
 			]
 		}
 	}

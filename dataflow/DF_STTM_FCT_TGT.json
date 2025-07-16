@@ -195,7 +195,8 @@
 				"\r",
 				",",
 				"          REIMB_AMT = toDecimal(toInteger(COGS_AMT)+toInteger(REIMB_AMT), 12 ,2),",
-				"          {TOTAL_AMT(COL 3)} = toDecimal((toInteger(COGS_AMT) * toInteger(REIMB_AMT)), 12 , 2)) ~> Trnsformation"
+				"          {TOTAL_AMT(COL 3)} = toDecimal((toInteger(COGS_AMT) * toInteger(REIMB_AMT)), 12 , 2),",
+				"          INGRD_CST_AMT = toDecimal(divide(toInteger(INGRD_CST_AMT),100), 12, 2)) ~> Trnsformation"
 			]
 		}
 	}

@@ -29,7 +29,15 @@
 					"name": "YearSrc"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "SinkToBlob"
+				}
+			],
 			"transformations": [
 				{
 					"name": "HandleStrNulls"
@@ -63,6 +71,9 @@
 				},
 				{
 					"name": "FinalTransformation"
+				},
+				{
+					"name": "FinSelect"
 				}
 			],
 			"scriptLines": [
@@ -241,6 +252,7 @@
 				"    iif(toInteger(TOT_RX_PRC_COLL) > toInteger(USUAL_AND_CSTMARY), 'Y', 'N')\r",
 				"),",
 				"          YEAR_DESC = iif(isNull(YEAR_DESC), 'UNK', YEAR_DESC),",
+				"          LOAD_DATE = currentDate(),",
 				"          dummy = toString(null())) ~> AllTransformations",
 				"AllTransformations window(over(PROD_ID),",
 				"     asc(dummy, true),",
@@ -249,8 +261,55 @@
 				"     SLS_TAX_AMT = max(PTNT_COPAY_AMT)) ~> WindowForMaxCopayAmt",
 				"WindowForMaxCopayAmt derive(DCT_AMT = iif(PTNT_COPAY_AMT > 0 && TOTAL_AMT != -1, \r",
 				"    toDecimal(PTNT_COPAY_AMT / TOTAL_AMT, 12, 2), \r",
-				"    toDecimal(TOTAL_AMT * 0.2, 12, 2)\r",
-				")) ~> FinalTransformation"
+				"    iif(TOTAL_AMT != -1,\r",
+				"        toDecimal(TOTAL_AMT * 0.2, 12, 2),\r",
+				"        toDecimal(-1, 12, 2)\r",
+				"    )\r",
+				")) ~> FinalTransformation",
+				"FinalTransformation select(mapColumn(",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PTNT_CD,",
+				"          PTNT_YR_OF_BRTH,",
+				"          PTNT_GNDR,",
+				"          DT_WRT,",
+				"          DT_FILL,",
+				"          PROD_ID,",
+				"          PMT_TYP,",
+				"          REIMB_AMT,",
+				"          COPAY_AMT,",
+				"          INGRD_CST_AMT,",
+				"          COGS_AMT,",
+				"          USUAL_AND_CSTMARY,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          LANG_CD,",
+				"          DEAL_ID,",
+				"          YEAR_ID,",
+				"          YEAR_DESC,",
+				"          TRANS_NBR,",
+				"          PHRMCY_NM,",
+				"          GRP_ID,",
+				"          TOT_RX_PRC_COLL,",
+				"          TRANS_KEY,",
+				"          PTNT_NM,",
+				"          PTNT_AGE,",
+				"          TRANS_DATE,",
+				"          PROD_GROUP_ID,",
+				"          PAYMENT_TYPE,",
+				"          TOTAL_AMT,",
+				"          DCT_AMT,",
+				"          FILLED_DATE,",
+				"          PAYR_CNTRCT_FLG,",
+				"          LOAD_DATE,",
+				"          dummy,",
+				"          PTNT_COPAY_AMT,",
+				"          SLS_TAX_AMT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> FinSelect",
+				"FinSelect sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkToBlob"
 			]
 		}
 	}

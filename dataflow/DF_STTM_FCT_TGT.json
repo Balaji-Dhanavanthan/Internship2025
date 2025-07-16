@@ -189,7 +189,8 @@
 				"    'UNK',\r",
 				"    iif(PMT_TYP == '1', 'On-Line', iif(PMT_TYP == '2', 'Cash', 'Others'))\r",
 				")\r",
-				") ~> Trnsformation"
+				",",
+				"          COGS_AMT = toInteger(divide(toInteger(COGS_AMT),100))) ~> Trnsformation"
 			]
 		}
 	}

@@ -47,10 +47,10 @@
 					"name": "Trnsformation"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "NullHandling"
 				},
 				{
-					"name": "window1"
+					"name": "window"
 				},
 				{
 					"name": "filter1"
@@ -65,7 +65,7 @@
 					"name": "window2"
 				},
 				{
-					"name": "derivedColumn4"
+					"name": "DctamtTransform"
 				},
 				{
 					"name": "SelectingColumn"
@@ -222,10 +222,10 @@
 				")),",
 				"          YEAR_DESC = YEAR_DESC) ~> Trnsformation",
 				"window2 derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#)),",
-				"          each(match(type=='decimal'), $$ = iif(isNull($$),0.00))) ~> derivedColumn2",
+				"          each(match(type=='decimal'), $$ = iif(isNull($$),0.00))) ~> NullHandling",
 				"Trnsformation window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
-				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window1",
+				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window",
 				"SrcYears filter(regexMatch(YEAR_ID, '[A-Za-z]\\\\d+{4}')) ~> filter1",
 				"SelectingColumn derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> StringNullHandling",
 				"PhrmcyDerived select(mapColumn(",
@@ -234,23 +234,23 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ChangingName",
-				"window1 window(over(PROD_ID),",
+				"window window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
 				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> window2",
-				"derivedColumn2 derive(DCT_AMT = toDecimal(iif(\r",
+				"NullHandling derive(DCT_AMT = toDecimal(iif(\r",
 				"    {PTNT_COPAY_AMT(COL1)} > 0,\r",
 				"    toDecimal({PTNT_COPAY_AMT(COL1)})/{TOTAL_AMT(COL 3)},\r",
 				"    multiply({TOTAL_AMT(COL 3)}, 0.20)\r",
 				"),12,2)\r",
 				"\r",
-				") ~> derivedColumn4",
+				") ~> DctamtTransform",
 				"JoinSrcYears select(mapColumn(",
 				"          each(match(/* All input columns */true()),",
 				"               /* Input name */$$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectingColumn",
-				"derivedColumn4 select(mapColumn(",
+				"DctamtTransform select(mapColumn(",
 				"          PTNT_CD,",
 				"          PTNT_YR_OF_BRTH,",
 				"          PTNT_GNDR,",

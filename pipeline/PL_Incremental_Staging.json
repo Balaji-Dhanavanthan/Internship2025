@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CP_CSVtoSQL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -59,11 +59,11 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "Cp_SRCtoStaging",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "CP_CSVtoSQL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -123,11 +123,11 @@
 				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "CP_stagingToTarget",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy data2",
+						"activity": "Cp_SRCtoStaging",
 						"dependencyConditions": [
 							"Succeeded"
 						]

@@ -38,10 +38,10 @@
 					"name": "PhrmcyDerived"
 				},
 				{
-					"name": "join1"
+					"name": "SrcPintJoinSrcPhrmcy"
 				},
 				{
-					"name": "join2"
+					"name": "JoinSrcYears"
 				},
 				{
 					"name": "Trnsformation"
@@ -56,7 +56,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "StringNullHandling"
 				},
 				{
 					"name": "ChangingName"
@@ -68,7 +68,7 @@
 					"name": "derivedColumn4"
 				},
 				{
-					"name": "select1"
+					"name": "SelectingColumn"
 				},
 				{
 					"name": "select2"
@@ -174,13 +174,13 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1, filter1 join(PTNT_YR_OF_BRTH == YEAR_ID,",
+				"     broadcast: 'auto')~> SrcPintJoinSrcPhrmcy",
+				"SrcPintJoinSrcPhrmcy, filter1 join(PTNT_YR_OF_BRTH == YEAR_ID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2",
-				"derivedColumn3 derive(TRANS_NBR = iif(isNull(TRANS_NBR), -1 , toInteger(TRANS_NBR)),",
+				"     broadcast: 'auto')~> JoinSrcYears",
+				"StringNullHandling derive(TRANS_NBR = iif(isNull(TRANS_NBR), -1 , toInteger(TRANS_NBR)),",
 				"          PTNT_CD = iif(isNull(PTNT_CD), 'UNK', right(PTNT_CD, 4)),",
 				"          PTNT_NM = iif(isNull(PHRMCY_NM),'UNK',replace(  replace(    replace(      replace(PHRMCY_NM, '-', ' '),      '&', ' '    ),    ',', ' '  ),  '\\'', ' ')),",
 				"          PTNT_YR_OF_BRTH = iif(isNull(PTNT_YR_OF_BRTH), 1900 , toInteger(PTNT_YR_OF_BRTH) ),",
@@ -227,7 +227,7 @@
 				"     asc(PROD_ID, true),",
 				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window1",
 				"SrcYears filter(regexMatch(YEAR_ID, '[A-Za-z]\\\\d+{4}')) ~> filter1",
-				"select1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn3",
+				"SelectingColumn derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> StringNullHandling",
 				"PhrmcyDerived select(mapColumn(",
 				"          each(match(true()),",
 				"               $$+'_tgt' = $$)",
@@ -237,17 +237,19 @@
 				"window1 window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
 				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> window2",
-				"derivedColumn2 derive(DCT_AMT = toDecimal(iif(\r",
+				"derivedColumn2 derive(DCT_AMT = /*toDecimal(iif(\r",
 				"    {PTNT_COPAY_AMT(COL1)} > 0,\r",
-				"    divide({PTNT_COPAY_AMT(COL1)}, {TOTAL_AMT(COL 3)}),\r",
+				"    toDecimal({PTNT_COPAY_AMT(COL1)})/{TOTAL_AMT(COL 3)},\r",
 				"    multiply({TOTAL_AMT(COL 3)}, 0.20)\r",
-				"),12,2)) ~> derivedColumn4",
-				"join2 select(mapColumn(",
+				"),12,2)*/\r",
+				"\r",
+				"toDecimal({PTNT_COPAY_AMT(COL1)})/{TOTAL_AMT(COL 3)}) ~> derivedColumn4",
+				"JoinSrcYears select(mapColumn(",
 				"          each(match(/* All input columns */ true()),",
 				"               /* Input name */ $$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> SelectingColumn",
 				"derivedColumn4 select(mapColumn(",
 				"          PTNT_CD,",
 				"          PTNT_YR_OF_BRTH,",

@@ -152,7 +152,20 @@
 				"          PHRMCY_NAT_PROV_ID_NBR = iif(isNull({p.PHRMCY_NAT_PROV_ID_NBR}), 'UNK',{p.PHRMCY_NAT_PROV_ID_NBR}),",
 				"          PSCB_FIRST_NM = ({p.PSCB_FIRST_NM}),",
 				"          PSCB_LAST_NM = ({p.PSCB_LAST_NM}),",
-				"          PHRMCY_NM = ERROR_FUNCTION('replace({p.PHRMCY_NM}, __SINGLE_QUOTE__[-,&,__SINGLE_QUOTE__,__SINGLE_QUOTE____SINGLE_QUOTE____SINGLE_QUOTE__]__SINGLE_QUOTE__, __SINGLE_QUOTE__ __SINGLE_QUOTE__)')) ~> DCTransformations"
+				"          PHRMCY_NM = regexReplace({p.PHRMCY_NM}, \"[,&'-]\", ' ')\r",
+				",",
+				"          PHRMCY_ADDR_CITY_NM =  case(like(trim({p.PHRMCY_ADDR_CITY_NM}) ,'% %'), \r",
+				"concat(left((regexSplit({p.PHRMCY_ADDR_CITY_NM},' ')[1]),1),\r",
+				" left((regexSplit({p.PHRMCY_ADDR_CITY_NM},' ')[2]),1)) ,\r",
+				"left({p.PHRMCY_ADDR_CITY_NM}, 3)),",
+				"          PHRMCY_ADDR_ST_NM = initCap({p.PHRMCY_ADDR_ST_NAME}),",
+				"          PHRMCY_ADDR_ZNE_NM = initCap({p.PHRMCY_ADDR_ZNE_NM}),",
+				"          PHRMCY_ADDR_ZIP_CD = case(length(toString({p.PHRMCY_ADDR_ZIP_CD})) < 5, \r",
+				"right(concat('00000', toString({p.PHRMCY_ADDR_ZIP_CD})),5), \r",
+				"left(toString({p.PHRMCY_ADDR_ZIP_CD}), 5)) ,",
+				"          PSCB_EMAIL_ID = concat(left(trim({p.PSCB_FIRST_NM}), length({p.PSCB_FIRST_NM})/2), left(({p.PSCB_LAST_NM}), 1), '@UN.com'),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toString({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy'),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = ERROR_FUNCTION('')) ~> DCTransformations"
 			]
 		}
 	}

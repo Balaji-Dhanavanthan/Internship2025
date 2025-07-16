@@ -153,8 +153,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2 derive(PTNT_CD = iif(isNull(PtntDerived@PTNT_CD), 'UNK', right(PtntDerived@PTNT_CD, 4))\r",
-				") ~> Trnsformation"
+				"join2 derive(PTNT_CD = iif(isNull(SrcPhrmcy@PTNT_CD), 'UNK', right(SrcPhrmcy@PTNT_CD, 4))) ~> Trnsformation"
 			]
 		}
 	}

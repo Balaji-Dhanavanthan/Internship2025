@@ -1,0 +1,80 @@
+{
+	"name": "PL_ws2_Inc_Load",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_for_transformation",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_FACT_STTM_DtypeConv",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"PatientSrc": {
+								"file_name": "SRC PTNT.csv",
+								"folder_name": "Workshop 2/SRC_Pharmacy",
+								"container_name": "practice-adf"
+							},
+							"pharmSrc": {
+								"file_name": "src_phrmcy.csv",
+								"folder_name": "Workshop 2/SRC_Pharmacy",
+								"container_name": "practice-adf"
+							},
+							"YearSrc": {
+								"file_name": "Year.csv",
+								"folder_name": "Workshop 2/SRC_Pharmacy",
+								"container_name": "practice-adf"
+							},
+							"SinkToBlob": {
+								"file_name": "STTM_PTNT_STG.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "DF_for_transformation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			}
+		],
+		"folder": {
+			"name": "Workshop 2"
+		},
+		"annotations": []
+	}
+}

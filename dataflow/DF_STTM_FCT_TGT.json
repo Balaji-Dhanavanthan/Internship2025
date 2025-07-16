@@ -51,6 +51,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -167,38 +170,29 @@
 				"    isNull(PTNT_YR_OF_BRTH),\r",
 				"    0,\r",
 				"    toInteger(year(currentDate()) - toInteger(PTNT_YR_OF_BRTH))\r",
-				")\r",
-				"\r",
-				",",
+				"),",
 				"          PTNT_GNDR = iif(\r",
 				"    isNull(PTNT_GNDR), \r",
 				"    'UNK', \r",
 				"    iif(PTNT_GNDR == 'M', 'Male', iif(PTNT_GNDR == 'F', 'Female', 'UNK'))\r",
-				")\r",
-				",",
+				"),",
 				"          DT_WRT = iif(\r",
 				"    isNull(DT_WRT),\r",
 				"    toDate('1900-01-01', 'yyyy-MM-dd'),\r",
 				"    toDate(toString(DT_WRT), 'yyyyMMdd')\r",
-				")\r",
-				"\r",
-				",",
+				"),",
 				"          PROD_ID = iif(isNull(PROD_ID), 'UNK' , PROD_ID),",
 				"          GRP_ID = iif(\r",
 				"    isNull(GRP_ID),\r",
 				"    'UNK',\r",
 				"    left(trim(GRP_ID), 2) + right(trim(GRP_ID), 2)\r",
-				")\r",
-				",",
+				"),",
 				"          PAYMENT_TYPE = iif(\r",
 				"    isNull(PMT_TYP),\r",
 				"    'UNK',\r",
 				"    iif(PMT_TYP == '1', 'On-Line', iif(PMT_TYP == '2', 'Cash', 'Others'))\r",
-				")\r",
-				",",
-				"          COGS_AMT = toDecimal(divide(toInteger(COGS_AMT), 100), 12, 2)\r",
-				"\r",
-				",",
+				"),",
+				"          COGS_AMT = toDecimal(divide(toInteger(COGS_AMT), 100), 12, 2),",
 				"          REIMB_AMT = toDecimal(toInteger(COGS_AMT)+toInteger(REIMB_AMT), 12 ,2),",
 				"          {TOTAL_AMT(COL 3)} = toDecimal((toInteger(COGS_AMT) * toInteger(REIMB_AMT)), 12 , 2),",
 				"          INGRD_CST_AMT = toDecimal(divide(toInteger(INGRD_CST_AMT), 100), 12, 2),",
@@ -209,7 +203,10 @@
 				"    'N'\r",
 				"))) ~> Trnsformation",
 				"PtntDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1",
-				"Trnsformation derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2"
+				"Trnsformation derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2",
+				"derivedColumn2 aggregate(groupBy(PROD_ID),",
+				"     COPAY_AMT = toDecimal(avg(toInteger(COPAY_AMT)),12,2)\r",
+				") ~> aggregate1"
 			]
 		}
 	}

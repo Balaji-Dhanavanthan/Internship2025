@@ -50,7 +50,7 @@
 					"name": "NullHandling"
 				},
 				{
-					"name": "window"
+					"name": "PTNTCOPAYAMT"
 				},
 				{
 					"name": "filter1"
@@ -62,7 +62,7 @@
 					"name": "ChangingName"
 				},
 				{
-					"name": "window2"
+					"name": "SLSTAXAMT"
 				},
 				{
 					"name": "DctamtTransform"
@@ -221,11 +221,11 @@
 				"    'N'\r",
 				")),",
 				"          YEAR_DESC = YEAR_DESC) ~> Trnsformation",
-				"window2 derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#)),",
-				"          each(match(type=='decimal'), $$ = iif(isNull($$),0.00))) ~> NullHandling",
+				"SLSTAXAMT derive(each(match(type=='Integer'), $$ = iifNull($$, -1, $$)),",
+				"          each(match(type=='decimal'), $$ = iifNull($$, 0.00, $$))) ~> NullHandling",
 				"Trnsformation window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
-				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window",
+				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> PTNTCOPAYAMT",
 				"SrcYears filter(regexMatch(YEAR_ID, '[A-Za-z]\\\\d+{4}')) ~> filter1",
 				"SelectingColumn derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> StringNullHandling",
 				"PhrmcyDerived select(mapColumn(",
@@ -234,9 +234,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ChangingName",
-				"window window(over(PROD_ID),",
+				"PTNTCOPAYAMT window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
-				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> window2",
+				"     {SLS_TAX_AMT(COL2)} = max(toInteger({PTNT_COPAY_AMT(COL1)}))) ~> SLSTAXAMT",
 				"NullHandling derive(DCT_AMT = toDecimal(iif(\r",
 				"    {PTNT_COPAY_AMT(COL1)} > 0,\r",
 				"    toDecimal({PTNT_COPAY_AMT(COL1)})/{TOTAL_AMT(COL 3)},\r",

@@ -117,8 +117,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> PhrmcyName",
-				"PhrmcyName derive({p.PHRMCY_NAT_PROV_ID_NBR} = toDecimal({p.PHRMCY_NAT_PROV_ID_NBR}, 10,0),",
-				"          {p.PHRMCY_NCPDP_NBR} = toInteger({p.PHRMCY_NCPDP_NBR}),",
+				"PhrmcyName derive({p.PHRMCY_NCPDP_NBR} = toInteger({p.PHRMCY_NCPDP_NBR}),",
 				"          {p.PHRMCY_ADDR_ZIP_CD} = toInteger({p.PHRMCY_ADDR_ZIP_CD}),",
 				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = toDate({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm')) ~> DCPhrmcyCast",
 				"SrcLanguage select(mapColumn(",
@@ -146,7 +145,14 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> PhrLeftJoinStatus",
 				"PhrLeftJoinStatus filter(in(['US', 'PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter",
-				"filter derive({p.PTNT_CD} = ERROR_FUNCTION('isNull(toInteger({p.PTNT_CD})),-1)')) ~> DCTransformations"
+				"filter derive(PTNT_ID = iif(isNull({p.PTNT_CD}), -1, toInteger(split({p.PTNT_CD}, '_')[1]))\r",
+				",",
+				"          PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1) ,",
+				"          PHRMCY_NCPDP_NBR = iif(isNull({p.PHRMCY_NCPDP_NBR}), -1,{p.PHRMCY_NCPDP_NBR}),",
+				"          PHRMCY_NAT_PROV_ID_NBR = iif(isNull({p.PHRMCY_NAT_PROV_ID_NBR}), 'UNK',{p.PHRMCY_NAT_PROV_ID_NBR}),",
+				"          PSCB_FIRST_NM = ({p.PSCB_FIRST_NM}),",
+				"          PSCB_LAST_NM = ({p.PSCB_LAST_NM}),",
+				"          PHRMCY_NM = ERROR_FUNCTION('replace({p.PHRMCY_NM}, __SINGLE_QUOTE__[-,&,__SINGLE_QUOTE__,__SINGLE_QUOTE____SINGLE_QUOTE____SINGLE_QUOTE__]__SINGLE_QUOTE__, __SINGLE_QUOTE__ __SINGLE_QUOTE__)')) ~> DCTransformations"
 			]
 		}
 	}

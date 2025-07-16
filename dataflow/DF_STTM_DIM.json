@@ -60,6 +60,9 @@
 				},
 				{
 					"name": "DCHandlingNull"
+				},
+				{
+					"name": "SelectTarget"
 				}
 			],
 			"scriptLines": [
@@ -197,7 +200,34 @@
 				"          RCD_CRT_TMS = currentTimestamp(),",
 				"          START_DATE = currentTimestamp()) ~> DCTransformations",
 				"DCTransformations derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK', $$)),",
-				"          each(match(type == 'Integer'), $$ = iifNull($#, -1, $#))) ~> DCHandlingNull"
+				"          each(match(type == 'Integer'), $$ = iifNull($#, -1, $#))) ~> DCHandlingNull",
+				"DCHandlingNull select(mapColumn(",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NM,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          START_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTarget"
 			]
 		}
 	}

@@ -44,7 +44,12 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Blob1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar",
+							"filename": "STG_FCT.csv"
+						}
 					}
 				],
 				"outputs": [

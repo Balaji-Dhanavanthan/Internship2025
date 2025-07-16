@@ -153,7 +153,17 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2 derive(PTNT_CD = iif(isNull(SrcPhrmcy@PTNT_CD), 'UNK', right(SrcPhrmcy@PTNT_CD, 4))) ~> Trnsformation"
+				"join2 derive(TRANS_NBR = iif(isNull(TRANS_NBR), -1 , toInteger(TRANS_NBR)),",
+				"          PTNT_CD = iif(isNull(SrcPhrmcy@PTNT_CD), 'UNK', right(SrcPhrmcy@PTNT_CD, 4)),",
+				"          PHRMCY_NM = iif(isNull(PHRMCY_NM),'UNK',replace(  replace(    replace(      replace(PHRMCY_NM, '-', ' '),      '&', ' '    ),    ',', ' '  ),  '\\'', ' ')),",
+				"          PTNT_YR_OF_BRTH = iif(isNull(PTNT_YR_OF_BRTH), 1900 , toInteger(PTNT_YR_OF_BRTH) ),",
+				"          PTNT_AGE = iif(\r",
+				"    isNull(PTNT_YR_OF_BRTH),\r",
+				"    0,\r",
+				"    toInteger(year(currentDate()) - toInteger(PTNT_YR_OF_BRTH))\r",
+				")\r",
+				"\r",
+				") ~> Trnsformation"
 			]
 		}
 	}

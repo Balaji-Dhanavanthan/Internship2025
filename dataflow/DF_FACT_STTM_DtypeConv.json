@@ -1,0 +1,140 @@
+{
+	"name": "DF_FACT_STTM_DtypeConv",
+	"properties": {
+		"folder": {
+			"name": "Workshop 2"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "PatientSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "pharmSrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "YearSrc"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "HandleStrNulls"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          DOC_ID as boolean,",
+				"          DOC_VER as boolean,",
+				"          SFTWR_VENDR as string,",
+				"          PHRMCY_NCPDP_ID as integer,",
+				"          PHRMCY_NAT_PROV_ID_NBR as integer,",
+				"          PTNT_CD as string,",
+				"          PTNT_YR_OF_BRTH as short,",
+				"          PTNT_GNDR as string,",
+				"          PTNT_ZIP_CD as integer,",
+				"          PTNT_LANG_CD as string,",
+				"          PTNT_LOC_CD as boolean,",
+				"          NURSING_HOME_FAC_NM as string,",
+				"          RX_ENROLL_IN_AUTOFILL as boolean,",
+				"          RX_ENROLL_IN_RFIL as boolean,",
+				"          RX_ENROLL_IN_CNTR_FILL as boolean,",
+				"          PSCB_NPI as integer,",
+				"          PSCB_DEA_ID as string,",
+				"          PSCB_ST_LIC_ID as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          OUT_PSCB_ZIP_CD as integer,",
+				"          RX_NBR as integer,",
+				"          TRANS_NBR as integer,",
+				"          RX_TYP as boolean,",
+				"          DT_WRT as date,",
+				"          DT_FILL as date,",
+				"          TM_FILL as boolean,",
+				"          OUT_MTRC_DSPN_QTY as integer,",
+				"          DAY_SPLY as short,",
+				"          FILL_NBR as short,",
+				"          RFIL_ORIGLY_AUTH as short,",
+				"          RFIL_RMN as short,",
+				"          DAW_CD as boolean,",
+				"          OUT_INV_QTY_AFT_FILL as boolean,",
+				"          PRC_OVRD as boolean,",
+				"          DLV as boolean,",
+				"          CMPND_IND as boolean,",
+				"          PROD_ID as long,",
+				"          RX_ORIG_IND as boolean,",
+				"          PMT_TYP as short,",
+				"          BAS_OF_INGRD_CST_REIMB as string,",
+				"          REIMB_AMT as string,",
+				"          COPAY_AMT as short,",
+				"          INGRD_CST_AMT as short,",
+				"          OUT_TOT_AMT_PD_BY_PTNT as short,",
+				"          TOT_RX_PRC_COLL as short,",
+				"          OUT_DSPN_FEE_PD as short,",
+				"          COGS_AMT as short,",
+				"          USUAL_AND_CSTMARY as integer,",
+				"          OUT_AWP_AMT as integer,",
+				"          OUT_DCT_AMT as boolean,",
+				"          OUT_SLS_TAX as short,",
+				"          PTY3_BIN as integer,",
+				"          PTY3_PCN as string,",
+				"          PLN_ID as string,",
+				"          GRP_ID as string,",
+				"          NTWK_REIMB_ID as string,",
+				"          PAYR_ID_QLFY as short,",
+				"          PAYR_ID as string,",
+				"          PTY3_CLM_REF_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> PatientSrc",
+				"source(output(",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PHRMCY_NCPDP_NBR as string,",
+				"          PTNT_CD as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          LANG_CD as string,",
+				"          DEAL_ID as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ST_ADDR_LINE1_TXT as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_CD as string,",
+				"          PHRMCY_ADDR_ST_NAME as string,",
+				"          PHRMCY_ADDR_ZNE_CD as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> pharmSrc",
+				"source(output(",
+				"          YEAR_ID as string,",
+				"          YEAR_DESC as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> YearSrc",
+				"YearSrc derive(each(match(type == 'string'), $$ = iif($$ == 'NULL', toString(null())))) ~> HandleStrNulls",
+				"PatientSrc derive() ~> derivedColumn1"
+			]
+		}
+	}
+}

@@ -309,7 +309,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"split1@UpdateAndExists split({s.PHRMCY_ADDR_ZIP_CD}!={t.PHRMCY_ADDR_ZIP_CD},",
+				"split1@UpdateAndExists split(toString({s.PHRMCY_ADDR_ZIP_CD})!={t.PHRMCY_ADDR_ZIP_CD},",
 				"     disjoint: false) ~> split2@(updated, exists)"
 			]
 		}

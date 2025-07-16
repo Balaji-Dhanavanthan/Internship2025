@@ -183,6 +183,12 @@
 				"    'UNK',\r",
 				"    left(trim(GRP_ID), 2) + right(trim(GRP_ID), 2)\r",
 				")\r",
+				",",
+				"          PAYMENT_TYPE = iif(\r",
+				"    isNull(PMT_TYP),\r",
+				"    'UNK',\r",
+				"    iif(PMT_TYP == '1', 'On-Line', iif(PMT_TYP == '2', 'Cash', 'Others'))\r",
+				")\r",
 				") ~> Trnsformation"
 			]
 		}

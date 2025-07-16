@@ -33,6 +33,9 @@
 			"transformations": [
 				{
 					"name": "PintDerived"
+				},
+				{
+					"name": "PhrmcyDerived"
 				}
 			],
 			"scriptLines": [
@@ -129,7 +132,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
-				"SrcPint derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PintDerived"
+				"SrcPint derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PintDerived",
+				"SrcPhrmcy derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PhrmcyDerived"
 			]
 		}
 	}

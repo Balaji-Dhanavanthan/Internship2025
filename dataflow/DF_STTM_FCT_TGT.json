@@ -190,13 +190,20 @@
 				"    iif(PMT_TYP == '1', 'On-Line', iif(PMT_TYP == '2', 'Cash', 'Others'))\r",
 				")\r",
 				",",
-				"          COGS_AMT = \r",
-				"    toDecimal(divide(toInteger(COGS_AMT), 100), 12, 2)\r",
+				"          COGS_AMT = toDecimal(divide(toInteger(COGS_AMT), 100), 12, 2)\r",
 				"\r",
 				",",
 				"          REIMB_AMT = toDecimal(toInteger(COGS_AMT)+toInteger(REIMB_AMT), 12 ,2),",
 				"          {TOTAL_AMT(COL 3)} = toDecimal((toInteger(COGS_AMT) * toInteger(REIMB_AMT)), 12 , 2),",
-				"          INGRD_CST_AMT = toDecimal(divide(toInteger(INGRD_CST_AMT),100), 12, 2)) ~> Trnsformation"
+				"          INGRD_CST_AMT = \r",
+				"    toDecimal(divide(toInteger(INGRD_CST_AMT), 100), 12, 2)\r",
+				",",
+				"          FILLED_DATE = iif(isNull(DT_FILL),toDate('1900-01-01', 'yyyy-MM-dd'),toDate(DT_FILL, 'yyyyMMdd')),",
+				"          PAYR_CNTRCT_FLG = toString(iif(\r",
+				"    TOT_RX_PRC_COLL > USUAL_AND_CSTMARY,\r",
+				"    'Y',\r",
+				"    'N'\r",
+				"))) ~> Trnsformation"
 			]
 		}
 	}

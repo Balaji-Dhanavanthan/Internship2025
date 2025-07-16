@@ -129,7 +129,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
-				"SrcPint derive(each(match(type=='string'), $$ = ERROR_FUNCTION(''))) ~> PintDerived"
+				"SrcPint derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PintDerived"
 			]
 		}
 	}

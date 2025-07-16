@@ -12,7 +12,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "SrcPint"
+					"name": "SrcPtnt"
 				},
 				{
 					"dataset": {
@@ -32,7 +32,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "PintDerived"
+					"name": "PtntDerived"
 				},
 				{
 					"name": "PhrmcyDerived"
@@ -44,7 +44,7 @@
 					"name": "join2"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "Trnsformation"
 				}
 			],
 			"scriptLines": [
@@ -112,7 +112,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> SrcPint",
+				"     ignoreNoFilesFound: false) ~> SrcPtnt",
 				"source(output(",
 				"          YEAR_ID as string,",
 				"          YEAR_DESC as string",
@@ -141,9 +141,9 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
-				"SrcPint derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PintDerived",
+				"SrcPtnt derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PtntDerived",
 				"SrcPhrmcy derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> PhrmcyDerived",
-				"PintDerived, SrcPhrmcy join(PintDerived@PTNT_CD == SrcPhrmcy@PTNT_CD,",
+				"PtntDerived, SrcPhrmcy join(PtntDerived@PTNT_CD == SrcPhrmcy@PTNT_CD,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -153,7 +153,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2 derive() ~> derivedColumn1"
+				"join2 derive(PTNT_CD = iifNull(right(PtntDerived@PTNT_CD),4,'UNK')) ~> Trnsformation"
 			]
 		}
 	}

@@ -53,9 +53,6 @@
 					"name": "filter1"
 				},
 				{
-					"name": "derivedColumn1"
-				},
-				{
 					"name": "DCPhrmcyNull"
 				},
 				{
@@ -102,7 +99,7 @@
 				"phrmcyName derive(PHRMCY_NAT_PROV_ID_NBR = toInteger({p.PHRMCY_NAT_PROV_ID_NBR}),",
 				"          PHRMCY_ADDR_ZIP_CD = toInteger({p.PHRMCY_ADDR_ZIP_CD}),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toDate({p.PHRMCY_SYS_IVR_DTA_STRT_DT},'dd-MM-yyyy HH:mm')) ~> DCPHRMCYCast",
-				"derivedColumn1, languageName join({p.LANG_CD} == {l.LANG_CD},",
+				"DCPHRMCYCast, languageName join({p.LANG_CD} == {l.LANG_CD},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -147,31 +144,28 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
 				"join2 filter( in( ['US','PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter1",
-				"DCPHRMCYCast derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK', $$)),",
-				"          each(match(type=='integer'), $$ = iifNull(-1, $#)),",
-				"          each(match(type=='date'), $$ = iifNull('01-01-1900', $0))) ~> derivedColumn1",
 				"phrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> DCPhrmcyNull",
-				"filter1 derive({p.PTNT_CD} = replace({p.PTNT_CD}, '_', ''),",
-				"          PTNT_CD = {p.PTNT_CD},",
-				"          PHRMCY_NCPDP_NBR = ERROR_FUNCTION(''),",
-				"          PHRMCY_NAT_PROV_ID_NBR = ERROR_FUNCTION(''),",
-				"          PSCB_FIRST_NM = ERROR_FUNCTION(''),",
-				"          PSCB_LAST_NM = ERROR_FUNCTION(''),",
-				"          PHRMCY_NM = ERROR_FUNCTION(''),",
-				"          {PHRMCY_ADDR_CITY_NM } = ERROR_FUNCTION(''),",
-				"          PHRMCY_ADDR_ST_NM = ERROR_FUNCTION(''),",
-				"          PHRMCY_ADDR_ZNE_NM = ERROR_FUNCTION(''),",
-				"          {PHRMCY_ADDR_ZIP_CD } = ERROR_FUNCTION(''),",
-				"          PSCB_EMAIL_ID = ERROR_FUNCTION(''),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT = ERROR_FUNCTION(''),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = ERROR_FUNCTION(''),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_YR = ERROR_FUNCTION(''),",
-				"          PHRMCY_AGE = ERROR_FUNCTION(''),",
-				"          DEAL_ID = ERROR_FUNCTION(''),",
-				"          DEAL_TYPE_CD = ERROR_FUNCTION(''),",
-				"          DEAL_NUMBER = ERROR_FUNCTION(''),",
-				"          LANG_CD = ERROR_FUNCTION(''),",
-				"          LANG_DESC = ERROR_FUNCTION('')) ~> DCTransition"
+				"filter1 derive({p.PTNT_CD} = toInteger(substringIndex({p.PTNT_CD}, '_', 1)),",
+				"          PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
+				"          PHRMCY_NCPDP_NBR = case(isNull({p.PHRMCY_NCPDP_NBR}), -1,toInteger({p.PHRMCY_NCPDP_NBR})),",
+				"          PHRMCY_NAT_PROV_ID_NBR = case(isNull({p.PHRMCY_NAT_PROV_ID_NBR}), 'UNK', {p.PHRMCY_NAT_PROV_ID_NBR}),",
+				"          PSCB_FIRST_NM = {p.PSCB_FIRST_NM},",
+				"          PSCB_LAST_NM = {p.PSCB_LAST_NM},",
+				"          PHRMCY_NM = regexReplace({p.PHRMCY_NM}, \"[,&'-]\", ' '),",
+				"          {PHRMCY_ADDR_CITY_NM } = case(like(trim({p.PHRMCY_ADDR_CITY_NM}) , ' '), initCap({p.PHRMCY_ADDR_CITY_NM}), {p.PHRMCY_ADDR_CITY_NM}),",
+				"          PHRMCY_ADDR_ST_NM = {p.PHRMCY_ADDR_ST_NAME},",
+				"          PHRMCY_ADDR_ZNE_NM = {p.PHRMCY_ADDR_ZNE_NM},",
+				"          {PHRMCY_ADDR_ZIP_CD } = PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID = {p.PSCB_FIRST_NM},",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = {p.PHRMCY_SYS_IVR_DTA_STRT_DT},",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = {p.PHRMCY_SYS_IVR_DTA_STRT_DT},",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR = {p.PHRMCY_SYS_IVR_DTA_STRT_DT},",
+				"          PHRMCY_AGE = {p.PHRMCY_SYS_IVR_DTA_STRT_DT},",
+				"          DEAL_ID = {d.deal_id},",
+				"          DEAL_TYPE_CD = {d.deal_nbr},",
+				"          DEAL_NUMBER = {d.deal_nbr},",
+				"          LANG_CD = {l.LANG_DESC},",
+				"          LANG_DESC = {l.LANG_DESC}) ~> DCTransition"
 			]
 		}
 	}

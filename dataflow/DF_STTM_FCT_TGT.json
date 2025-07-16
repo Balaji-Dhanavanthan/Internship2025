@@ -222,7 +222,7 @@
 				")),",
 				"          YEAR_DESC = YEAR_DESC) ~> Trnsformation",
 				"window2 derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#)),",
-				"          each(match(type=='decimal'), ERROR_FUNCTION('') = ERROR_FUNCTION(''))) ~> derivedColumn2",
+				"          each(match(type=='decimal'), $$ =  iif(isNull($$),0.00))) ~> derivedColumn2",
 				"Trnsformation window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
 				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window1",

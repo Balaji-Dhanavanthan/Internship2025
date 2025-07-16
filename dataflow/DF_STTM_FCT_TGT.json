@@ -53,7 +53,10 @@
 					"name": "derivedColumn2"
 				},
 				{
-					"name": "aggregate1"
+					"name": "window1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -203,10 +206,12 @@
 				"    'N'\r",
 				"))) ~> Trnsformation",
 				"PtntDerived derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$))) ~> derivedColumn1",
-				"Trnsformation derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2",
-				"derivedColumn2 aggregate(groupBy(PROD_ID),",
-				"     COPAY_AMT = toDecimal(avg(toInteger(COPAY_AMT)),12,2)\r",
-				") ~> aggregate1"
+				"window1 derive(each(match(type=='Integer'), $$ = iif(isNull($$),-1,$#))) ~> derivedColumn2",
+				"Trnsformation window(over(PROD_ID),",
+				"     asc(PROD_ID, true),",
+				"     {PTNT_COPAY_AMT(COL1)} = avg(toInteger(COPAY_AMT))) ~> window1",
+				"SrcYears filter(isMatch(YEAR_ID, '^[a-zA-Z0-9]+$')\r",
+				") ~> filter1"
 			]
 		}
 	}

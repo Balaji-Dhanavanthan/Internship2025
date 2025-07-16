@@ -163,6 +163,19 @@
 				"    toInteger(year(currentDate()) - toInteger(PTNT_YR_OF_BRTH))\r",
 				")\r",
 				"\r",
+				",",
+				"          PTNT_GNDR = iif(\r",
+				"    isNull(PTNT_GNDR), \r",
+				"    'UNK', \r",
+				"    iif(PTNT_GNDR == 'M', 'Male', iif(PTNT_GNDR == 'F', 'Female', 'UNK'))\r",
+				")\r",
+				",",
+				"          DT_WRT = iif(\r",
+				"    isNull(DT_WRT),\r",
+				"    toDate('1900-01-01', 'yyyy-MM-dd'),\r",
+				"    toDate(toString(DT_WRT), 'yyyyMMdd')\r",
+				")\r",
+				"\r",
 				") ~> Trnsformation"
 			]
 		}

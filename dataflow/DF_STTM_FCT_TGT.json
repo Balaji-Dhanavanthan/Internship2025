@@ -177,7 +177,13 @@
 				")\r",
 				"\r",
 				",",
-				"          PROD_ID = iif(isNull(PROD_ID), 'UNK' , PROD_ID)) ~> Trnsformation"
+				"          PROD_ID = iif(isNull(PROD_ID), 'UNK' , PROD_ID),",
+				"          GRP_ID = iif(\r",
+				"    isNull(GRP_ID),\r",
+				"    'UNK',\r",
+				"    left(trim(GRP_ID), 2) + right(trim(GRP_ID), 2)\r",
+				")\r",
+				") ~> Trnsformation"
 			]
 		}
 	}

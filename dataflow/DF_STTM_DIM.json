@@ -51,6 +51,15 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "DCPhrmcyNull"
+				},
+				{
+					"name": "DCTransition"
 				}
 			],
 			"scriptLines": [
@@ -90,16 +99,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> status",
-				"phrmcyName derive(PHRMCY_NCPDP_NBR = toInteger({p.PHRMCY_NCPDP_NBR}),",
-				"          PHRMCY_NAT_PROV_ID_NBR = toLong({p.PHRMCY_NAT_PROV_ID_NBR}),",
+				"phrmcyName derive(PHRMCY_NAT_PROV_ID_NBR = toInteger({p.PHRMCY_NAT_PROV_ID_NBR}),",
 				"          PHRMCY_ADDR_ZIP_CD = toInteger({p.PHRMCY_ADDR_ZIP_CD}),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toDate({p.PHRMCY_SYS_IVR_DTA_STRT_DT},'dd-MM-yyyy HH:mm')) ~> DCPHRMCYCast",
-				"DCPHRMCYCast, languageName join({p.LANG_CD} == {l.LANG_CD},",
+				"derivedColumn1, languageName join({p.LANG_CD} == {l.LANG_CD},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"phrmcy select(mapColumn(",
+				"DCPhrmcyNull select(mapColumn(",
 				"          {p.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
 				"          {p.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
 				"          {p.PTNT_CD} = PTNT_CD,",
@@ -138,7 +146,32 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2 filter({p.PHRMCY_ADDR_ZIP_CD}=='US' && {p.PHRMCY_ADDR_ZIP_CD}=='PR') ~> filter1"
+				"join2 filter( in( ['US','PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter1",
+				"DCPHRMCYCast derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK', $$)),",
+				"          each(match(type=='integer'), $$ = iifNull(-1, $#)),",
+				"          each(match(type=='date'), $$ = iifNull('01-01-1900', $0))) ~> derivedColumn1",
+				"phrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> DCPhrmcyNull",
+				"filter1 derive({p.PTNT_CD} = replace({p.PTNT_CD}, '_', ''),",
+				"          PTNT_CD = {p.PTNT_CD},",
+				"          PHRMCY_NCPDP_NBR = ERROR_FUNCTION(''),",
+				"          PHRMCY_NAT_PROV_ID_NBR = ERROR_FUNCTION(''),",
+				"          PSCB_FIRST_NM = ERROR_FUNCTION(''),",
+				"          PSCB_LAST_NM = ERROR_FUNCTION(''),",
+				"          PHRMCY_NM = ERROR_FUNCTION(''),",
+				"          {PHRMCY_ADDR_CITY_NM } = ERROR_FUNCTION(''),",
+				"          PHRMCY_ADDR_ST_NM = ERROR_FUNCTION(''),",
+				"          PHRMCY_ADDR_ZNE_NM = ERROR_FUNCTION(''),",
+				"          {PHRMCY_ADDR_ZIP_CD } = ERROR_FUNCTION(''),",
+				"          PSCB_EMAIL_ID = ERROR_FUNCTION(''),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = ERROR_FUNCTION(''),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = ERROR_FUNCTION(''),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR = ERROR_FUNCTION(''),",
+				"          PHRMCY_AGE = ERROR_FUNCTION(''),",
+				"          DEAL_ID = ERROR_FUNCTION(''),",
+				"          DEAL_TYPE_CD = ERROR_FUNCTION(''),",
+				"          DEAL_NUMBER = ERROR_FUNCTION(''),",
+				"          LANG_CD = ERROR_FUNCTION(''),",
+				"          LANG_DESC = ERROR_FUNCTION('')) ~> DCTransition"
 			]
 		}
 	}

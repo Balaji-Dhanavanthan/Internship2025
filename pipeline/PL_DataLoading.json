@@ -5,8 +5,6 @@
 			{
 				"name": "CP_pharmacycsv",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Data flow1",
@@ -55,9 +53,8 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "src_phrmcy.csv",
-							"folder_name": "Workshop 2/SRC_Pharmacy",
-							"container_name": "practice-adf"
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
 						}
 					}
 				],
@@ -1085,6 +1082,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_test",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"container_name": "csvcontainer"
+							},
+							"EmptSink": {
+								"container_name": "csvcontainer"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

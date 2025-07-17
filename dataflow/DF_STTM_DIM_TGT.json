@@ -118,7 +118,7 @@
 					"name": "HistorySelection"
 				},
 				{
-					"name": "union1"
+					"name": "CombiningRows"
 				}
 			],
 			"scriptLines": [
@@ -498,7 +498,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> HistorySelection",
-				"SelectingSrcColumns union(byName: true)~> union1"
+				"SelectingSrcColumns, UpdateSelection, ExtistingSelection, HistorySelection union(byName: true)~> CombiningRows"
 			]
 		}
 	}

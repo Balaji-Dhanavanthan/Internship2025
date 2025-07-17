@@ -73,6 +73,9 @@
 				},
 				{
 					"name": "TargetDerived"
+				},
+				{
+					"name": "INSERT"
 				}
 			],
 			"scriptLines": [
@@ -255,7 +258,7 @@
 				"          END_DATE = toDate(END_DATE),",
 				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS),",
 				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == '0NULL', 'UNK', PHRMCY_ADDR_ZIP_CD)) ~> AuditColumns",
-				"AuditColumns join(PTNT_CD == ERROR_FUNCTION(''),",
+				"AuditColumns, TargetDerived join(SelReqCol@PTNT_CD == DIMTGT@PTNT_CD,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -267,7 +270,9 @@
 				"          RCD_CRT_TMS = toDate(RCD_CRT_TMS, 'dd-MM-yyyy'),",
 				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS, 'dd-MM-yyyy'),",
 				"          START_DATE = toDate(START_DATE, 'dd-MM-yyyy'),",
-				"          END_DATE = toDate(END_DATE, 'dd-MM-yyyy')) ~> TargetDerived"
+				"          END_DATE = toDate(END_DATE, 'dd-MM-yyyy')) ~> TargetDerived",
+				"joinswithtarget split(isNull(DIMTGT@PTNT_CD),",
+				"     disjoint: false) ~> INSERT@(INSERT, UPDATE)"
 			]
 		}
 	}

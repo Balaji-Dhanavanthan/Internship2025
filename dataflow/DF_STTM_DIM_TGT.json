@@ -107,6 +107,9 @@
 				},
 				{
 					"name": "JoinigForHistoryRcords"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -449,7 +452,9 @@
 				"     joinType:'right',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> JoinigForHistoryRcords"
+				"     broadcast: 'auto')~> JoinigForHistoryRcords",
+				"JoinigForHistoryRcords split(ERROR_FUNCTION(''),",
+				"     disjoint: false) ~> split1@(Update, Existing)"
 			]
 		}
 	}

@@ -5,6 +5,8 @@
 			{
 				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -107,7 +109,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "DIM_PTNT_testing_record.csv"
+							"FileName": "TGT_SCD2_STTM.csv"
 						}
 					}
 				],
@@ -117,8 +119,72 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "DIM_PTNT_testing_123_Tgt",
+							"tablename": "TGT_SCD2_STTM",
 							"databasename": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "PHRMCY_SRC",
+							"databasename": "Intern_2025"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar",
+							"FileName": "SRC_SCD2_TESTING.csv"
 						}
 					}
 				]

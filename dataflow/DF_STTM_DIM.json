@@ -296,7 +296,7 @@
 				"          {t.PSCB_FIRST_NM} = PSCB_FIRST_NM,",
 				"          {t.PSCB_LAST_NM} = PSCB_LAST_NM,",
 				"          {t.PHRMCY_NM} = PHRMCY_NM,",
-				"          {t.PHRMCY_ADDR_CITY_NM} = PHRMCY_ADDR_CITY_NM,",
+				"          {t.PHRMCY_ADDR_CITY_NM} = {PHRMCY_ADDR_CITY_NM },",
 				"          {t.PHRMCY_ADDR_ST_NM} = PHRMCY_ADDR_ST_NM,",
 				"          {t.PHRMCY_ADDR_ZNE_NM} = PHRMCY_ADDR_ZNE_NM,",
 				"          {t.PHRMCY_ADDR_ZIP_CD} = PHRMCY_ADDR_ZIP_CD,",

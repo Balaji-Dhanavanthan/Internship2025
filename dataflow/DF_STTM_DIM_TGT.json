@@ -357,7 +357,7 @@
 				"          START_DATE = toDate(START_DATE, 'dd-MM-yyyy'),",
 				"          END_DATE = toDate(END_DATE, 'dd-MM-yyyy')) ~> TargetDerived",
 				"joinswithtarget split(isNull(DIMTGT@PTNT_CD),",
-				"     SelReqCol@PTNT_CD == DIMTGT@PTNT_CD && (AuditColumns@PHRMCY_ADDR_ZIP_CD != DIMTGT@PHRMCY_ADDR_ZIP_CD),",
+				"     replace(po_PTNT_CD, '_', '') == replace(substring(p_PTNT_CD, indexOf(p_PTNT_CD, '_'), length(p_PTNT_CD)), '_', ''),",
 				"     disjoint: false) ~> INSERT@(INSERT, UPDATE, EXISTING)",
 				"INSERT@INSERT derive({Is Current} = 1,",
 				"          RCD_CRT_TMS = currentDate(),",

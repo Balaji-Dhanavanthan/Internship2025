@@ -264,9 +264,9 @@
 				"          PAYMENT_TYPE,",
 				"          COGS_AMT,",
 				"          REIMB_AMT,",
-				"          {PTNT_COPAY_AMT(COL1)},",
-				"          {SLS_TAX_AMT(COL2)},",
-				"          {TOTAL_AMT(COL 3)},",
+				"          PTNT_COPAY_AMT = {PTNT_COPAY_AMT(COL1)},",
+				"          SLS_TAX_AMT = {SLS_TAX_AMT(COL2)},",
+				"          TOTAL_AMT = {TOTAL_AMT(COL 3)},",
 				"          DCT_AMT,",
 				"          INGRD_CST_AMT,",
 				"          FILLED_DATE,",
@@ -276,8 +276,15 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectTarget",
-				"selectTarget derive(each(match(type == 'string'), $$ = iifNull($$, 'UNk', $$)),",
-				"          each(match(type == 'Integer'), $$ = iifNull($#, -1, $#))) ~> TgtNullHandle"
+				"selectTarget derive(each(match(type=='string'), $$ = iifNull($$, 'UNk', $$)),",
+				"          each(match(type=='Integer'), $$ = iifNull($#, -1, $#)),",
+				"          COGS_AMT = iif(isNull(COGS_AMT), 0.00, toFloat(COGS_AMT)),",
+				"          REIMB_AMT = iif(isNull(REIMB_AMT), 0.00, toFloat(REIMB_AMT)),",
+				"          PTNT_COPAY_AMT = iif(isNull(PTNT_COPAY_AMT), 0.00,toFloat(PTNT_COPAY_AMT) ),",
+				"          SLS_TAX_AMT = iif(isNull(SLS_TAX_AMT), 0.00,toFloat(SLS_TAX_AMT) ),",
+				"          TOTAL_AMT = iif(isNull(TOTAL_AMT), 0.00,toFloat(TOTAL_AMT) ),",
+				"          DCT_AMT = iif(isNull(DCT_AMT), 0.00,toFloat(DCT_AMT) ),",
+				"          INGRD_CST_AMT = iif(isNull(INGRD_CST_AMT), 0.00,toFloat(INGRD_CST_AMT) )) ~> TgtNullHandle"
 			]
 		}
 	}

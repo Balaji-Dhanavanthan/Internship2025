@@ -69,6 +69,9 @@
 				},
 				{
 					"name": "DCToInt"
+				},
+				{
+					"name": "window1"
 				}
 			],
 			"scriptLines": [
@@ -219,19 +222,19 @@
 				"          PAYMENT_TYPE = iif({pt.PMT_TYP} == 1, 'On-Line', iif({pt.PMT_TYP} == 2, 'Cash', 'Others')),",
 				"          COGS_AMT = {pt.COGS_AMT}/100,",
 				"          REIMB_AMT = {pt.COGS_AMT} + {pt.REIMB_AMT},",
-				"          {PTNT_COPAY_AMT(COL1)} = ERROR_FUNCTION(''),",
-				"          {SLS_TAX_AMT(COL2)} = ERROR_FUNCTION(''),",
 				"          {TOTAL_AMT(COL 3)} = {pt.COGS_AMT} * {pt.REIMB_AMT},",
-				"          DCT_AMT = ERROR_FUNCTION(''),",
 				"          INGRD_CST_AMT = {pt.INGRD_CST_AMT}/100,",
 				"          FILLED_DATE = toDate({pt.DT_FILL}, 'yyyyMMdd'),",
 				"          PAYR_CNTRCT_FLG = iif({pt.TOT_RX_PRC_COLL} > {pt.USUAL_AND_CSTMARY}, 'Y', 'N'),",
-				"          YEAR_DESC = {y.YEAR_DESC},",
+				"          YEAR_DESC = right({y.YEAR_DESC}, 4),",
 				"          LOAD_DATE = {pt.DOC_ID}) ~> DCTransformations",
 				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH}),",
 				"          {pt.DT_WRT} = toString({pt.DT_WRT}),",
 				"          {pt.DT_FILL} = toString({pt.DT_FILL}),",
-				"          {pt.USUAL_AND_CSTMARY} = toString({pt.USUAL_AND_CSTMARY})) ~> DCToInt"
+				"          {pt.USUAL_AND_CSTMARY} = toString({pt.USUAL_AND_CSTMARY})) ~> DCToInt",
+				"DCTransformations window(over({pt.PROD_ID}),",
+				"     asc({pt.PROD_ID}, true),",
+				"     {PTNT_COPAY_AMT(COL1)} = avg({pt.COPAY_AMT})) ~> window1"
 			]
 		}
 	}

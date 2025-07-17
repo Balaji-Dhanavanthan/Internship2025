@@ -19,9 +19,6 @@
 						"referenceName": "DF_STTM_DIM",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"phrmcy": {
-								"filename": "src_phrmcy.csv"
-							},
 							"Language": {
 								"filename": "language.csv"
 							},
@@ -29,10 +26,17 @@
 								"filename": "status.csv"
 							},
 							"DimPtnt": {
-								"filename": "Dim_ptnt.csv"
+								"filename": "sink.csv"
 							},
 							"sink1": {
 								"filename": "Dim_ptnt.csv"
+							}
+						},
+						"linkedServiceParameters": {
+							"DimPtnt": {
+								"schemaLinkedService": {
+									"filename": "sink.csv"
+								}
 							}
 						}
 					},

@@ -35,11 +35,6 @@
 								"file_name": "src_phrmcy.csv",
 								"folder_name": "Workshop 2/SRC_Pharmacy",
 								"container_name": "practice-adf"
-							},
-							"DimSink": {
-								"file_name": "DIM_PTMT_I2025_JSenthil_v2.csv",
-								"folder_name": "ETL_stuff",
-								"container_name": "csvcontainer"
 							}
 						}
 					},
@@ -119,6 +114,44 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "df_test",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_test",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"file_name": "DIM_PTNT_I2025_JSenthil.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"EmptSink": {
+								"file_name": "DIM_PTMT_TGT.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

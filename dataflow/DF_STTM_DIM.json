@@ -36,7 +36,15 @@
 					"name": "DimPtnt"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "DCPHRMCYCast"
@@ -231,7 +239,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2 filter( in( ['US','PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter1",
+				"join2 filter(in( ['US','PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter1",
 				"phrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> DCPhrmcyNull",
 				"filter1 derive(PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
 				"          PTNT_ID = iifNull(toInteger(substringIndex({p.PTNT_CD}, '_', 1)),-1,toInteger(substringIndex({p.PTNT_CD}, '_', 1))),",
@@ -248,16 +256,11 @@
 				"          PHRMCY_ADDR_ZNE_NM = initCap({p.PHRMCY_ADDR_ZNE_NM}),",
 				"          {PHRMCY_ADDR_ZIP_CD } = case(length({p.PHRMCY_ADDR_ZIP_CD})<5, right(concat('00000', {p.PHRMCY_ADDR_ZIP_CD}),5), left({p.PHRMCY_ADDR_ZIP_CD}, 5)),",
 				"          PSCB_EMAIL_ID = concat(left(trim({p.PSCB_FIRST_NM}),length({p.PSCB_FIRST_NM})/2),left({p.PSCB_LAST_NM},1),'@UN.com'),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toString(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT},'dd-MM-yyyy HH:mm'),'dd-MMM-yyyy')\r",
-				",",
-				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = \r",
-				"'Q' + toString(ceil(month(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm')) / 3)) + '-' +\r",
-				"toString(year(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm')))\r",
-				",",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toString(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT},'dd-MM-yyyy HH:mm'),'dd-MMM-yyyy'),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = 'Q' + toString(ceil(month(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm')) / 3)) + '-' +\r",
+				"toString(year(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm'))),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm'))),",
-				"          PHRMCY_AGE = toInteger(minus(currentDate(),PHRMCY_SYS_IVR_DTA_STRT_DT)/365)\r",
-				"\r",
-				",",
+				"          PHRMCY_AGE = toInteger(minus(currentDate(),PHRMCY_SYS_IVR_DTA_STRT_DT)/365),",
 				"          DEAL_ID = case(in([{d.deal_id},{d.deal_nbr}], {p.DEAL_ID}), 'Exists', 'Not exists'),",
 				"          DEAL_TYPE_CD = left({d.deal_nbr},2),",
 				"          DEAL_NUMBER = substring({d.deal_nbr}, 2, length({d.deal_nbr})),",
@@ -466,7 +469,11 @@
 				"select6, union2 union(byName: true)~> union3",
 				"union3 keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1"
+				"     stepValue: 1L) ~> surrogateKey1",
+				"union2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

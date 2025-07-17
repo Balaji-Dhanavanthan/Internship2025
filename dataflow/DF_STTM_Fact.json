@@ -59,7 +59,13 @@
 					"name": "emptyValuetoNull"
 				},
 				{
-					"name": "derivedColumn4"
+					"name": "DCTransition"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "typeCast"
 				}
 			],
 			"scriptLines": [
@@ -156,7 +162,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ptnt",
-				"ptntName, phrmcyName join({p.PTNT_CD} == {pt.PTNT_CD},",
+				"ptntName, phrmcyName join({p.PTNT_CD} == {ph.PTNT_CD},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -176,22 +182,22 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> yearName",
 				"derivedColumn2 select(mapColumn(",
-				"          {pt.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
-				"          {pt.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
-				"          {pt.PTNT_CD} = PTNT_CD,",
-				"          {pt.PSCB_FIRST_NM} = PSCB_FIRST_NM,",
-				"          {pt.PSCB_LAST_NM} = PSCB_LAST_NM,",
-				"          {pt.LANG_CD} = LANG_CD,",
-				"          {pt.DEAL_ID} = DEAL_ID,",
-				"          {pt.PHRMCY_NM} = PHRMCY_NM,",
-				"          {pt.PHRMCY_ST_ADDR_LINE1_TXT} = PHRMCY_ST_ADDR_LINE1_TXT,",
-				"          {pt.PHRMCY_ADDR_ZIP_CD} = PHRMCY_ADDR_ZIP_CD,",
-				"          {pt.PHRMCY_ADDR_CITY_NM} = PHRMCY_ADDR_CITY_NM,",
-				"          {pt.PHRMCY_ADDR_ST_CD} = PHRMCY_ADDR_ST_CD,",
-				"          {pt.PHRMCY_ADDR_ST_NAME} = PHRMCY_ADDR_ST_NAME,",
-				"          {pt.PHRMCY_ADDR_ZNE_CD} = PHRMCY_ADDR_ZNE_CD,",
-				"          {pt.PHRMCY_ADDR_ZNE_NM} = PHRMCY_ADDR_ZNE_NM,",
-				"          {pt.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT",
+				"          {ph.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
+				"          {ph.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
+				"          {ph.PTNT_CD} = PTNT_CD,",
+				"          {ph.PSCB_FIRST_NM} = PSCB_FIRST_NM,",
+				"          {ph.PSCB_LAST_NM} = PSCB_LAST_NM,",
+				"          {ph.LANG_CD} = LANG_CD,",
+				"          {ph.DEAL_ID} = DEAL_ID,",
+				"          {ph.PHRMCY_NM} = PHRMCY_NM,",
+				"          {ph.PHRMCY_ST_ADDR_LINE1_TXT} = PHRMCY_ST_ADDR_LINE1_TXT,",
+				"          {ph.PHRMCY_ADDR_ZIP_CD} = PHRMCY_ADDR_ZIP_CD,",
+				"          {ph.PHRMCY_ADDR_CITY_NM} = PHRMCY_ADDR_CITY_NM,",
+				"          {ph.PHRMCY_ADDR_ST_CD} = PHRMCY_ADDR_ST_CD,",
+				"          {ph.PHRMCY_ADDR_ST_NAME} = PHRMCY_ADDR_ST_NAME,",
+				"          {ph.PHRMCY_ADDR_ZNE_CD} = PHRMCY_ADDR_ZNE_CD,",
+				"          {ph.PHRMCY_ADDR_ZNE_NM} = PHRMCY_ADDR_ZNE_NM,",
+				"          {ph.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> phrmcyName",
@@ -201,12 +207,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ptntName",
-				"join2 derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()) ,$$))) ~> emptyValuetoNull",
-				"emptyValuetoNull derive(TRANS_NBR = ERROR_FUNCTION(''),",
-				"          PTNT_CD = ERROR_FUNCTION(''),",
-				"          PTNT_NM = ERROR_FUNCTION(''),",
-				"          PTNT_YR_OF_BRTH = ERROR_FUNCTION(''),",
-				"          PTNT_AGE = ERROR_FUNCTION(''),",
+				"filter1 derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()) ,$$))) ~> emptyValuetoNull",
+				"typeCast derive(TRANS_NBR = {p.TRANS_NBR},",
+				"          PTNT_CD = substringIndex({ph.PTNT_CD}, '_', -1),",
+				"          PTNT_NM = regexReplace({ph.PHRMCY_NM}, \"[,&'-]\", ' '),",
+				"          PTNT_YR_OF_BRTH = {p.PTNT_YR_OF_BRTH},",
+				"          PTNT_AGE = minus({p.PTNT_YR_OF_BRTH}, toInteger(year(currentTimestamp())) ),",
 				"          PTNT_GNDR = ERROR_FUNCTION(''),",
 				"          TRANS_DATE = ERROR_FUNCTION(''),",
 				"          PROD_ID = ERROR_FUNCTION(''),",
@@ -221,7 +227,18 @@
 				"          INGRD_CST_AMT = ERROR_FUNCTION(''),",
 				"          FILLED_DATE = ERROR_FUNCTION(''),",
 				"          PAYR_CNTRCT_FLG = ERROR_FUNCTION(''),",
-				"          YEAR_DESC = ERROR_FUNCTION('')) ~> derivedColumn4"
+				"          YEAR_DESC = ERROR_FUNCTION('')) ~> DCTransition",
+				"join2 filter(isNull({ph.PHRMCY_NAT_PROV_ID_NBR})) ~> filter1",
+				"emptyValuetoNull derive({p.TRANS_NBR} = toInteger({p.TRANS_NBR}),",
+				"          {p.PTNT_YR_OF_BRTH} = toInteger({p.PTNT_YR_OF_BRTH}),",
+				"          {p.DT_WRT} = toInteger({p.DT_WRT}),",
+				"          {p.PMT_TYP} = toInteger({p.PMT_TYP}),",
+				"          {p.COGS_AMT} = toDecimal({p.COGS_AMT}, 12, 2),",
+				"          {p.REIMB_AMT} = toDecimal({p.REIMB_AMT}, 12, 2),",
+				"          {p.COPAY_AMT} = toDecimal({p.COPAY_AMT}, 12, 2),",
+				"          {p.INGRD_CST_AMT} = toDecimal({p.INGRD_CST_AMT}, 12, 2),",
+				"          {p.DT_FILL} = toInteger({p.DT_FILL}),",
+				"          {p.USUAL_AND_CSTMARY} = toDecimal({p.USUAL_AND_CSTMARY}, 12, 2)) ~> typeCast"
 			]
 		}
 	}

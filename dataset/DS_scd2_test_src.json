@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "scd2Test2.csv",
-				"folderPath": "Target Folders/I2025_JNagara1",
-				"container": "test-container"
+				"fileName": "Scd2Testing.csv",
+				"folderPath": "Asrar",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

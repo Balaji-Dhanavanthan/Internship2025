@@ -34,6 +34,15 @@
 						"type": "DatasetReference"
 					},
 					"name": "TgtSrc"
+				},
+				{
+					"name": "LangSrc1"
+				},
+				{
+					"name": "statusSrc1"
+				},
+				{
+					"name": "PharmSrc1"
 				}
 			],
 			"sinks": [],
@@ -161,6 +170,12 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> TgtSrc",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> LangSrc1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> statusSrc1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> PharmSrc1",
 				"AddingSurrogateKey derive(PHRMCY_NAT_PROV_ID_NBR = iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', -1, toInteger(PHRMCY_NAT_PROV_ID_NBR)),",
 				"          PHRMCY_NCPDP_NBR = iif(PHRMCY_NCPDP_NBR == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR)),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_DT = iif(PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL' || isNull(PHRMCY_SYS_IVR_DTA_STRT_DT), '31-12-2999 00:00', PHRMCY_SYS_IVR_DTA_STRT_DT),",

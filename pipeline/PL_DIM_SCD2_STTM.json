@@ -5,6 +5,8 @@
 			{
 				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -100,7 +102,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "DIM_PTNT_ADF_SCD2",
+							"tablename": "SRC_PHRMCY_FACT",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -112,7 +114,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "DIM_PTNT_ADF_SCD2.csv"
+							"FileName": "SRC_PHRMCY_FACT_for_testing.csv"
 						}
 					}
 				]
@@ -120,6 +122,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_DIM_SCD2",

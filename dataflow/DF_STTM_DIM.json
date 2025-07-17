@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_Dim_STTM_source",
+						"referenceName": "DS_scd2_test_src",
 						"type": "DatasetReference"
 					},
 					"name": "phrmcy"
@@ -126,25 +126,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          PHRMCY_NAT_PROV_ID_NBR as string,",
-				"          PHRMCY_NCPDP_NBR as string,",
-				"          PTNT_CD as string,",
-				"          PSCB_FIRST_NM as string,",
-				"          PSCB_LAST_NM as string,",
-				"          LANG_CD as string,",
-				"          DEAL_ID as string,",
-				"          PHRMCY_NM as string,",
-				"          PHRMCY_ST_ADDR_LINE1_TXT as string,",
-				"          PHRMCY_ADDR_ZIP_CD as string,",
-				"          PHRMCY_ADDR_CITY_NM as string,",
-				"          PHRMCY_ADDR_ST_CD as string,",
-				"          PHRMCY_ADDR_ST_NAME as string,",
-				"          PHRMCY_ADDR_ZNE_CD as string,",
-				"          PHRMCY_ADDR_ZNE_NM as string,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> phrmcy",
 				"source(output(",

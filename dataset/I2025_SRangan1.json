@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Year.csv",
 				"folderPath": "Workshop 2/SRC_Pharmacy",
 				"container": "practice-adf"
 			},

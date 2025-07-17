@@ -20,6 +20,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SrcPhrmcy"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_STTM_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SrcYear"
 				}
 			],
 			"sinks": [],
@@ -32,6 +39,9 @@
 				},
 				{
 					"name": "PhrmcyName"
+				},
+				{
+					"name": "NamingYear"
 				}
 			],
 			"scriptLines": [
@@ -121,7 +131,14 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPhrmcy",
-				"SrcPTNT derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCnulltoString",
+				"source(output(",
+				"          YEAR_ID as string,",
+				"          YEAR_DESC as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcYear",
+				"SrcPTNT derive(each(match(type=='string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCnulltoString",
 				"DCnulltoString derive(TRANS_NBR = toInteger(TRANS_NBR),",
 				"          PTNT_YR_OF_BRTH = toInteger(PTNT_YR_OF_BRTH),",
 				"          DT_WRT = toInteger(DT_WRT),",
@@ -137,7 +154,13 @@
 				"               'p.'+$$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> PhrmcyName"
+				"     skipDuplicateMapOutputs: true) ~> PhrmcyName",
+				"SrcYear select(mapColumn(",
+				"          {y.YEAR_ID} = YEAR_ID,",
+				"          {y.YEAR_DESC} = YEAR_DESC",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> NamingYear"
 			]
 		}
 	}

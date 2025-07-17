@@ -51,6 +51,15 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "DCNultoString"
+				},
+				{
+					"name": "DCNullTooString"
+				},
+				{
+					"name": "EmptyValuesToNull"
 				}
 			],
 			"scriptLines": [
@@ -158,13 +167,13 @@
 				"          INGRD_CST_AMT = toDecimal(INGRD_CST_AMT, 12, 2),",
 				"          DT_FILL = toInteger(DT_FILL),",
 				"          USUAL_AND_CSTMARY = toDecimal(USUAL_AND_CSTMARY, 12, 2)) ~> DCTypeCast",
-				"SrcPhrmcy select(mapColumn(",
+				"DCNultoString select(mapColumn(",
 				"          each(match(true()),",
 				"               'p.'+$$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> PhrmcyName",
-				"SrcYear select(mapColumn(",
+				"DCNullTooString select(mapColumn(",
 				"          {y.YEAR_ID} = YEAR_ID,",
 				"          {y.YEAR_DESC} = YEAR_DESC",
 				"     ),",
@@ -181,7 +190,10 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> LeftJoinPTNTPhrmcy",
-				"LeftJoinPTNTPhrmcy filter(isNull({p.PHRMCY_NAT_PROV_ID_NBR}) ) ~> filter1"
+				"EmptyValuesToNull filter(isNull(PhrmcyName@{p.PHRMCY_NAT_PROV_ID_NBR})) ~> filter1",
+				"SrcPhrmcy derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()),$$ ))) ~> DCNultoString",
+				"SrcYear derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCNullTooString",
+				"LeftJoinPTNTPhrmcy derive(each(match(type == 'empty'), $$ = case(trim($$)=='',toString(null())))) ~> EmptyValuesToNull"
 			]
 		}
 	}

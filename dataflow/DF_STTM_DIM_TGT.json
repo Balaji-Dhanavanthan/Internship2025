@@ -572,8 +572,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['SRC_PHRMCY_FACT_for_testing.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

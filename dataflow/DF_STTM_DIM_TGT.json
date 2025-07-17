@@ -135,7 +135,7 @@
 					"name": "derivedColumn1"
 				},
 				{
-					"name": "select2"
+					"name": "HistoryRecord"
 				}
 			],
 			"scriptLines": [
@@ -348,7 +348,7 @@
 				"          START_DATE = toDate(START_DATE),",
 				"          END_DATE = toDate(END_DATE),",
 				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS),",
-				"          PHRMCY_ADDR_ZIP_CD = iif(in(PHRMCY_ADDR_ZIP_CD ,['0NULL','UNK']), 'UNK', PHRMCY_ADDR_ZIP_CD)) ~> AuditColumns",
+				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD =='0NULL', 'UNK', PHRMCY_ADDR_ZIP_CD)) ~> AuditColumns",
 				"AuditColumns, TargetDerived join(SelReqCol@PTNT_CD == DIMTGT@PTNT_CD,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -517,7 +517,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> HistorySelection",
-				"SelectingSrcColumns, UpdateSelection, ExtistingSelection, phrmcysrc union(byName: true)~> CombiningRows",
+				"SelectingSrcColumns, UpdateSelection, ExtistingSelection, HistoryRecord union(byName: true)~> CombiningRows",
 				"CombiningRows select(mapColumn(",
 				"          PTNT_KEY,",
 				"          PTNT_ID,",
@@ -551,7 +551,8 @@
 				"     skipDuplicateMapOutputs: true) ~> FinalSelection",
 				"INSERT@UPDATE derive({Is current } = 0,",
 				"          END_DATE = currentDate(),",
-				"          RCD_MOD_TMS = currentDate()) ~> derivedColumn1",
+				"          RCD_MOD_TMS = currentDate(),",
+				"          PHRMCY_NCPDP_NBR = toInteger(INSERT@UPDATE@PHRMCY_NCPDP_NBR)) ~> derivedColumn1",
 				"derivedColumn1 select(mapColumn(",
 				"          PTNT_KEY = INSERT@UPDATE@PTNT_KEY,",
 				"          PTNT_ID = INSERT@UPDATE@PTNT_ID,",
@@ -582,7 +583,7 @@
 				"          {Is current }",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> HistoryRecord",
 				"FinalSelection sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

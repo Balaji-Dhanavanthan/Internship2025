@@ -83,7 +83,7 @@
 					"name": "selectTarget"
 				},
 				{
-					"name": "TransKey"
+					"name": "TgtNullHandle"
 				}
 			],
 			"scriptLines": [
@@ -238,7 +238,8 @@
 				"          INGRD_CST_AMT = {pt.INGRD_CST_AMT}/100,",
 				"          FILLED_DATE = toDate({pt.DT_FILL}, 'yyyyMMdd'),",
 				"          PAYR_CNTRCT_FLG = iif({pt.TOT_RX_PRC_COLL} > {pt.USUAL_AND_CSTMARY}, 'Y', 'N'),",
-				"          YEAR_DESC = right({y.YEAR_DESC}, 4)) ~> DCTransformations",
+				"          YEAR_DESC = right({y.YEAR_DESC}, 4),",
+				"          LOAD_DATE = currentTimestamp()) ~> DCTransformations",
 				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH}),",
 				"          {pt.DT_WRT} = toString({pt.DT_WRT}),",
 				"          {pt.DT_FILL} = toString({pt.DT_FILL}),",
@@ -250,7 +251,7 @@
 				"     asc({pt.PROD_ID}, true),",
 				"     {SLS_TAX_AMT(COL2)} = max({PTNT_COPAY_AMT(COL1)})) ~> AggMax",
 				"AggMax derive(DCT_AMT = iif({PTNT_COPAY_AMT(COL1)} > 0 , ({PTNT_COPAY_AMT(COL1)}/{TOTAL_AMT(COL 3)}), {TOTAL_AMT(COL 3)}*0.2)) ~> DCDctAmt",
-				"TransKey select(mapColumn(",
+				"DCDctAmt select(mapColumn(",
 				"          TRANS_NBR,",
 				"          PTNT_CD,",
 				"          PTNT_NM,",
@@ -263,20 +264,20 @@
 				"          PAYMENT_TYPE,",
 				"          COGS_AMT,",
 				"          REIMB_AMT,",
+				"          {PTNT_COPAY_AMT(COL1)},",
+				"          {SLS_TAX_AMT(COL2)},",
 				"          {TOTAL_AMT(COL 3)},",
+				"          DCT_AMT,",
 				"          INGRD_CST_AMT,",
 				"          FILLED_DATE,",
 				"          PAYR_CNTRCT_FLG,",
 				"          YEAR_DESC,",
-				"          {PTNT_COPAY_AMT(COL1)},",
-				"          {SLS_TAX_AMT(COL2)},",
-				"          DCT_AMT",
+				"          LOAD_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectTarget",
-				"DCDctAmt keyGenerate(output(TRANS_KEY as long),",
-				"     startAt: 1L,",
-				"     stepValue: 1L) ~> TransKey"
+				"selectTarget derive(each(match(type == 'string'), $$ = iifNull($$, 'UNk', $$)),",
+				"          each(match(type == 'Integer'), $$ = iifNull($#, -1, $#))) ~> TgtNullHandle"
 			]
 		}
 	}

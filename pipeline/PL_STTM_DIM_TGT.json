@@ -35,11 +35,6 @@
 								"container": "practice-adf",
 								"Directory": "Workshop 2/SRC_Pharmacy",
 								"FileName": "status.csv"
-							},
-							"sink1": {
-								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "DIM_PTNT_SRC.csv"
 							}
 						}
 					},
@@ -51,7 +46,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CP_DIM_BLOB",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",

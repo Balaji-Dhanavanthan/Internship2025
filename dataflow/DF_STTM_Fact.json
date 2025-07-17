@@ -29,7 +29,15 @@
 					"name": "ptnt"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -68,10 +76,19 @@
 					"name": "typeCast"
 				},
 				{
-					"name": "window1"
+					"name": "PTNTCOPAYAMT"
+				},
+				{
+					"name": "SLSTAXAMT"
 				},
 				{
 					"name": "derivedColumn4"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "Nullhandling"
 				}
 			],
 			"scriptLines": [
@@ -218,7 +235,7 @@
 				"          {s.PTNT_CD} = substringIndex({ph.PTNT_CD}, '_', -1),",
 				"          {s.PTNT_NM} = regexReplace({ph.PHRMCY_NM}, \"[,&'-]\", ' '),",
 				"          {s.PTNT_YR_OF_BRTH} = {p.PTNT_YR_OF_BRTH},",
-				"          {s.PTNT_AGE} = minus({p.PTNT_YR_OF_BRTH}, toInteger(year(currentTimestamp())) ),",
+				"          {s.PTNT_AGE} = minus( year(currentTimestamp()),{p.PTNT_YR_OF_BRTH} ),",
 				"          {s.PTNT_GNDR} = case({p.PTNT_GNDR}=='M', 'Male',{p.PTNT_GNDR}=='F', 'Female','UNK'),",
 				"          {s.TRANS_DATE} = toDate(toString({p.DT_WRT}),'yyyyMMdd'),",
 				"          {s.PROD_ID} = {p.PROD_ID},",
@@ -226,7 +243,7 @@
 				"          {s.PAYMENT_TYPE} = case({p.PMT_TYP}==1, 'On-Line',{p.PMT_TYP}==2, 'Cash', 'Others'),",
 				"          {s.COGS_AMT} = {p.COGS_AMT}/100,",
 				"          {s.REIMB_AMT} = add({p.COGS_AMT},{p.REIMB_AMT}),",
-				"          {TOTAL_AMT(COL 3)} = {p.COGS_AMT}*{p.REIMB_AMT},",
+				"          {s.TOTAL_AMT(COL 3)} = {p.COGS_AMT}*{p.REIMB_AMT},",
 				"          {s.INGRD_CST_AMT} = {p.INGRD_CST_AMT}/100,",
 				"          {s.FILLED_DATE} = toDate(toString({p.DT_FILL}),'yyyyMMdd'),",
 				"          {s.PAYR_CNTRCT_FLG} = case(toDecimal({p.TOT_RX_PRC_COLL})>{p.USUAL_AND_CSTMARY}, 'Y', 'N'),",
@@ -244,8 +261,46 @@
 				"          {p.USUAL_AND_CSTMARY} = toDecimal({p.USUAL_AND_CSTMARY}, 12, 2)) ~> typeCast",
 				"DCTransition window(over(PROD_ID = {p.PROD_ID}),",
 				"     asc({p.PROD_ID}, true),",
-				"     {s.PTNT_COPAY_AMT(COL1)} = avg({p.COPAY_AMT})) ~> window1",
-				"window1 derive({SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> derivedColumn4"
+				"     {s.PTNT_COPAY_AMT(COL1)} = avg({p.COPAY_AMT})) ~> PTNTCOPAYAMT",
+				"PTNTCOPAYAMT window(over({s.PTNT_COPAY_AMT(COL1)}),",
+				"     asc({s.PTNT_COPAY_AMT(COL1)}, true),",
+				"     {s.SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> SLSTAXAMT",
+				"SLSTAXAMT derive({s.DCT_AMT} = case({s.PTNT_COPAY_AMT(COL1)}>0, ({s.PTNT_COPAY_AMT(COL1)}/{s.TOTAL_AMT(COL 3)}),toDecimal(( 0.20*{s.TOTAL_AMT(COL 3)}),12,2))) ~> derivedColumn4",
+				"derivedColumn4 select(mapColumn(",
+				"          TRANS_NBR = {s.TRANS_NBR},",
+				"          PTNT_CD = {s.PTNT_CD},",
+				"          PTNT_NM = {s.PTNT_NM},",
+				"          PTNT_YR_OF_BRTH = {s.PTNT_YR_OF_BRTH},",
+				"          PTNT_AGE = {s.PTNT_AGE},",
+				"          PTNT_GNDR = {s.PTNT_GNDR},",
+				"          TRANS_DATE = {s.TRANS_DATE},",
+				"          PROD_ID = {s.PROD_ID},",
+				"          PROD_GROUP_ID = {s.PROD_GROUP_ID},",
+				"          PAYMENT_TYPE = {s.PAYMENT_TYPE},",
+				"          COGS_AMT = {s.COGS_AMT},",
+				"          REIMB_AMT = {s.REIMB_AMT},",
+				"          {TOTAL_AMT(COL 3)} = {s.TOTAL_AMT(COL 3)},",
+				"          INGRD_CST_AMT = {s.INGRD_CST_AMT},",
+				"          FILLED_DATE = {s.FILLED_DATE},",
+				"          PAYR_CNTRCT_FLG = {s.PAYR_CNTRCT_FLG},",
+				"          YEAR_DESC = {s.YEAR_DESC},",
+				"          {PTNT_COPAY_AMT(COL1)} = {s.PTNT_COPAY_AMT(COL1)},",
+				"          {SLS_TAX_AMT(COL2)} = {s.SLS_TAX_AMT(COL2)},",
+				"          DCT_AMT = {s.DCT_AMT}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$)),",
+				"          LOAD_DATE = currentTimestamp(),",
+				"          each(match(type=='integer'), $$ = iif(isNull($$),-1 , $$)),",
+				"          each(match(type=='decimal'), $$ = iif(isNull($$),toDecimal(-1.00,12,2) ,toDecimal($$,12,2))),",
+				"          each(match(type=='stort'), $$ = iif(isNull($$),toFloat(-1.00) ,toFloat($$)))) ~> Nullhandling",
+				"Nullhandling sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['factSource.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

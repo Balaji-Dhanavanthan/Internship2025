@@ -79,6 +79,247 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "TRANS_NBR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TRANS_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_NM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_AGE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_AGE",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANS_DATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TRANS_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_GROUP_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PROD_GROUP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYMENT_TYPE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PAYMENT_TYPE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COGS_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "COGS_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "REIMB_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "REIMB_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"sink": {
+									"name": "PTNT_COPAY_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"sink": {
+									"name": "SLS_TAX_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"sink": {
+									"name": "TOTAL_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "DCT_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DCT_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "INGRD_CST_AMT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "INGRD_CST_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "FILLED_DATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FILLED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYR_CNTRCT_FLG",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PAYR_CNTRCT_FLG",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -142,6 +383,276 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "TRANS_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "TRANS_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PTNT_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_AGE",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PTNT_AGE",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANS_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "TRANS_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_GROUP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PROD_GROUP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYMENT_TYPE",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PAYMENT_TYPE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COGS_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "COGS_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "REIMB_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "REIMB_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_COPAY_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "PTNT_COPAY_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "SLS_TAX_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "SLS_TAX_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "TOTAL_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "TOTAL_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "DCT_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "DCT_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "INGRD_CST_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "INGRD_CST_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "FILLED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "FILLED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYR_CNTRCT_FLG",
+									"type": "String",
+									"physicalType": "char"
+								},
+								"sink": {
+									"name": "PAYR_CNTRCT_FLG",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -192,6 +703,15 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"additionalColumns": [
+							{
+								"name": "LoadDate",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						],
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -204,6 +724,276 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "TRANS_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "TRANS_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PTNT_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PTNT_NM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PTNT_YR_OF_BRTH",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_AGE",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PTNT_AGE",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PTNT_GNDR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANS_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "TRANS_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PROD_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PROD_GROUP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PROD_GROUP_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYMENT_TYPE",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PAYMENT_TYPE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COGS_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "COGS_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "REIMB_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "REIMB_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "PTNT_COPAY_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "PTNT_COPAY_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "SLS_TAX_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "SLS_TAX_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "TOTAL_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "TOTAL_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "DCT_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "DCT_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "INGRD_CST_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								},
+								"sink": {
+									"name": "INGRD_CST_AMT",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "FILLED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "FILLED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYR_CNTRCT_FLG",
+									"type": "String",
+									"physicalType": "char"
+								},
+								"sink": {
+									"name": "PAYR_CNTRCT_FLG",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "YEAR_DESC",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,

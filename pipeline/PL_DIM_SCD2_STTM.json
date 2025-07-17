@@ -47,7 +47,7 @@
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "DIM_PTNT_testing_tgt.csv"
+								"FileName": "TGT_SCD2_STTM.csv"
 							}
 						}
 					},

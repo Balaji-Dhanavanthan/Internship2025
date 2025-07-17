@@ -50,7 +50,7 @@
 					"name": "LeftJoinPTNTPhrmcy"
 				},
 				{
-					"name": "filter1"
+					"name": "filterIsNull"
 				},
 				{
 					"name": "DCNultoString"
@@ -60,6 +60,12 @@
 				},
 				{
 					"name": "EmptyValuesToNull"
+				},
+				{
+					"name": "LeftJoinPTNTYear"
+				},
+				{
+					"name": "DCTransformations"
 				}
 			],
 			"scriptLines": [
@@ -158,7 +164,6 @@
 				"     ignoreNoFilesFound: false) ~> SrcYear",
 				"SrcPTNT derive(each(match(type=='string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCnulltoString",
 				"DCnulltoString derive(TRANS_NBR = toInteger(TRANS_NBR),",
-				"          PTNT_YR_OF_BRTH = toInteger(PTNT_YR_OF_BRTH),",
 				"          DT_WRT = toInteger(DT_WRT),",
 				"          PMT_TYP = toInteger(PMT_TYP),",
 				"          COGS_AMT = toDecimal(COGS_AMT, 12, 2),",
@@ -190,10 +195,19 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> LeftJoinPTNTPhrmcy",
-				"EmptyValuesToNull filter(isNull(PhrmcyName@{p.PHRMCY_NAT_PROV_ID_NBR})) ~> filter1",
-				"SrcPhrmcy derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()),$$ ))) ~> DCNultoString",
-				"SrcYear derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCNullTooString",
-				"LeftJoinPTNTPhrmcy derive(each(match(type == 'empty'), $$ = case(trim($$)=='',toString(null())))) ~> EmptyValuesToNull"
+				"EmptyValuesToNull filter(isNull({p.PHRMCY_NAT_PROV_ID_NBR})) ~> filterIsNull",
+				"SrcPhrmcy derive(each(match(type=='string'), $$ = case($$ == 'NULL', toString(null()),$$ ))) ~> DCNultoString",
+				"SrcYear derive(each(match(type=='string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCNullTooString",
+				"LeftJoinPTNTYear derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()),$$))) ~> EmptyValuesToNull",
+				"LeftJoinPTNTPhrmcy, NamingYear join({pt.PTNT_YR_OF_BRTH} == {y.YEAR_ID},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> LeftJoinPTNTYear",
+				"filterIsNull derive(TRANS_NBR = toInteger({pt.TRANS_NBR}),",
+				"          PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
+				"          PTNT_NM = regexReplace({p.PHRMCY_NM}, \"[,&'-]\", ' '),",
+				"          PTNT_YR_OF_BRTH = ERROR_FUNCTION('')) ~> DCTransformations"
 			]
 		}
 	}

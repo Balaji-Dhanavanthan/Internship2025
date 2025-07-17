@@ -104,6 +104,9 @@
 				},
 				{
 					"name": "DinSrcDerived"
+				},
+				{
+					"name": "JoinigForHistoryRcords"
 				}
 			],
 			"scriptLines": [
@@ -441,7 +444,12 @@
 				"          RCD_CRT_TMS = toDate(RCD_CRT_TMS, 'dd-MM-yyyy'),",
 				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS, 'dd-MM-yyyy'),",
 				"          START_DATE = toDate(START_DATE, 'dd-MM-yyyy'),",
-				"          END_DATE = toDate(END_DATE, 'dd-MM-yyyy')) ~> DinSrcDerived"
+				"          END_DATE = toDate(END_DATE, 'dd-MM-yyyy')) ~> DinSrcDerived",
+				"DinSrcDerived, AuditColumns join(DimSrc@PTNT_CD == SelReqCol@PTNT_CD,",
+				"     joinType:'right',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinigForHistoryRcords"
 			]
 		}
 	}

@@ -23,8 +23,8 @@
 						"datasetParameters": {
 							"phrmcysrc": {
 								"container": "practice-adf",
-								"Directory": "Workshop 2/SRC_Pharmacy",
-								"FileName": "src_phrmcy.csv"
+								"Directory": "Asrar",
+								"FileName": "SRC_SCD2_TESTING.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",
@@ -62,6 +62,68 @@
 			},
 			{
 				"name": "cp_scd2_testing",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "DIM_PTNT_ADF_SCD2",
+							"databasename": "Intern_2025"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar",
+							"FileName": "DIM_PTNT_ADF_SCD2.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data1",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -119,72 +181,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "TGT_SCD2_STTM",
+							"tablename": "TGT_SCD2_STTM_UPDATE",
 							"databasename": "Intern_2025"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "I2025_MSyed",
-							"tablename": "PHRMCY_SRC",
-							"databasename": "Intern_2025"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"Directory": "Asrar",
-							"FileName": "SRC_SCD2_TESTING.csv"
 						}
 					}
 				]

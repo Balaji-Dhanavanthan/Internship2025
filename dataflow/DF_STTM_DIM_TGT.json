@@ -110,6 +110,9 @@
 				},
 				{
 					"name": "split1"
+				},
+				{
+					"name": "HistoryAuditColumns"
 				}
 			],
 			"scriptLines": [
@@ -453,8 +456,11 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinigForHistoryRcords",
-				"JoinigForHistoryRcords split(ERROR_FUNCTION(''),",
-				"     disjoint: false) ~> split1@(Update, Existing)"
+				"JoinigForHistoryRcords split(DinSrcDerived@PTNT_KEY == AuditColumns@PTNT_KEY && (DimSrc@PHRMCY_ADDR_ZIP_CD != AuditColumns@PHRMCY_ADDR_ZIP_CD),",
+				"     disjoint: false) ~> split1@(Update, Existing)",
+				"split1@Update derive({Is Current} = 0,",
+				"          RCD_MOD_TMS = currentDate(),",
+				"          END_DATE = currentDate()) ~> HistoryAuditColumns"
 			]
 		}
 	}

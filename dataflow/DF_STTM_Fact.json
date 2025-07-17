@@ -88,10 +88,7 @@
 					"name": "Nullhandling"
 				},
 				{
-					"name": "aggregate1"
-				},
-				{
-					"name": "join3"
+					"name": "window1"
 				}
 			],
 			"scriptLines": [
@@ -228,8 +225,8 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> phrmcyName",
 				"derivedColumn1 select(mapColumn(",
-				"          each(match(/* All input columns */ true()),",
-				"               /* Input name */ concat('p.',$$) = $$)",
+				"          each(match(/* All input columns */true()),",
+				"               /* Input name */concat('p.',$$) = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ptntName",
@@ -265,8 +262,8 @@
 				"DCTransition window(over(PROD_ID = {p.PROD_ID}),",
 				"     asc({p.PROD_ID}, true),",
 				"     {s.PTNT_COPAY_AMT(COL1)} = avg({p.COPAY_AMT})) ~> PTNTCOPAYAMT",
-				"PTNTCOPAYAMT derive({s.DCT_AMT} = case({s.PTNT_COPAY_AMT(COL1)}>0, ({s.PTNT_COPAY_AMT(COL1)}/{s.TOTAL_AMT(COL 3)}),toDecimal(( 0.20*{s.TOTAL_AMT(COL 3)}),12,2))) ~> derivedColumn4",
-				"join3 select(mapColumn(",
+				"window1 derive({s.DCT_AMT} = case({s.PTNT_COPAY_AMT(COL1)}>0, ({s.PTNT_COPAY_AMT(COL1)}/{s.TOTAL_AMT(COL 3)}),toDecimal(( 0.20*{s.TOTAL_AMT(COL 3)}),12,2))) ~> derivedColumn4",
+				"derivedColumn4 select(mapColumn(",
 				"          TRANS_NBR = {s.TRANS_NBR},",
 				"          PTNT_CD = {s.PTNT_CD},",
 				"          PTNT_NM = {s.PTNT_NM},",
@@ -285,23 +282,18 @@
 				"          PAYR_CNTRCT_FLG = {s.PAYR_CNTRCT_FLG},",
 				"          YEAR_DESC = {s.YEAR_DESC},",
 				"          {PTNT_COPAY_AMT(COL1)} = {s.PTNT_COPAY_AMT(COL1)},",
-				"          {SLS_TAX_AMT(COL2)} = {s.SLS_TAX_AMT(COL2)},",
+				"          {SLS_TAX_AMT(COL2)},",
 				"          DCT_AMT = {s.DCT_AMT}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$)),",
-				"          LOAD_DATE = currentTimestamp(),",
 				"          each(match(type=='integer'), $$ = iif(isNull($$),-1 , $$)),",
 				"          each(match(type=='decimal'), $$ = iif(isNull($$),toDecimal(-1.00,12,2) ,toDecimal($$,12,2))),",
 				"          each(match(type=='stort'), $$ = iif(isNull($$),toFloat(-1.00) ,toFloat($$)))) ~> Nullhandling",
-				"PTNTCOPAYAMT aggregate(groupBy({p.PROD_ID}),",
-				"     {s.SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> aggregate1",
-				"aggregate1, derivedColumn4 join(aggregate1@{p.PROD_ID} == emptyValuetoNull@{p.PROD_ID},",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join3",
+				"PTNTCOPAYAMT window(over({p.PROD_ID}),",
+				"     asc({p.PROD_ID}, true),",
+				"     {SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> window1",
 				"Nullhandling sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['factSource.csv'],",

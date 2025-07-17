@@ -71,10 +71,10 @@
 					"name": "DCToInt"
 				},
 				{
-					"name": "PerformingAVG"
+					"name": "AggAvg"
 				},
 				{
-					"name": "PerformingMAx"
+					"name": "AggMax"
 				}
 			],
 			"scriptLines": [
@@ -236,10 +236,8 @@
 				"          {pt.USUAL_AND_CSTMARY} = toString({pt.USUAL_AND_CSTMARY})) ~> DCToInt",
 				"DCTransformations window(over({pt.PROD_ID}),",
 				"     asc({pt.PROD_ID}, true),",
-				"     {PTNT_COPAY_AMT(COL1)} = avg({pt.COPAY_AMT})) ~> PerformingAVG",
-				"PerformingAVG window(over({PTNT_COPAY_AMT(COL1)}),",
-				"     asc({PTNT_COPAY_AMT(COL1)}, true),",
-				"     {SLS_TAX_AMT(COL2)} = max({PTNT_COPAY_AMT(COL1)})) ~> PerformingMAx"
+				"     {PTNT_COPAY_AMT(COL1)} = avg({pt.COPAY_AMT})) ~> AggAvg",
+				"AggAvg window(over({pt.PROD_ID})) ~> AggMax"
 			]
 		}
 	}

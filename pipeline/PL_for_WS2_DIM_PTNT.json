@@ -108,7 +108,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "DIM_PTMT_TGT.csv",
+							"file_name": "DIM_PTNT_new.csv",
 							"folder_name": "ETL_stuff",
 							"container_name": "csvcontainer"
 						}

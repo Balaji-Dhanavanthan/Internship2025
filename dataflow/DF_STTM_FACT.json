@@ -212,8 +212,10 @@
 				"          PTNT_NM = regexReplace({p.PHRMCY_NM}, \"[,&'-]\", ' '),",
 				"          PTNT_YR_OF_BRTH = {pt.PTNT_YR_OF_BRTH},",
 				"          PTNT_AGE = toInteger(year(currentTimestamp())) - {pt.PTNT_YR_OF_BRTH},",
-				"          PTNT_GNDR = ERROR_FUNCTION('')) ~> DCTransformations",
-				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH})) ~> DCToInt"
+				"          PTNT_GNDR = iif({pt.PTNT_GNDR} == 'M', 'Male', iif({pt.PTNT_GNDR} == 'F', 'Female', 'UNK')),",
+				"          TRANS_DATE = toDate({pt.DT_WRT}, '')) ~> DCTransformations",
+				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH}),",
+				"          {pt.DT_WRT} = toString({pt.DT_WRT})) ~> DCToInt"
 			]
 		}
 	}

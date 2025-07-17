@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "STTM_FACT",
 	"properties": {
 		"activities": [
 			{
@@ -18,28 +18,28 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_STTM_FACT_TO_SQL",
+						"referenceName": "fact_copy",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
+							"SrcPtnt": {
 								"container": "practice-adf",
 								"folder": "Workshop 2/SRC_Pharmacy",
 								"filename": "SRC PTNT.csv"
 							},
-							"source2": {
+							"SrcYears": {
 								"container": "practice-adf",
 								"folder": "Workshop 2/SRC_Pharmacy",
 								"filename": "Year.csv"
+							},
+							"SrcPhrmcy": {
+								"container": "practice-adf",
+								"folder": "Workshop 2/SRC_Pharmacy",
+								"filename": "src_phrmcy.csv"
 							},
 							"sink1": {
 								"container": "practice-adf",
-								"folder": "aabidh",
-								"filename": "SRC PTNT.csv"
-							},
-							"sink2": {
-								"container": "practice-adf",
-								"folder": "aabidh",
-								"filename": "Year.csv"
+								"folder": "aabidh/sttm",
+								"filename": "STG_FACT.csv"
 							}
 						}
 					},
@@ -91,8 +91,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_veiw",
-						"type": "DatasetReference"
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "aabidh/sttm",
+							"filename": "STG_FACT.csv"
+						}
 					}
 				],
 				"outputs": [
@@ -101,7 +106,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_MAbdul1",
-							"TableName": "SRC_PHRMCY_Fact",
+							"TableName": "SRC_FACT",
 							"database": "Intern_2025"
 						}
 					}

@@ -29,7 +29,15 @@
 					"name": "SrcYear"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTarget"
+				}
+			],
 			"transformations": [
 				{
 					"name": "DCnulltoString"
@@ -284,7 +292,40 @@
 				"          SLS_TAX_AMT = iif(isNull(SLS_TAX_AMT), 0.00,toFloat(SLS_TAX_AMT) ),",
 				"          TOTAL_AMT = iif(isNull(TOTAL_AMT), 0.00,toFloat(TOTAL_AMT) ),",
 				"          DCT_AMT = iif(isNull(DCT_AMT), 0.00,toFloat(DCT_AMT) ),",
-				"          INGRD_CST_AMT = iif(isNull(INGRD_CST_AMT), 0.00,toFloat(INGRD_CST_AMT) )) ~> TgtNullHandle"
+				"          INGRD_CST_AMT = iif(isNull(INGRD_CST_AMT), 0.00,toFloat(INGRD_CST_AMT) )) ~> TgtNullHandle",
+				"TgtNullHandle sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          MakeFlag as string,",
+				"          FinishedGoodsFlag as string,",
+				"          Color as string,",
+				"          SafetyStockLevel as string,",
+				"          ReorderPoint as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as string,",
+				"          ProductLine as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ProductSubcategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          DiscontinuedDate as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     partitionFileNames:['STTM_FACT.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkTarget"
 			]
 		}
 	}

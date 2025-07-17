@@ -74,21 +74,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -102,23 +101,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_OnPrem_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "practice-adf",
-							"Directory": "Asrar",
-							"FileName": "DIM_PTNT_testing.csv"
+							"schemaname": "I2025_MSyed",
+							"tablename": "DIM_PTNT_testing_123",
+							"databasename": "Intern_2025"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"schemaname": "I2025_MSyed",
-							"tablename": "DIM_PTNT_testing",
-							"databasename": "Intern_2025"
+							"container": "practice-adf",
+							"Directory": "Asrar",
+							"FileName": "DIM_PTNT_testing_record.csv"
 						}
 					}
 				]

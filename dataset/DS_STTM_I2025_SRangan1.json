@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Year.csv",
-				"folderPath": "Workshop 2/SRC_Pharmacy",
-				"container": "practice-adf"
+				"fileName": "DIM_PTNT.csv",
+				"folderPath": "I2025_SRangan1/From_SQL",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

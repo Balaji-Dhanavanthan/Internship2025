@@ -27,6 +27,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SrcStatus"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_STTM_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "DIMPTNT"
 				}
 			],
 			"sinks": [],
@@ -63,6 +70,9 @@
 				},
 				{
 					"name": "SelectTarget"
+				},
+				{
+					"name": "namePTNT"
 				}
 			],
 			"scriptLines": [
@@ -102,6 +112,36 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcStatus",
+				"source(output(",
+				"          PTNT_ID as string,",
+				"          PTNT_CD as string,",
+				"          PHRMCY_NCPDP_NBR as string,",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_NM as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PSCB_EMAIL_ID as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR as string,",
+				"          PHRMCY_AGE as string,",
+				"          DEAL_ID as string,",
+				"          DEAL_TYPE_CD as string,",
+				"          DEAL_NUMBER as string,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string,",
+				"          RCD_CRT_TMS as string,",
+				"          RCD_MOD_TMS as string,",
+				"          START_DATE as string,",
+				"          END_DATE as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DIMPTNT",
 				"SrcPhrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()),$$))) ~> DCconvertNull",
 				"DCconvertNull select(mapColumn(",
 				"          {p.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
@@ -182,16 +222,9 @@
 				"  month({p.PHRMCY_SYS_IVR_DTA_STRT_DT}) == 10 ||\r",
 				"  month({p.PHRMCY_SYS_IVR_DTA_STRT_DT}) == 11 || \r",
 				"  month({p.PHRMCY_SYS_IVR_DTA_STRT_DT}) == 12, 'Q4'\r",
-				") + '-' + toString(year({p.PHRMCY_SYS_IVR_DTA_STRT_DT}))\r",
-				"\r",
-				"\r",
-				"\r",
-				"\r",
-				",",
-				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy', 'HH:mm')))\r",
-				",",
-				"          PHRMCY_AGE = toInteger(year(currentTimestamp()) - year({p.PHRMCY_SYS_IVR_DTA_STRT_DT}))\r",
-				",",
+				") + '-' + toString(year({p.PHRMCY_SYS_IVR_DTA_STRT_DT})),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(year(toTimestamp({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy', 'HH:mm'))),",
+				"          PHRMCY_AGE = toInteger(year(currentTimestamp()) - year({p.PHRMCY_SYS_IVR_DTA_STRT_DT})),",
 				"          DEAL_ID = case(in([{s.deal_id},{s.deal_nbr}], {p.DEAL_ID}), 'Exists', 'NotExist'),",
 				"          DEAL_TYPE_CD = left({s.deal_nbr},2),",
 				"          DEAL_NUMBER = substring({s.deal_nbr}, 2, length({s.deal_nbr})),",
@@ -199,8 +232,8 @@
 				"          LANG_DESC = {l.LANG_DESC},",
 				"          RCD_CRT_TMS = currentTimestamp(),",
 				"          START_DATE = currentTimestamp()) ~> DCTransformations",
-				"DCTransformations derive(each(match(type == 'string'), $$ = iifNull($$, 'UNK', $$)),",
-				"          each(match(type == 'Integer'), $$ = iifNull($#, -1, $#))) ~> DCHandlingNull",
+				"DCTransformations derive(each(match(type=='string'), $$ = iifNull($$, 'UNK', $$)),",
+				"          each(match(type=='Integer'), $$ = iifNull($#, -1, $#))) ~> DCHandlingNull",
 				"DCHandlingNull select(mapColumn(",
 				"          PTNT_ID,",
 				"          PTNT_CD,",
@@ -227,7 +260,13 @@
 				"          START_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectTarget"
+				"     skipDuplicateMapOutputs: true) ~> SelectTarget",
+				"DIMPTNT select(mapColumn(",
+				"          each(match(true()),",
+				"               'D.'+$$ = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> namePTNT"
 			]
 		}
 	}

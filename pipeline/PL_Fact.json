@@ -88,7 +88,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Incremental_source",
+						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "factSource.csv"

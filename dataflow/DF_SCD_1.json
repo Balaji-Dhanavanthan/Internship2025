@@ -20,6 +20,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "srcCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "randomSrc"
 				}
 			],
 			"sinks": [
@@ -72,6 +79,37 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> srcCSV",
+				"source(output(",
+				"          PTNT_KEY as short,",
+				"          PTNT_ID as integer,",
+				"          PTNT_CD as string,",
+				"          PHRMCY_NCPDP_NBR as integer,",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_NM as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PSCB_EMAIL_ID as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR as string,",
+				"          PHRMCY_AGE as short,",
+				"          DEAL_ID as string,",
+				"          DEAL_TYPE_CD as string,",
+				"          DEAL_NUMBER as string,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string,",
+				"          RCD_CRT_TMS as timestamp,",
+				"          RCD_MOD_TMS as string,",
+				"          START_DATE as timestamp,",
+				"          END_DATE as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> randomSrc",
 				"tgtCSV, srcCSV join(tgtCSV@emp_id == srcCSV@emp_id,",
 				"     joinType:'right',",
 				"     matchType:'exact',",

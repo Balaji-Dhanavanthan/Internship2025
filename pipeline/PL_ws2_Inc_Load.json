@@ -5,8 +5,6 @@
 			{
 				"name": "DF_for_transformation",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -53,8 +51,6 @@
 			{
 				"name": "CP_stg_to_sqlserver",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_for_transformation",
@@ -121,13 +117,134 @@
 				]
 			},
 			{
-				"name": "Script1",
-				"type": "Script",
+				"name": "DE_stg_csv",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "STTM_PTNT_STG.csv",
+							"folder_name": "ETL_stuff",
+							"container_name": "csvcontainer"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DS_Blob_storgare",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "DE_stg_csv_copy1",
+				"type": "Delete",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableLogging": true
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
 				"dependsOn": [
 					{
 						"activity": "CP_stg_to_sqlserver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "SELECT *\nFROM STG_FACT_DSPN_ADF\nWHERE TRANS_DATE > (\nSELECT MAX(TRANS_DATE)\nFROM TGT_FACT_DSPN_ADF\n)",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "STG_FACT_DSPN_ADF"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "TGT_FACT_DSPN_ADF"
+						}
+					}
+				]
+			},
+			{
+				"name": "SC_Truncate_stg_tble",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -149,63 +266,10 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": ""
+							"text": "TRUNCATE TABLE STG_FACT_DSPN_ADF"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "LU_get_max_tgt_trans_date",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT MAX(TRANS_DATE)\nFROM FACT_DSPN",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_Sql_server_intern",
-						"type": "DatasetReference",
-						"parameters": {
-							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "TGT_FACT_DSPN_ADF"
-						}
-					}
-				}
-			},
-			{
-				"name": "SET_max_date",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "LU_get_max_tgt_trans_date",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "max_date",
-					"value": {
-						"value": "@activity('LU_get_max_tgt_trans_date').output.firstRow['']",
-						"type": "Expression"
-					}
 				}
 			}
 		],

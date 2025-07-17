@@ -27,17 +27,12 @@
 						"type": "DatasetReference"
 					},
 					"name": "PharmSrcNew"
-				}
-			],
-			"sinks": [
+				},
 				{
-					"dataset": {
-						"referenceName": "DS_CSV_test",
-						"type": "DatasetReference"
-					},
-					"name": "DimSink"
+					"name": "source1"
 				}
 			],
+			"sinks": [],
 			"transformations": [
 				{
 					"name": "SelectedNullHandling"
@@ -65,6 +60,9 @@
 				},
 				{
 					"name": "FinSelectOrdered"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -104,6 +102,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> PharmSrcNew",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1",
 				"AddingSurrogateKey derive(PHRMCY_NAT_PROV_ID_NBR = iif(PHRMCY_NAT_PROV_ID_NBR == 'NULL', -1, toInteger(PHRMCY_NAT_PROV_ID_NBR)),",
 				"          PHRMCY_NCPDP_NBR = iif(PHRMCY_NCPDP_NBR == 'NULL', -1, toInteger(PHRMCY_NCPDP_NBR)),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_DT = iif(PHRMCY_SYS_IVR_DTA_STRT_DT == 'NULL' || isNull(PHRMCY_SYS_IVR_DTA_STRT_DT), '31-12-2999 00:00', PHRMCY_SYS_IVR_DTA_STRT_DT),",
@@ -118,7 +118,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> NewLeftStatus",
-				"SelectedNullHandling derive(each(match(type == 'string'), $$ = iif(isNull($$) || $$ == 'NULL', 'UNK', $$))) ~> DynamicNullHandling1",
+				"SelectedNullHandling derive(each(match(type=='string'), $$ = iif(isNull($$) || $$ == 'NULL', 'UNK', $$))) ~> DynamicNullHandling1",
 				"NewLeftStatus select(mapColumn(",
 				"          PHRMCY_NAT_PROV_ID_NBR,",
 				"          PHRMCY_NCPDP_NBR,",
@@ -161,7 +161,7 @@
 				"          PHRMCY_ADDR_ZIP_CD = iif(length(PHRMCY_ADDR_ZIP_CD) < 5 && PHRMCY_ADDR_ZIP_CD != 'UNK', \r",
 				"    lpad(PHRMCY_ADDR_ZIP_CD, 5, '0'),\r",
 				"    substring(PHRMCY_ADDR_ZIP_CD, 1, 5)\r",
-				")    ,",
+				"),",
 				"          PSCB_EMAIL_ID = concat(\r",
 				"    left(trim(PSCB_FIRST_NM), toInteger(round(length(trim(PSCB_FIRST_NM)) * 1/2))),\r",
 				"    left(trim(PSCB_LAST_NM), 1),\r",
@@ -181,8 +181,7 @@
 				"    ),\r",
 				"    '-',\r",
 				"    toString(year(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy')))\r",
-				")\r",
-				",",
+				"),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR = toString(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy'), 'yyyy'),",
 				"          PHRMCY_AGE = iif(PHRMCY_SYS_IVR_DTA_STRT_DT == '31-12-2999 00:00', -1,\r",
 				"    year(currentDate()) - year(toDate(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy'))\r",
@@ -226,12 +225,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> FinSelectOrdered",
-				"FinSelectOrdered sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     partitionFileNames:['csvcontainer'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> DimSink"
+				"FinSelectOrdered split(ERROR_FUNCTION(''),",
+				"     disjoint: false) ~> split1@(, )"
 			]
 		}
 	}

@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "src_phrmcy.csv",
-				"folderPath": "Workshop 2/SRC_Pharmacy",
+				"fileName": "Scd2Testing.csv",
+				"folderPath": "Asrar",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

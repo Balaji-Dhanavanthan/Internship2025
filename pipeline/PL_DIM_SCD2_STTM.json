@@ -21,8 +21,8 @@
 						"datasetParameters": {
 							"phrmcysrc": {
 								"container": "practice-adf",
-								"Directory": "Workshop 2/SRC_Pharmacy",
-								"FileName": "src_phrmcy.csv"
+								"Directory": "Asrar",
+								"FileName": "Scd2Testing.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",

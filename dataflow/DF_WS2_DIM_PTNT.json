@@ -445,7 +445,7 @@
 				"          RCD_MOD_TS = toString(currentTimestamp())) ~> DCUpd2",
 				"Uni sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['DIM_PTMT_TGT_V1.csv'],",
+				"     partitionFileNames:['DIM_PTMT_TGT.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> FinSink"

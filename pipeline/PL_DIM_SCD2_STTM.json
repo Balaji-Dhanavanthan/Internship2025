@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -15,6 +15,42 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_STTM_DIM_TGT",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"phrmcysrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "src_phrmcy.csv"
+							},
+							"langsrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "language.csv"
+							},
+							"statussrc": {
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "status.csv"
+							},
+							"DIMTGT": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "DIM_PTNT.csv"
+							},
+							"DimSrc": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "DIM_PTNT_SRC.csv"
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "DIM_PTNT.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -25,6 +61,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

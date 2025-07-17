@@ -1,0 +1,245 @@
+{
+	"name": "DF_SCD2_flag1",
+	"properties": {
+		"folder": {
+			"name": "SCD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "sourceData"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "target"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "sourcederived"
+				},
+				{
+					"name": "targetderived"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "insert"
+				},
+				{
+					"name": "insertDerived"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "select4"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "derivedColumn4"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceData",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"sourceData derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
+				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
+				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy'),",
+				"          EmployeeID = toInteger(EmployeeID)) ~> sourcederived",
+				"target derive(DateOfBirth = toDate(DateOfBirth,'yyyy-MM-dd'),",
+				"          HireDate = toDate(HireDate,'yyyy-MM-dd'),",
+				"          EffectiveDate = toDate(EffectiveDate,'yyyy-MM-dd'),",
+				"          EndDate = toDate(EndDate,'yyyy-MM-dd'),",
+				"          IsCurrent = 1,",
+				"          EmployeeID = toInteger(EmployeeID)) ~> targetderived",
+				"sourcederived, targetderived join(sourcederived@EmployeeID == targetderived@EmployeeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(isNull(targetderived@EmployeeID),",
+				"     sourcederived@EmployeeID == targetderived@EmployeeID && (sourceData@Department != target@Department || sourceData@JobTitle != target@JobTitle || sourceData@Salary != target@Salary || sourceData@MaritalStatus != target@MaritalStatus),",
+				"     disjoint: false) ~> insert@(Insert, UPDATE, existing)",
+				"insert@Insert derive(IsCurrent = 1,",
+				"          created_by = 'I2025_MSyed',",
+				"          created_at = currentDate(),",
+				"          modified_at = toDate('')) ~> insertDerived",
+				"insert@UPDATE derive(IsCurrent = 1,",
+				"          modified_at = toDate('')) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          EmployeeID = insert@UPDATE@EmployeeID,",
+				"          Name = insert@UPDATE@Name,",
+				"          Gender = insert@UPDATE@Gender,",
+				"          DateOfBirth = insert@UPDATE@DateOfBirth,",
+				"          Department = insert@UPDATE@Department,",
+				"          JobTitle = insert@UPDATE@JobTitle,",
+				"          Salary = insert@UPDATE@Salary,",
+				"          HireDate = insert@UPDATE@HireDate,",
+				"          Address = insert@UPDATE@Address,",
+				"          Email = insert@UPDATE@Email,",
+				"          PhoneNumber = insert@UPDATE@PhoneNumber,",
+				"          MaritalStatus = insert@UPDATE@MaritalStatus,",
+				"          EffectiveDate = insert@UPDATE@EffectiveDate,",
+				"          EndDate = insert@UPDATE@EndDate,",
+				"          IsCurrent,",
+				"          created_by,",
+				"          created_at,",
+				"          modified_by,",
+				"          modified_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1 derive(DateOfBirth = toDate(DateOfBirth,'dd-MM-yyyy'),",
+				"          HireDate = toDate(HireDate,'dd-MM-yyyy'),",
+				"          EffectiveDate = toDate(EffectiveDate,'dd-MM-yyyy'),",
+				"          EndDate = toDate(EndDate,'dd-MM-yyyy'),",
+				"          EmployeeID = toInteger(EmployeeID)) ~> derivedColumn2",
+				"derivedColumn2, sourcederived join(sourcederived@EmployeeID == derivedColumn2@EmployeeID,",
+				"     joinType:'right',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 split(derivedColumn2@EmployeeID == sourcederived@EmployeeID && (source1@Department != sourceData@Department || source1@JobTitle != sourceData@JobTitle || source1@Salary != sourceData@Salary || source1@MaritalStatus != sourceData@MaritalStatus),",
+				"     disjoint: false) ~> split1@(update, Existing)",
+				"split1@update derive(IsCurrent = 0,",
+				"          modified_by = 'I2025_MSyed',",
+				"          modified_at = currentDate(),",
+				"          EndDate = currentDate()) ~> derivedColumn3",
+				"derivedColumn3 select(mapColumn(",
+				"          EmployeeID = split1@update@EmployeeID,",
+				"          Name = split1@update@Name,",
+				"          Gender = split1@update@Gender,",
+				"          DateOfBirth = split1@update@DateOfBirth,",
+				"          Department = split1@update@Department,",
+				"          JobTitle = split1@update@JobTitle,",
+				"          Salary = split1@update@Salary,",
+				"          HireDate = split1@update@HireDate,",
+				"          Address = split1@update@Address,",
+				"          Email = split1@update@Email,",
+				"          PhoneNumber = split1@update@PhoneNumber,",
+				"          MaritalStatus = split1@update@MaritalStatus,",
+				"          EffectiveDate = split1@update@EffectiveDate,",
+				"          EndDate,",
+				"          IsCurrent,",
+				"          created_by,",
+				"          created_at,",
+				"          modified_by,",
+				"          modified_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"derivedColumn4 select(mapColumn(",
+				"          EmployeeID = insert@existing@EmployeeID,",
+				"          Name = insert@existing@Name,",
+				"          Gender = insert@existing@Gender,",
+				"          DateOfBirth = insert@existing@DateOfBirth,",
+				"          Department = insert@existing@Department,",
+				"          JobTitle = insert@existing@JobTitle,",
+				"          Salary = insert@existing@Salary,",
+				"          HireDate = insert@existing@HireDate,",
+				"          Address = insert@existing@Address,",
+				"          Email = insert@existing@Email,",
+				"          PhoneNumber = insert@existing@PhoneNumber,",
+				"          MaritalStatus = insert@existing@MaritalStatus,",
+				"          EffectiveDate = insert@existing@EffectiveDate,",
+				"          EndDate = insert@existing@EndDate,",
+				"          IsCurrent,",
+				"          created_by,",
+				"          created_at,",
+				"          modified_by,",
+				"          modified_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"insertDerived select(mapColumn(",
+				"          EmployeeID = insert@Insert@EmployeeID,",
+				"          Name = insert@Insert@Name,",
+				"          Gender = insert@Insert@Gender,",
+				"          DateOfBirth = insert@Insert@DateOfBirth,",
+				"          Department = insert@Insert@Department,",
+				"          JobTitle = insert@Insert@JobTitle,",
+				"          Salary = insert@Insert@Salary,",
+				"          HireDate = insert@Insert@HireDate,",
+				"          Address = insert@Insert@Address,",
+				"          Email = insert@Insert@Email,",
+				"          PhoneNumber = insert@Insert@PhoneNumber,",
+				"          MaritalStatus = insert@Insert@MaritalStatus,",
+				"          EffectiveDate = insert@Insert@EffectiveDate,",
+				"          EndDate = insert@Insert@EndDate,",
+				"          IsCurrent,",
+				"          created_by,",
+				"          created_at,",
+				"          modified_by,",
+				"          modified_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"select4, select1, select3, select2 union(byName: true)~> union1",
+				"insert@existing derive(modified_at = toDate('')) ~> derivedColumn4",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['scd2.2.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

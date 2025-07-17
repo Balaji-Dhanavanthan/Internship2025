@@ -66,6 +66,9 @@
 				},
 				{
 					"name": "DCTransformations"
+				},
+				{
+					"name": "DCToInt"
 				}
 			],
 			"scriptLines": [
@@ -204,10 +207,13 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> LeftJoinPTNTYear",
-				"filterIsNull derive(TRANS_NBR = toInteger({pt.TRANS_NBR}),",
+				"DCToInt derive(TRANS_NBR = toInteger({pt.TRANS_NBR}),",
 				"          PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
 				"          PTNT_NM = regexReplace({p.PHRMCY_NM}, \"[,&'-]\", ' '),",
-				"          PTNT_YR_OF_BRTH = ERROR_FUNCTION('')) ~> DCTransformations"
+				"          PTNT_YR_OF_BRTH = {pt.PTNT_YR_OF_BRTH},",
+				"          PTNT_AGE = toInteger(year(currentTimestamp())) - {pt.PTNT_YR_OF_BRTH},",
+				"          PTNT_GNDR = ERROR_FUNCTION('')) ~> DCTransformations",
+				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH})) ~> DCToInt"
 			]
 		}
 	}

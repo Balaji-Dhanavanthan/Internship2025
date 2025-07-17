@@ -220,16 +220,18 @@
 				"          COGS_AMT = {pt.COGS_AMT}/100,",
 				"          REIMB_AMT = {pt.COGS_AMT} + {pt.REIMB_AMT},",
 				"          {PTNT_COPAY_AMT(COL1)} = ERROR_FUNCTION(''),",
-				"          {SLS_TAX_AMT(COL2)} = {pt.DOC_ID},",
-				"          {TOTAL_AMT(COL 3)} = {pt.DOC_ID},",
-				"          DCT_AMT = {pt.DOC_VER},",
-				"          INGRD_CST_AMT = {pt.PHRMCY_NCPDP_ID},",
-				"          FILLED_DATE = {pt.DOC_ID},",
-				"          PAYR_CNTRCT_FLG = {pt.PHRMCY_NCPDP_ID},",
+				"          {SLS_TAX_AMT(COL2)} = ERROR_FUNCTION(''),",
+				"          {TOTAL_AMT(COL 3)} = {pt.COGS_AMT} * {pt.REIMB_AMT},",
+				"          DCT_AMT = ERROR_FUNCTION(''),",
+				"          INGRD_CST_AMT = {pt.INGRD_CST_AMT}/100,",
+				"          FILLED_DATE = toDate({pt.DT_FILL}, 'yyyyMMdd'),",
+				"          PAYR_CNTRCT_FLG = iif({pt.TOT_RX_PRC_COLL} > {pt.USUAL_AND_CSTMARY}, 'Y', 'N'),",
 				"          YEAR_DESC = {y.YEAR_DESC},",
 				"          LOAD_DATE = {pt.DOC_ID}) ~> DCTransformations",
 				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH}),",
-				"          {pt.DT_WRT} = toString({pt.DT_WRT})) ~> DCToInt"
+				"          {pt.DT_WRT} = toString({pt.DT_WRT}),",
+				"          {pt.DT_FILL} = toString({pt.DT_FILL}),",
+				"          {pt.USUAL_AND_CSTMARY} = toString({pt.USUAL_AND_CSTMARY})) ~> DCToInt"
 			]
 		}
 	}

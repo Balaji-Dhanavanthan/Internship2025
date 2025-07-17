@@ -93,7 +93,7 @@
 					"name": "ExistingAuditColumn"
 				},
 				{
-					"name": "select2"
+					"name": "ExtistingSelection"
 				}
 			],
 			"scriptLines": [
@@ -392,7 +392,7 @@
 				"          {Is Current}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> ExtistingSelection"
 			]
 		}
 	}

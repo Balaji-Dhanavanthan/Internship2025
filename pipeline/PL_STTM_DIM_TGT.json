@@ -35,6 +35,10 @@
 								"container": "practice-adf",
 								"Directory": "Workshop 2/SRC_Pharmacy",
 								"FileName": "status.csv"
+							},
+							"DIMTGT": {
+								"container": "practice-adf",
+								"Directory": "Asrar"
 							}
 						}
 					},

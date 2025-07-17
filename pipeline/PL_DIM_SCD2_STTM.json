@@ -5,8 +5,6 @@
 			{
 				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -22,9 +20,9 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"phrmcysrc": {
-								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "SRC_SCD2_TESTING.csv"
+								"container": "test-container",
+								"Directory": "Target Folders/I2025_JNagara1",
+								"FileName": "scd2Test2.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",
@@ -122,7 +120,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "DF_DIM_SCD2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,

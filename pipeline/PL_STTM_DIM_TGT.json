@@ -40,10 +40,6 @@
 								"container": "practice-adf",
 								"Directory": "Asrar"
 							},
-							"DimSrc": {
-								"container": "practice-adf",
-								"Directory": "Asrar"
-							},
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar"

@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_scd2_test_src",
+						"referenceName": "DS_Dim_STTM_source",
 						"type": "DatasetReference"
 					},
 					"name": "phrmcy"
@@ -280,7 +280,7 @@
 				"          {t.RCD_MOD_TMS} = toTimestamp({t.RCD_MOD_TMS},'yyyy-MM-dd HH:mm:ss'),",
 				"          {t.START_DATE} = toTimestamp({t.START_DATE},'yyyy-MM-dd HH:mm:ss'),",
 				"          {t.END_DATE} = toTimestamp({t.END_DATE},'yyyy-MM-dd HH:mm:ss')) ~> TargetCast",
-				"select3, TargetCast join({s.PTNT_CD} == {t.PTNT_CD},",
+				"select3, TargetCast join(replace({s.PTNT_CD}, '_', '') == {t.PTNT_CD},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",

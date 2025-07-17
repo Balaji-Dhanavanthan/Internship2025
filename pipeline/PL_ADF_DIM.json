@@ -19,6 +19,9 @@
 						"referenceName": "DF_STTM_DIM",
 						"type": "DataFlowReference",
 						"datasetParameters": {
+							"phrmcy": {
+								"filename": "src_phrmcy.csv"
+							},
 							"Language": {
 								"filename": "language.csv"
 							},

@@ -66,6 +66,12 @@
 				},
 				{
 					"name": "typeCast"
+				},
+				{
+					"name": "window1"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -208,37 +214,38 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ptntName",
 				"filter1 derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()) ,$$))) ~> emptyValuetoNull",
-				"typeCast derive(TRANS_NBR = {p.TRANS_NBR},",
-				"          PTNT_CD = substringIndex({ph.PTNT_CD}, '_', -1),",
-				"          PTNT_NM = regexReplace({ph.PHRMCY_NM}, \"[,&'-]\", ' '),",
-				"          PTNT_YR_OF_BRTH = {p.PTNT_YR_OF_BRTH},",
-				"          PTNT_AGE = minus({p.PTNT_YR_OF_BRTH}, toInteger(year(currentTimestamp())) ),",
-				"          PTNT_GNDR = ERROR_FUNCTION(''),",
-				"          TRANS_DATE = ERROR_FUNCTION(''),",
-				"          PROD_ID = ERROR_FUNCTION(''),",
-				"          PROD_GROUP_ID = ERROR_FUNCTION(''),",
-				"          PAYMENT_TYPE = ERROR_FUNCTION(''),",
-				"          COGS_AMT = ERROR_FUNCTION(''),",
-				"          REIMB_AMT = ERROR_FUNCTION(''),",
-				"          {PTNT_COPAY_AMT(COL1)} = ERROR_FUNCTION(''),",
-				"          {SLS_TAX_AMT(COL2)} = ERROR_FUNCTION(''),",
-				"          {TOTAL_AMT(COL 3)} = ERROR_FUNCTION(''),",
-				"          DCT_AMT = ERROR_FUNCTION(''),",
-				"          INGRD_CST_AMT = ERROR_FUNCTION(''),",
-				"          FILLED_DATE = ERROR_FUNCTION(''),",
-				"          PAYR_CNTRCT_FLG = ERROR_FUNCTION(''),",
-				"          YEAR_DESC = ERROR_FUNCTION('')) ~> DCTransition",
+				"typeCast derive({s.TRANS_NBR} = {p.TRANS_NBR},",
+				"          {s.PTNT_CD} = substringIndex({ph.PTNT_CD}, '_', -1),",
+				"          {s.PTNT_NM} = regexReplace({ph.PHRMCY_NM}, \"[,&'-]\", ' '),",
+				"          {s.PTNT_YR_OF_BRTH} = {p.PTNT_YR_OF_BRTH},",
+				"          {s.PTNT_AGE} = minus({p.PTNT_YR_OF_BRTH}, toInteger(year(currentTimestamp())) ),",
+				"          {s.PTNT_GNDR} = case({p.PTNT_GNDR}=='M', 'Male',{p.PTNT_GNDR}=='F', 'Female','UNK'),",
+				"          {s.TRANS_DATE} = toDate(toString({p.DT_WRT}),'yyyyMMdd'),",
+				"          {s.PROD_ID} = {p.PROD_ID},",
+				"          {s.PROD_GROUP_ID} = concat(left(trim({p.GRP_ID}),2), right(trim({p.GRP_ID}),2)),",
+				"          {s.PAYMENT_TYPE} = case({p.PMT_TYP}==1, 'On-Line',{p.PMT_TYP}==2, 'Cash', 'Others'),",
+				"          {s.COGS_AMT} = {p.COGS_AMT}/100,",
+				"          {s.REIMB_AMT} = add({p.COGS_AMT},{p.REIMB_AMT}),",
+				"          {TOTAL_AMT(COL 3)} = {p.COGS_AMT}*{p.REIMB_AMT},",
+				"          {s.INGRD_CST_AMT} = {p.INGRD_CST_AMT}/100,",
+				"          {s.FILLED_DATE} = toDate(toString({p.DT_FILL}),'yyyyMMdd'),",
+				"          {s.PAYR_CNTRCT_FLG} = case(toDecimal({p.TOT_RX_PRC_COLL})>{p.USUAL_AND_CSTMARY}, 'Y', 'N'),",
+				"          {s.YEAR_DESC} = right({y.YEAR_DESC}, 4)) ~> DCTransition",
 				"join2 filter(isNull({ph.PHRMCY_NAT_PROV_ID_NBR})) ~> filter1",
 				"emptyValuetoNull derive({p.TRANS_NBR} = toInteger({p.TRANS_NBR}),",
 				"          {p.PTNT_YR_OF_BRTH} = toInteger({p.PTNT_YR_OF_BRTH}),",
 				"          {p.DT_WRT} = toInteger({p.DT_WRT}),",
 				"          {p.PMT_TYP} = toInteger({p.PMT_TYP}),",
-				"          {p.COGS_AMT} = toDecimal({p.COGS_AMT}, 12, 2),",
+				"          {p.COGS_AMT} = toFloat({p.COGS_AMT}),",
 				"          {p.REIMB_AMT} = toDecimal({p.REIMB_AMT}, 12, 2),",
 				"          {p.COPAY_AMT} = toDecimal({p.COPAY_AMT}, 12, 2),",
 				"          {p.INGRD_CST_AMT} = toDecimal({p.INGRD_CST_AMT}, 12, 2),",
 				"          {p.DT_FILL} = toInteger({p.DT_FILL}),",
-				"          {p.USUAL_AND_CSTMARY} = toDecimal({p.USUAL_AND_CSTMARY}, 12, 2)) ~> typeCast"
+				"          {p.USUAL_AND_CSTMARY} = toDecimal({p.USUAL_AND_CSTMARY}, 12, 2)) ~> typeCast",
+				"DCTransition window(over(PROD_ID = {p.PROD_ID}),",
+				"     asc({p.PROD_ID}, true),",
+				"     {s.PTNT_COPAY_AMT(COL1)} = avg({p.COPAY_AMT})) ~> window1",
+				"window1 derive({SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> derivedColumn4"
 			]
 		}
 	}

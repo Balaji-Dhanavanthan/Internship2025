@@ -114,6 +114,12 @@
 				},
 				{
 					"name": "HistoryRecord"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
 				}
 			],
 			"scriptLines": [
@@ -297,12 +303,12 @@
 				"          END_DATE = toDate(END_DATE),",
 				"          RCD_MOD_TMS = toDate(RCD_MOD_TMS),",
 				"          PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD =='0NULL', 'UNK', PHRMCY_ADDR_ZIP_CD)) ~> AuditColumns",
-				"AuditColumns, TargetDerived join(SelReqCol@PTNT_CD == DIMTGT@PTNT_CD,",
+				"select2, TargetDerived join(SelReqCol@PTNT_CD == DIMTGT@PTNT_CD,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinswithtarget",
-				"DIMTGT derive(PTNT_KEY = toInteger(PTNT_KEY),",
+				"select3 derive(PTNT_KEY = toInteger(PTNT_KEY),",
 				"          PTNT_ID = split(PTNT_CD,'_')[size(split(PTNT_CD,'_'))],",
 				"          PHRMCY_NCPDP_NBR = toInteger(PHRMCY_NCPDP_NBR),",
 				"          PHRMCY_AGE = toInteger(PHRMCY_AGE),",
@@ -311,7 +317,7 @@
 				"          START_DATE = toDate(START_DATE, 'dd-MM-yyyy'),",
 				"          END_DATE = toDate(END_DATE, 'dd-MM-yyyy')) ~> TargetDerived",
 				"joinswithtarget split(isNull(DIMTGT@PTNT_CD),",
-				"     (SelReqCol@PTNT_CD == DIMTGT@PTNT_CD) && (AuditColumns@PHRMCY_ADDR_ZIP_CD != DIMTGT@PHRMCY_ADDR_ZIP_CD),",
+				"     (SelReqCol@PTNT_CD == DIMTGT@PTNT_CD) && (select2@PHRMCY_ADDR_ZIP_CD != DIMTGT@PHRMCY_ADDR_ZIP_CD),",
 				"     disjoint: false) ~> INSERT@(INSERT, UPDATE, EXISTING)",
 				"INSERT@INSERT derive({Is Current} = 1,",
 				"          RCD_CRT_TMS = currentTimestamp(),",
@@ -484,6 +490,18 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> HistoryRecord",
+				"AuditColumns select(mapColumn(",
+				"          each(match(true()),",
+				"               'src_'+$$ = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"DIMTGT select(mapColumn(",
+				"          each(match(true()),",
+				"               'tgt_'+$$ = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
 				"FinalSelection sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

@@ -5,6 +5,8 @@
 			{
 				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -22,7 +24,7 @@
 							"phrmcysrc": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "Scd2Testing.csv"
+								"FileName": "SRC_SCD2_TESTING.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",
@@ -120,8 +122,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -146,8 +146,7 @@
 					"sink": {
 						"type": "SqlServerSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate"
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -166,7 +165,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "TGT_SCD2_STTM.csv"
+							"FileName": "DIM_PTNT_ADF_SCD2.csv"
 						}
 					}
 				],
@@ -176,7 +175,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "TGT_SCD2_STTM_UPDATE",
+							"tablename": "DIM_PTNT_ADF_SCD2.csv",
 							"databasename": "Intern_2025"
 						}
 					}

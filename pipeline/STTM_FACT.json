@@ -49,6 +49,177 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "CP_staging-csv_to_SQL_staging",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DF_STTM_inc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "aabidh/sttm",
+							"filename": "STG_FCT.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL2",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "Intern_2025",
+							"tablename": "STG_FACT"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_staging_to_target",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_staging-csv_to_SQL_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT *\nFROM STG_FACT\nWHERE TRANS_DATE > (\nSELECT MAX(TRANS_DATE)\nFROM F_FACT\n)",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MAbdul1",
+							"TableName": "STG_FACT",
+							"database": "Intern_2025"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL2",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "Intern_2025",
+							"tablename": "F_FACT"
+						}
+					}
+				]
+			},
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "CP_staging_to_target",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_OnPrem_SQLServer",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"Database": "Intern_2025"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "truncate table STG_FACT"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"folder": {

@@ -39,16 +39,11 @@
 				}
 			},
 			{
-				"name": "CP_BLOB_TO_SQL",
+				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "DF_STTM_SCD2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -59,20 +54,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -86,23 +81,22 @@
 				},
 				"inputs": [
 					{
+						"referenceName": "DS_OnPrem_SQL2",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "Intern_2025",
+							"tablename": "DIM_PTNT_adf "
+						}
+					}
+				],
+				"outputs": [
+					{
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "practice-adf",
 							"folder": "aabidh/sttm",
 							"filename": "DIM_PTNT_adf.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"SchemaName": "I2025_MAbdul1",
-							"TableName": "DIM_PTNT_adf",
-							"database": "Intern_2025"
 						}
 					}
 				]

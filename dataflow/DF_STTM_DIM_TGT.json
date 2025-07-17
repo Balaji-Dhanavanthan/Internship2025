@@ -653,7 +653,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['DIM_PTNT.csv'],",
+				"     partitionFileNames:['DIM_PTNT_testing.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink1"

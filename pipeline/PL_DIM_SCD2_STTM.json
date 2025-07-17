@@ -5,8 +5,6 @@
 			{
 				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -49,7 +47,7 @@
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "DIM_PTNT.csv"
+								"FileName": "DIM_PTNT_testing.csv"
 							}
 						}
 					},
@@ -63,6 +61,8 @@
 			{
 				"name": "cp_scd2_testing",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

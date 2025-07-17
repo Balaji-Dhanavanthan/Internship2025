@@ -23,7 +23,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DS_Fact_STTM_SRC",
+						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference"
 					},
 					"name": "ptnt"

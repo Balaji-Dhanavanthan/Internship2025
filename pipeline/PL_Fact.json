@@ -26,7 +26,7 @@
 								"FILENAME": "src_phrmcy.csv"
 							},
 							"ptnt": {
-								"FILENAME": "SRC PTNT.csv"
+								"filename": "SRC_PTNT_adf_Test.csv"
 							},
 							"sink1": {
 								"filename": "factSource.csv"

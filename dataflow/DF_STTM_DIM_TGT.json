@@ -572,7 +572,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['SRC_PHRMCY_FACT_for_testing.csv'],",
+				"     partitionFileNames:['SCD2_FINAL_TESTING_TARGET.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink1"

@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "STG_FCT.csv",
+				"fileName": "DIM_PTNT_adf.csv",
 				"folderPath": "aabidh/sttm",
 				"container": "practice-adf"
 			},

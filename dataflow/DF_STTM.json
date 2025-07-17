@@ -215,8 +215,7 @@
 				"),",
 				"          PHRMCY_NCPDP_NBR = toInteger(PHRMCY_NCPDP_NBR)) ~> trans1",
 				"trans1 derive(each(match(type=='string'), $$ = coalesce($$,'UNK')),",
-				"          each(match(type=='integer'), $$ = coalesce($$,-1)),",
-				"          each(match(type=='date'), $$ = coalesce($$,'2999-12-31'))) ~> Nullhandling",
+				"          each(match(type=='integer'), $$ = coalesce($$,-1))) ~> Nullhandling",
 				"Nullhandling, status join(Nullhandling@DEAL_ID == status@deal_id,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -341,7 +340,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 split(isNull({t.PTNT_CD}) && isNull({t.RCD_MOD_TMS}),",
-				"     {s.PTNT_CD} == {t.PTNT_CD} && ({t.PHRMCY_ADDR_ZIP_CD} != {t.PHRMCY_ADDR_ZIP_CD}) && isNull({t.RCD_MOD_TMS}),",
+				"     {s.PHRMCY_ADDR_ZIP_CD}!={t.PHRMCY_ADDR_ZIP_CD} ,",
 				"     disjoint: false) ~> split1@(INSERT, UPDATE, EXISTING)",
 				"split1@INSERT select(mapColumn(",
 				"          PTNT_KEY = {s.PTNT_KEY},",
@@ -384,7 +383,7 @@
 				"          {s.PHRMCY_ADDR_CITY_NM} = PHRMCY_ADDR_CITY_NM,",
 				"          {s.PHRMCY_ADDR_ST_NM} = PHRMCY_ADDR_ST_NM,",
 				"          {s.PHRMCY_ADDR_ZNE_NM} = PHRMCY_ADDR_ZNE_NM,",
-				"          PHRMCY_ADDR_ZIP_CD,",
+				"          {s.PHRMCY_ADDR_ZIP_CD} = PHRMCY_ADDR_ZIP_CD,",
 				"          {s.PSCB_EMAIL_ID} = PSCB_EMAIL_ID,",
 				"          {s.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT,",
 				"          {s.PHRMCY_SYS_IVR_DTA_STRT_QTR} = PHRMCY_SYS_IVR_DTA_STRT_QTR,",
@@ -595,8 +594,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
+				"     partitionFileNames:['DIM_PTNT_adf.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}

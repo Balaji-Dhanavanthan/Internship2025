@@ -58,8 +58,6 @@
 			{
 				"name": "CP_to_SQL_tgt_table",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_DataTransfom_SCD2",
@@ -90,6 +88,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "TRUNCATE TABLE ADF_DIM_PTNT;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
@@ -128,6 +127,8 @@
 			{
 				"name": "df_test",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

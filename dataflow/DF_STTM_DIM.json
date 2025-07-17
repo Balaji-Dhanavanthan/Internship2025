@@ -73,6 +73,21 @@
 				},
 				{
 					"name": "namePTNT"
+				},
+				{
+					"name": "DCTypeCast"
+				},
+				{
+					"name": "LeftJoinWithPTNT"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "split2"
+				},
+				{
+					"name": "alterRow"
 				}
 			],
 			"scriptLines": [
@@ -113,6 +128,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcStatus",
 				"source(output(",
+				"          PTNT_KEY as string,",
 				"          PTNT_ID as string,",
 				"          PTNT_CD as string,",
 				"          PHRMCY_NCPDP_NBR as string,",
@@ -235,29 +251,29 @@
 				"DCTransformations derive(each(match(type=='string'), $$ = iifNull($$, 'UNK', $$)),",
 				"          each(match(type=='Integer'), $$ = iifNull($#, -1, $#))) ~> DCHandlingNull",
 				"DCHandlingNull select(mapColumn(",
-				"          PTNT_ID,",
-				"          PTNT_CD,",
-				"          PHRMCY_NCPDP_NBR,",
-				"          PHRMCY_NAT_PROV_ID_NBR,",
-				"          PSCB_FIRST_NM,",
-				"          PSCB_LAST_NM,",
-				"          PHRMCY_NM,",
-				"          PHRMCY_ADDR_CITY_NM,",
-				"          PHRMCY_ADDR_ST_NM,",
-				"          PHRMCY_ADDR_ZNE_NM,",
-				"          PHRMCY_ADDR_ZIP_CD,",
-				"          PSCB_EMAIL_ID,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
-				"          PHRMCY_AGE,",
-				"          DEAL_ID,",
-				"          DEAL_TYPE_CD,",
-				"          DEAL_NUMBER,",
-				"          LANG_CD,",
-				"          LANG_DESC,",
-				"          RCD_CRT_TMS,",
-				"          START_DATE",
+				"          {n.PTNT_ID} = PTNT_ID,",
+				"          {n.PTNT_CD} = PTNT_CD,",
+				"          {n.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
+				"          {n.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
+				"          {n.PSCB_FIRST_NM} = PSCB_FIRST_NM,",
+				"          {n.PSCB_LAST_NM} = PSCB_LAST_NM,",
+				"          {n.PHRMCY_NM} = PHRMCY_NM,",
+				"          {n.PHRMCY_ADDR_CITY_NM} = PHRMCY_ADDR_CITY_NM,",
+				"          {n.PHRMCY_ADDR_ST_NM} = PHRMCY_ADDR_ST_NM,",
+				"          {n.PHRMCY_ADDR_ZNE_NM} = PHRMCY_ADDR_ZNE_NM,",
+				"          {n.PHRMCY_ADDR_ZIP_CD} = PHRMCY_ADDR_ZIP_CD,",
+				"          {n.PSCB_EMAIL_ID} = PSCB_EMAIL_ID,",
+				"          {n.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          {n.PHRMCY_SYS_IVR_DTA_STRT_QTR} = PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          {n.PHRMCY_SYS_IVR_DTA_STRT_YR} = PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          {n.PHRMCY_AGE} = PHRMCY_AGE,",
+				"          {n.DEAL_ID} = DEAL_ID,",
+				"          {n.DEAL_TYPE_CD} = DEAL_TYPE_CD,",
+				"          {n.DEAL_NUMBER} = DEAL_NUMBER,",
+				"          {n.LANG_CD} = LANG_CD,",
+				"          {n.LANG_DESC} = LANG_DESC,",
+				"          {n.RCD_CRT_TMS} = RCD_CRT_TMS,",
+				"          {n.START_DATE} = START_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTarget",
@@ -266,7 +282,25 @@
 				"               'D.'+$$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> namePTNT"
+				"     skipDuplicateMapOutputs: true) ~> namePTNT",
+				"namePTNT derive({D.PTNT_KEY} = toInteger({D.PTNT_KEY}),",
+				"          {D.PTNT_ID} = toInteger({D.PTNT_ID}),",
+				"          {D.PHRMCY_NCPDP_NBR} = toInteger({D.PHRMCY_NCPDP_NBR}),",
+				"          {D.PHRMCY_AGE} = toInteger({D.PHRMCY_AGE}),",
+				"          {D.RCD_CRT_TMS} = toTimestamp({D.RCD_CRT_TMS},'yyyy-MM-dd HH:mm:ss'),",
+				"          {D.RCD_MOD_TMS} = toTimestamp({D.RCD_MOD_TMS},'yyyy-MM-dd HH:mm:ss'),",
+				"          {D.START_DATE} = toTimestamp({D.START_DATE},'yyyy-MM-dd HH:mm:ss'),",
+				"          {D.END_DATE} =  toTimestamp({D.END_DATE},'yyyy-MM-dd HH:mm:ss')) ~> DCTypeCast",
+				"SelectTarget, DCTypeCast join({n.PTNT_CD} == {D.PTNT_CD},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> LeftJoinWithPTNT",
+				"LeftJoinWithPTNT split(isNull({D.PTNT_CD})&& isNull({D.RCD_MOD_TMS}),",
+				"     disjoint: false) ~> split1@(insert, update)",
+				"split1@update split({n.PHRMCY_ADDR_ZIP_CD}!={D.PHRMCY_ADDR_ZIP_CD}&& isNull({D.RCD_MOD_TMS}),",
+				"     disjoint: false) ~> split2@(updated, exists)",
+				"split2@updated alterRow() ~> alterRow"
 			]
 		}
 	}

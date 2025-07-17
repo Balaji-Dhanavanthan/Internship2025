@@ -5,14 +5,9 @@
 			{
 				"name": "DF_for_transformation",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "DeleteStageBeforeLoad",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -56,8 +51,10 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CP_stg_to_sqlserver",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_for_transformation",
@@ -87,15 +84,9 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -120,21 +111,53 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_CSV_test",
+						"referenceName": "DS_Sql_server_intern",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "STTM_PTNT.csv",
-							"folder_name": "ETL_stuff",
-							"container_name": "csvcontainer"
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "STG_FACT_DSPN_ADF"
 						}
 					}
 				]
 			},
 			{
-				"name": "DeleteStageBeforeLoad",
-				"type": "Delete",
+				"name": "Script1",
+				"type": "Script",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_stg_to_sqlserver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_server",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": ""
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "LU_get_max_tgt_trans_date",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -145,30 +168,52 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT MAX(TRANS_DATE)\nFROM FACT_DSPN",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
 					"dataset": {
-						"referenceName": "DS_CSV_test",
+						"referenceName": "DS_Sql_server_intern",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "STTM_PTNT_STG.csv",
-							"folder_name": "ETL_stuff",
-							"container_name": "csvcontainer"
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "TGT_FACT_DSPN_ADF"
 						}
-					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "DS_Blob_storgare",
-							"type": "LinkedServiceReference"
-						}
-					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "SET_max_date",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LU_get_max_tgt_trans_date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "max_date",
+					"value": {
+						"value": "@activity('LU_get_max_tgt_trans_date').output.firstRow['']",
+						"type": "Expression"
 					}
 				}
 			}
 		],
+		"variables": {
+			"max_date": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "Workshop 2"
 		},

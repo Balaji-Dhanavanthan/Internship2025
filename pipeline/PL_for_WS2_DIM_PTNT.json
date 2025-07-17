@@ -3,10 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "initialLoad",
+				"name": "DF_DataTransfom_SCD2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -37,6 +35,13 @@
 								"container_name": "practice-adf"
 							},
 							"TgtSrc": {
+								"file_name": "DIM_PTMT_TGT_V1.csv",
+								"folder_name": "ETL_stuff",
+								"container_name": "csvcontainer"
+							},
+							"FinSink": {
+								"file_name": "DIM_PTMT_TGT.csv",
+								"folder_name": "ETL_stuff",
 								"container_name": "csvcontainer"
 							}
 						}
@@ -51,11 +56,9 @@
 			{
 				"name": "CP_to_SQL_tgt_table",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "initialLoad",
+						"activity": "DF_DataTransfom_SCD2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -101,7 +104,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "DIM_PTMT_I2025_JSenthil_v2.csv",
+							"file_name": "DIM_PTMT_TGT_V1.csv",
 							"folder_name": "ETL_stuff",
 							"container_name": "csvcontainer"
 						}
@@ -113,7 +116,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
-							"TableName": "DIM_PTNT"
+							"TableName": "ADF_DIM_PTNT"
 						}
 					}
 				]

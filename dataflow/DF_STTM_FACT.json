@@ -75,6 +75,15 @@
 				},
 				{
 					"name": "AggMax"
+				},
+				{
+					"name": "DCDctAmt"
+				},
+				{
+					"name": "selectTarget"
+				},
+				{
+					"name": "TransKey"
 				}
 			],
 			"scriptLines": [
@@ -237,7 +246,37 @@
 				"DCTransformations window(over({pt.PROD_ID}),",
 				"     asc({pt.PROD_ID}, true),",
 				"     {PTNT_COPAY_AMT(COL1)} = avg({pt.COPAY_AMT})) ~> AggAvg",
-				"AggAvg window(over({pt.PROD_ID})) ~> AggMax"
+				"AggAvg window(over({pt.PROD_ID}),",
+				"     asc({pt.PROD_ID}, true),",
+				"     {SLS_TAX_AMT(COL2)} = max({PTNT_COPAY_AMT(COL1)})) ~> AggMax",
+				"AggMax derive(DCT_AMT = iif({PTNT_COPAY_AMT(COL1)} > 0 , ({PTNT_COPAY_AMT(COL1)}/{TOTAL_AMT(COL 3)}), {TOTAL_AMT(COL 3)}*0.2)) ~> DCDctAmt",
+				"TransKey select(mapColumn(",
+				"          TRANS_NBR,",
+				"          PTNT_CD,",
+				"          PTNT_NM,",
+				"          PTNT_YR_OF_BRTH,",
+				"          PTNT_AGE,",
+				"          PTNT_GNDR,",
+				"          TRANS_DATE,",
+				"          PROD_ID,",
+				"          PROD_GROUP_ID,",
+				"          PAYMENT_TYPE,",
+				"          COGS_AMT,",
+				"          REIMB_AMT,",
+				"          {TOTAL_AMT(COL 3)},",
+				"          INGRD_CST_AMT,",
+				"          FILLED_DATE,",
+				"          PAYR_CNTRCT_FLG,",
+				"          YEAR_DESC,",
+				"          {PTNT_COPAY_AMT(COL1)},",
+				"          {SLS_TAX_AMT(COL2)},",
+				"          DCT_AMT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectTarget",
+				"DCDctAmt keyGenerate(output(TRANS_KEY as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> TransKey"
 			]
 		}
 	}

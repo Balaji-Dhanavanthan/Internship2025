@@ -97,12 +97,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
+						"referenceName": "DS_OnPrem_SQL2",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "I2025_MAbdul1",
-							"TableName": "SRC_PHRMCY_Fact",
-							"database": "Intern_2025"
+							"database": " Intern_2025",
+							"tablename": "STG_FACT"
 						}
 					}
 				]

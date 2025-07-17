@@ -35,6 +35,18 @@
 								"file_name": "src_phrmcy.csv",
 								"folder_name": "Workshop 2/SRC_Pharmacy",
 								"container_name": "practice-adf"
+							},
+							"TgtSrc": {
+								"container_name": "csvcontainer"
+							},
+							"LangSrc1": {
+								"container_name": "csvcontainer"
+							},
+							"StatusSrc1": {
+								"container_name": "csvcontainer"
+							},
+							"PharmSrc": {
+								"container_name": "csvcontainer"
 							}
 						}
 					},

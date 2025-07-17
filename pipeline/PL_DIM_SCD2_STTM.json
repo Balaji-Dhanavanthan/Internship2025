@@ -39,7 +39,7 @@
 							"DIMTGT": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "DIM_PTNT.csv"
+								"FileName": "DIM_PTNT_testing_record.csv"
 							},
 							"DimSrc": {
 								"container": "practice-adf",
@@ -49,7 +49,7 @@
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "DIM_PTNT_testi.csv"
+								"FileName": "DIM_PTNT_testing_record.csv"
 							}
 						}
 					},
@@ -63,8 +63,6 @@
 			{
 				"name": "cp_scd2_testing",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -76,20 +74,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "DelimitedTextReadSettings"
 						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -103,23 +102,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_OnPrem_SQL",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "I2025_MSyed",
-							"tablename": "DIM_PTNT_testing_123",
-							"databasename": "Intern_2025"
-						}
-					}
-				],
-				"outputs": [
-					{
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
 							"FileName": "DIM_PTNT_testing_record.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "I2025_MSyed",
+							"tablename": "DIM_PTNT_testing_123_Tgt",
+							"databasename": "Intern_2025"
 						}
 					}
 				]

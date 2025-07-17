@@ -120,8 +120,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_DIM_SCD2",
@@ -172,7 +170,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "DIM_PTNT_ADF_SCD2.csv"
+							"FileName": "SCD2_FINAL_TESTING_TARGET.csv"
 						}
 					}
 				],
@@ -182,7 +180,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "DIM_PTNT_ADF_SCD2.csv",
+							"tablename": "DIM_PTNT",
 							"databasename": "Intern_2025"
 						}
 					}

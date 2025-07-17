@@ -387,7 +387,7 @@
 				"          PHRMCY_SYS_IVR_DTA_STRT_QTR = INSERT@INSERT@PHRMCY_SYS_IVR_DTA_STRT_QTR,",
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR = INSERT@INSERT@PHRMCY_SYS_IVR_DTA_STRT_YR,",
 				"          PHRMCY_AGE = INSERT@INSERT@PHRMCY_AGE,",
-				"          deal_id,",
+				"          deal_id = INSERT@INSERT@deal_id,",
 				"          DEAL_TYPE_CD = INSERT@INSERT@DEAL_TYPE_CD,",
 				"          DEAL_NUMBER = INSERT@INSERT@DEAL_NUMBER,",
 				"          LANG_CD = INSERT@INSERT@LANG_CD,",

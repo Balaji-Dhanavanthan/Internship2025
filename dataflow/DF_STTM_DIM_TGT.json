@@ -186,7 +186,7 @@
 				"          RCD_MOD_TMS as string,",
 				"          START_DATE as string,",
 				"          END_DATE as string,",
-				"          {Is Current} as string",
+				"          Is_current as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",

@@ -27,20 +27,19 @@
 						"type": "DatasetReference"
 					},
 					"name": "language"
-				}
-			],
-			"sinks": [
+				},
 				{
 					"dataset": {
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "target"
 				}
 			],
+			"sinks": [],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "trans1"
 				},
 				{
 					"name": "Nullhandling"
@@ -73,7 +72,13 @@
 					"name": "select3"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "trans3"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -113,6 +118,37 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> language",
+				"source(output(",
+				"          PTNT_KEY as integer,",
+				"          PTNT_ID as integer,",
+				"          PTNT_CD as string,",
+				"          PHRMCY_NCPDP_NBR as integer,",
+				"          PHRMCY_NAT_PROV_ID_NBR as string,",
+				"          PSCB_FIRST_NM as string,",
+				"          PSCB_LAST_NM as string,",
+				"          PHRMCY_NM as string,",
+				"          PHRMCY_ADDR_CITY_NM as string,",
+				"          PHRMCY_ADDR_ST_NM as string,",
+				"          PHRMCY_ADDR_ZNE_NM as string,",
+				"          PHRMCY_ADDR_ZIP_CD as string,",
+				"          PSCB_EMAIL_ID as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR as string,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR as string,",
+				"          PHRMCY_AGE as integer,",
+				"          DEAL_ID as string,",
+				"          DEAL_TYPE_CD as string,",
+				"          DEAL_NUMBER as string,",
+				"          LANG_CD as string,",
+				"          LANG_DESC as string,",
+				"          RCD_CRT_TMS as date,",
+				"          RCD_MOD_TMS as date,",
+				"          START_DATE as date,",
+				"          END_DATE as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> target",
 				"phrmcy derive(PTNT_ID = toInteger(split(PTNT_CD, '_')[1]),",
 				"          PTNT_CD = split(PTNT_CD, '_')[2],",
 				"          PHRMCY_NAT_PROV_ID_NBR = iif(isNull(PHRMCY_NAT_PROV_ID_NBR) || PHRMCY_NAT_PROV_ID_NBR == 'NULL', 'UNK', PHRMCY_NAT_PROV_ID_NBR),",
@@ -141,8 +177,8 @@
 				"        ),\r",
 				"        upper(substring(trim(PHRMCY_ADDR_CITY_NM), 1, 3))\r",
 				"    )\r",
-				")) ~> derivedColumn1",
-				"derivedColumn1 derive(each(match(type=='string'), $$ = coalesce($$,'UNK')),",
+				")) ~> trans1",
+				"trans1 derive(each(match(type=='string'), $$ = coalesce($$,'UNK')),",
 				"          each(match(type=='integer'), $$ = coalesce($$,-1)),",
 				"          each(match(type=='date'), $$ = coalesce($$,'2999-12-31'))) ~> Nullhandling",
 				"Nullhandling, status join(Nullhandling@DEAL_ID == status@deal_id,",
@@ -178,7 +214,7 @@
 				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
 				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
 				"          PHRMCY_AGE,",
-				"          DEAL_ID = Nullhandling@DEAL_ID,",
+				"          DEAL_ID = derivedColumn2@DEAL_ID,",
 				"          DEAL_TYPE_CD,",
 				"          DEAL_NUMBER,",
 				"          LANG_CD = Nullhandling@LANG_CD,",
@@ -262,79 +298,15 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 derive(PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', 'UNK',PHRMCY_ADDR_ZIP_CD )) ~> derivedColumn3",
-				"derivedColumn3 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          Prop_0 as string,",
-				"          match_id as string,",
-				"          date as string,",
-				"          match_type as string,",
-				"          event_name as string,",
-				"          innings as string,",
-				"          batting_team as string,",
-				"          bowling_team as string,",
-				"          over as string,",
-				"          ball as string,",
-				"          ball_no as string,",
-				"          batter as string,",
-				"          bat_pos as string,",
-				"          runs_batter as string,",
-				"          balls_faced as string,",
-				"          bowler as string,",
-				"          valid_ball as string,",
-				"          runs_extras as string,",
-				"          runs_total as string,",
-				"          runs_bowler as string,",
-				"          runs_not_boundary as string,",
-				"          extra_type as string,",
-				"          non_striker as string,",
-				"          non_striker_pos as string,",
-				"          wicket_kind as string,",
-				"          player_out as string,",
-				"          fielders as string,",
-				"          runs_target as string,",
-				"          review_batter as string,",
-				"          team_reviewed as string,",
-				"          review_decision as string,",
-				"          umpire as string,",
-				"          umpires_call as string,",
-				"          player_of_match as string,",
-				"          match_won_by as string,",
-				"          win_outcome as string,",
-				"          toss_winner as string,",
-				"          toss_decision as string,",
-				"          venue as string,",
-				"          city as string,",
-				"          day as string,",
-				"          month as string,",
-				"          year as string,",
-				"          season as string,",
-				"          gender as string,",
-				"          team_type as string,",
-				"          superover_winner as string,",
-				"          result_type as string,",
-				"          method as string,",
-				"          balls_per_over as string,",
-				"          overs as string,",
-				"          event_match_no as string,",
-				"          stage as string,",
-				"          match_number as string,",
-				"          team_runs as string,",
-				"          team_balls as string,",
-				"          team_wicket as string,",
-				"          new_batter as string,",
-				"          batter_runs as string,",
-				"          batter_balls as string,",
-				"          bowler_wicket as string,",
-				"          batting_partners as string,",
-				"          next_batter as string,",
-				"          striker_out as string",
-				"     ),",
-				"     partitionFileNames:['DIM_PTNT_src.csv'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"select3 derive(PHRMCY_ADDR_ZIP_CD = iif(PHRMCY_ADDR_ZIP_CD == 'NULL', 'UNK',PHRMCY_ADDR_ZIP_CD )) ~> trans3",
+				"trans3, target join(select3@PTNT_CD == target@PTNT_CD,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 split(isNull(target@PTNT_CD),",
+				"     select3@PTNT_CD == target@PTNT_CD && (trans3@PHRMCY_ADDR_ZIP_CD != target@PHRMCY_ADDR_ZIP_CD),",
+				"     disjoint: false) ~> split1@(INSERT, UPDATE, EXISTING)"
 			]
 		}
 	}

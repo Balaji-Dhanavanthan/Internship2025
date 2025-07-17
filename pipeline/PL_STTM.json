@@ -19,14 +19,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_STTM",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink1": {
-								"container": "practice-adf",
-								"folder": "aabidh",
-								"filename": "DIM_PTNT_src.csv"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

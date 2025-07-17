@@ -45,6 +45,12 @@
 				},
 				{
 					"name": "PTNTName"
+				},
+				{
+					"name": "LeftJoinPTNTPhrmcy"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -169,7 +175,13 @@
 				"               'pt.'+$$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> PTNTName"
+				"     skipDuplicateMapOutputs: true) ~> PTNTName",
+				"PTNTName, PhrmcyName join({pt.PTNT_CD} == {p.PTNT_CD},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> LeftJoinPTNTPhrmcy",
+				"LeftJoinPTNTPhrmcy filter(isNull({p.PHRMCY_NAT_PROV_ID_NBR}) ) ~> filter1"
 			]
 		}
 	}

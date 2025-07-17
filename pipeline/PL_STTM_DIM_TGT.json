@@ -43,6 +43,18 @@
 							"DimSrc": {
 								"container": "practice-adf",
 								"Directory": "Asrar"
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"Directory": "Asrar"
+							}
+						},
+						"linkedServiceParameters": {
+							"sink1": {
+								"schemaLinkedService": {
+									"container": "practice-adf",
+									"Directory": "Asrar"
+								}
 							}
 						}
 					},

@@ -42,6 +42,9 @@
 				},
 				{
 					"name": "NamingYear"
+				},
+				{
+					"name": "PTNTName"
 				}
 			],
 			"scriptLines": [
@@ -160,7 +163,13 @@
 				"          {y.YEAR_DESC} = YEAR_DESC",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> NamingYear"
+				"     skipDuplicateMapOutputs: true) ~> NamingYear",
+				"DCTypeCast select(mapColumn(",
+				"          each(match(true()),",
+				"               'pt.'+$$ = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> PTNTName"
 			]
 		}
 	}

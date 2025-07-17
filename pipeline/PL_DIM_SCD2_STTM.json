@@ -21,8 +21,8 @@
 						"datasetParameters": {
 							"phrmcysrc": {
 								"container": "practice-adf",
-								"Directory": "Workshop 2/SRC_Pharmacy",
-								"FileName": "src_phrmcy.csv"
+								"Directory": "Asrar",
+								"FileName": "SCD2_FINAL_TESTING_SOURCE.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",
@@ -180,7 +180,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "DIM_PTNT",
+							"tablename": "SCD2_FINAL_TESTING_TARGET.csv",
 							"databasename": "Intern_2025"
 						}
 					}

@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_STTM_inc",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -51,6 +51,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "sttm_fact"
+		},
 		"annotations": []
 	}
 }

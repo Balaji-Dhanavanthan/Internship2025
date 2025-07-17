@@ -22,9 +22,9 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"phrmcysrc": {
-								"container": "test-container",
-								"Directory": "Target Folders/I2025_JNagara1",
-								"FileName": "scd2Test2.csv"
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "SRC_PHRMCY_FACT_for_testing.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",
@@ -58,8 +58,6 @@
 			{
 				"name": "cp_scd2_testing",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -102,7 +100,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "SRC_PHRMCY_FACT",
+							"tablename": "DIM_PTNT",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -114,7 +112,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "SRC_PHRMCY_FACT_for_testing.csv"
+							"FileName": "SCD2_FINAL_TESTING_TARGET.csv"
 						}
 					}
 				]

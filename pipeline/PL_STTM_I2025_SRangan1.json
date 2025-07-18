@@ -1,0 +1,72 @@
+{
+	"name": "PL_STTM_I2025_SRangan1",
+	"properties": {
+		"activities": [
+			{
+				"name": "CP_SrcActuals_SQL",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_STTM_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": " practice-adf",
+							"Foldername": "TDSG Project Scenario",
+							"Filename": "Daily Production Actual"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "I2025_SRangan1",
+							"filename": "Daily_Production_Actuals"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "TDSG_Training_I2025_SRangan1/TDSG_PROJECT_I2025_SRangan1"
+		},
+		"annotations": []
+	}
+}

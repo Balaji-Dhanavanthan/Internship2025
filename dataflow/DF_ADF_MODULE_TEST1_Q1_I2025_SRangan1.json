@@ -36,16 +36,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          anime_id as integer,",
-				"          name as string,",
-				"          genre as string,",
-				"          type as string,",
-				"          episodes as string,",
-				"          rating as double,",
-				"          members as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> srcAnime",
 				"srcAnime select(mapColumn(",

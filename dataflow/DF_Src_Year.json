@@ -30,11 +30,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          YEAR_ID as string,",
-				"          YEAR_DESC as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcYear",
 				"SrcYear derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> DCnullhandle",

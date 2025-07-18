@@ -57,7 +57,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_new_I2025SRangan1",
+						"referenceName": "DS_new_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -117,7 +117,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -136,7 +136,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"fieldList": [],
@@ -639,13 +639,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Excel_I2025SRangan1",
+						"referenceName": "DS_Excel_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_Parquet_I2025SRangan1",
+						"referenceName": "DS_Parquet_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -713,13 +713,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "I2025_SRangan1",
+									"referenceName": "DS_Source_I2025_SRangan1",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_sql_I2025SRangan1",
+									"referenceName": "DS_sql_I2025_SRangan1",
 									"type": "DatasetReference"
 								}
 							]
@@ -776,13 +776,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Parquet_I2025SRangan1",
+						"referenceName": "DS_Parquet_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]

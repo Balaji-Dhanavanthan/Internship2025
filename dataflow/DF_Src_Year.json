@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -37,7 +37,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()), $$))) ~> nullhandle",
+				"source1 derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> nullhandle",
 				"nullhandle sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

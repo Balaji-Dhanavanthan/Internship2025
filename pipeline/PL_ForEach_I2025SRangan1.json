@@ -32,7 +32,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -114,13 +114,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_new_I2025SRangan1",
+									"referenceName": "DS_new_I2025_SRangan1",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_new_I2025SRangan1",
+									"referenceName": "DS_new_I2025_SRangan1",
 									"type": "DatasetReference"
 								}
 							]

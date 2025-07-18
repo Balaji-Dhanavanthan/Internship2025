@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -58,9 +58,9 @@
 				"          PHRMCY_ADDR_ZIP_CD = toInteger(PHRMCY_ADDR_ZIP_CD),",
 				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toTimestamp(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy', 'HH:mm'),",
 				"          PHRMCY_NAT_PROV_ID_NBR = toInteger(PHRMCY_NAT_PROV_ID_NBR)) ~> cast",
-				"cast derive(each(match(type == 'string'), $$ = iif(isNull($$), 'UNK', $$)),",
-				"          each(match(type == 'timestamp'), $$ = iif(isNull($$), toTimestamp('2999-12-31 00:00:00.000'), $$)),",
-				"          each(match(type == 'integer'), $$ = iif(isNull($$), -1, $$))) ~> nullHandle",
+				"cast derive(each(match(type=='string'), $$ = iif(isNull($$), 'UNK', $$)),",
+				"          each(match(type=='timestamp'), $$ = iif(isNull($$), toTimestamp('2999-12-31 00:00:00.000'), $$)),",
+				"          each(match(type=='integer'), $$ = iif(isNull($$), -1, $$))) ~> nullHandle",
 				"nullHandle sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

@@ -36,13 +36,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_rest_I2025SRangan1",
+						"referenceName": "DS_rest_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_sql_I2025SRangan1",
+						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -153,13 +153,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_sql_I2025SRangan1",
+						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_sql_I2025SRangan1",
+						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]
@@ -208,7 +208,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_sql_I2025SRangan1",
+						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				],

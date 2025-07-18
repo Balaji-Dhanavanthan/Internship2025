@@ -45,7 +45,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_sql_I2025SRangan1",
+						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
 							"folder": "I2025_SRangan1",
@@ -335,7 +335,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					}
 				]

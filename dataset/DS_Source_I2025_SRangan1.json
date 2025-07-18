@@ -1,5 +1,5 @@
 {
-	"name": "I2025_SRangan1",
+	"name": "DS_Source_I2025_SRangan1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",

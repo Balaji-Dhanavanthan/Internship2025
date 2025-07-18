@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -59,17 +59,15 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> replace",
-				"replace derive(each(match(name == 'rating'), $0 = round(rating, 1)),",
-				"          each(match(name == 'type'), $$ = case(\r",
+				"replace derive(each(match(name=='rating'), $0 = round(rating, 1)),",
+				"          each(match(name=='type'), $$ = case(\r",
 				"    type == 'OVA', 'Original Video Animation',\r",
 				"    type == 'ONA', 'Original Net Animation',\r",
 				"    type == 'TV', 'Television',\r",
 				"    type == 'Movie', 'Cinema',\r",
 				"    type\r",
-				")\r",
-				")) ~> derivedcolumn",
-				"derivedcolumn filter(!isNull(type) && trim(type) != ''",
-				") ~> filter1",
+				"))) ~> derivedcolumn",
+				"derivedcolumn filter(!isNull(type) && trim(type) != '') ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

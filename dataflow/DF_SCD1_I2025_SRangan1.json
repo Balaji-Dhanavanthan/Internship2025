@@ -16,7 +16,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"name": "target"
@@ -25,7 +25,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "I2025_SRangan1",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -97,7 +97,7 @@
 				"     ignoreNoFilesFound: false) ~> target",
 				"select1 derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
 				"          each(match(type=='Integer'), $$ = iifNull($#, -1)),",
-				"          each(match(type == 'float'), $$ = iifNull($#, 0))) ~> nullhandling",
+				"          each(match(type=='float'), $$ = iifNull($#, 0))) ~> nullhandling",
 				"surrogateKey1, select4 join(select1@EmployeeID == select4@EmployeeID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -136,7 +136,7 @@
 				"          PhoneNumber = nullhandling@PhoneNumber,",
 				"          MaritalStatus = nullhandling@MaritalStatus,",
 				"          EffectiveDate = select1@EffectiveDate,",
-				"          EndDate = select1@EndDate,",
+				"          EndDate = {select1@EndDate},",
 				"          surr_key,",
 				"          createBy,",
 				"          time",

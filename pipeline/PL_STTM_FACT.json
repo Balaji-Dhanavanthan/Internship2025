@@ -69,6 +69,8 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -86,7 +88,7 @@
 							"SrcPtnt": {
 								"container": "test-container",
 								"Directory": "Target Folders/I2025_JNagara1",
-								"FileName": "Target Folders/I2025_JNagara1"
+								"FileName": "SRC_PTNT_adf_Test.csv"
 							},
 							"SrcYears": {
 								"container": "practice-adf",
@@ -243,8 +245,6 @@
 			{
 				"name": "CP_SRC_SQL",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -307,8 +307,6 @@
 			{
 				"name": "CP_SRC_STG",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_SRC_SQL",
@@ -328,6 +326,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT * \nFROM SRC_FACT_DSPN_adf\nWHERE TRANS_DATE > (\n    SELECT MAX(TRANS_DATE) \n    FROM FACT_DSPN_adf\n);\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -372,8 +371,6 @@
 			{
 				"name": "CP_STG_TGT",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_SRC_STG",
@@ -393,6 +390,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT * \nFROM STAGING_FACT_DSPN_adf\nWHERE TRANS_DATE > (\n    SELECT MAX(TRANS_DATE) \n    FROM FACT_DSPN_adf\n);\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

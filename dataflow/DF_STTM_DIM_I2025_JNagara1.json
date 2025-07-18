@@ -50,7 +50,7 @@
 					"name": "DCPHRMCYCast"
 				},
 				{
-					"name": "join1"
+					"name": "LeftOuterPhrmcyLanguage"
 				},
 				{
 					"name": "phrmcyName"
@@ -62,16 +62,16 @@
 					"name": "statusName"
 				},
 				{
-					"name": "join2"
+					"name": "leftOuterJoinStatus"
 				},
 				{
-					"name": "filter1"
+					"name": "filterPhrmcyAddrZneCd"
 				},
 				{
 					"name": "DCPhrmcyNull"
 				},
 				{
-					"name": "DCTransition"
+					"name": "DCTransformation"
 				},
 				{
 					"name": "derivedColumn1"
@@ -80,7 +80,7 @@
 					"name": "TargetCast"
 				},
 				{
-					"name": "join3"
+					"name": "leftOuterSrcT"
 				},
 				{
 					"name": "split1"
@@ -89,7 +89,7 @@
 					"name": "select2"
 				},
 				{
-					"name": "select3"
+					"name": "selectSourceName"
 				},
 				{
 					"name": "split2"
@@ -199,7 +199,7 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
+				"     broadcast: 'auto')~> LeftOuterPhrmcyLanguage",
 				"DCPhrmcyNull select(mapColumn(",
 				"          {p.PHRMCY_NAT_PROV_ID_NBR} = PHRMCY_NAT_PROV_ID_NBR,",
 				"          {p.PHRMCY_NCPDP_NBR} = PHRMCY_NCPDP_NBR,",
@@ -233,15 +233,15 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> statusName",
-				"join1, statusName join({p.DEAL_ID} == {d.deal_id}",
+				"LeftOuterPhrmcyLanguage, statusName join({p.DEAL_ID} == {d.deal_id}",
 				"     && {p.DEAL_ID} == {d.deal_nbr},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2",
-				"join2 filter(in( ['US','PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter1",
+				"     broadcast: 'auto')~> leftOuterJoinStatus",
+				"leftOuterJoinStatus filter(in( ['US','PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filterPhrmcyAddrZneCd",
 				"phrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> DCPhrmcyNull",
-				"filter1 derive(PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
+				"filterPhrmcyAddrZneCd derive(PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
 				"          PTNT_ID = iifNull(toInteger(substringIndex({p.PTNT_CD}, '_', 1)),-1,toInteger(substringIndex({p.PTNT_CD}, '_', 1))),",
 				"          PHRMCY_NCPDP_NBR = case(isNull({p.PHRMCY_NCPDP_NBR}), -1,toInteger({p.PHRMCY_NCPDP_NBR})),",
 				"          PHRMCY_NAT_PROV_ID_NBR = case(isNull({p.PHRMCY_NAT_PROV_ID_NBR}), 'UNK', {p.PHRMCY_NAT_PROV_ID_NBR}),",
@@ -267,8 +267,8 @@
 				"          LANG_CD = {l.LANG_CD},",
 				"          LANG_DESC = {l.LANG_DESC},",
 				"          RCD_CRT_TMS = currentTimestamp(),",
-				"          START_DATE = currentTimestamp()) ~> DCTransition",
-				"DCTransition derive(each(match(type=='string'), $$ = iif(isNull($$), 'UNK', $$)),",
+				"          START_DATE = currentTimestamp()) ~> DCTransformation",
+				"DCTransformation derive(each(match(type=='string'), $$ = iif(isNull($$), 'UNK', $$)),",
 				"          RCD_MOD_TMS = toTimestamp('01-01-1900','dd-MM-yyyy'),",
 				"          END_DATE = toTimestamp('01-01-1900','dd-MM-yyyy'),",
 				"          each(match(type=='integer'), $$ = iif(isNull($$), -1, $$))) ~> derivedColumn1",
@@ -280,12 +280,12 @@
 				"          {t.RCD_MOD_TMS} = toTimestamp({t.RCD_MOD_TMS},'yyyy-MM-dd HH:mm:ss'),",
 				"          {t.START_DATE} = toTimestamp({t.START_DATE},'yyyy-MM-dd HH:mm:ss'),",
 				"          {t.END_DATE} = toTimestamp({t.END_DATE},'yyyy-MM-dd HH:mm:ss')) ~> TargetCast",
-				"select3, TargetCast join(replace({s.PTNT_CD}, '_', '') == {t.PTNT_CD},",
+				"selectSourceName, TargetCast join(replace({s.PTNT_CD}, '_', '') == {t.PTNT_CD},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join3",
-				"join3 split(isNull({t.PTNT_CD})&& isNull({t.RCD_MOD_TMS}),",
+				"     broadcast: 'auto')~> leftOuterSrcT",
+				"leftOuterSrcT split(isNull({t.PTNT_CD})&& isNull({t.RCD_MOD_TMS}),",
 				"     disjoint: false) ~> split1@(insert, UpdateAndExists)",
 				"DimPtnt select(mapColumn(",
 				"          {t.PTNT_KEY} = PTNT_KEY,",
@@ -345,7 +345,7 @@
 				"          {s.START_DATE} = START_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
+				"     skipDuplicateMapOutputs: true) ~> selectSourceName",
 				"split1@UpdateAndExists split({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD}&& isNull({t.RCD_MOD_TMS}),",
 				"     disjoint: false) ~> split2@(updated, exists)",
 				"split2@updated alterRow(upsertIf({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD}&&isNull({t.RCD_MOD_TMS}))) ~> update",

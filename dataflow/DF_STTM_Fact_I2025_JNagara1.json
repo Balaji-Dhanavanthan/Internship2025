@@ -79,7 +79,7 @@
 					"name": "DCDCTAMT"
 				},
 				{
-					"name": "select1"
+					"name": "selectSource"
 				},
 				{
 					"name": "DCNullhandling"
@@ -282,8 +282,8 @@
 				"          YEAR_DESC = {s.YEAR_DESC}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$)),",
+				"     skipDuplicateMapOutputs: true) ~> selectSource",
+				"selectSource derive(each(match(type=='string'), $$ = iif(isNull($$),'UNK',$$)),",
 				"          REIMB_AMT = iif(isNull(REIMB_AMT), 0.00,toFloat(REIMB_AMT) ),",
 				"          INGRD_CST_AMT = iif(isNull(INGRD_CST_AMT), 0.00,toFloat(INGRD_CST_AMT )),",
 				"          {PTNT_COPAY_AMT(COL1)} = iif(isNull({PTNT_COPAY_AMT(COL1)}), 0.00, toFloat({PTNT_COPAY_AMT(COL1)})),",

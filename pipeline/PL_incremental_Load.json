@@ -117,7 +117,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "transactions_increment_1"
 						}
 					}
@@ -169,7 +169,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "transactions_increment_1"
 						}
 					}
@@ -179,7 +179,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "IncrementalLoad"
 						}
 					}

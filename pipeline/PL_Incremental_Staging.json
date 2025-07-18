@@ -52,7 +52,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "source"
 						}
 					}
@@ -106,7 +106,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "source"
 						}
 					}
@@ -116,7 +116,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "stg_Incremental"
 						}
 					}
@@ -168,7 +168,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "stg_Incremental"
 						}
 					}
@@ -178,7 +178,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "trg_Incremental"
 						}
 					}

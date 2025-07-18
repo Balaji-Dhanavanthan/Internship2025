@@ -1,0 +1,105 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"folder": {
+			"name": "Day14"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_I2025_JNagara1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_I2025_JNagara1",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          MaterialCode as string,",
+				"          CreatedDate as date 'dd-MM-yyyy',",
+				"          MaterialDescription as string,",
+				"          ProductVarient as string,",
+				"          ProductType as string,",
+				"          CustomerMaster as string,",
+				"          Line as string,",
+				"          ProductionLocation as string,",
+				"          ProductionPlant as string,",
+				"          {SalesPlant-GJ} as string,",
+				"          {SalesPlant-HR} as string,",
+				"          {SalesPlant-KA} as string,",
+				"          IsActive as boolean,",
+				"          StartDate as date 'dd-MM-yyyy',",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          MaterialCode as string,",
+				"          ForecastDate as date 'dd-MM-yyyy',",
+				"          Plan as short,",
+				"          TrialProduct as string,",
+				"          IsActive as boolean,",
+				"          RevisionNumber as integer,",
+				"          RevisionComment as string,",
+				"          Line as string,",
+				"          CreatedOn as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1 derive(each(match(type=='string'), $$ = case($$=='null', toString(null()), $$))) ~> derivedColumn1",
+				"source2 derive(CreatedOn = case(CreatedOn=='getdate()', currentDate(), toDate(null()))) ~> derivedColumn2",
+				"derivedColumn1 derive(EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['material.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['plan.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
+			]
+		}
+	}
+}

@@ -48,7 +48,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "SRC_PTNT_adf"
 						}
 					}
@@ -107,7 +107,7 @@
 						"referenceName": "DS_sql_I2025_JNagara",
 						"type": "DatasetReference",
 						"parameters": {
-							"object": "I2025_JNagara1",
+							"sehma": "I2025_JNagara1",
 							"table": "SRC_PHRMCY"
 						}
 					}

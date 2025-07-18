@@ -120,6 +120,9 @@
 				},
 				{
 					"name": "select3"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -355,7 +358,6 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectingSrcColumns",
 				"INSERT@UPDATE derive({Is Current} = 1,",
-				"          RCD_MOD_TMS = currentDate(),",
 				"          RCD_CRT_TMS = currentTimestamp()) ~> UpdateAuditColumns",
 				"UpdateAuditColumns select(mapColumn(",
 				"          PTNT_KEY = src_PTNT_KEY,",
@@ -454,7 +456,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> FinalSelection",
-				"INSERT@UPDATE derive({Is current } = 0,",
+				"alterRow1 derive({Is current } = 0,",
 				"          END_DATE = currentDate(),",
 				"          RCD_MOD_TMS = currentDate(),",
 				"          PHRMCY_NCPDP_NBR = toInteger(tgt_PHRMCY_NCPDP_NBR),",
@@ -504,6 +506,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
+				"INSERT@UPDATE alterRow(updateIf((src_PTNT_CD == tgt_PTNT_CD) && (src_PHRMCY_ADDR_ZIP_CD != tgt_PHRMCY_ADDR_ZIP_CD) && isNull(tgt_RCD_MOD_TMS))) ~> alterRow1",
 				"FinalSelection sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

@@ -29,15 +29,29 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          MaterialCode as string,",
+				"          ForecastDate as date,",
+				"          Plan as short,",
+				"          TrialProduct as integer,",
+				"          IsActive as boolean,",
+				"          RevisionNumber as integer,",
+				"          RevisionComment as string,",
+				"          Line as string,",
+				"          CreatedOn as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPlan",
 				"source(output(",
 				"          MaterialCode as string,",
-				"          CreatedDate as date,",
+				"          CreatedDate as string,",
 				"          MaterialDescription as string,",
 				"          ProductVarient as string,",
 				"          ProductType as string,",
@@ -48,15 +62,17 @@
 				"          {SalesPlant-GJ} as string,",
 				"          {SalesPlant-HR} as string,",
 				"          {SalesPlant-KA} as string,",
-				"          IsActive as boolean,",
-				"          StartDate as date,",
+				"          IsActive as string,",
+				"          StartDate as string,",
 				"          EndDate as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcMaterial",
-				"SrcMaterial derive(each(match(type=='string'), $$ = case(EndDate=='Getdate()', currentDate(EndDate),toDate(EndDate, 'null')))) ~> derivedColumn1",
-				"SrcPlan derive(each(match(), ERROR_FUNCTION('') = case(CreatedOn=='getdate()', currentDate(CreatedOn), toDate(null)))) ~> derivedColumn2"
+				"SrcMaterial derive(each(match(type=='string'), $$ = case($$=='null', toString(null()),$$)\r",
+				")) ~> derivedColumn1",
+				"SrcPlan derive(each(match(), ERROR_FUNCTION('') = case(CreatedOn=='getdate()', currentDate(CreatedOn), toDate(null)))) ~> derivedColumn2",
+				"derivedColumn1 derive(EndDate = toDate(EndDate, 'dd-MM-yyyy')) ~> derivedColumn3"
 			]
 		}
 	}

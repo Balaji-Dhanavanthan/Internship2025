@@ -287,7 +287,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"DctamtTransform derive(DCT_AMT = iif(isNull(DCT_AMT),toDecimal(0),DCT_AMT),",
 				"          {TOTAL_AMT(COL 3)} = iif(isNull({TOTAL_AMT(COL 3)}),toDecimal(0.00),{TOTAL_AMT(COL 3)}),",
-				"          LOAD_DATE = currentDate()) ~> derivedColumn1",
+				"          LOAD_DATE = currentTimestamp()) ~> derivedColumn1",
 				"JoinSrcYears filter(isNull(PhrmcyDerived@PHRMCY_NAT_PROV_ID_NBR)) ~> filter1",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

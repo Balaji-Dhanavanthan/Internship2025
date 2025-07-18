@@ -86,9 +86,6 @@
 					"name": "InsSelect"
 				},
 				{
-					"name": "DCUpd"
-				},
-				{
 					"name": "RemSelect"
 				},
 				{
@@ -98,13 +95,19 @@
 					"name": "surrogateKey2"
 				},
 				{
-					"name": "UpSelect2"
+					"name": "alterRow1"
 				},
 				{
-					"name": "UpSelect1"
+					"name": "SelectNewRcrds"
 				},
 				{
-					"name": "DCUpd2"
+					"name": "AuditForNewRcrds"
+				},
+				{
+					"name": "SelectOldRcrds"
+				},
+				{
+					"name": "AuditForOldRcrds"
 				}
 			],
 			"scriptLines": [
@@ -345,8 +348,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> InsSelect",
-				"UpSelect1 derive(RCD_MOD_TMS = toString(currentTimestamp()),",
-				"          END_DATE = toString(currentDate())) ~> DCUpd",
 				"split@Remaining select(mapColumn(",
 				"          PTNT_KEY,",
 				"          PTNT_ID,",
@@ -377,41 +378,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemSelect",
-				"DCIns, DCUpd, RemSelect, DCUpd2 union(byName: true)~> Uni",
+				"DCIns, AuditForNewRcrds, AuditForOldRcrds, RemSelect union(byName: true)~> Uni",
 				"selectForSurrogateKey1 keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey2",
-				"split@Update select(mapColumn(",
-				"          PTNT_KEY,",
-				"          PTNT_ID,",
-				"          PTNT_CD,",
-				"          PHRMCY_NCPDP_NBR,",
-				"          PHRMCY_NAT_PROV_ID_NBR,",
-				"          PSCB_FIRST_NM,",
-				"          PSCB_LAST_NM,",
-				"          PHRMCY_NM,",
-				"          PHRMCY_ADDR_CITY_NM,",
-				"          PHRMCY_ADDR_ST_NM,",
-				"          PHRMCY_ADDR_ZNE_NM,",
-				"          PHRMCY_ADDR_ZIP_CD,",
-				"          PSCB_EMAIL_ID,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
-				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
-				"          PHRMCY_AGE,",
-				"          DEAL_TYPE_CD,",
-				"          DEAL_NUMBER,",
-				"          LANG_CD,",
-				"          LANG_DESC,",
-				"          RCD_CRT_TMS,",
-				"          RCD_MOD_TMS,",
-				"          START_DATE,",
-				"          END_DATE,",
-				"          DEAL_ID = tgt_DEAL_ID",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> UpSelect2",
-				"split@Update select(mapColumn(",
+				"split@Update alterRow(updateIf(PTNT_CD == tgt_PTNT_CD && (tgt_PHRMCY_ADDR_ZIP_CD != PHRMCY_ADDR_ZIP_CD))) ~> alterRow1",
+				"alterRow1 select(mapColumn(",
 				"          PTNT_KEY,",
 				"          PTNT_ID,",
 				"          PTNT_CD,",
@@ -440,9 +412,41 @@
 				"          END_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> UpSelect1",
-				"UpSelect2 derive(START_DATE = currentDate(),",
-				"          RCD_MOD_TMS = toString(currentTimestamp())) ~> DCUpd2",
+				"     skipDuplicateMapOutputs: true) ~> SelectNewRcrds",
+				"SelectNewRcrds derive(RCD_CRT_TMS = currentTimestamp(),",
+				"          START_DATE = currentDate()) ~> AuditForNewRcrds",
+				"alterRow1 select(mapColumn(",
+				"          PTNT_KEY,",
+				"          PTNT_ID,",
+				"          PTNT_CD,",
+				"          PHRMCY_NCPDP_NBR,",
+				"          PHRMCY_NAT_PROV_ID_NBR,",
+				"          PSCB_FIRST_NM,",
+				"          PSCB_LAST_NM,",
+				"          PHRMCY_NM,",
+				"          PHRMCY_ADDR_CITY_NM,",
+				"          PHRMCY_ADDR_ST_NM,",
+				"          PHRMCY_ADDR_ZNE_NM,",
+				"          PHRMCY_ADDR_ZIP_CD = tgt_PHRMCY_ADDR_ZIP_CD,",
+				"          PSCB_EMAIL_ID,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_QTR,",
+				"          PHRMCY_SYS_IVR_DTA_STRT_YR,",
+				"          PHRMCY_AGE,",
+				"          DEAL_ID,",
+				"          DEAL_TYPE_CD,",
+				"          DEAL_NUMBER,",
+				"          LANG_CD,",
+				"          LANG_DESC,",
+				"          RCD_CRT_TMS,",
+				"          RCD_MOD_TMS,",
+				"          START_DATE,",
+				"          END_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectOldRcrds",
+				"SelectOldRcrds derive(END_DATE = toString(currentDate()),",
+				"          RCD_MOD_TMS = toString(currentTimestamp())) ~> AuditForOldRcrds",
 				"Uni sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['DIM_PTNT_new.csv'],",

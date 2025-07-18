@@ -1,0 +1,17 @@
+{
+	"name": "TDSG_STTM_SRC",
+	"properties": {
+		"folder": {
+			"name": "TDSG_ADF_DataFlow/TDSG_STTM"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}

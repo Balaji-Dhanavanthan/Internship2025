@@ -58,8 +58,6 @@
 			{
 				"name": "cp_scd2_testing",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -102,7 +100,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "PHRMCY_SRC",
+							"tablename": "SCD2_FINAL_TESTING_TARGET.csv",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -114,7 +112,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar",
-							"FileName": "SCD2_FINAL_TESTING_SOURCE.csv"
+							"FileName": "SCD2_FINAL_TESTING_TARGET.csv"
 						}
 					}
 				]

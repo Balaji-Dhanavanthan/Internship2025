@@ -6,11 +6,32 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel_1",
+						"type": "DatasetReference"
+					},
+					"name": "TDSGACTUALS"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          ProductionId as integer,",
+				"          MaterialCode as string,",
+				"          CustomerMaterial as string,",
+				"          Description as string,",
+				"          PostingDate as date 'dd-MM-yyyy',",
+				"          Actual as integer,",
+				"          MovementType as integer,",
+				"          StorageLocation as string,",
+				"          Plant as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TDSGACTUALS"
 			]
 		}
 	}

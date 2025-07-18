@@ -49,7 +49,7 @@
 				}
 			},
 			{
-				"name": "CP_stg_to_sqlserver",
+				"name": "CP_csv_to_Stg_sql",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -81,6 +81,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "TRUNCATE TABLE STG_FACT_DSPN_ADF;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
@@ -117,54 +118,11 @@
 				]
 			},
 			{
-				"name": "DE_stg_csv",
-				"type": "Delete",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_CSV_test",
-						"type": "DatasetReference",
-						"parameters": {
-							"file_name": "STTM_PTNT_STG.csv",
-							"folder_name": "ETL_stuff",
-							"container_name": "csvcontainer"
-						}
-					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "DS_Blob_storgare",
-							"type": "LinkedServiceReference"
-						}
-					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
-				}
-			},
-			{
-				"name": "Copy data1",
+				"name": "CP_stg_to_tgt",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "CP_stg_to_sqlserver",
+						"activity": "CP_csv_to_Stg_sql",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -220,39 +178,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "SC_Truncate_stg_tble",
-				"type": "Script",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "LS_SQL_server",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query",
-							"text": "TRUNCATE TABLE STG_FACT_DSPN_ADF"
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
 			}
 		],
 		"variables": {

@@ -76,7 +76,7 @@
 					"name": "FinSelect"
 				},
 				{
-					"name": "FilteringOnlyAlphaNumericYearId"
+					"name": "FilterPNPINisNull"
 				}
 			],
 			"scriptLines": [
@@ -173,20 +173,20 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> YearSrc",
-				"FilteringOnlyAlphaNumericYearId derive(each(match(type=='string'), $$ = iif($$ == 'NULL', toString(null()), $$))) ~> HandleStrNulls",
+				"YearSrc derive(each(match(type=='string'), $$ = iif($$ == 'NULL', toString(null()), $$))) ~> HandleStrNulls",
 				"PatientSrc derive(each(match(type=='string'), $$ = iif($$ == 'NULL', toString(null()), $$))) ~> HandleStrNulls1",
 				"HandleStrNulls1, HandleStrNulls2 join(HandleStrNulls1@PTNT_CD == HandleStrNulls2@PTNT_CD,",
-				"     joinType:'inner',",
+				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> LeftPtntOnPharm",
 				"pharmSrc derive(each(match(type=='string'), $$ = iif($$ == 'NULL', toString(null()), $$))) ~> HandleStrNulls2",
 				"LeftPtntOnPharm, HandleStrNulls join(PTNT_YR_OF_BRTH == YEAR_ID,",
-				"     joinType:'inner',",
+				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> LeftOnYear",
-				"LeftOnYear select(mapColumn(",
+				"FilterPNPINisNull select(mapColumn(",
 				"          PHRMCY_NAT_PROV_ID_NBR = HandleStrNulls1@PHRMCY_NAT_PROV_ID_NBR,",
 				"          PTNT_CD = HandleStrNulls1@PTNT_CD,",
 				"          PTNT_YR_OF_BRTH,",
@@ -292,7 +292,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> FinSelect",
-				"YearSrc derive(YEAR_ID = iif(regexMatch(YEAR_ID, '^[a-zA-Z][0-9]{4}'), toString(null()), YEAR_ID)) ~> FilteringOnlyAlphaNumericYearId",
+				"LeftOnYear filter(isNull(HandleStrNulls2@PHRMCY_NAT_PROV_ID_NBR)) ~> FilterPNPINisNull",
 				"FinSelect sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['STTM_PTNT_STG.csv'],",

@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_SQLFACT_Year",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -35,11 +35,11 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CD_CSV_Year",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "DF_SQLFACT_Year",
 						"dependencyConditions": [
 							"Succeeded"
 						]

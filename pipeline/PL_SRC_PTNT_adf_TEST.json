@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CD_PTNT_CSV",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -64,7 +64,7 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "CD_Phrmcy_CSV",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

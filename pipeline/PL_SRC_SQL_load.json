@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "DF_SRC_null_handle",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -447,7 +447,7 @@
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "DF_SRC_null_handle",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {

@@ -5,8 +5,6 @@
 			{
 				"name": "DF_DIM_SCD2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -23,8 +21,8 @@
 						"datasetParameters": {
 							"phrmcysrc": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "SCD2_FINAL_TESTING_SOURCE.csv"
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "src_phrmcy.csv"
 							},
 							"langsrc": {
 								"container": "practice-adf",
@@ -58,6 +56,8 @@
 			{
 				"name": "cp_scd2_testing",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

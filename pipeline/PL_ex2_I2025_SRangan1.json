@@ -1,9 +1,9 @@
 {
-	"name": "PL_ex2_I2025SRangan1",
+	"name": "PL_ex2_I2025_SRangan1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Metadata_Blob",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -19,9 +19,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
@@ -33,11 +31,11 @@
 				}
 			},
 			{
-				"name": "Filter1",
+				"name": "Filter_csv",
 				"type": "Filter",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Metadata_Blob",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,11 +54,11 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "Set_variable",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Filter1",
+						"activity": "Filter_csv",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -77,11 +75,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "For_filter",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "Set_variable",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -96,7 +94,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable2",
+							"name": "Set_value",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -113,11 +111,11 @@
 							}
 						},
 						{
-							"name": "Set variable3",
+							"name": "Set_valueFor_Add",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Set variable2",
+									"activity": "Set_value",
 									"dependencyConditions": [
 										"Succeeded"
 									]

@@ -12,7 +12,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "SrcYear"
 				}
 			],
 			"sinks": [
@@ -21,12 +21,12 @@
 						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "SNKYear"
 				}
 			],
 			"transformations": [
 				{
-					"name": "nullhandle"
+					"name": "DCnullhandle"
 				}
 			],
 			"scriptLines": [
@@ -36,9 +36,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> nullhandle",
-				"nullhandle sink(allowSchemaDrift: true,",
+				"     ignoreNoFilesFound: false) ~> SrcYear",
+				"SrcYear derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> DCnullhandle",
+				"DCnullhandle sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ProductID as string,",
@@ -70,7 +70,7 @@
 				"     partitionFileNames:['src.year.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     partitionBy('hash', 1)) ~> SNKYear"
 			]
 		}
 	}

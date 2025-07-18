@@ -12,7 +12,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "srcAnime"
 				}
 			],
 			"sinks": [
@@ -21,7 +21,7 @@
 						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink"
 				}
 			],
 			"transformations": [
@@ -32,7 +32,7 @@
 					"name": "derivedcolumn"
 				},
 				{
-					"name": "filter1"
+					"name": "filter"
 				}
 			],
 			"scriptLines": [
@@ -47,8 +47,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 select(mapColumn(",
+				"     ignoreNoFilesFound: false) ~> srcAnime",
+				"srcAnime select(mapColumn(",
 				"          anime_id,",
 				"          name,",
 				"          {genre field} = genre,",
@@ -67,8 +67,8 @@
 				"    type == 'Movie', 'Cinema',\r",
 				"    type\r",
 				"))) ~> derivedcolumn",
-				"derivedcolumn filter(!isNull(type) && trim(type) != '') ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"derivedcolumn filter(!isNull(type) && trim(type) != '') ~> filter",
+				"filter sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ProductID as string,",
@@ -100,7 +100,7 @@
 				"     partitionFileNames:['Q1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     partitionBy('hash', 1)) ~> sink"
 			]
 		}
 	}

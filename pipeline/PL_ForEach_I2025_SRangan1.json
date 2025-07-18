@@ -1,9 +1,9 @@
 {
-	"name": "PL_ForEach_I2025SRangan1",
+	"name": "PL_ForEach_I2025_SRangan1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Execute Pipeline1",
+				"name": "Exec_Child_PL",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
@@ -12,14 +12,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_child_I2025SRangan1",
+						"referenceName": "PL_child_I2025_SRangan1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Metadata_DS_Src",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -35,9 +35,7 @@
 						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
@@ -49,11 +47,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "For_Variables",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Metadata_DS_Src",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -68,7 +66,7 @@
 					"batchCount": 2,
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "CP_SrcDS_DSTgt",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {

@@ -32,13 +32,13 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "DTypeConversion"
+					"name": "DCTypeConversion"
 				},
 				{
 					"name": "DataTransform"
 				},
 				{
-					"name": "surrogateKey1"
+					"name": "surrogatePTNT"
 				}
 			],
 			"scriptLines": [
@@ -165,11 +165,11 @@
 				"SourcePHRMCY derive(PHRMCY_NCPDP_NBR = toInteger(PHRMCY_NCPDP_NBR),",
 				"          PHRMCY_NAT_PROV_ID_NBR = toInteger(PHRMCY_NAT_PROV_ID_NBR),",
 				"          PHRMCY_ADDR_ZIP_CD = toInteger(PHRMCY_ADDR_ZIP_CD),",
-				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toTimestamp(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy', 'HH:mm')) ~> DTypeConversion",
-				"surrogateKey1 derive(PTNT_CD = right(PTNT_CD, 4)) ~> DataTransform",
-				"DTypeConversion keyGenerate(output(PTNT_KEY as long),",
+				"          PHRMCY_SYS_IVR_DTA_STRT_DT = toTimestamp(PHRMCY_SYS_IVR_DTA_STRT_DT, 'dd-MM-yyyy', 'HH:mm')) ~> DCTypeConversion",
+				"surrogatePTNT derive(PTNT_CD = right(PTNT_CD, 4)) ~> DataTransform",
+				"DCTypeConversion keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1"
+				"     stepValue: 1L) ~> surrogatePTNT"
 			]
 		}
 	}

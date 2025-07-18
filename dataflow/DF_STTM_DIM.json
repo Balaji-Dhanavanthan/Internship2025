@@ -42,7 +42,7 @@
 						"referenceName": "DS_STTM_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sinkToPTNT"
+					"name": "snkToPTNT"
 				}
 			],
 			"transformations": [
@@ -50,7 +50,7 @@
 					"name": "DCconvertNull"
 				},
 				{
-					"name": "PhrmcyName"
+					"name": "SelectPhrName"
 				},
 				{
 					"name": "DCPhrmcyCast"
@@ -62,22 +62,22 @@
 					"name": "StatusName"
 				},
 				{
-					"name": "PhrLeftJoinLang"
+					"name": "LeftPhrLang"
 				},
 				{
-					"name": "PhrLeftJoinStatus"
+					"name": "LeftPhrStatus"
 				},
 				{
-					"name": "filter"
+					"name": "filterPHRMCYADDRZNECD"
 				},
 				{
-					"name": "DCTransformations"
+					"name": "DCTransformation"
 				},
 				{
 					"name": "DCHandlingNull"
 				},
 				{
-					"name": "Select"
+					"name": "SelectPhr"
 				},
 				{
 					"name": "namePTNT"
@@ -86,10 +86,10 @@
 					"name": "DCTypeCast"
 				},
 				{
-					"name": "LeftJoinWithPTNT"
+					"name": "LeftPhrPTNT"
 				},
 				{
-					"name": "split1"
+					"name": "insert"
 				},
 				{
 					"name": "split2"
@@ -98,10 +98,10 @@
 					"name": "update"
 				},
 				{
-					"name": "select1"
+					"name": "selectPhrmcy"
 				},
 				{
-					"name": "select2"
+					"name": "select"
 				},
 				{
 					"name": "newValue"
@@ -110,10 +110,10 @@
 					"name": "DCHistory"
 				},
 				{
-					"name": "select3"
+					"name": "selectPTNT"
 				},
 				{
-					"name": "union1"
+					"name": "union"
 				},
 				{
 					"name": "PTNTKEY"
@@ -207,8 +207,8 @@
 				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = PHRMCY_SYS_IVR_DTA_STRT_DT",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> PhrmcyName",
-				"PhrmcyName derive({p.PHRMCY_NCPDP_NBR} = toInteger({p.PHRMCY_NCPDP_NBR}),",
+				"     skipDuplicateMapOutputs: true) ~> SelectPhrName",
+				"SelectPhrName derive({p.PHRMCY_NCPDP_NBR} = toInteger({p.PHRMCY_NCPDP_NBR}),",
 				"          {p.PHRMCY_ADDR_ZIP_CD} = toInteger({p.PHRMCY_ADDR_ZIP_CD}),",
 				"          {p.PHRMCY_SYS_IVR_DTA_STRT_DT} = toDate({p.PHRMCY_SYS_IVR_DTA_STRT_DT}, 'dd-MM-yyyy HH:mm')) ~> DCPhrmcyCast",
 				"SrcLanguage select(mapColumn(",
@@ -228,15 +228,15 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> PhrLeftJoinLang",
-				"PhrLeftJoinLang, StatusName join({p.DEAL_ID} == {s.deal_id}",
+				"     broadcast: 'auto')~> LeftPhrLang",
+				"LeftPhrLang, StatusName join({p.DEAL_ID} == {s.deal_id}",
 				"     && {p.DEAL_ID} == {s.deal_nbr},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> PhrLeftJoinStatus",
-				"PhrLeftJoinStatus filter(in(['US', 'PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filter",
-				"filter derive(PTNT_ID = iif(isNull({p.PTNT_CD}), -1, toInteger(split({p.PTNT_CD}, '_')[1])),",
+				"     broadcast: 'auto')~> LeftPhrStatus",
+				"LeftPhrStatus filter(in(['US', 'PR'],{p.PHRMCY_ADDR_ZNE_CD})) ~> filterPHRMCYADDRZNECD",
+				"filterPHRMCYADDRZNECD derive(PTNT_ID = iif(isNull({p.PTNT_CD}), -1, toInteger(split({p.PTNT_CD}, '_')[1])),",
 				"          PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
 				"          PHRMCY_NCPDP_NBR = iif(isNull({p.PHRMCY_NCPDP_NBR}), -1,{p.PHRMCY_NCPDP_NBR}),",
 				"          PHRMCY_NAT_PROV_ID_NBR = iif(isNull({p.PHRMCY_NAT_PROV_ID_NBR}), 'UNK',{p.PHRMCY_NAT_PROV_ID_NBR}),",
@@ -276,8 +276,8 @@
 				"          LANG_CD = {l.LANG_CD},",
 				"          LANG_DESC = {l.LANG_DESC},",
 				"          RCD_CRT_TMS = currentTimestamp(),",
-				"          START_DATE = currentTimestamp()) ~> DCTransformations",
-				"DCTransformations derive(each(match(type=='string'), $$ = iifNull($$, 'UNK', $$)),",
+				"          START_DATE = currentTimestamp()) ~> DCTransformation",
+				"DCTransformation derive(each(match(type=='string'), $$ = iifNull($$, 'UNK', $$)),",
 				"          each(match(type=='Integer'), $$ = iifNull($#, -1, $#))) ~> DCHandlingNull",
 				"DCHandlingNull select(mapColumn(",
 				"          {n.PTNT_ID} = PTNT_ID,",
@@ -305,7 +305,7 @@
 				"          {n.START_DATE} = START_DATE",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Select",
+				"     skipDuplicateMapOutputs: true) ~> SelectPhr",
 				"DIMPTNT select(mapColumn(",
 				"          each(match(true()),",
 				"               'D.'+$$ = $$)",
@@ -320,14 +320,14 @@
 				"          {D.RCD_MOD_TMS} = toTimestamp({D.RCD_MOD_TMS},'yyyy-MM-dd HH:mm:ss'),",
 				"          {D.START_DATE} = toTimestamp({D.START_DATE},'yyyy-MM-dd HH:mm:ss'),",
 				"          {D.END_DATE} = toTimestamp({D.END_DATE},'yyyy-MM-dd HH:mm:ss')) ~> DCTypeCast",
-				"Select, DCTypeCast join({n.PTNT_CD} == {D.PTNT_CD},",
+				"SelectPhr, DCTypeCast join({n.PTNT_CD} == {D.PTNT_CD},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> LeftJoinWithPTNT",
-				"LeftJoinWithPTNT split(isNull({D.PTNT_CD})&& isNull({D.RCD_MOD_TMS}),",
-				"     disjoint: false) ~> split1@(insert, updateandexists)",
-				"split1@updateandexists split({n.PHRMCY_ADDR_ZIP_CD}!={D.PHRMCY_ADDR_ZIP_CD}&& isNull({D.RCD_MOD_TMS}),",
+				"     broadcast: 'auto')~> LeftPhrPTNT",
+				"LeftPhrPTNT split(isNull({D.PTNT_CD})&& isNull({D.RCD_MOD_TMS}),",
+				"     disjoint: false) ~> insert@(insert, updateandexists)",
+				"insert@updateandexists split({n.PHRMCY_ADDR_ZIP_CD}!={D.PHRMCY_ADDR_ZIP_CD}&& isNull({D.RCD_MOD_TMS}),",
 				"     disjoint: false) ~> split2@(updated, exists)",
 				"split2@updated alterRow(upsertIf({n.PHRMCY_ADDR_ZIP_CD}!={D.PHRMCY_ADDR_ZIP_CD})) ~> update",
 				"update select(mapColumn(",
@@ -356,8 +356,8 @@
 				"          START_DATE = {n.START_DATE}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"split1@insert select(mapColumn(",
+				"     skipDuplicateMapOutputs: true) ~> selectPhrmcy",
+				"insert@insert select(mapColumn(",
 				"          PTNT_ID = {n.PTNT_ID},",
 				"          PTNT_CD = {n.PTNT_CD},",
 				"          PHRMCY_NCPDP_NBR = {n.PHRMCY_NCPDP_NBR},",
@@ -383,7 +383,7 @@
 				"          START_DATE = {n.START_DATE}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> select",
 				"update select(mapColumn(",
 				"          PTNT_ID = {n.PTNT_ID},",
 				"          PTNT_CD = {n.PTNT_CD},",
@@ -411,7 +411,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> newValue",
-				"select1 derive(RCD_MOD_TMS = currentTimestamp(),",
+				"selectPhrmcy derive(RCD_MOD_TMS = currentTimestamp(),",
 				"          END_DATE = currentTimestamp()) ~> DCHistory",
 				"split2@exists select(mapColumn(",
 				"          PTNT_KEY = {D.PTNT_KEY},",
@@ -442,9 +442,9 @@
 				"          END_DATE = {D.END_DATE}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select2, newValue, DCHistory, select3 union(byName: true)~> union1",
-				"union1 keyGenerate(output(PTNT_KEY as long),",
+				"     skipDuplicateMapOutputs: true) ~> selectPTNT",
+				"select, newValue, DCHistory, selectPTNT union(byName: true)~> union",
+				"union keyGenerate(output(PTNT_KEY as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> PTNTKEY",
 				"PTNTKEY sink(allowSchemaDrift: true,",
@@ -452,7 +452,7 @@
 				"     partitionFileNames:['DIM_PTNT.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sinkToPTNT"
+				"     partitionBy('hash', 1)) ~> snkToPTNT"
 			]
 		}
 	}

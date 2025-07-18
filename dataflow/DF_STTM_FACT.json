@@ -35,7 +35,7 @@
 						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sinkTarget"
+					"name": "SNKFact"
 				}
 			],
 			"transformations": [
@@ -55,10 +55,10 @@
 					"name": "PTNTName"
 				},
 				{
-					"name": "LeftJoinPTNTPhrmcy"
+					"name": "LeftPTNTPhrmcy"
 				},
 				{
-					"name": "filterIsNull"
+					"name": "filterPHRMCYNATPROVIDNBR"
 				},
 				{
 					"name": "DCNultoString"
@@ -70,19 +70,19 @@
 					"name": "EmptyValuesToNull"
 				},
 				{
-					"name": "LeftJoinPTNTYear"
+					"name": "LeftPTNTYear"
 				},
 				{
 					"name": "DCTransformations"
 				},
 				{
-					"name": "DCToInt"
+					"name": "DCTransform"
 				},
 				{
-					"name": "AggAvg"
+					"name": "WindowAggAvg"
 				},
 				{
-					"name": "AggMax"
+					"name": "WindowAggMax"
 				},
 				{
 					"name": "DCDctAmt"
@@ -220,17 +220,17 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> LeftJoinPTNTPhrmcy",
-				"EmptyValuesToNull filter(isNull({p.PHRMCY_NAT_PROV_ID_NBR})) ~> filterIsNull",
+				"     broadcast: 'auto')~> LeftPTNTPhrmcy",
+				"EmptyValuesToNull filter(isNull({p.PHRMCY_NAT_PROV_ID_NBR})) ~> filterPHRMCYNATPROVIDNBR",
 				"SrcPhrmcy derive(each(match(type=='string'), $$ = case($$ == 'NULL', toString(null()),$$ ))) ~> DCNultoString",
 				"SrcYear derive(each(match(type=='string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCNullTooString",
-				"LeftJoinPTNTYear derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()),$$))) ~> EmptyValuesToNull",
-				"LeftJoinPTNTPhrmcy, NamingYear join({pt.PTNT_YR_OF_BRTH} == {y.YEAR_ID},",
+				"LeftPTNTYear derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()),$$))) ~> EmptyValuesToNull",
+				"LeftPTNTPhrmcy, NamingYear join({pt.PTNT_YR_OF_BRTH} == {y.YEAR_ID},",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> LeftJoinPTNTYear",
-				"DCToInt derive(TRANS_NBR = toInteger({pt.TRANS_NBR}),",
+				"     broadcast: 'auto')~> LeftPTNTYear",
+				"DCTransform derive(TRANS_NBR = toInteger({pt.TRANS_NBR}),",
 				"          PTNT_CD = substringIndex({p.PTNT_CD}, '_', -1),",
 				"          PTNT_NM = regexReplace({p.PHRMCY_NM}, \"[,&'-]\", ' '),",
 				"          PTNT_YR_OF_BRTH = {pt.PTNT_YR_OF_BRTH},",
@@ -248,17 +248,17 @@
 				"          PAYR_CNTRCT_FLG = iif({pt.TOT_RX_PRC_COLL} > {pt.USUAL_AND_CSTMARY}, 'Y', 'N'),",
 				"          YEAR_DESC = right({y.YEAR_DESC}, 4),",
 				"          LOAD_DATE = currentTimestamp()) ~> DCTransformations",
-				"filterIsNull derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH}),",
+				"filterPHRMCYNATPROVIDNBR derive({pt.PTNT_YR_OF_BRTH} = toInteger({pt.PTNT_YR_OF_BRTH}),",
 				"          {pt.DT_WRT} = toString({pt.DT_WRT}),",
 				"          {pt.DT_FILL} = toString({pt.DT_FILL}),",
-				"          {pt.USUAL_AND_CSTMARY} = toString({pt.USUAL_AND_CSTMARY})) ~> DCToInt",
+				"          {pt.USUAL_AND_CSTMARY} = toString({pt.USUAL_AND_CSTMARY})) ~> DCTransform",
 				"DCTransformations window(over({pt.PROD_ID}),",
 				"     asc({pt.PROD_ID}, true),",
-				"     {PTNT_COPAY_AMT(COL1)} = avg({pt.COPAY_AMT})) ~> AggAvg",
-				"AggAvg window(over({pt.PROD_ID}),",
+				"     {PTNT_COPAY_AMT(COL1)} = avg({pt.COPAY_AMT})) ~> WindowAggAvg",
+				"WindowAggAvg window(over({pt.PROD_ID}),",
 				"     asc({pt.PROD_ID}, true),",
-				"     {SLS_TAX_AMT(COL2)} = max({PTNT_COPAY_AMT(COL1)})) ~> AggMax",
-				"AggMax derive(DCT_AMT = iif({PTNT_COPAY_AMT(COL1)} > 0 , ({PTNT_COPAY_AMT(COL1)}/{TOTAL_AMT(COL 3)}), {TOTAL_AMT(COL 3)}*0.2)) ~> DCDctAmt",
+				"     {SLS_TAX_AMT(COL2)} = max({PTNT_COPAY_AMT(COL1)})) ~> WindowAggMax",
+				"WindowAggMax derive(DCT_AMT = iif({PTNT_COPAY_AMT(COL1)} > 0 , ({PTNT_COPAY_AMT(COL1)}/{TOTAL_AMT(COL 3)}), {TOTAL_AMT(COL 3)}*0.2)) ~> DCDctAmt",
 				"DCDctAmt select(mapColumn(",
 				"          TRANS_NBR,",
 				"          PTNT_CD,",
@@ -325,7 +325,7 @@
 				"     partitionFileNames:['STTM_FACT.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sinkTarget"
+				"     partitionBy('hash', 1)) ~> SNKFact"
 			]
 		}
 	}

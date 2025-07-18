@@ -1,9 +1,9 @@
 {
-	"name": "PL_DF_I2025SRangan1",
+	"name": "PL_DFWorkshop_I2025_SRangan1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_Workshop_1-4",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -56,7 +56,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CP_csv_sql",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -111,7 +111,7 @@
 				]
 			},
 			{
-				"name": "4",
+				"name": "DF_Workshop4",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -137,7 +137,7 @@
 				}
 			},
 			{
-				"name": "Copy data2",
+				"name": "CP_Blob_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -767,7 +767,7 @@
 				]
 			},
 			{
-				"name": "scd",
+				"name": "DF_scd",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",

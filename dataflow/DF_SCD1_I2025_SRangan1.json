@@ -28,7 +28,7 @@
 						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink"
 				}
 			],
 			"transformations": [
@@ -36,22 +36,22 @@
 					"name": "nullhandling"
 				},
 				{
-					"name": "join1"
+					"name": "LeftSrcTgt"
 				},
 				{
 					"name": "dcaudit"
 				},
 				{
-					"name": "select1"
+					"name": "selectSrc"
 				},
 				{
-					"name": "select2"
+					"name": "select"
 				},
 				{
-					"name": "surrogateKey1"
+					"name": "surrogateKey"
 				},
 				{
-					"name": "select4"
+					"name": "selectTgt"
 				}
 			],
 			"scriptLines": [
@@ -95,15 +95,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> target",
-				"select1 derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
+				"selectSrc derive(each(match(type=='string'), $$ = iifNull($$, 'UNK')),",
 				"          each(match(type=='Integer'), $$ = iifNull($#, -1)),",
 				"          each(match(type=='float'), $$ = iifNull($#, 0))) ~> nullhandling",
-				"surrogateKey1, select4 join(select1@EmployeeID == select4@EmployeeID,",
+				"surrogateKey, selectTgt join(selectSrc@EmployeeID == selectTgt@EmployeeID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 derive(createBy = 'I2025_SRangan1',",
+				"     broadcast: 'auto')~> LeftSrcTgt",
+				"LeftSrcTgt derive(createBy = 'I2025_SRangan1',",
 				"          time = currentDate()) ~> dcaudit",
 				"source select(mapColumn(",
 				"          EmployeeID,",
@@ -122,30 +122,30 @@
 				"          EndDate",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> selectSrc",
 				"dcaudit select(mapColumn(",
-				"          EmployeeID = select1@EmployeeID,",
+				"          EmployeeID = selectSrc@EmployeeID,",
 				"          Name = nullhandling@Name,",
-				"          DateOfBirth = select1@DateOfBirth,",
+				"          DateOfBirth = selectSrc@DateOfBirth,",
 				"          Department = nullhandling@Department,",
 				"          JobTitle = nullhandling@JobTitle,",
-				"          Salary = select1@Salary,",
-				"          HireDate = select1@HireDate,",
+				"          Salary = selectSrc@Salary,",
+				"          HireDate = selectSrc@HireDate,",
 				"          Address = nullhandling@Address,",
 				"          Email = nullhandling@Email,",
 				"          PhoneNumber = nullhandling@PhoneNumber,",
 				"          MaritalStatus = nullhandling@MaritalStatus,",
-				"          EffectiveDate = select1@EffectiveDate,",
+				"          EffectiveDate = selectSrc@EffectiveDate,",
 				"          EndDate = {select1@EndDate},",
 				"          surr_key,",
 				"          createBy,",
 				"          time",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> select",
 				"nullhandling keyGenerate(output(surr_key as long),",
 				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1",
+				"     stepValue: 1L) ~> surrogateKey",
 				"target select(mapColumn(",
 				"          EmployeeID,",
 				"          Name,",
@@ -165,8 +165,8 @@
 				"          time",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select4",
-				"select2 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectTgt",
+				"select sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ProductID as string,",
@@ -198,7 +198,7 @@
 				"     partitionFileNames:['employee_target.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     partitionBy('hash', 1)) ~> sink"
 			]
 		}
 	}

@@ -12,7 +12,7 @@
 						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "source"
 				}
 			],
 			"sinks": [
@@ -21,12 +21,12 @@
 						"referenceName": "DS_new_I2025_SRangan1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink"
 				}
 			],
 			"transformations": [
 				{
-					"name": "filter1"
+					"name": "filterInvitationdate"
 				}
 			],
 			"scriptLines": [
@@ -72,9 +72,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(in(['2021','2022'],left({Invitationdate}, 4))) ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source filter(in(['2021','2022'],left({Invitationdate}, 4))) ~> filterInvitationdate",
+				"filterInvitationdate sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",
@@ -145,7 +145,7 @@
 				"     partitionFileNames:['DF.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     partitionBy('hash', 1)) ~> sink"
 			]
 		}
 	}

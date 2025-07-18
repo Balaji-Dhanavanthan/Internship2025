@@ -1,9 +1,9 @@
 {
-	"name": "PL_ex3_I2025SRangan1",
+	"name": "PL_ex3_I2025_SRangan1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CP_rest_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -48,7 +48,7 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "CP_SQL_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -165,7 +165,7 @@
 				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "CP_SQL_Blob",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -220,11 +220,11 @@
 				]
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Metadata_BlobSrc",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -239,7 +239,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data4",
+							"name": "CP_Blob_Blob",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -300,7 +300,7 @@
 				}
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Metadata_BlobSrc",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {

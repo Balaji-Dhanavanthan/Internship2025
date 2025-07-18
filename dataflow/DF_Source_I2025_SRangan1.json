@@ -26,16 +26,37 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcPlan",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          MaterialCode as string,",
+				"          CreatedDate as date,",
+				"          MaterialDescription as string,",
+				"          ProductVarient as string,",
+				"          ProductType as string,",
+				"          CustomerMaster as string,",
+				"          Line as string,",
+				"          ProductionLocation as string,",
+				"          ProductionPlant as string,",
+				"          {SalesPlant-GJ} as string,",
+				"          {SalesPlant-HR} as string,",
+				"          {SalesPlant-KA} as string,",
+				"          IsActive as boolean,",
+				"          StartDate as date,",
+				"          EndDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcMaterial",
-				"SrcMaterial derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn1"
+				"SrcMaterial derive(each(match(type=='string'), $$ = case(EndDate=='Getdate()', currentDate(EndDate),toDate(EndDate, 'null')))) ~> derivedColumn1",
+				"SrcPlan derive(each(match(), ERROR_FUNCTION('') = case(CreatedOn=='getdate()', currentDate(CreatedOn), toDate(null)))) ~> derivedColumn2"
 			]
 		}
 	}

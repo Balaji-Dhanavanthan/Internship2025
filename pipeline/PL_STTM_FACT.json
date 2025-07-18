@@ -69,8 +69,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -82,28 +80,28 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_STTM_FACT",
+						"referenceName": "DF_STTM_FCT_TGT",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"phrmyFact": {
-								"container": "practice-adf",
-								"Directory": "Workshop 2/SRC_Pharmacy",
-								"FileName": "SRC PTNT.csv"
+							"SrcPtnt": {
+								"container": "test-container",
+								"Directory": "Target Folders/I2025_JNagara1",
+								"FileName": "SRC_PTNT_adf_Test.csv"
 							},
-							"yearssrc": {
+							"SrcYears": {
 								"container": "practice-adf",
 								"Directory": "Workshop 2/SRC_Pharmacy",
 								"FileName": "Year.csv"
 							},
-							"yearsSink": {
+							"SrcPhrmcy": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "yearsSink.csv"
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "src_phrmcy.csv"
 							},
-							"phrmcyfact": {
+							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar",
-								"FileName": "phrmcyfact.csv"
+								"FileName": "STG_FCT.csv"
 							}
 						}
 					},

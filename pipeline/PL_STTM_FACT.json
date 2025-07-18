@@ -69,8 +69,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -86,9 +84,9 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SrcPtnt": {
-								"container": "test-container",
-								"Directory": "Target Folders/I2025_JNagara1",
-								"FileName": "SRC_PTNT_adf_Test.csv"
+								"container": "practice-adf",
+								"Directory": "Workshop 2/SRC_Pharmacy",
+								"FileName": "SRC PTNT.csv"
 							},
 							"SrcYears": {
 								"container": "practice-adf",
@@ -330,7 +328,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT * \nFROM SRC_FACT_DSPN_adf\nWHERE TRANS_DATE > (\n    SELECT MAX(TRANS_DATE) \n    FROM FACT_DSPN_adf\n);\n",
+						"sqlReaderQuery": "",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -396,7 +394,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT * \nFROM STAGING_FACT_DSPN_adf\nWHERE TRANS_DATE > (\n    SELECT MAX(TRANS_DATE) \n    FROM FACT_DSPN_adf\n);\n",
+						"sqlReaderQuery": "",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

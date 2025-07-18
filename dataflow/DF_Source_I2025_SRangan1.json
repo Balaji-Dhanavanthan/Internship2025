@@ -1,0 +1,42 @@
+{
+	"name": "DF_Source_I2025_SRangan1",
+	"properties": {
+		"folder": {
+			"name": "DF_TDSG_Project_Scenario"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "SrcPlan"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_STTM_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SrcMaterial"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcPlan",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcMaterial",
+				"SrcMaterial derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn1"
+			]
+		}
+	}
+}

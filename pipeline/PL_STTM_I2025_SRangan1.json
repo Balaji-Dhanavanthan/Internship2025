@@ -43,12 +43,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_STTM_I2025_SRangan1",
+						"referenceName": "DS_Blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": " practice-adf",
-							"Foldername": "TDSG Project Scenario",
-							"Filename": "Daily Production Actual"
+							"Container": "practice-adf",
+							"FolderName": "TDSG Project Scenario",
+							"FileName": "Daily Production Actual"
 						}
 					}
 				],

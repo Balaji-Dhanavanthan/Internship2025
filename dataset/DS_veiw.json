@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DIM_PTNT_adf.csv",
-				"folderPath": "aabidh/sttm",
-				"container": "practice-adf"
+				"fileName": "SRC_PTNT_adf_Test.csv",
+				"folderPath": "Target Folders/I2025_JNagara1",
+				"container": "test-container"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

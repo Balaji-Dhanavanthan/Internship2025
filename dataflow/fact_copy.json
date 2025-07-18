@@ -61,9 +61,6 @@
 					"name": "COPAYAMT"
 				},
 				{
-					"name": "filter1"
-				},
-				{
 					"name": "StringNullHandling"
 				},
 				{
@@ -83,6 +80,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter2"
 				}
 			],
 			"scriptLines": [
@@ -186,7 +186,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> SrcPintJoinSrcPhrmcy",
-				"SrcPintJoinSrcPhrmcy, filter1 join(PTNT_YR_OF_BRTH == YEAR_ID,",
+				"SrcPintJoinSrcPhrmcy, SrcYears join(PTNT_YR_OF_BRTH == YEAR_ID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -239,7 +239,6 @@
 				"Transformation window(over(PROD_ID),",
 				"     asc(PROD_ID, true),",
 				"     PTNT_COPAY_AMT = avg(toInteger(COPAY_AMT))) ~> COPAYAMT",
-				"SrcYears filter(regexMatch(YEAR_ID, '[A-Za-z]\\\\d+{4}')) ~> filter1",
 				"SelectingColumn derive(each(match(type=='string'), $$ = iif(isNull($$) || trim($$)=='','UNK',$$))) ~> StringNullHandling",
 				"PhrmcyDerived select(mapColumn(",
 				"          each(match(true()),",
@@ -259,7 +258,7 @@
 				"    12,\r",
 				"    2\r",
 				")) ~> DctamtTransform",
-				"JoinSrcYears select(mapColumn(",
+				"filter2 select(mapColumn(",
 				"          each(match(/* All input columns */true()),",
 				"               /* Input name */$$ = $$)",
 				"     ),",
@@ -293,6 +292,7 @@
 				"DctamtTransform derive(DCT_AMT = iif(isNull(DCT_AMT),toDecimal(0),DCT_AMT),",
 				"          TOTAL_AMT = iif(isNull(TOTAL_AMT),toDecimal(0.00),TOTAL_AMT),",
 				"          LOAD_DATE = currentDate()) ~> derivedColumn1",
+				"JoinSrcYears filter(isNull(PhrmcyDerived@PHRMCY_NAT_PROV_ID_NBR)) ~> filter2",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

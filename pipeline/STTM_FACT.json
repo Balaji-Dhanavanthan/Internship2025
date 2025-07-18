@@ -22,9 +22,9 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SrcPtnt": {
-								"container": "practice-adf",
-								"folder": "Workshop 2/SRC_Pharmacy",
-								"filename": "SRC PTNT.csv"
+								"container": "test-container",
+								"folder": "Target Folders/I2025_JNagara1",
+								"filename": "SRC_PTNT_adf_Test.csv"
 							},
 							"SrcYears": {
 								"container": "practice-adf",
@@ -123,8 +123,6 @@
 			{
 				"name": "CP_staging_to_target",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_staging-csv_to_SQL_staging",
@@ -144,7 +142,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT *\nFROM STG_FACT\nWHERE TRANS_DATE > (\nSELECT MAX(TRANS_DATE)\nFROM F_FACT\n)",
+						"sqlReaderQuery": "SELECT *\nFROM STG_FACT\nWHERE TRANS_DATE > (\n    SELECT COALESCE(MAX(TRANS_DATE), CAST('1900-01-01' AS DATE))\n    FROM F_FACT\n)\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -222,67 +220,6 @@
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
-			},
-			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_OnPrem_SQL2",
-						"type": "DatasetReference",
-						"parameters": {
-							"database": "Intern_2025",
-							"tablename": "DIM_PTNT_adf"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_Blob",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"folder": "aabidh/sttm",
-							"filename": "DIM_PTNT_adf.csv"
-						}
-					}
-				]
 			}
 		],
 		"folder": {

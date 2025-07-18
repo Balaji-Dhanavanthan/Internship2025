@@ -84,9 +84,9 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SrcPtnt": {
-								"container": "practice-adf",
-								"Directory": "Workshop 2/SRC_Pharmacy",
-								"FileName": "SRC PTNT.csv"
+								"container": "test-container",
+								"Directory": "Target Folders/I2025_JNagara1",
+								"FileName": "Target Folders/I2025_JNagara1"
 							},
 							"SrcYears": {
 								"container": "practice-adf",
@@ -328,7 +328,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -394,7 +393,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

@@ -1,5 +1,5 @@
 {
-	"name": "DF_STTM_DIM",
+	"name": "DF_STTM_DIM_I2025_JNagara1",
 	"properties": {
 		"folder": {
 			"name": "Day9"
@@ -348,7 +348,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select3",
 				"split1@UpdateAndExists split({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD}&& isNull({t.RCD_MOD_TMS}),",
 				"     disjoint: false) ~> split2@(updated, exists)",
-				"split2@updated alterRow(upsertIf({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD}&& isNull({t.RCD_MOD_TMS}))) ~> update",
+				"split2@updated alterRow(upsertIf({s.PHRMCY_ADDR_ZIP_CD }!={t.PHRMCY_ADDR_ZIP_CD}&&isNull({t.RCD_MOD_TMS}))) ~> update",
 				"update derive({t.RCD_MOD_TMS} = currentTimestamp(),",
 				"          {t.END_DATE} = currentTimestamp()) ~> historyUpdate",
 				"historyUpdate select(mapColumn(",

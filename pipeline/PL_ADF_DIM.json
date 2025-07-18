@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_Dim_I2025_JNagara1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_STTM_DIM",
+						"referenceName": "DF_STTM_DIM_I2025_JNagara1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"Language": {
@@ -30,13 +30,6 @@
 							},
 							"sink1": {
 								"filename": "Dim_ptnt.csv"
-							}
-						},
-						"linkedServiceParameters": {
-							"DimPtnt": {
-								"schemaLinkedService": {
-									"filename": "sink.csv"
-								}
 							}
 						}
 					},

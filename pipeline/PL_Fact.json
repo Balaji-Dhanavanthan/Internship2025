@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "DF_Fact_I2025_JNagara1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_STTM_Fact",
+						"referenceName": "DF_STTM_Fact_I2025_JNagara1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"year": {
@@ -28,7 +28,7 @@
 							"ptnt": {
 								"filename": "SRC_PTNT_adf_Test.csv"
 							},
-							"sink1": {
+							"sinkfactSource": {
 								"filename": "factSource.csv"
 							}
 						}
@@ -45,7 +45,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "DF_Fact_I2025_JNagara1",
 						"dependencyConditions": [
 							"Succeeded"
 						]

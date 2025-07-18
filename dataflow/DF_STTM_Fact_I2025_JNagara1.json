@@ -1,5 +1,5 @@
 {
-	"name": "DF_STTM_Fact",
+	"name": "DF_STTM_Fact_I2025_JNagara1",
 	"properties": {
 		"folder": {
 			"name": "Day9"
@@ -35,24 +35,21 @@
 						"referenceName": "DS_CSV_Sink",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sinkfactSource"
 				}
 			],
 			"transformations": [
 				{
-					"name": "join1"
+					"name": "LeftOuterPTNTphrmcy"
 				},
 				{
-					"name": "join2"
+					"name": "LeftOuterJoinYear"
 				},
 				{
 					"name": "derivedColumn1"
 				},
 				{
 					"name": "derivedColumn2"
-				},
-				{
-					"name": "derivedColumn3"
 				},
 				{
 					"name": "yearName"
@@ -64,31 +61,31 @@
 					"name": "ptntName"
 				},
 				{
-					"name": "emptyValuetoNull"
+					"name": "DCemptyValuetoNull"
 				},
 				{
-					"name": "DCTransition"
+					"name": "DCTransformation"
 				},
 				{
-					"name": "filter1"
+					"name": "filterPHRMCYNATPROVIDNBRNull"
 				},
 				{
-					"name": "typeCast"
+					"name": "DCtypeCast"
 				},
 				{
-					"name": "PTNTCOPAYAMT"
+					"name": "WindowPTNTCOPAYAMT"
 				},
 				{
-					"name": "derivedColumn4"
+					"name": "DCDCTAMT"
 				},
 				{
 					"name": "select1"
 				},
 				{
-					"name": "Nullhandling"
+					"name": "DCNullhandling"
 				},
 				{
-					"name": "window1"
+					"name": "WindowSLSTAXAMT"
 				}
 			],
 			"scriptLines": [
@@ -189,16 +186,15 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1, yearName join({p.PTNT_YR_OF_BRTH} == {y.YEAR_ID},",
+				"     broadcast: 'auto')~> LeftOuterPTNTphrmcy",
+				"LeftOuterPTNTphrmcy, yearName join({p.PTNT_YR_OF_BRTH} == {y.YEAR_ID},",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2",
+				"     broadcast: 'auto')~> LeftOuterJoinYear",
 				"ptnt derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn1",
 				"phrmcy derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn2",
-				"year derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn3",
-				"derivedColumn3 select(mapColumn(",
+				"year select(mapColumn(",
 				"          {y.YEAR_ID} = YEAR_ID,",
 				"          {y.YEAR_DESC} = YEAR_DESC",
 				"     ),",
@@ -230,8 +226,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ptntName",
-				"filter1 derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()) ,$$))) ~> emptyValuetoNull",
-				"typeCast derive({s.TRANS_NBR} = {p.TRANS_NBR},",
+				"filterPHRMCYNATPROVIDNBRNull derive(each(match(type=='string'), $$ = case(trim($$)=='',toString(null()) ,$$))) ~> DCemptyValuetoNull",
+				"DCtypeCast derive({s.TRANS_NBR} = {p.TRANS_NBR},",
 				"          {s.PTNT_CD} = substringIndex({ph.PTNT_CD}, '_', -1),",
 				"          {s.PTNT_NM} = regexReplace({ph.PHRMCY_NM}, \"[,&'-]\", ' '),",
 				"          {s.PTNT_YR_OF_BRTH} = {p.PTNT_YR_OF_BRTH},",
@@ -247,9 +243,9 @@
 				"          {s.INGRD_CST_AMT} = {p.INGRD_CST_AMT}/100,",
 				"          {s.FILLED_DATE} = toDate(toString({p.DT_FILL}),'yyyyMMdd'),",
 				"          {s.PAYR_CNTRCT_FLG} = case(toDecimal({p.TOT_RX_PRC_COLL})>{p.USUAL_AND_CSTMARY}, 'Y', 'N'),",
-				"          {s.YEAR_DESC} = right({y.YEAR_DESC}, 4)) ~> DCTransition",
-				"join2 filter(isNull({ph.PHRMCY_NAT_PROV_ID_NBR})) ~> filter1",
-				"emptyValuetoNull derive({p.TRANS_NBR} = toInteger({p.TRANS_NBR}),",
+				"          {s.YEAR_DESC} = right({y.YEAR_DESC}, 4)) ~> DCTransformation",
+				"LeftOuterJoinYear filter(isNull({ph.PHRMCY_NAT_PROV_ID_NBR})) ~> filterPHRMCYNATPROVIDNBRNull",
+				"DCemptyValuetoNull derive({p.TRANS_NBR} = toInteger({p.TRANS_NBR}),",
 				"          {p.PTNT_YR_OF_BRTH} = toInteger({p.PTNT_YR_OF_BRTH}),",
 				"          {p.DT_WRT} = toInteger({p.DT_WRT}),",
 				"          {p.PMT_TYP} = toInteger({p.PMT_TYP}),",
@@ -258,12 +254,12 @@
 				"          {p.COPAY_AMT} = toDecimal({p.COPAY_AMT}, 12, 2),",
 				"          {p.INGRD_CST_AMT} = toDecimal({p.INGRD_CST_AMT}, 12, 2),",
 				"          {p.DT_FILL} = toInteger({p.DT_FILL}),",
-				"          {p.USUAL_AND_CSTMARY} = toDecimal({p.USUAL_AND_CSTMARY}, 12, 2)) ~> typeCast",
-				"DCTransition window(over(PROD_ID = {p.PROD_ID}),",
+				"          {p.USUAL_AND_CSTMARY} = toDecimal({p.USUAL_AND_CSTMARY}, 12, 2)) ~> DCtypeCast",
+				"DCTransformation window(over(PROD_ID = {p.PROD_ID}),",
 				"     asc({p.PROD_ID}, true),",
-				"     {s.PTNT_COPAY_AMT(COL1)} = avg({p.COPAY_AMT})) ~> PTNTCOPAYAMT",
-				"window1 derive({s.DCT_AMT} = case({s.PTNT_COPAY_AMT(COL1)}>0, ({s.PTNT_COPAY_AMT(COL1)}/{s.TOTAL_AMT(COL 3)}),toDecimal(( 0.20*{s.TOTAL_AMT(COL 3)}),12,2))) ~> derivedColumn4",
-				"derivedColumn4 select(mapColumn(",
+				"     {s.PTNT_COPAY_AMT(COL1)} = avg({p.COPAY_AMT})) ~> WindowPTNTCOPAYAMT",
+				"WindowSLSTAXAMT derive({s.DCT_AMT} = case({s.PTNT_COPAY_AMT(COL1)}>0, ({s.PTNT_COPAY_AMT(COL1)}/{s.TOTAL_AMT(COL 3)}),toDecimal(( 0.20*{s.TOTAL_AMT(COL 3)}),12,2))) ~> DCDCTAMT",
+				"DCDCTAMT select(mapColumn(",
 				"          TRANS_NBR = {s.TRANS_NBR},",
 				"          PTNT_CD = {s.PTNT_CD},",
 				"          PTNT_NM = {s.PTNT_NM},",
@@ -295,16 +291,16 @@
 				"          {TOTAL_AMT(COL 3)} = iif(isNull({TOTAL_AMT(COL 3)}), 0.00, toFloat({TOTAL_AMT(COL 3)})),",
 				"          DCT_AMT = iif(isNull(DCT_AMT), 0.00,toFloat(DCT_AMT) ),",
 				"          LOAD_DATE = currentTimestamp(),",
-				"          each(match(type=='integer'), $$ = iif(isNull($$),-1 , $$))) ~> Nullhandling",
-				"PTNTCOPAYAMT window(over({p.PROD_ID}),",
+				"          each(match(type=='integer'), $$ = iif(isNull($$),-1 , $$))) ~> DCNullhandling",
+				"WindowPTNTCOPAYAMT window(over({p.PROD_ID}),",
 				"     asc({p.PROD_ID}, true),",
-				"     {SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> window1",
-				"Nullhandling sink(allowSchemaDrift: true,",
+				"     {SLS_TAX_AMT(COL2)} = max({s.PTNT_COPAY_AMT(COL1)})) ~> WindowSLSTAXAMT",
+				"DCNullhandling sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['factSource.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     partitionBy('hash', 1)) ~> sinkfactSource"
 			]
 		}
 	}

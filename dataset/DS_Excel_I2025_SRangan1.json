@@ -8,6 +8,15 @@
 		"parameters": {
 			"sheetname": {
 				"type": "int"
+			},
+			"Container": {
+				"type": "string"
+			},
+			"FolderName": {
+				"type": "string"
+			},
+			"FileName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -15,9 +24,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Excel Workshop.xlsx",
-				"folderPath": "Excel Workshop",
-				"container": "practice-adf"
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().FolderName",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().Container",
+					"type": "Expression"
+				}
 			},
 			"sheetIndex": {
 				"value": "@dataset().sheetname",

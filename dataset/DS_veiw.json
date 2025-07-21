@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC_PTNT_adf_Test.csv",
-				"folderPath": "Target Folders/I2025_JNagara1",
-				"container": "test-container"
+				"fileName": "Daily Production Actuals.xlsx",
+				"folderPath": "TDSG Project Scenario/Daily Production Actual",
+				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

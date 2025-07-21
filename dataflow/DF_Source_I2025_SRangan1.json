@@ -22,25 +22,40 @@
 					"name": "SrcMaterial"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Source_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKMaterial"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Source_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKPlan"
+				}
+			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "DCnulltoString"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "DCtoDate"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "DCEnddatetoDate"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
 				"          MaterialCode as string,",
-				"          ForecastDate as date,",
+				"          ForecastDate as string,",
 				"          Plan as short,",
-				"          TrialProduct as integer,",
-				"          IsActive as boolean,",
+				"          TrialProduct as string,",
+				"          IsActive as string,",
 				"          RevisionNumber as integer,",
 				"          RevisionComment as string,",
 				"          Line as string,",
@@ -69,10 +84,77 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SrcMaterial",
-				"SrcMaterial derive(each(match(type=='string'), $$ = case($$=='null', toString(null()),$$)\r",
-				")) ~> derivedColumn1",
-				"SrcPlan derive(each(match(), ERROR_FUNCTION('') = case(CreatedOn=='getdate()', currentDate(CreatedOn), toDate(null)))) ~> derivedColumn2",
-				"derivedColumn1 derive(EndDate = toDate(EndDate, 'dd-MM-yyyy')) ~> derivedColumn3"
+				"SrcMaterial derive(each(match(type=='string'), $$ = case($$=='null', toString(null()),$$))) ~> DCnulltoString",
+				"SrcPlan derive(CreatedOn = case(CreatedOn=='getdate()',currentDate(), toDate(null())),",
+				"          ForecastDate = toDate(ForecastDate, 'dd-MM-yyyy')) ~> DCtoDate",
+				"DCnulltoString derive(EndDate = toDate(EndDate, 'dd-MM-yyyy'),",
+				"          CreatedDate = toDate(CreatedDate, 'dd-MM-yyyy')) ~> DCEnddatetoDate",
+				"DCEnddatetoDate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          MakeFlag as string,",
+				"          FinishedGoodsFlag as string,",
+				"          Color as string,",
+				"          SafetyStockLevel as string,",
+				"          ReorderPoint as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as string,",
+				"          ProductLine as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ProductSubcategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          DiscontinuedDate as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     partitionFileNames:['MaterialMaster.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKMaterial",
+				"DCtoDate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          MakeFlag as string,",
+				"          FinishedGoodsFlag as string,",
+				"          Color as string,",
+				"          SafetyStockLevel as string,",
+				"          ReorderPoint as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as string,",
+				"          ProductLine as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ProductSubcategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          DiscontinuedDate as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     partitionFileNames:['ProductionPlan.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKPlan"
 			]
 		}
 	}

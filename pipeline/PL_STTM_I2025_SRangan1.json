@@ -176,7 +176,16 @@
 			{
 				"name": "CP_SrcPlan_SQL",
 				"type": "Copy",
-				"dependsOn": [],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DF_TDSG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -324,12 +333,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_Blob",
+						"referenceName": "DS_Source_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "practice-adf",
-							"FolderName": "TDSG Project Scenario/Daily Production Plan",
-							"FileName": "Daily Production Plan.csv"
+							"container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Project",
+							"FileName": "ProductionPlan.csv"
 						}
 					}
 				],
@@ -340,6 +349,338 @@
 						"parameters": {
 							"folder": "I2025_SRangan1",
 							"filename": "Daily_Production_Plan"
+						}
+					}
+				]
+			},
+			{
+				"name": "DF_TDSG",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Source_I2025_SRangan1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SrcPlan": {
+								"Container": "practice-adf",
+								"FolderName": "TDSG Project Scenario/Daily Production Plan",
+								"FileName": "Daily Production Plan.csv"
+							},
+							"SrcMaterial": {
+								"Container": "practice-adf",
+								"Foldername": "TDSG Project Scenario/Material Master",
+								"Filename": "Material Master.csv"
+							},
+							"SNKMaterial": {
+								"container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Project",
+								"FileName": "MaterialMaster.csv"
+							},
+							"SNKPlan": {
+								"container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Project",
+								"FileName": "ProductionPlan.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Delete1",
+				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Source_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Project",
+							"FileName": "ProductionPlan.csv"
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "CP_SrcMaster_SQL",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_SrcPlan_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "MaterialDescription",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaterialDescription",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductVarient",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductVarient",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductType",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CustomerMaster",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CustomerMaster",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductionLocation",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductionLocation",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductionPlant",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductionPlant",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SalesPlant-GJ",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalesPlant-GJ",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SalesPlant-HR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalesPlant-HR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SalesPlant-KA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalesPlant-KA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "StartDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "EndDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EndDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Source_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Project",
+							"FileName": "MaterialMaster.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "I2025_SRangan1",
+							"filename": "Material_Master"
 						}
 					}
 				]

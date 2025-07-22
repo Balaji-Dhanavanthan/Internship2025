@@ -48,6 +48,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -100,6 +103,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> TDSGMATERIAL",
 				"TDSGPLAN derive(CreatedOn = currentDate()) ~> derivedColumn1",
+				"TDSGMATERIAL derive(each(match(type == 'string'), $$ = ERROR_FUNCTION(''))) ~> derivedColumn2",
 				"TDSGACTUALS sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

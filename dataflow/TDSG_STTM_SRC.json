@@ -66,7 +66,7 @@
 				"          MaterialCode as string,",
 				"          CustomerMaterial as string,",
 				"          Description as string,",
-				"          PostingDate as date 'dd-MM-yyyy',",
+				"          PostingDate as date 'yyyy-MM-dd',",
 				"          Actual as integer,",
 				"          MovementType as integer,",
 				"          StorageLocation as string,",

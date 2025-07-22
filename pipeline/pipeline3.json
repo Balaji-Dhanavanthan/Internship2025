@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -17,6 +15,43 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "TDSG_STTM_SRC",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"TDSGACTUALS": {
+								"container": "practice-adf",
+								"directory": "TDSG Project Scenario/Daily Production Actual",
+								"filename": "Daily Production Actuals.xlsx",
+								"sheet": 0
+							},
+							"TDSGPLAN": {
+								"container": "practice-adf",
+								"Directory": "TDSG Project Scenario/Daily Production Plan",
+								"FileName": "Daily Production Plan.csv"
+							},
+							"TDSGMATERIAL": {
+								"container": "practice-adf",
+								"Directory": "TDSG Project Scenario/Material Master",
+								"FileName": "Material Master.csv"
+							},
+							"TDSGACTUALSINK": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "TDSG_ACTUAL.csv"
+							},
+							"TDSGPLANSINK": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "TDSG_PLAN.csv"
+							},
+							"TDSGMATERIALSINK": {
+								"container": "practice-adf",
+								"Directory": "Asrar",
+								"FileName": "TDSGMATERIAL.csv"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

@@ -47,7 +47,7 @@
 						"parameters": {
 							"container_name": "practice-adf",
 							"dir_name": "TDSG Project Scenario/Daily Production Actual",
-							"file_name": "Daily Production Actuals.xlsx",
+							"file_name": "Daily Production Actual 01.02.2025 to 31.07.2025.xlsx",
 							"sheet_idx": 0
 						}
 					}
@@ -97,6 +97,116 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ForecastDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ForecastDate",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plan",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Plann",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedOn",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedOn",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -109,7 +219,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "Daily Production Plan.csv",
+							"file_name": "Daily Production Plan 01.02.2025 to 30.04.2025.csv",
 							"folder_name": "TDSG Project Scenario/Daily Production Plan",
 							"container_name": "practice-adf"
 						}
@@ -367,6 +477,179 @@
 						"parameters": {
 							"DatabaseObject": "I2025_JSenthil",
 							"TableName": "MaterialMaster"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_prod_plan1",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ForecastDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ForecastDate",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plan",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Plann",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedOn",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedOn",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "Daily Production Plan 01.05.2025 to 31.07.2025.csv",
+							"folder_name": "TDSG Project Scenario/Daily Production Plan",
+							"container_name": "practice-adf"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sql_server_intern",
+						"type": "DatasetReference",
+						"parameters": {
+							"DatabaseObject": "I2025_JSenthil",
+							"TableName": "DailyProductionPlan"
 						}
 					}
 				]

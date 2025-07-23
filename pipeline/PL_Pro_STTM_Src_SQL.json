@@ -160,9 +160,9 @@
 								"FolderName": "TDSG Project Scenario/Daily Production Plan",
 								"FileName": "Daily Production Plan 01.02.2025 to 30.04.2025.csv"
 							},
-							"SrcPlan2": {
-								"Container": "practice-adf ",
-								"FolderName": "TDSG Project Scenario/Daily Production Actual",
+							"SrcPlantwo": {
+								"Container": "practice-adf",
+								"FolderName": "TDSG Project Scenario/Daily Production Plan",
 								"FileName": "Daily Production Plan 01.05.2025 to 31.07.2025.csv"
 							},
 							"sinkPlan": {

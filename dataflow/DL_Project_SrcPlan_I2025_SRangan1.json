@@ -19,7 +19,7 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "SrcPlan2"
+					"name": "SrcPlantwo"
 				}
 			],
 			"sinks": [
@@ -65,20 +65,21 @@
 				"          MaterialCode as string,",
 				"          ForecastDate as string,",
 				"          Plan as short,",
-				"          TrialProduct as string,",
-				"          IsActive as string,",
-				"          RevisionNumber as integer,",
+				"          TrialProduct as boolean,",
+				"          IsActive as boolean,",
+				"          RevisionNumber as short,",
 				"          RevisionComment as string,",
 				"          Line as string,",
 				"          CreatedOn as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> SrcPlan2",
+				"     ignoreNoFilesFound: false) ~> SrcPlantwo",
 				"SrcPlan derive(CreatedOn = case(CreatedOn == 'getdate()', currentDate(),toDate(null())),",
 				"          ForecastDate = toDate(ForecastDate, 'dd-MM-yyyy')) ~> DCtoDate",
-				"SrcPlan2 derive(CreatedOn = case(CreatedOn == 'getdate()', currentDate(), toDate(null())),",
-				"          ForecastDate = toDate(ForecastDate, 'dd-MM-yyyy')) ~> DCchangetoDate",
+				"SrcPlantwo derive(CreatedOn = case(CreatedOn == 'getdate()', currentDate(), toDate(null())),",
+				"          ForecastDate = toDate(ForecastDate, 'dd-MM-yyyy'),",
+				"          RevisionNumber = toInteger(RevisionNumber)) ~> DCchangetoDate",
 				"DCtoDate sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

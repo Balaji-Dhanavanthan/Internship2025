@@ -5,6 +5,8 @@
 			{
 				"name": "CP_Actual",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -175,14 +177,9 @@
 			{
 				"name": "CD_plan",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Data flow1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -353,7 +350,14 @@
 			{
 				"name": "CD_material",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -535,8 +539,8 @@
 								},
 								"sink": {
 									"name": "IsActive",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							},
 							{
@@ -559,8 +563,8 @@
 								},
 								"sink": {
 									"name": "EndDate",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "DateTime",
+									"physicalType": "date"
 								}
 							}
 						],
@@ -594,8 +598,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -646,6 +648,8 @@
 			{
 				"name": "CD_plan_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CD_plan",

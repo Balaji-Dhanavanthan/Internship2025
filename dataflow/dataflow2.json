@@ -80,7 +80,7 @@
 				"          {SalesPlant-GJ} as string,",
 				"          {SalesPlant-HR} as string,",
 				"          {SalesPlant-KA} as string,",
-				"          IsActive as boolean,",
+				"          IsActive as string,",
 				"          StartDate as date 'dd-MM-yyyy',",
 				"          EndDate as string",
 				"     ),",

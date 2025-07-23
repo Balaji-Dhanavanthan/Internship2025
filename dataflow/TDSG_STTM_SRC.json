@@ -58,9 +58,6 @@
 				},
 				{
 					"name": "derivedColumn2"
-				},
-				{
-					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -109,7 +106,6 @@
 				"TDSGPLAN1 derive(CreatedOn = currentDate()) ~> derivedColumn1",
 				"TDSGPLAN2 derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$)),",
 				"          CreatedOn = currentDate()) ~> derivedColumn2",
-				"derivedColumn1 filter(MaterialCode != 'nullbyOrigin()') ~> filter1",
 				"TDSGACTUALS sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -182,7 +178,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> TDSGACTUALSINK",
-				"filter1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Prop_0 as string,",

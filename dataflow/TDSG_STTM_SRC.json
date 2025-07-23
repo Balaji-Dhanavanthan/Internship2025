@@ -19,14 +19,14 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "TDSGPLAN"
+					"name": "TDSGPLAN1"
 				},
 				{
 					"dataset": {
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "TDSGMATERIAL"
+					"name": "TDSGPLAN2"
 				}
 			],
 			"sinks": [
@@ -42,14 +42,14 @@
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "TDSGPLANSINK"
+					"name": "TDSGPLAN1SINK"
 				},
 				{
 					"dataset": {
 						"referenceName": "DS_Blob",
 						"type": "DatasetReference"
 					},
-					"name": "TDSGMATERIALSINK"
+					"name": "TDSGPLAN2SINK"
 				}
 			],
 			"transformations": [
@@ -61,18 +61,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          ProductionId as integer,",
-				"          MaterialCode as string,",
-				"          CustomerMaterial as string,",
-				"          Description as string,",
-				"          PostingDate as date 'yyyy-MM-dd',",
-				"          Actual as integer,",
-				"          MovementType as integer,",
-				"          StorageLocation as string,",
-				"          Plant as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> TDSGACTUALS",
 				"source(output(",
@@ -88,7 +77,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> TDSGPLAN",
+				"     ignoreNoFilesFound: false) ~> TDSGPLAN1",
 				"source(output(",
 				"          MaterialCode as string,",
 				"          CreatedDate as date 'dd-MM-yyyy',",
@@ -108,9 +97,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> TDSGMATERIAL",
-				"TDSGPLAN derive(CreatedOn = currentDate()) ~> derivedColumn1",
-				"TDSGMATERIAL derive(each(match(type == 'string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> derivedColumn2",
+				"     ignoreNoFilesFound: false) ~> TDSGPLAN2",
+				"TDSGPLAN1 derive(CreatedOn = currentDate()) ~> derivedColumn1",
+				"TDSGPLAN2 derive(each(match(type=='string'), $$ = iif($$ == 'NULL' , toString(null()),$$))) ~> derivedColumn2",
 				"TDSGACTUALS sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -254,7 +243,7 @@
 				"     partitionFileNames:['TDSG_PLAN.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> TDSGPLANSINK",
+				"     partitionBy('hash', 1)) ~> TDSGPLAN1SINK",
 				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -323,10 +312,10 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['TDSGMATERIAL.csv'],",
+				"     partitionFileNames:['TDSG_PLAN.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> TDSGMATERIALSINK"
+				"     partitionBy('hash', 1)) ~> TDSGPLAN2SINK"
 			]
 		}
 	}

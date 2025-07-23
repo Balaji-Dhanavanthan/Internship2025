@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -278,8 +276,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "practice-adf",
-							"Directory": "Asrar",
-							"FileName": "TDSG_ACTUAL.csv"
+							"Directory": "Asrar/TDSG_STTM",
+							"FileName": "TDSG_PLAN1.csv"
 						}
 					},
 					"logStorageSettings": {
@@ -292,6 +290,8 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
+						"modifiedDatetimeStart": null,
+						"modifiedDatetimeEnd": null,
 						"enablePartitionDiscovery": false
 					}
 				}
@@ -299,8 +299,6 @@
 			{
 				"name": "CP_PLAN2_SRC",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_PLAN1_SRC",
@@ -367,6 +365,46 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Delete3",
+				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"Directory": "Asrar/TDSG_STTM",
+							"FileName": "TDSG_PLAN2.csv"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DS_Blob_storgare",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"modifiedDatetimeStart": null,
+						"modifiedDatetimeEnd": null,
+						"enablePartitionDiscovery": false
+					}
+				}
 			}
 		],
 		"folder": {

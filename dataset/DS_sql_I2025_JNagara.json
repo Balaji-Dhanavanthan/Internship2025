@@ -12,7 +12,7 @@
 			},
 			"table": {
 				"type": "string",
-				"defaultValue": "employee"
+				"defaultValue": "Daily_Production_Plan"
 			}
 		},
 		"folder": {

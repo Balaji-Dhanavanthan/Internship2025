@@ -20,6 +20,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_I2025_JNagara1",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
 				}
 			],
 			"sinks": [
@@ -36,6 +43,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_Sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
 				}
 			],
 			"transformations": [
@@ -47,6 +61,9 @@
 				},
 				{
 					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +92,7 @@
 				"          ForecastDate as date 'dd-MM-yyyy',",
 				"          Plan as short,",
 				"          TrialProduct as string,",
-				"          IsActive as boolean,",
+				"          IsActive as integer,",
 				"          RevisionNumber as integer,",
 				"          RevisionComment as string,",
 				"          Line as string,",
@@ -84,9 +101,24 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
+				"source(output(",
+				"          MaterialCode as string,",
+				"          ForecastDate as date 'dd-MM-yyyy',",
+				"          Plan as short,",
+				"          TrialProduct as string,",
+				"          IsActive as integer,",
+				"          RevisionNumber as short,",
+				"          RevisionComment as string,",
+				"          Line as string,",
+				"          CreatedOn as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source3",
 				"source1 derive(each(match(type=='string'), $$ = case($$=='null', toString(null()), $$))) ~> derivedColumn1",
 				"source2 derive(CreatedOn = case(CreatedOn=='getdate()', currentDate(), toDate(null()))) ~> derivedColumn2",
 				"derivedColumn1 derive(EndDate = toDate(EndDate,'dd-MM-yyyy')) ~> derivedColumn3",
+				"source3 derive(CreatedOn = case(CreatedOn=='getdate()', currentDate(), toDate(null()))) ~> derivedColumn4",
 				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['material.csv'],",
@@ -95,10 +127,16 @@
 				"     partitionBy('hash', 1)) ~> sink1",
 				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['plan.csv'],",
+				"     partitionFileNames:['plantest1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink2"
+				"     partitionBy('hash', 1)) ~> sink2",
+				"derivedColumn4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['plantest2.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink3"
 			]
 		}
 	}

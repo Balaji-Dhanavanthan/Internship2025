@@ -42,11 +42,13 @@
 							},
 							"TDSGPLAN1SINK": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar/TDSG_STTM",
+								"FileName": "TDSG_PLAN1.csv"
 							},
 							"TDSGPLAN2SINK": {
 								"container": "practice-adf",
-								"Directory": "Asrar"
+								"Directory": "Asrar/TDSG_STTM",
+								"FileName": "TDSG_PLAN2.csv"
 							}
 						}
 					},

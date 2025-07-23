@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -24,33 +22,31 @@
 							"TDSGACTUALS": {
 								"container": "practice-adf",
 								"directory": "TDSG Project Scenario/Daily Production Actual",
-								"filename": "Daily Production Actuals.xlsx",
+								"filename": "Daily Production Actual 01.02.2025 to 31.07.2025.xlsx",
 								"sheet": 0
 							},
-							"TDSGPLAN": {
+							"TDSGPLAN1": {
 								"container": "practice-adf",
 								"Directory": "TDSG Project Scenario/Daily Production Plan",
-								"FileName": "Daily Production Plan.csv"
+								"FileName": "Daily Production Plan 01.02.2025 to 30.04.2025.csv"
 							},
-							"TDSGMATERIAL": {
+							"TDSGPLAN2": {
 								"container": "practice-adf",
-								"Directory": "TDSG Project Scenario/Material Master",
-								"FileName": "Material Master.csv"
+								"Directory": "TDSG Project Scenario/Daily Production Plan",
+								"FileName": "Daily Production Plan 01.05.2025 to 31.07.2025.csv"
 							},
 							"TDSGACTUALSINK": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
+								"Directory": "Asrar/TDSG_STTM",
 								"FileName": "TDSG_ACTUAL.csv"
 							},
-							"TDSGPLANSINK": {
+							"TDSGPLAN1SINK": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "TDSG_PLAN.csv"
+								"Directory": "Asrar"
 							},
-							"TDSGMATERIALSINK": {
+							"TDSGPLAN2SINK": {
 								"container": "practice-adf",
-								"Directory": "Asrar",
-								"FileName": "TDSGMATERIAL.csv"
+								"Directory": "Asrar"
 							}
 						}
 					},

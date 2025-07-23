@@ -5,6 +5,8 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -126,6 +128,8 @@
 			{
 				"name": "CP_PLAN1_SRC",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Data flow1",
@@ -360,7 +364,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "Daily_Production_Plan2",
+							"tablename": "Daily_Production_Plan",
 							"databasename": "Intern_2025"
 						}
 					}

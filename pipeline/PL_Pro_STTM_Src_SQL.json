@@ -1,0 +1,193 @@
+{
+	"name": "PL_Pro_STTM_Src_SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "CP_SrcPlan_SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "DF_SrcUpdatedPlan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_new_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Project",
+							"FileName": "Updated_ProductionPlan.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "I2025_SRangan1",
+							"filename": "Daily_Production_Plan"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_SrcPlan2_SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "CP_SrcPlan_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_STTM_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"Foldername": "I2025_SRangan1/ TDSG_Project",
+							"Filename": "Updated_ProductionPlan2.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "I2025_SRangan1",
+							"filename": "Daily_Production_Plan"
+						}
+					}
+				]
+			},
+			{
+				"name": "DF_SrcUpdatedPlan",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DL_Project_SrcPlan_I2025_SRangan1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SrcPlan": {
+								"Container": "practice-adf",
+								"FolderName": "TDSG Project Scenario/Daily Production Plan",
+								"FileName": "Daily Production Plan 01.02.2025 to 30.04.2025.csv"
+							},
+							"SrcPlan2": {
+								"Container": "practice-adf ",
+								"FolderName": "TDSG Project Scenario/Daily Production Actual",
+								"FileName": "Daily Production Plan 01.05.2025 to 31.07.2025.csv"
+							},
+							"sinkPlan": {
+								"container": "test-container",
+								"FolderName": "I2025_SRangan1/ TDSG_Project",
+								"FileName": "Updated_ProductionPlan.csv"
+							},
+							"sinkPlan2": {
+								"Container": "test-container",
+								"Foldername": "I2025_SRangan1/ TDSG_Project",
+								"Filename": "Updated_ProductionPlan2.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "TDSG_Training_I2025_SRangan1/TDSG_PROJECT_I2025_SRangan1"
+		},
+		"annotations": []
+	}
+}

@@ -246,7 +246,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['TDSG_PLAN.csv'],",
+				"     partitionFileNames:['TDSG_PLAN1.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> TDSGPLAN1SINK",
@@ -318,7 +318,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['TDSG_PLAN.csv'],",
+				"     partitionFileNames:['TDSG_PLAN2.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> TDSGPLAN2SINK"

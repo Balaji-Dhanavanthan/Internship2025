@@ -81,7 +81,7 @@
 				"          Plan as integer,",
 				"          TrialProduct as string,",
 				"          IsActive as string,",
-				"          RevisionNumber as string,",
+				"          RevisionNumber as integer,",
 				"          RevisionComment as string,",
 				"          Line as string,",
 				"          CreatedOn as date 'dd-MM-yyyy'",

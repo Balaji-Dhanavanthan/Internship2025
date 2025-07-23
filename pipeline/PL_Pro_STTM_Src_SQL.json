@@ -41,6 +41,116 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ForecastDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ForecastDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Plan",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Plans",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedOn",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedOn",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -50,12 +160,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_new_I2025_SRangan1",
+						"referenceName": "DS_STTM_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "test-container",
-							"FolderName": "I2025_SRangan1/TDSG_Project",
-							"FileName": "Updated_ProductionPlan.csv"
+							"Container": "test-container",
+							"Foldername": "I2025_SRangan1/ TDSG_Project",
+							"Filename": "Updated_ProductionPlan.csv"
 						}
 					}
 				],
@@ -109,6 +219,116 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MaterialCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ForecastDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ForecastDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Plan",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Plans",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TrialProduct",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionNumber",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RevisionComment",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Line",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedOn",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedOn",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -141,6 +361,8 @@
 			{
 				"name": "DF_SrcUpdatedPlan",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -161,14 +383,14 @@
 								"FileName": "Daily Production Plan 01.02.2025 to 30.04.2025.csv"
 							},
 							"SrcPlantwo": {
-								"Container": "practice-adf",
+								"container": "practice-adf",
 								"FolderName": "TDSG Project Scenario/Daily Production Plan",
 								"FileName": "Daily Production Plan 01.05.2025 to 31.07.2025.csv"
 							},
 							"sinkPlan": {
-								"container": "test-container",
-								"FolderName": "I2025_SRangan1/ TDSG_Project",
-								"FileName": "Updated_ProductionPlan.csv"
+								"Container": "test-container",
+								"Foldername": "I2025_SRangan1/ TDSG_Project",
+								"Filename": "Updated_ProductionPlan.csv"
 							},
 							"sinkPlan2": {
 								"Container": "test-container",

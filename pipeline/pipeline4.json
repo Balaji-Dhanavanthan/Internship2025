@@ -1,0 +1,9 @@
+{
+	"name": "pipeline4",
+	"properties": {
+		"folder": {
+			"name": "TDSG_ADF_Pipeline/TDSG_STTM"
+		},
+		"annotations": []
+	}
+}

@@ -3,7 +3,10 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_sql_I2025_JNagara",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database": "Northwind"
+			}
 		},
 		"parameters": {
 			"sehma": {

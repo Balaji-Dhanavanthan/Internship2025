@@ -5,6 +5,8 @@
 			{
 				"name": "CP_SrcPlan_SQL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_SrcUpdatedPlan",
@@ -165,7 +167,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Foldername": "I2025_SRangan1/ TDSG_Project",
-							"Filename": "Updated_ProductionPlan.csv"
+							"Filename": "new_ProductionPlan.csv"
 						}
 					}
 				],
@@ -175,7 +177,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Schema": "I2025_SRangan1",
-							"Table": "Daily_Production_Plan"
+							"Table": "Daily_Production_Plan",
+							"DB_Name": "Intern_2025"
 						}
 					}
 				]
@@ -183,6 +186,8 @@
 			{
 				"name": "CP_SrcPlan2_SQL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_SrcPlan_SQL",
@@ -343,7 +348,7 @@
 						"parameters": {
 							"Container": "test-container",
 							"Foldername": "I2025_SRangan1/ TDSG_Project",
-							"Filename": "Updated_ProductionPlan2.csv"
+							"Filename": "new_ProductionPlan2.csv"
 						}
 					}
 				],
@@ -353,7 +358,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Schema": "I2025_SRangan1",
-							"Table": "Daily_Production_Plan"
+							"Table": "Daily_Production_Plan",
+							"DB_Name": "Intern_2025"
 						}
 					}
 				]
@@ -380,22 +386,22 @@
 							"SrcPlan": {
 								"Container": "practice-adf",
 								"FolderName": "TDSG Project Scenario/Daily Production Plan",
-								"FileName": "Daily Production Plan 01.02.2025 to 30.04.2025.csv"
+								"FileName": "Daily Production plan 01.02.2025 to 31.03.2025.csv"
 							},
 							"SrcPlantwo": {
 								"container": "practice-adf",
 								"FolderName": "TDSG Project Scenario/Daily Production Plan",
-								"FileName": "Daily Production Plan 01.05.2025 to 31.07.2025.csv"
+								"FileName": "Daily Production Plan 01.04.2025 to 31.07.2025.csv"
 							},
 							"sinkPlan": {
 								"Container": "test-container",
 								"Foldername": "I2025_SRangan1/ TDSG_Project",
-								"Filename": "Updated_ProductionPlan.csv"
+								"Filename": "new_ProductionPlan.csv"
 							},
 							"sinkPlan2": {
 								"Container": "test-container",
 								"Foldername": "I2025_SRangan1/ TDSG_Project",
-								"Filename": "Updated_ProductionPlan2.csv"
+								"Filename": "new_ProductionPlan2.csv"
 							}
 						}
 					},
@@ -405,6 +411,68 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "CP_SnewActual_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Excel_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"sheetname": 0,
+							"Container": "practice-adf",
+							"FolderName": "TDSG Project Scenario/Daily Production Actual",
+							"FileName": "Daily Production Actual 01.02.2025 to 31.07.2025.xlsx"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "Daily_Production_Actuals",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CP_SQL_Blob",
-				"type": "Copy",
+				"name": "Lookup",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -16,24 +16,130 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
 					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_sql_I2025_SRangan1",
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"Schema": "dbo",
-							"Table": "Categories"
+							"sheetname": 0,
+							"Container": "practice-adf",
+							"FolderName": "I2025_SRangan1/Northwind Data Migration",
+							"FileName": "Northwind Migration.xlsx"
 						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
-				]
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "CP",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlServerSource",
+									"sqlReaderQuery": {
+										"value": "@item().['Source Query']",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_sql_I2025_SRangan1",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": "dbo",
+										"Table": {
+											"value": "@item().['Table Name']",
+											"type": "Expression"
+										},
+										"DB_Name": "Northwind"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_sql_I2025_SRangan1",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": {
+											"value": "@item().['Target Schema']",
+											"type": "Expression"
+										},
+										"Table": {
+											"value": "@item().['Target Table']",
+											"type": "Expression"
+										},
+										"DB_Name": {
+											"value": "@item().TGT_Database",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
 			}
 		],
+		"variables": {
+			"TableName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "TDSG_Training_I2025_SRangan1"
+		},
 		"annotations": []
 	}
 }

@@ -8,11 +8,10 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "MigrationExcel 3.xlsx",
-				"folderPath": "I2025_MSyed/Northwind Data Migration",
+				"fileName": "Northwind_data_transfer.xlsx",
+				"folderPath": "I2025_JSenthil",
 				"container": "practice-adf"
 			},
 			"range": "A1:G14",

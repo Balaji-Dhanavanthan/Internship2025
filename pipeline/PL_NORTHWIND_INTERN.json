@@ -64,7 +64,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schemaname": {
-											"value": "@item().SourceSchema",
+											"value": "@item()['Source Schema']",
 											"type": "Expression"
 										},
 										"tablename": {
@@ -85,10 +85,13 @@
 											"type": "Expression"
 										},
 										"tablename": {
-											"value": "@item().DestinationTable",
+											"value": "@item()['DestinationTable']",
 											"type": "Expression"
 										},
-										"databasename": "Intern_2025"
+										"databasename": {
+											"value": "@item()['Desitination Database']",
+											"type": "Expression"
+										}
 									}
 								}
 							]

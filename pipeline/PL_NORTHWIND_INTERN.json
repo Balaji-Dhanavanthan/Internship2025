@@ -85,7 +85,7 @@
 											"type": "Expression"
 										},
 										"tablename": {
-											"value": "@item()['DestinationTable']",
+											"value": "@item()['Destination Table']",
 											"type": "Expression"
 										},
 										"databasename": {

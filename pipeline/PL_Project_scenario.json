@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -24,10 +22,10 @@
 							"DailyProductionPlan": {
 								"container": "practice-adf",
 								"folder": "TDSG Project Scenario/Daily Production Plan",
-								"filename": "Daily Production Plan.csv"
+								"filename": "Daily Production plan 01.02.2025 to 31.03.2025.csv"
 							},
 							"DailyProductionActual": {
-								"filename": "Daily Production Actuals.xlsx",
+								"filename": "Daily Production Actual 01.02.2025 to 31.07.2025.xlsx",
 								"container": "practice-adf",
 								"directory": "TDSG Project Scenario/Daily Production Actual",
 								"index": 0
@@ -37,20 +35,30 @@
 								"folder": "TDSG Project Scenario/Material Master",
 								"filename": "Material Master.csv"
 							},
+							"source1": {
+								"container": "practice-adf",
+								"folder": "TDSG Project Scenario/Daily Production Plan",
+								"filename": "Daily Production Plan 01.04.2025 to 31.07.2025.csv"
+							},
 							"sink1": {
 								"container": "practice-adf",
 								"folder": "aabidh",
-								"filename": "Daily Production Plan.csv"
+								"filename": "Daily Production plan 01.02.2025 to 31.03.2025.csv"
 							},
 							"sink2": {
 								"container": "practice-adf",
 								"folder": "aabidh",
-								"filename": "Daily Production Actuals.csv"
+								"filename": "Daily Production Actual 01.02.2025 to 31.07.2025.csv"
 							},
 							"sink3": {
 								"container": "practice-adf",
 								"folder": "aabidh",
 								"filename": "Material Master.csv"
+							},
+							"sink4": {
+								"container": "practice-adf",
+								"folder": "aabidh",
+								"filename": "Daily Production Plan 01.04.2025 to 31.07.2025.csv"
 							}
 						}
 					},
@@ -64,6 +72,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",

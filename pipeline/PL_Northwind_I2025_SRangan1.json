@@ -27,10 +27,10 @@
 						"referenceName": "DS_Excel_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"sheetname": 0,
+							"sheetnum": 0,
 							"Container": "practice-adf",
 							"FolderName": "I2025_SRangan1/Northwind Data Migration",
-							"FileName": "Northwind Migration.xlsx"
+							"FileName": "Northwind Migration (1).xlsx"
 						}
 					},
 					"firstRowOnly": false
@@ -71,7 +71,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@item().['Source Query']",
+										"value": "@item()['Source Query']",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -98,9 +98,12 @@
 									"referenceName": "DS_sql_I2025_SRangan1",
 									"type": "DatasetReference",
 									"parameters": {
-										"Schema": "dbo",
+										"Schema": {
+											"value": "@item()['Source Schema']",
+											"type": "Expression"
+										},
 										"Table": {
-											"value": "@item().['Table Name']",
+											"value": "@item()['Table Name']",
 											"type": "Expression"
 										},
 										"DB_Name": "Northwind"
@@ -113,17 +116,14 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Schema": {
-											"value": "@item().['Target Schema']",
+											"value": "@item()['Target Schema']",
 											"type": "Expression"
 										},
 										"Table": {
-											"value": "@item().['Target Table']",
+											"value": "@item()['Target Table']",
 											"type": "Expression"
 										},
-										"DB_Name": {
-											"value": "@item().TGT_Database",
-											"type": "Expression"
-										}
+										"DB_Name": "Intern_2025"
 									}
 								}
 							]

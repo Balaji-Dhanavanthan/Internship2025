@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"sheetname": {
+			"sheetnum": {
 				"type": "int"
 			},
 			"Container": {
@@ -38,7 +38,7 @@
 				}
 			},
 			"sheetIndex": {
-				"value": "@dataset().sheetname",
+				"value": "@dataset().sheetnum",
 				"type": "Expression"
 			},
 			"firstRowAsHeader": true

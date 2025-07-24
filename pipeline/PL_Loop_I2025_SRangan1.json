@@ -56,7 +56,7 @@
 									"referenceName": "DS_Excel_I2025_SRangan1",
 									"type": "DatasetReference",
 									"parameters": {
-										"sheetname": {
+										"sheetnum": {
 											"value": "@item()",
 											"type": "Expression"
 										}

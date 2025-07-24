@@ -5,6 +5,8 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -72,8 +74,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -117,7 +117,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"folder": "aabidh",
-							"filename": "Daily Production Actuals.csv"
+							"filename": "Daily Production Plan 01.04.2025 to 31.07.2025.csv"
 						}
 					}
 				],
@@ -127,7 +127,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_MAbdul1",
-							"TableName": "Daily_Production_Actuals",
+							"TableName": "Daily_Production_Plan",
 							"database": "Intern_2025"
 						}
 					}

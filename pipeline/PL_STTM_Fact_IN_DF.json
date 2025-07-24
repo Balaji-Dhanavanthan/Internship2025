@@ -87,8 +87,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "SRC_FACT_DSPN_ADF"
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_FACT_DSPN_ADF"
 						}
 					}
 				]
@@ -141,8 +141,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "SRC_FACT_DSPN_ADF"
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_FACT_DSPN_ADF"
 						}
 					}
 				],
@@ -151,8 +151,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "STAGING_STTM_FACT_ADF"
+							"Schema": "I2025_SRangan1",
+							"Table": "STAGING_STTM_FACT_ADF"
 						}
 					}
 				]
@@ -204,8 +204,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "STAGING_STTM_FACT_ADF"
+							"Schema": "I2025_SRangan1",
+							"Table": "STAGING_STTM_FACT_ADF"
 						}
 					}
 				],
@@ -214,8 +214,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "TGT_FACT_DSPN_ADF"
+							"Schema": "I2025_SRangan1",
+							"Table": "TGT_FACT_DSPN_ADF"
 						}
 					}
 				]

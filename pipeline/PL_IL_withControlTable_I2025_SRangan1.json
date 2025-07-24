@@ -52,8 +52,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "Source_IL"
+							"Schema": "I2025_SRangan1",
+							"Table": "Source_IL"
 						}
 					}
 				]
@@ -104,8 +104,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "Source_IL"
+							"Schema": "I2025_SRangan1",
+							"Table": "Source_IL"
 						}
 					}
 				],
@@ -114,8 +114,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "Target_IL"
+							"Schema": "I2025_SRangan1",
+							"Table": "Target_IL"
 						}
 					}
 				]
@@ -166,8 +166,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "Target_IL"
+							"Schema": "I2025_SRangan1",
+							"Table": "Target_IL"
 						}
 					}
 				],
@@ -176,8 +176,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "control_table"
+							"Schema": "I2025_SRangan1",
+							"Table": "control_table"
 						}
 					}
 				]

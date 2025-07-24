@@ -52,8 +52,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "transactions_increment_1"
+							"Schema": "I2025_SRangan1",
+							"Table": "transactions_increment_1"
 						}
 					}
 				]
@@ -104,8 +104,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "transactions_increment_1"
+							"Schema": "I2025_SRangan1",
+							"Table": "transactions_increment_1"
 						}
 					}
 				],
@@ -114,8 +114,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "IncrementLoad"
+							"Schema": "I2025_SRangan1",
+							"Table": "IncrementLoad"
 						}
 					}
 				]

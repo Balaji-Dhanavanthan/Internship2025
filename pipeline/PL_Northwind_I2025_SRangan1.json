@@ -1,0 +1,39 @@
+{
+	"name": "PL_Northwind_I2025_SRangan1",
+	"properties": {
+		"activities": [
+			{
+				"name": "CP_SQL_Blob",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "dbo",
+							"Table": "Categories"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

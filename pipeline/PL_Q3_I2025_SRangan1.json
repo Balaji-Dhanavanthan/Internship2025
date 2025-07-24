@@ -47,8 +47,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "TGT_Anime_I2025_SRangan1"
+							"Schema": "I2025_SRangan1",
+							"Table": "TGT_Anime_I2025_SRangan1"
 						}
 					}
 				],

@@ -54,8 +54,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "YEAR"
+							"Schema": "I2025_SRangan1",
+							"Table": "YEAR"
 						}
 					}
 				]
@@ -112,8 +112,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "SRC_PHRMCY_Fact"
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_PHRMCY_Fact"
 						}
 					}
 				]
@@ -222,8 +222,8 @@
 						"referenceName": "DS_sql_I2025_SRangan1",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "I2025_SRangan1",
-							"filename": "SRC_PTNT"
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_PTNT"
 						}
 					}
 				]

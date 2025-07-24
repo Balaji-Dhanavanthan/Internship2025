@@ -1,0 +1,121 @@
+{
+	"name": "PL_SQL_DB_Transfer",
+	"properties": {
+		"activities": [
+			{
+				"name": "LKP_ExcelContents",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_EXCEL_BLOB",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "practice-adf",
+							"dir_name": "I2025_JSenthil",
+							"file_name": "Northwind_data_transfer.xlsx",
+							"sheet_idx": 0
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "FOR_each_NWTable",
+				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "LKP_ExcelContents",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('LKP_ExcelContents').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "CP_table",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlServerSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"DatabaseObject": "dbo"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_Sql_server_intern",
+									"type": "DatasetReference",
+									"parameters": {
+										"DatabaseObject": "I2025_JSenthil"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "DataTransfer"
+		},
+		"annotations": []
+	}
+}

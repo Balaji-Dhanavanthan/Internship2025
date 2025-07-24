@@ -7,10 +7,12 @@
 		},
 		"parameters": {
 			"DatabaseObject": {
-				"type": "string",
-				"defaultValue": "dbo"
+				"type": "string"
 			},
 			"TableName": {
+				"type": "string"
+			},
+			"SchemaName": {
 				"type": "string"
 			}
 		},

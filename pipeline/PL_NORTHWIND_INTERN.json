@@ -37,7 +37,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@item().SourceQuery",
+										"value": "@item()['Source Query']",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -65,14 +65,17 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schemaname": {
-											"value": "@item()['Source Schema']",
+											"value": "@item().SRC_Schema",
 											"type": "Expression"
 										},
 										"tablename": {
-											"value": "@item().TableName",
+											"value": "@item()['SRC_Table Name']",
 											"type": "Expression"
 										},
-										"databasename": "Northwind"
+										"databasename": {
+											"value": "@item().SRC_Database",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -82,15 +85,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schemaname": {
-											"value": "@item()['Destination Schema']",
+											"value": "@item().TGT_Schema",
 											"type": "Expression"
 										},
 										"tablename": {
-											"value": "@item()['Destination Table']",
+											"value": "@item()['TGT_Table Name']",
 											"type": "Expression"
 										},
 										"databasename": {
-											"value": "@item()['Destination Database']",
+											"value": "@item().TGT_Database",
 											"type": "Expression"
 										}
 									}

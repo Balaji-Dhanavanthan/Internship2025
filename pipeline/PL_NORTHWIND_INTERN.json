@@ -46,7 +46,8 @@
 								"sink": {
 									"type": "SqlServerSink",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate"
 								},
 								"enableStaging": false,
 								"translator": {
@@ -89,7 +90,7 @@
 											"type": "Expression"
 										},
 										"databasename": {
-											"value": "@item()['Desitination Database']",
+											"value": "@item()['Destination Database']",
 											"type": "Expression"
 										}
 									}

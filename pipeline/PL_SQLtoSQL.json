@@ -98,12 +98,18 @@
 									"referenceName": "DS_sql_I2025_JNagara",
 									"type": "DatasetReference",
 									"parameters": {
-										"sehma": "dbo",
+										"sehma": {
+											"value": "@item().SourceSchema",
+											"type": "Expression"
+										},
 										"table": {
 											"value": "@item().TableName",
 											"type": "Expression"
 										},
-										"database": "Northwind"
+										"database": {
+											"value": "@item().SourceDatabase",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -113,15 +119,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"sehma": {
-											"value": "@item().['Destination Schema']",
+											"value": "@item()['Destination Schema']",
 											"type": "Expression"
 										},
 										"table": {
-											"value": "@item().['Destination Table']",
+											"value": "@item()['Destination Table']",
 											"type": "Expression"
 										},
 										"database": {
-											"value": "@item().['Destination Database']",
+											"value": "@item()['Destination Database']",
 											"type": "Expression"
 										}
 									}

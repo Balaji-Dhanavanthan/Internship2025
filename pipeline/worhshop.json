@@ -21,12 +21,6 @@
 						"referenceName": "workshop",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
-								"container": "test-container",
-								"directory": "Workshop_source",
-								"filename": "BASK Invitation Dataset.xlsx",
-								"sheet": 0
-							},
 							"finalreportworkshop": {
 								"container": "practice-adf",
 								"Directory": "Asrar",

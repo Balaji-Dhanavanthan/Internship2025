@@ -21,12 +21,6 @@
 						"referenceName": "TDSG_STTM_SRC",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"TDSGACTUALS": {
-								"container": "practice-adf",
-								"directory": "TDSG Project Scenario/Daily Production Actual",
-								"filename": "Daily Production Actual 01.02.2025 to 31.07.2025.xlsx",
-								"sheet": 0
-							},
 							"TDSGPLAN1": {
 								"container": "practice-adf",
 								"Directory": "TDSG Project Scenario/Daily Production Plan",

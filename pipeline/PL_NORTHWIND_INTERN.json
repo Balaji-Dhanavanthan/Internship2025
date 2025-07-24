@@ -126,13 +126,7 @@
 					},
 					"dataset": {
 						"referenceName": "Excel_1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"directory": "I2025_JNagara1/Northwind Data Migration",
-							"filename": "migrationNorthwind.xlsx",
-							"sheet": 0
-						}
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}

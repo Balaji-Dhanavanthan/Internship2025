@@ -5,9 +5,21 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ReadMetaData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('ReadMetaData').output.firstRow",
+						"type": "Expression"
+					},
+					"batchCount": 1,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -24,19 +36,59 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
+									"sqlReaderQuery": {
+										"value": "@item().SourceQuery",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"schemaname": "dbo",
-										"tablename": "Categories",
+										"schemaname": {
+											"value": "@item().SourceSchema",
+											"type": "Expression"
+										},
+										"tablename": {
+											"value": "@item().TableName",
+											"type": "Expression"
+										},
 										"databasename": "Northwind"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_OnPrem_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"schemaname": {
+											"value": "@item().DestinationSchema",
+											"type": "Expression"
+										},
+										"tablename": {
+											"value": "@item().DestinationTable",
+											"type": "Expression"
+										},
+										"databasename": "Intern_2025"
 									}
 								}
 							]

@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "PL_SQLtoSQL",
 	"properties": {
 		"activities": [
 			{
@@ -30,7 +30,7 @@
 							"sheetss": 0,
 							"container": "practice-adf",
 							"folder": "I2025_JNagara1/Northwind Data Migration",
-							"filename": "migrationNorthwind.xlsx"
+							"filename": "migrationNorthwind (1).xlsx"
 						}
 					},
 					"firstRowOnly": false

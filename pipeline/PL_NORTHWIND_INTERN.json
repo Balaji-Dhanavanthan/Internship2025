@@ -81,7 +81,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schemaname": {
-											"value": "@item().DestinationSchema",
+											"value": "@item()['Destination Schema']",
 											"type": "Expression"
 										},
 										"tablename": {

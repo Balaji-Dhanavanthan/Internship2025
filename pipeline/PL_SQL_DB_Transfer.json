@@ -93,10 +93,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference",
-									"parameters": {
-										"DatabaseObject": "dbo"
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [

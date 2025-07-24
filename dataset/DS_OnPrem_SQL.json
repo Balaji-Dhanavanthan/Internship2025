@@ -2,13 +2,10 @@
 	"name": "DS_OnPrem_SQL",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_OnPrem_SQLServer",
+			"referenceName": "LS_SQL_server",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"DatabaseObject": {
-				"type": "string"
-			},
 			"TableName": {
 				"type": "string"
 			},
@@ -24,7 +21,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().DatabaseObject",
+				"value": "@dataset().SchemaName",
 				"type": "Expression"
 			},
 			"table": {

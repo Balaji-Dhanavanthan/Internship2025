@@ -14,15 +14,17 @@
 			},
 			"tablename": {
 				"type": "String"
+			},
+			"Schemaname": {
+				"type": "String"
 			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "I2025_MAbdul1",
-			"table": {
-				"value": "@dataset().tablename",
+			"schema": {
+				"value": "@dataset().Schemaname",
 				"type": "Expression"
 			}
 		}

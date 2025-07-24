@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "length(activity('ReadMetaData').output)",
+						"value": "@activity('ReadMetaData').output.value",
 						"type": "Expression"
 					},
 					"batchCount": 1,
@@ -64,7 +64,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schemaname": {
-											"value": "@item().SourceSchema",
+											"value": "@item().Source Schema",
 											"type": "Expression"
 										},
 										"tablename": {
@@ -126,7 +126,8 @@
 							"filename": "migrationNorthwind.xlsx",
 							"sheet": 0
 						}
-					}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],

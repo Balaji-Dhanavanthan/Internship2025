@@ -8,6 +8,15 @@
 		"parameters": {
 			"sheetss": {
 				"type": "int"
+			},
+			"container": {
+				"type": "string"
+			},
+			"folder": {
+				"type": "string"
+			},
+			"filename": {
+				"type": "string"
 			}
 		},
 		"folder": {
@@ -18,9 +27,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC PTNT.csv",
-				"folderPath": "Workshop 2/SRC_Pharmacy",
-				"container": "practice-adf"
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
 			"sheetIndex": {
 				"value": "@dataset().sheetss",

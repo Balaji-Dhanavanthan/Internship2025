@@ -5,7 +5,10 @@
 			"referenceName": "LS_sql_I2025_JNagara",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"database": "Northwind"
+				"database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				}
 			}
 		},
 		"parameters": {
@@ -16,6 +19,9 @@
 			"table": {
 				"type": "string",
 				"defaultValue": "Daily_Production_Plan"
+			},
+			"database": {
+				"type": "String"
 			}
 		},
 		"folder": {

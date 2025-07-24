@@ -24,6 +24,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "MaterialMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -47,6 +54,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
 				}
 			],
 			"transformations": [
@@ -64,6 +78,12 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -115,11 +135,27 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> MaterialMaster",
-				"DailyProductionPlan derive(each(match(type == 'string'), $$ = iif($$ == 'NULL',toString(null()), $$) )) ~> Nullhandling",
-				"DailyProductionActual derive(each(match(type == 'string'), $$ = iif($$ == 'NULL',toString(null()), $$))) ~> Nullhandling2",
-				"MaterialMaster derive(each(match(type == 'string'), $$ = iif($$ == 'NULL' || trim($$)=='null',toString(null()), $$))) ~> Nullhandling3",
+				"source(output(",
+				"          MaterialCode as string,",
+				"          ForecastDate as date 'dd-MM-yyyy',",
+				"          Plan as string,",
+				"          TrialProduct as string,",
+				"          IsActive as string,",
+				"          RevisionNumber as string,",
+				"          RevisionComment as string,",
+				"          Line as string,",
+				"          CreatedOn as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"DailyProductionPlan derive(each(match(type=='string'), $$ = iif($$ == 'NULL',toString(null()), $$))) ~> Nullhandling",
+				"DailyProductionActual derive(each(match(type=='string'), $$ = iif($$ == 'NULL',toString(null()), $$))) ~> Nullhandling2",
+				"MaterialMaster derive(each(match(type=='string'), $$ = iif($$ == 'NULL' || trim($$)=='null',toString(null()), $$))) ~> Nullhandling3",
 				"Nullhandling derive(CreatedOn = iif(CreatedOn == 'getdate()',toString(currentDate()), CreatedOn)) ~> derivedColumn1",
 				"Nullhandling3 derive(EndDate = toDate(EndDate, 'dd-MM-yyyy')) ~> derivedColumn2",
+				"source1 derive(each(match(type=='string'), $$ = iif($$ == 'NULL' || trim($$)=='null',toString(null()), $$))) ~> derivedColumn3",
+				"derivedColumn3 derive(CreatedOn = iif(CreatedOn == 'getdate()',toString(currentDate()), CreatedOn)) ~> derivedColumn4",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -335,7 +371,79 @@
 				"     partitionFileNames:['Material Master.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink3"
+				"     partitionBy('hash', 1)) ~> sink3",
+				"derivedColumn4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Prop_0 as string,",
+				"          match_id as string,",
+				"          date as string,",
+				"          match_type as string,",
+				"          event_name as string,",
+				"          innings as string,",
+				"          batting_team as string,",
+				"          bowling_team as string,",
+				"          over as string,",
+				"          ball as string,",
+				"          ball_no as string,",
+				"          batter as string,",
+				"          bat_pos as string,",
+				"          runs_batter as string,",
+				"          balls_faced as string,",
+				"          bowler as string,",
+				"          valid_ball as string,",
+				"          runs_extras as string,",
+				"          runs_total as string,",
+				"          runs_bowler as string,",
+				"          runs_not_boundary as string,",
+				"          extra_type as string,",
+				"          non_striker as string,",
+				"          non_striker_pos as string,",
+				"          wicket_kind as string,",
+				"          player_out as string,",
+				"          fielders as string,",
+				"          runs_target as string,",
+				"          review_batter as string,",
+				"          team_reviewed as string,",
+				"          review_decision as string,",
+				"          umpire as string,",
+				"          umpires_call as string,",
+				"          player_of_match as string,",
+				"          match_won_by as string,",
+				"          win_outcome as string,",
+				"          toss_winner as string,",
+				"          toss_decision as string,",
+				"          venue as string,",
+				"          city as string,",
+				"          day as string,",
+				"          month as string,",
+				"          year as string,",
+				"          season as string,",
+				"          gender as string,",
+				"          team_type as string,",
+				"          superover_winner as string,",
+				"          result_type as string,",
+				"          method as string,",
+				"          balls_per_over as string,",
+				"          overs as string,",
+				"          event_match_no as string,",
+				"          stage as string,",
+				"          match_number as string,",
+				"          team_runs as string,",
+				"          team_balls as string,",
+				"          team_wicket as string,",
+				"          new_batter as string,",
+				"          batter_runs as string,",
+				"          batter_balls as string,",
+				"          bowler_wicket as string,",
+				"          batting_partners as string,",
+				"          next_batter as string,",
+				"          striker_out as string",
+				"     ),",
+				"     partitionFileNames:['Daily Production Plan 01.04.2025 to 31.07.2025.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink4"
 			]
 		}
 	}

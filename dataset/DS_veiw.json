@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Daily Production Actuals.xlsx",
-				"folderPath": "TDSG Project Scenario/Daily Production Actual",
+				"fileName": "Daily Production Plan 01.04.2025 to 31.07.2025.csv",
+				"folderPath": "TDSG Project Scenario/Daily Production Plan",
 				"container": "practice-adf"
 			},
 			"columnDelimiter": ",",

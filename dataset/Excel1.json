@@ -15,8 +15,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Excel Workshop.xlsx",
-				"folderPath": "Excel Workshop",
+				"folderPath": "TDSG Project Scenario/Material Master",
 				"container": "practice-adf"
 			},
 			"sheetIndex": {

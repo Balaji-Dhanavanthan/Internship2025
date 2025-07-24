@@ -5,14 +5,14 @@
 			"referenceName": "LS_OnPrem_SQLServer",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"Database": "Intern_2025"
+				"Database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				}
 			}
 		},
 		"parameters": {
 			"database": {
-				"type": "String"
-			},
-			"tablename": {
 				"type": "String"
 			},
 			"Schemaname": {
@@ -26,7 +26,8 @@
 			"schema": {
 				"value": "@dataset().Schemaname",
 				"type": "Expression"
-			}
+			},
+			"table": "None"
 		}
 	}
 }

@@ -45,7 +45,7 @@
 				}
 			},
 			{
-				"name": "Lookup1",
+				"name": "ReadMetaData",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -55,7 +55,27 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"dataset": {
+						"referenceName": "Excel_1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"directory": "I2025_JNagara1/Northwind Data Migration",
+							"filename": "migrationNorthwind.xlsx",
+							"sheet": 0
+						}
+					}
+				}
 			}
 		],
 		"folder": {

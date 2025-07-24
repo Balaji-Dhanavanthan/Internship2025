@@ -5,6 +5,8 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -62,6 +64,8 @@
 			{
 				"name": "CP_ACTUAL_SRC",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Data flow1",
@@ -131,6 +135,8 @@
 			{
 				"name": "CP_PLAN1_SRC",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_ACTUAL_SRC",
@@ -311,6 +317,8 @@
 			{
 				"name": "CP_PLAN2_SRC",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CP_PLAN1_SRC",

@@ -64,7 +64,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "dbo",
-							"tablename": "$$",
+							"tablename": "Categories",
 							"databasename": "Northwind"
 						}
 					},

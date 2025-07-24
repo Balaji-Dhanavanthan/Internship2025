@@ -37,10 +37,8 @@
 				}
 			},
 			{
-				"name": "FOR_each_NWTable",
+				"name": "FOR_each_table",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LKP_ExcelContents",
@@ -55,11 +53,10 @@
 						"value": "@activity('LKP_ExcelContents').output.value",
 						"type": "Expression"
 					},
-					"isSequential": true,
 					"activities": [
 						{
-							"name": "CP_table",
-							"type": "Copy",
+							"name": "SCPT_for_each_copy",
+							"type": "Script",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -69,44 +66,57 @@
 								"secureInput": false
 							},
 							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"sink": {
-									"type": "SqlServerSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+							"linkedServiceName": {
+								"referenceName": "LS_SQL_server",
+								"type": "LinkedServiceReference"
 							},
-							"inputs": [
-								{
-									"referenceName": "DS_OnPrem_SQL",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DS_Sql_server_intern",
-									"type": "DatasetReference",
-									"parameters": {
-										"DatabaseObject": "I2025_JSenthil"
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@replace(replace(item()['CopyQuery'], '/n', ''), '/t', '')",
+											"type": "Expression"
+										}
 									}
-								}
-							]
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
+				}
+			},
+			{
+				"name": "SRT_TruncateTables",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "FOR_each_table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_server",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "TRUNCATE TABLE [NW_Shippers];\nTRUNCATE TABLE [NW_Suppliers];\nTRUNCATE TABLE [NW_Products];\nTRUNCATE TABLE [NW_Categories];\nTRUNCATE TABLE [NW_CustomerCustomerDemo];\nTRUNCATE TABLE [NW_CustomerDemographics];\nTRUNCATE TABLE [NW_Customers];\nTRUNCATE TABLE [NW_Employees];\nTRUNCATE TABLE [NW_EmployeeTerritories];\nTRUNCATE TABLE [NW_Territories];\nTRUNCATE TABLE [NW_Region];\nTRUNCATE TABLE [NW_Order_Details];\nTRUNCATE TABLE [NW_Orders];"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
 				}
 			}
 		],

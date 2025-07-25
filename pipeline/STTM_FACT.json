@@ -114,8 +114,7 @@
 						"referenceName": "DS_OnPrem_SQL2",
 						"type": "DatasetReference",
 						"parameters": {
-							"database": "Intern_2025",
-							"tablename": "STG_FACT"
+							"database": "Intern_2025"
 						}
 					}
 				]
@@ -177,8 +176,7 @@
 						"referenceName": "DS_OnPrem_SQL2",
 						"type": "DatasetReference",
 						"parameters": {
-							"database": "Intern_2025",
-							"tablename": "F_FACT"
+							"database": "Intern_2025"
 						}
 					}
 				]

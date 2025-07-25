@@ -5,6 +5,8 @@
 			{
 				"name": "Lookup",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -39,6 +41,8 @@
 			{
 				"name": "ForEach",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Lookup",
@@ -71,7 +75,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@item()['Source Query']",
+										"value": "@if(equals(item()['Source Query'],'dbo.Regions'), 'dbo.Region', if(equals(item()['Source Query'],'sales.Orders'),'dbo.Orders', if(equals(item()['Source Query'],'sales.[Order Details]'),'dbo.Order_Details',item()['Source Query'])))\n\n\n",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -99,14 +103,17 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Schema": {
-											"value": "@item()['Source Schema']",
+											"value": "@if(equals(item()['Source Schema'],'sales'),'dbo',item()['Source Schema'])",
 											"type": "Expression"
 										},
 										"Table": {
-											"value": "@item()['Table Name']",
+											"value": "@if(equals(item()['Table Name'],'Regions'),'Region',if(equals(item()['Table Name'], 'Order Details'),'Order_Details',item()['Table Name']))\n",
 											"type": "Expression"
 										},
-										"DB_Name": "Northwind"
+										"DB_Name": {
+											"value": "@item()['Source Database']",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -123,7 +130,10 @@
 											"value": "@item()['Target Table']",
 											"type": "Expression"
 										},
-										"DB_Name": "Intern_2025"
+										"DB_Name": {
+											"value": "@item().TGT_Database",
+											"type": "Expression"
+										}
 									}
 								}
 							]
@@ -132,11 +142,6 @@
 				}
 			}
 		],
-		"variables": {
-			"TableName": {
-				"type": "String"
-			}
-		},
 		"folder": {
 			"name": "TDSG_Training_I2025_SRangan1"
 		},

@@ -97,7 +97,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SchemaName": {
-											"value": "@item().dbo",
+											"value": "@item()['Source Schema']",
 											"type": "Expression"
 										},
 										"TableName": {
@@ -118,11 +118,11 @@
 											"type": "Expression"
 										},
 										"TableName": {
-											"value": "@item().Destination Table",
+											"value": "@item()['Destination Table']",
 											"type": "Expression"
 										},
 										"database": {
-											"value": "@item().Destination Database",
+											"value": "@item()['Destination Database']",
 											"type": "Expression"
 										}
 									}

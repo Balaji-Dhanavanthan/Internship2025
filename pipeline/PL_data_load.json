@@ -68,7 +68,14 @@
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CP_prod_actuals",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -219,7 +226,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "Daily Production Plan 01.02.2025 to 30.04.2025.csv",
+							"file_name": "Daily Production Plan 01.04.2025 to 31.07.2025.csv",
 							"folder_name": "TDSG Project Scenario/Daily Production Plan",
 							"container_name": "practice-adf"
 						}
@@ -486,7 +493,14 @@
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CP_prod_plan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -637,7 +651,7 @@
 						"referenceName": "DS_CSV_test",
 						"type": "DatasetReference",
 						"parameters": {
-							"file_name": "Daily Production Plan 01.05.2025 to 31.07.2025.csv",
+							"file_name": "Daily Production plan 01.02.2025 to 31.03.2025.csv",
 							"folder_name": "TDSG Project Scenario/Daily Production Plan",
 							"container_name": "practice-adf"
 						}

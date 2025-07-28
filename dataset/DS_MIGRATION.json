@@ -1,5 +1,5 @@
 {
-	"name": "Excel2",
+	"name": "DS_MIGRATION",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DS_Blob_storgare",
@@ -17,6 +17,9 @@
 			},
 			"SheetName": {
 				"type": "string"
+			},
+			"INDEX": {
+				"type": "Int"
 			}
 		},
 		"folder": {

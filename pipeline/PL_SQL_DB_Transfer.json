@@ -29,7 +29,7 @@
 						"parameters": {
 							"container_name": "practice-adf",
 							"dir_name": "I2025_JSenthil",
-							"file_name": "Northwind_data_transfer.xlsx",
+							"file_name": "Northwind_data_transfer_updated.xlsx",
 							"sheet_idx": 0
 						}
 					},
@@ -89,6 +89,8 @@
 			{
 				"name": "SRT_TruncateTables",
 				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "FOR_each_table",

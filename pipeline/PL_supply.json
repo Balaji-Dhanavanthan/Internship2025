@@ -5,6 +5,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -34,26 +36,86 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "HolidayDate",
+									"name": "Id",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "HolidayDate",
-									"type": "DateTime",
-									"physicalType": "date"
+									"name": "Id",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							},
 							{
 								"source": {
-									"name": "id",
+									"name": "KPIYear",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "ID",
+									"name": "KPIYear",
 									"type": "Int32",
 									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "KPIMonth",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "KPIMonth",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "KPI",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "KPI",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Target",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Target",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedAt",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedAt",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "char"
 								}
 							}
 						],

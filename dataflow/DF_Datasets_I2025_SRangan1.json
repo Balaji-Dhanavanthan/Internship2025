@@ -1,0 +1,22 @@
+{
+	"name": "DF_Datasets_I2025_SRangan1",
+	"properties": {
+		"folder": {
+			"name": "DF_TDSG_Project_Scenario"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1"
+			]
+		}
+	}
+}

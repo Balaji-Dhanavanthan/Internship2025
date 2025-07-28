@@ -1,5 +1,5 @@
 {
-	"name": "DF_Datasets_I2025_SRangan1",
+	"name": "DFDatasetsI2025SRangan1",
 	"properties": {
 		"folder": {
 			"name": "DF_TDSG_Project_Scenario"
@@ -8,14 +8,169 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "Department"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "Division"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "HolidayCalander"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "KPIIndicator"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "ManageHistoryMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "divisionMap"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "employees"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "prdapprovetaskmaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "prdpomaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "prdpurchasegrpMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "purchaserhandledivprd"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "ringiPORMap"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "stgRingiMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "stgpormaster"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "DCDept"
+				},
+				{
+					"name": "DCDiv"
+				}
+			],
 			"scriptLines": [
+				"source(output(",
+				"          DepartmentKey as string,",
+				"          SPID as string,",
+				"          CostCenterKey as string,",
+				"          DivisionKey as string,",
+				"          DepartmentName as string,",
+				"          DepartmentHead as string,",
+				"          PurchasingGroupKey as string,",
+				"          ActiveFlag as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Department",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Division",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> HolidayCalander",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> KPIIndicator",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ManageHistoryMaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> divisionMap",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employees",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> prdapprovetaskmaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> prdpomaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> prdpurchasegrpMaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> purchaserhandledivprd",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ringiPORMap",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> stgRingiMaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> stgpormaster",
+				"Department derive() ~> DCDept",
+				"Division derive() ~> DCDiv"
 			]
 		}
 	}

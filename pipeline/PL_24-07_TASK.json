@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "LKP_Excel",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -37,11 +37,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "FOR_LKPitems",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "LKP_Excel",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -50,15 +50,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('LKP_Excel').output.value",
 						"type": "Expression"
 					},
-					"batchCount": 1,
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "CP_Northwind_to_InternDB",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Truncate_script",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -119,7 +125,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SchemaName": {
-											"value": "@item().TGT_Schema",
+											"value": "I2025_MAbdul1",
 											"type": "Expression"
 										},
 										"TableName": {
@@ -135,7 +141,7 @@
 							]
 						},
 						{
-							"name": "Script1",
+							"name": "Truncate_script",
 							"type": "Script",
 							"dependsOn": [],
 							"policy": {
@@ -151,7 +157,7 @@
 								"type": "LinkedServiceReference",
 								"parameters": {
 									"Database": {
-										"value": "@item()['SRC_Database']",
+										"value": "@item()['TGT_Database']",
 										"type": "Expression"
 									}
 								}

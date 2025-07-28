@@ -29,8 +29,7 @@
 							"DailyProductionActual": {
 								"filename": "Daily Production Actual 01.02.2025 to 31.07.2025.xlsx",
 								"container": "practice-adf",
-								"directory": "TDSG Project Scenario/Daily Production Actual",
-								"index": 0
+								"directory": "TDSG Project Scenario/Daily Production Actual"
 							},
 							"MaterialMaster": {
 								"container": "practice-adf",

@@ -115,7 +115,7 @@
 				"          DepartmentHead as string,",
 				"          PurchasingGroupKey as string,",
 				"          ActiveFlag as string,",
-				"          CreatedDate as timestamp",
+				"          CreatedDate as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",

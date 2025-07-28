@@ -1,0 +1,147 @@
+{
+	"name": "DFSupplysrc",
+	"properties": {
+		"folder": {
+			"name": "SupplyChain"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "Departmentsrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "Division"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "HolidayCalander"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "STGManageHistoryMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "divisionMapping"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "employees"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "prdapprovaltaskmaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "prdpomaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "prdpurchasinggroupMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "purchaserhandlingdivisionprd"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "ringiPORMap"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "stgRingiMaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Excel_I2025_JNagar1",
+						"type": "DatasetReference"
+					},
+					"name": "stgpormaster"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Departmentsrc",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Division",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> HolidayCalander",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> STGManageHistoryMaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> divisionMapping",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employees",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> prdapprovaltaskmaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> prdpomaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> prdpurchasinggroupMaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> purchaserhandlingdivisionprd",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ringiPORMap",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> stgRingiMaster",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> stgpormaster"
+			]
+		}
+	}
+}

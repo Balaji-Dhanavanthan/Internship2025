@@ -17,9 +17,6 @@
 			},
 			"SheetName": {
 				"type": "string"
-			},
-			"INDEX": {
-				"type": "Int"
 			}
 		},
 		"folder": {

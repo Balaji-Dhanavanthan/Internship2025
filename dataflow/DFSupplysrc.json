@@ -103,28 +103,149 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "derivedColumn5"
+				},
+				{
+					"name": "derivedColumn6"
+				},
+				{
+					"name": "derivedColumn7"
+				},
+				{
+					"name": "derivedColumn8"
+				},
+				{
+					"name": "derivedColumn9"
+				},
+				{
+					"name": "derivedColumn10"
+				},
+				{
+					"name": "derivedColumn11"
+				},
+				{
+					"name": "derivedColumn12"
+				},
+				{
+					"name": "derivedColumn13"
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          DepartmentKey as string,",
+				"          SPID as string,",
+				"          CostCenterKey as string,",
+				"          DivisionKey as string,",
+				"          DepartmentName as string,",
+				"          DepartmentHead as string,",
+				"          PurchasingGroupKey as string,",
+				"          ActiveFlag as string,",
+				"          CreatedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> Departmentsrc",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          Divisionkey as string,",
+				"          SPID as string,",
+				"          DivisionShortCode as string,",
+				"          DivisionName as string,",
+				"          DivisionHead as string,",
+				"          DeputyDivisionHead as string,",
+				"          ActiveFlag as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> Division",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          HolidayDate as string,",
+				"          id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> HolidayCalander",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          Id as string,",
+				"          HistoryID as string,",
+				"          FormID as string,",
+				"          FormType as string,",
+				"          ActionTakenDateTime as string,",
+				"          Status as string,",
+				"          ActionTakenByUserID as string,",
+				"          Role as string,",
+				"          ActionType as string,",
+				"          DelegateUserId as string,",
+				"          IsActive as string,",
+				"          CreatedAt as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> STGManageHistoryMaster",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          SPID as string,",
+				"          DivisionKey as string,",
+				"          Division as string,",
+				"          PurchaseOrganization as string,",
+				"          Description as string,",
+				"          ActiveFlag as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> divisionMapping",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          EmployeeKey as string,",
+				"          DepartmentKey as string,",
+				"          ReportingManagerKey as string,",
+				"          PlantKey as string,",
+				"          EmployeeCode as string,",
+				"          EmployeeName as string,",
+				"          CostCenter as string,",
+				"          IsAdmin as string,",
+				"          Email as string,",
+				"          EmpDesignation as string,",
+				"          IsVendorSync as string,",
+				"          EmployeeType as string,",
+				"          RoleId as short,",
+				"          CreatedDate as string,",
+				"          IsActive as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> employees",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          ApproverTaskID as string,",
+				"          FormType as string,",
+				"          FormID as string,",
+				"          AssignedToUserID as string,",
+				"          DelegateUserID as string,",
+				"          DelegateBy as string,",
+				"          DelegateOn as string,",
+				"          Status as string,",
+				"          Role as string,",
+				"          SequenceNo as string,",
+				"          ActionTakenBy as string,",
+				"          ActionTakenDate as string,",
+				"          CreatedBy as string,",
+				"          Src_CreatedDate as string,",
+				"          ModifiedBy as string,",
+				"          ModifiedDate as string,",
+				"          IsActive as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> prdapprovaltaskmaster",
 				"source(allowSchemaDrift: true,",
@@ -145,7 +266,19 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> stgpormaster",
-				"Departmentsrc derive(each(match(type=='string'), $$ = case($$=='null' , toString(null()), $$))) ~> derivedColumn1"
+				"Departmentsrc derive(each(match(type=='string'), $$ = case($$=='NULL' , toString(null()), $$))) ~> derivedColumn1",
+				"Division derive(each(match(type=='string'), $$ = case($$=='NULL' , toString(null()), $$))) ~> derivedColumn2",
+				"HolidayCalander derive() ~> derivedColumn3",
+				"STGManageHistoryMaster derive() ~> derivedColumn4",
+				"divisionMapping derive() ~> derivedColumn5",
+				"employees derive() ~> derivedColumn6",
+				"prdapprovaltaskmaster derive() ~> derivedColumn7",
+				"prdpomaster derive() ~> derivedColumn8",
+				"prdpurchasinggroupMaster derive() ~> derivedColumn9",
+				"purchaserhandlingdivisionprd derive() ~> derivedColumn10",
+				"ringiPORMap derive() ~> derivedColumn11",
+				"stgRingiMaster derive() ~> derivedColumn12",
+				"stgpormaster derive() ~> derivedColumn13"
 			]
 		}
 	}

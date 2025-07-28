@@ -100,7 +100,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -140,7 +144,8 @@
 				"     ignoreNoFilesFound: false) ~> stgRingiMaster",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> stgpormaster"
+				"     ignoreNoFilesFound: false) ~> stgpormaster",
+				"Departmentsrc derive(each(match(type=='string'), $$ = case($$=='null' , toString(null()), $$))) ~> derivedColumn1"
 			]
 		}
 	}

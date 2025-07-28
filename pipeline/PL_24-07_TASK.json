@@ -27,10 +27,10 @@
 						"referenceName": "Excel2",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "Excel_Query.xlsx",
+							"filename": "Excel_Query2.xlsx",
 							"container": "practice-adf",
 							"directory": "I2025_MAbdul1",
-							"index": 0
+							"SheetName": "sheet1"
 						}
 					},
 					"firstRowOnly": false
@@ -71,7 +71,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@item().SourceQuery",
+										"value": "@item()['Source Query']",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -99,14 +99,17 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SchemaName": {
-											"value": "@item()['Source Schema']",
+											"value": "@item()['SRC_Schema']",
 											"type": "Expression"
 										},
 										"TableName": {
-											"value": "@item().TableName",
+											"value": "@item()['SRC_Table Name']",
 											"type": "Expression"
 										},
-										"database": "Northwind"
+										"database": {
+											"value": "@item().SRC_Database",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -116,20 +119,52 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SchemaName": {
-											"value": "@item().I2025_MAbdul1",
+											"value": "@item().TGT_Schema",
 											"type": "Expression"
 										},
 										"TableName": {
-											"value": "@item()['Destination Table']",
+											"value": "@item()['TGT_Table Name']",
 											"type": "Expression"
 										},
 										"database": {
-											"value": "@item()['Destination Database']",
+											"value": "@item()['TGT_Database']",
 											"type": "Expression"
 										}
 									}
 								}
 							]
+						},
+						{
+							"name": "Script1",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "LS_OnPrem_SQLServer",
+								"type": "LinkedServiceReference",
+								"parameters": {
+									"Database": {
+										"value": "@item()['SRC_Database']",
+										"type": "Expression"
+									}
+								}
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": "TRUNCATE TABLE [Categories_tgt];\nTRUNCATE TABLE [CustomerCustomerDemo_tgt];\nTRUNCATE TABLE [CustomerDemographics_tgt];\nTRUNCATE TABLE [Customers_tgt];\nTRUNCATE TABLE [Employees_tgt];\nTRUNCATE TABLE [EmployeeTerritories_tgt];\nTRUNCATE TABLE [Order_Details_tgt];\nTRUNCATE TABLE [Orders_tgt];\nTRUNCATE TABLE [Products_tgt];\nTRUNCATE TABLE [Region_tgt];\nTRUNCATE TABLE [Shippers_tgt];\nTRUNCATE TABLE [Suppliers_tgt];\nTRUNCATE TABLE [Territories_tgt];"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}

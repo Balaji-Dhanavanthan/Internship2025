@@ -7,16 +7,19 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "practice-adf"
 			},
 			"folder": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Supply Chain Analytics/Dataset"
 			},
 			"file": {
 				"type": "string"
 			},
 			"sheet": {
-				"type": "int"
+				"type": "int",
+				"defaultValue": 0
 			}
 		},
 		"annotations": [],

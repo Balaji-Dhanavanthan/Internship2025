@@ -21,7 +21,8 @@
 				"defaultValue": "Daily_Production_Plan"
 			},
 			"database": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "Intern_2025"
 			}
 		},
 		"folder": {

@@ -24,7 +24,7 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "Excel2",
+						"referenceName": "DS_MIGRATION",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "Excel_Query2.xlsx",

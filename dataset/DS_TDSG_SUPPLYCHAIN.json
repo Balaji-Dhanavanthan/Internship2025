@@ -22,7 +22,7 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "Supply Chain Analytics",
+				"folderPath": "Supply Chain Analytics/Dataset",
 				"container": "practice-adf"
 			},
 			"sheetIndex": {

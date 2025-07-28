@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "Excel2",
+						"referenceName": "DS_MIGRATION",
 						"type": "DatasetReference"
 					},
 					"name": "DailyProductionActual"

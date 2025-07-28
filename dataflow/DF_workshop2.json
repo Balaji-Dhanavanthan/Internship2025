@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Excel2",
+						"referenceName": "DS_MIGRATION",
 						"type": "DatasetReference"
 					},
 					"name": "source1"

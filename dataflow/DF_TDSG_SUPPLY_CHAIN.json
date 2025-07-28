@@ -1,0 +1,154 @@
+{
+	"name": "DF_TDSG_SUPPLY_CHAIN",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source5"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source6"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source7"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source8"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source9"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source10"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source11"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source12"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source13"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_SUPPLYCHAIN",
+						"type": "DatasetReference"
+					},
+					"name": "source14"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source3",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source4",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source5",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source6",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source7",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source8",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source9",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source10",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source11",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source12",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source13",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source14"
+			]
+		}
+	}
+}

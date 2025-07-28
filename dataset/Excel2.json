@@ -44,7 +44,8 @@
 					"type": "Expression"
 				}
 			},
-			"firstRowAsHeader": false
+			"range": "A1:G14",
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}

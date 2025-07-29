@@ -8,14 +8,31 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "Excel_1",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"source(output(",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          SupplierID as string,",
+				"          CategoryID as string,",
+				"          QuantityPerUnit as string,",
+				"          UnitPrice as string,",
+				"          UnitsInStock as string,",
+				"          UnitsOnOrder as string,",
+				"          ReorderLevel as string,",
+				"          Discontinued as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1"
 			]
 		}
 	}

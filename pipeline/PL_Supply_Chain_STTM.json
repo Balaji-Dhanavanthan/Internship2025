@@ -146,13 +146,13 @@
 							"source1": {
 								"container": "practice-adf",
 								"directory": "Supply Chain Analytics/Dataset",
-								"fileName": "ringiPORMap.xlsx",
+								"fileName": "stg_RingiMaster.xlsx",
 								"sheet": 0
 							},
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar/TDSG_STTM",
-								"FileName": "ringiPORMap.csv"
+								"FileName": "stg_RingiMaster.csv"
 							}
 						}
 					},
@@ -216,7 +216,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar/TDSG_STTM",
-							"FileName": "ringiPORMap.csv"
+							"FileName": "stg_RingiMaster.csv"
 						}
 					}
 				],
@@ -226,7 +226,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "ringiPORMap",
+							"tablename": "stg_RingiMaster",
 							"databasename": "Intern_2025"
 						}
 					}

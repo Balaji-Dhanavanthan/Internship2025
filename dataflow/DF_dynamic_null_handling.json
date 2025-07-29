@@ -1,0 +1,80 @@
+{
+	"name": "DF_dynamic_null_handling",
+	"properties": {
+		"folder": {
+			"name": "Supply Chain"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_EXCEL_BLOB",
+						"type": "DatasetReference"
+					},
+					"name": "SRCexcel"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSV_test",
+						"type": "DatasetReference"
+					},
+					"name": "SINKcsv"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DynamicNullHandling"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PORID as string,",
+				"          PreferredVendorId as string,",
+				"          PlantId as string,",
+				"          PurchasingGroupId as string,",
+				"          PurchasingOrgId as string,",
+				"          PorNo as string,",
+				"          TotalAmount as string,",
+				"          BaseCurrency as string,",
+				"          TotalAmount_INR as string,",
+				"          ConversionRate as string,",
+				"          RequiredDate as string,",
+				"          Status as string,",
+				"          Ringi_ReSubmittedDate as string,",
+				"          Ringi_SubmittedDate as string,",
+				"          DepartmentId as string,",
+				"          IsSubmitted as string,",
+				"          Option1 as string,",
+				"          Option2 as string,",
+				"          Ringi_CreatedBy as string,",
+				"          Ringi_CreatedDate as string,",
+				"          Ringi_ModifiedBy as string,",
+				"          Ringi_ModifiedDate as string,",
+				"          IsDeleted as string,",
+				"          ReviseNo as string,",
+				"          SAP_PO as string,",
+				"          SAP_PR as string,",
+				"          IsSynced as string,",
+				"          SAPIssueOrder as string,",
+				"          PONo as string,",
+				"          PODate as string,",
+				"          RingiCreatedBy as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SRCexcel",
+				"SRCexcel derive(each(match(type == 'string'), $$ = iif(lower($$) == 'null', toString(null()), $$))) ~> DynamicNullHandling",
+				"DynamicNullHandling sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['stg_pormaster.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SINKcsv"
+			]
+		}
+	}
+}

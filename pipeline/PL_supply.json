@@ -617,8 +617,10 @@
 				]
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Get Metadata supply src",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -650,11 +652,13 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEachtocsv",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Get Metadata supply src",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -669,7 +673,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Data flow1",
+							"name": "DFnull",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
@@ -719,6 +723,467 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy data1_copy5",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PORID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PORID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PreferredVendorId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PreferredVendorId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PlantId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PlantId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PurchasingGroupId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchasingGroupId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PurchasingOrgId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchasingOrgId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PorNo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PorNo",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAmount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TotalAmount",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "BaseCurrency",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BaseCurrency",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAmount_INR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TotalAmount_INR",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "ConversionRate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ConversionRate",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "RequiredDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RequiredDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_ReSubmittedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_ReSubmittedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_SubmittedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_SubmittedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "DepartmentId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DepartmentId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "IsSubmitted",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsSubmitted",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Option1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Option1",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Option2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Option2",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_CreatedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_CreatedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_ModifiedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_ModifiedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_ModifiedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_ModifiedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "IsDeleted",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsDeleted",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "ReviseNo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ReviseNo",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_PO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAP_PO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_PR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAP_PR",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "IsSynced",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsSynced",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SAPIssueOrder",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAPIssueOrder",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PONo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PONo",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PODate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PODate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "RingiCreatedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RingiCreatedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_I2025_JNagara1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "I2025_JNagara1/supplySRC",
+							"filename": "stg_pormaster.xlsx"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference",
+						"parameters": {
+							"sehma": "I2025_JNagara1",
+							"table": "stg_pormaster",
+							"database": "Intern_2025"
+						}
+					}
+				]
 			}
 		],
 		"folder": {

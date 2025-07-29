@@ -45,7 +45,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"directory": "Supply Chain Analytics/Dataset",
-							"fileName": "Division.xlsx",
+							"fileName": "divisionMapping.xlsx",
 							"sheet": 0
 						}
 					}
@@ -56,7 +56,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "SRC_DIVISION",
+							"tablename": "SRC_DIVISION_MAPPING",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -105,7 +105,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"directory": "Supply Chain Analytics/Dataset",
-							"fileName": "Department.xlsx",
+							"fileName": "employees.xlsx",
 							"sheet": 0
 						}
 					}
@@ -116,7 +116,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "SRC_DEPARTMENT",
+							"tablename": "SRC_EMPLOYEES",
 							"databasename": "Intern_2025"
 						}
 					}

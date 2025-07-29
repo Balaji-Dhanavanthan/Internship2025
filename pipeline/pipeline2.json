@@ -5,6 +5,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -43,7 +45,7 @@
 						"referenceName": "DS_TDSG_SUPPLYCHAIN",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "stg_pormaster.xlsx",
+							"filename": "prd_approvaltaskmaster.xlsx",
 							"index": 0
 						}
 					}
@@ -54,7 +56,106 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_MAbdul1",
-							"TableName": "stg_pormaster",
+							"TableName": "prd_approvaltaskmaster",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_TDSG_TEST",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "purchaserhandlingdivision_prd.xlsx",
+								"index": 0
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"folder": "aabidh",
+								"filename": "purchaserhandlingdivision_prd.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_Blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "aabidh",
+							"filename": "purchaserhandlingdivision_prd.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_OnPrem_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "I2025_MAbdul1",
+							"TableName": "purchaserhandlingdivision_prd",
 							"database": "Intern_2025"
 						}
 					}

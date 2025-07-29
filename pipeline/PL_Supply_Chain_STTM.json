@@ -127,7 +127,7 @@
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "DF_NULL_Handling",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -164,11 +164,11 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CP_BLOB_SQL",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "DF_NULL_Handling",
 						"dependencyConditions": [
 							"Succeeded"
 						]

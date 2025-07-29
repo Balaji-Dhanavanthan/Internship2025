@@ -146,13 +146,13 @@
 							"source1": {
 								"container": "practice-adf",
 								"directory": "Supply Chain Analytics/Dataset",
-								"fileName": "purchaserhandlingdivision_prd.xlsx",
+								"fileName": "ringiPORMap.xlsx",
 								"sheet": 0
 							},
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar/TDSG_STTM",
-								"FileName": "purchaserhandlingdivision_prd.csv"
+								"FileName": "ringiPORMap.csv"
 							}
 						}
 					},
@@ -216,7 +216,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar/TDSG_STTM",
-							"FileName": "purchaserhandlingdivision_prd.csv"
+							"FileName": "ringiPORMap.csv"
 						}
 					}
 				],
@@ -226,7 +226,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "purchaserhandlingdivision_prd",
+							"tablename": "ringiPORMap",
 							"databasename": "Intern_2025"
 						}
 					}

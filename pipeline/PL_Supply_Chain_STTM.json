@@ -5,6 +5,8 @@
 			{
 				"name": "CP_EXCEL_SQL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -45,7 +47,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"directory": "Supply Chain Analytics/Dataset",
-							"fileName": "divisionMapping.xlsx",
+							"fileName": "prd_purchasing_group_Master.xlsx",
 							"sheet": 0
 						}
 					}
@@ -56,7 +58,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "SRC_DIVISION_MAPPING",
+							"tablename": "prd_purchasing_group_master",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -105,7 +107,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"directory": "Supply Chain Analytics/Dataset",
-							"fileName": "employees.xlsx",
+							"fileName": "Holiday Calander.xlsx",
 							"sheet": 0
 						}
 					}
@@ -116,7 +118,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "SRC_EMPLOYEES",
+							"tablename": "SRC_HOLIDAY_CALENDER",
 							"databasename": "Intern_2025"
 						}
 					}

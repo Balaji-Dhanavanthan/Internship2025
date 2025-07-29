@@ -1,0 +1,9 @@
+{
+	"name": "PL_Supply_Chain_STTM",
+	"properties": {
+		"folder": {
+			"name": "TDSG_ADF_Pipeline/TDSG_STTM"
+		},
+		"annotations": []
+	}
+}

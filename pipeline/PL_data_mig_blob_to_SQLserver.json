@@ -1,0 +1,84 @@
+{
+	"name": "PL_data_mig_blob_to_SQLserver",
+	"properties": {
+		"activities": [
+			{
+				"name": "Metadata_get_src_filenames",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_EXCEL_BLOB",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "FOR_each_excelfile",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Metadata_get_src_filenames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"activities": [
+						{
+							"name": "CP_excel_to_SQL_server",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false
+							},
+							"outputs": [
+								{
+									"referenceName": "DS_Sql_server_intern",
+									"type": "DatasetReference",
+									"parameters": {
+										"DatabaseObject": "I2025_JSenthil"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply chain project"
+		},
+		"annotations": []
+	}
+}

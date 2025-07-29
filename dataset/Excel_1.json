@@ -24,11 +24,24 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Northwind_data_transfer.xlsx",
-				"folderPath": "I2025_JSenthil",
-				"container": "practice-adf"
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().directory",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
-			"range": "A1:G14",
+			"sheetIndex": {
+				"value": "@dataset().sheet",
+				"type": "Expression"
+			},
+			"range": "",
 			"firstRowAsHeader": true
 		},
 		"schema": [

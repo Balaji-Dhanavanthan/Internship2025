@@ -146,13 +146,13 @@
 							"source1": {
 								"container": "practice-adf",
 								"directory": "Supply Chain Analytics/Dataset",
-								"fileName": "prd_approvaltaskmaster.xlsx",
+								"fileName": "prd_po_master.xlsx",
 								"sheet": 0
 							},
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar/TDSG_STTM",
-								"FileName": "prd_approvaltaskmaster.csv"
+								"FileName": "prd_po_master.csv"
 							}
 						}
 					},
@@ -216,7 +216,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar/TDSG_STTM",
-							"FileName": "prd_approvaltaskmaster.csv"
+							"FileName": "prd_po_master.csv"
 						}
 					}
 				],
@@ -226,7 +226,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "prd_approvaltaskmaster",
+							"tablename": "prd_po_master",
 							"databasename": "Intern_2025"
 						}
 					}

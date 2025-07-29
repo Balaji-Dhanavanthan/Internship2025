@@ -77,13 +77,7 @@
 				"inputs": [
 					{
 						"referenceName": "Excel_1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"directory": "Workshop_source",
-							"filename": "BASK Invitation Dataset.xlsx",
-							"sheet": 0
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
@@ -593,13 +587,7 @@
 				"inputs": [
 					{
 						"referenceName": "Excel_1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "test-container",
-							"directory": "Workshop_source",
-							"filename": "BASK Invitation Dataset.xlsx",
-							"sheet": 0
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [

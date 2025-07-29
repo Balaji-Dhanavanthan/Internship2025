@@ -53,16 +53,7 @@
 							"inputs": [
 								{
 									"referenceName": "Excel_1",
-									"type": "DatasetReference",
-									"parameters": {
-										"container": "practice-adf",
-										"directory": "Excel Workshop",
-										"filename": "Excel Workshop.xlsx",
-										"sheet": {
-											"value": "@item()",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [

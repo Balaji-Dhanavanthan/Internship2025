@@ -82,13 +82,13 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"source1": {
-								"filename": "purchaserhandlingdivision_prd.xlsx",
+								"filename": "stg_pormaster.xlsx",
 								"index": 0
 							},
 							"sink1": {
 								"container": "practice-adf",
 								"folder": "aabidh",
-								"filename": "purchaserhandlingdivision_prd.csv"
+								"filename": "stg_pormaster.csv"
 							}
 						}
 					},
@@ -145,7 +145,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"folder": "aabidh",
-							"filename": "purchaserhandlingdivision_prd.csv"
+							"filename": "stg_pormaster.csv"
 						}
 					}
 				],
@@ -155,7 +155,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"SchemaName": "I2025_MAbdul1",
-							"TableName": "purchaserhandlingdivision_prd",
+							"TableName": "stg_pormaster",
 							"database": "Intern_2025"
 						}
 					}

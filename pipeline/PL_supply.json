@@ -647,6 +647,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					}
 				}
@@ -1169,7 +1170,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"folder": "I2025_JNagara1/supplySRC",
-							"filename": "stg_pormaster.xlsx"
+							"filename": "prd_po_master.xlsx"
 						}
 					}
 				],
@@ -1179,7 +1180,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"sehma": "I2025_JNagara1",
-							"table": "stg_pormaster",
+							"table": "prd_po_master",
 							"database": "Intern_2025"
 						}
 					}

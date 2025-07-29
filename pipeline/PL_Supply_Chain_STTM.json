@@ -129,8 +129,6 @@
 			{
 				"name": "DF_NULL_Handling",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -148,13 +146,13 @@
 							"source1": {
 								"container": "practice-adf",
 								"directory": "Supply Chain Analytics/Dataset",
-								"fileName": "stg_pormaster.xlsx",
+								"fileName": "prd_purchasing_group_Master.xlsx",
 								"sheet": 0
 							},
 							"sink1": {
 								"container": "practice-adf",
 								"Directory": "Asrar/TDSG_STTM",
-								"FileName": "stg_pormaster.csv"
+								"FileName": "prd_purchasing_group_Master.csv"
 							}
 						}
 					},
@@ -168,8 +166,6 @@
 			{
 				"name": "CP_BLOB_SQL",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_NULL_Handling",
@@ -220,7 +216,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"Directory": "Asrar/TDSG_STTM",
-							"FileName": "stg_pormaster.csv"
+							"FileName": "prd_purchasing_group_Master.csv"
 						}
 					}
 				],
@@ -230,7 +226,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "stg_pormaster",
+							"tablename": "prd_purchasing_group_master",
 							"databasename": "Intern_2025"
 						}
 					}

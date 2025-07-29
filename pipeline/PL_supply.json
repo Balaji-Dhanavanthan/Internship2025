@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy data1_copy1",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -48,159 +48,6 @@
 							},
 							{
 								"source": {
-									"name": "KPIYear",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "KPIYear",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "KPIMonth",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "KPIMonth",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "KPI",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "KPI",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Target",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Target",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "CreatedAt",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CreatedAt",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"source": {
-									"name": "IsActive",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "IsActive",
-									"type": "String",
-									"physicalType": "char"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Excel_I2025_JNagar1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"folder": "Supply Chain Analytics/Dataset",
-							"file": "KPI Indicator.xlsx",
-							"sheet": 0
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"sehma": "I2025_JNagara1",
-							"table": "KPI_Indicator",
-							"database": "Intern_2025"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data1_copy1",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Id",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Id",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
 									"name": "HistoryID",
 									"type": "String",
 									"physicalType": "String"
@@ -232,7 +79,7 @@
 								"sink": {
 									"name": "FormType",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -256,7 +103,7 @@
 								"sink": {
 									"name": "Status",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -280,7 +127,7 @@
 								"sink": {
 									"name": "Role",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -292,7 +139,7 @@
 								"sink": {
 									"name": "ActionType",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -366,6 +213,8 @@
 			{
 				"name": "Copy data1_copy2",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data1_copy1",
@@ -517,488 +366,10 @@
 				]
 			},
 			{
-				"name": "Copy data1_copy3",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy data1_copy4",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "PODate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PODate",
-									"type": "DateTime",
-									"physicalType": "date"
-								}
-							},
-							{
-								"source": {
-									"name": "DeliveryDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DeliveryDate",
-									"type": "DateTime",
-									"physicalType": "date"
-								}
-							},
-							{
-								"source": {
-									"name": "VendorCode",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "VendorCode",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "VendorName",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "VendorName",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "TotalPOValue",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "TotalPOValue",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 18
-								}
-							},
-							{
-								"source": {
-									"name": "Currency",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Currency",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "ExchangeRate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ExchangeRate",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 10
-								}
-							},
-							{
-								"source": {
-									"name": "POValue(INR)",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "POValue_INR",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 5,
-									"precision": 20
-								}
-							},
-							{
-								"source": {
-									"name": "CreatedBy",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CreatedBy",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "PipelineRunDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PipelineRunDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Excel_I2025_JNagar1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"folder": "Supply Chain Analytics/Dataset",
-							"file": "prd_po_master.xlsx",
-							"sheet": 0
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"sehma": "I2025_JNagara1",
-							"table": "prd_po_master",
-							"database": "Intern_2025"
-						}
-					}
-				]
-			},
-			{
-				"name": "Copy data1_copy4",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy data1_copy5",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						}
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "ApproverTaskID",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ApproverTaskID",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "FormType",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "FormType",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "FormID",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "FormID",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "AssignedToUserID",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "AssignedToUserID",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "DelegateUserID",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DelegateUserID",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "DelegateBy",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DelegateBy",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "DelegateOn",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DelegateOn",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"source": {
-									"name": "Status",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Status",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Role",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Role",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "SequenceNo",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SequenceNo",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "ActionTakenBy",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ActionTakenBy",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "ActionTakenDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ActionTakenDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"source": {
-									"name": "CreatedBy",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CreatedBy",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "Src_CreatedDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Src_CreatedDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"source": {
-									"name": "ModifiedBy",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ModifiedBy",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "ModifiedDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ModifiedDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"source": {
-									"name": "IsActive",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "IsActive",
-									"type": "Boolean",
-									"physicalType": "bit"
-								}
-							},
-							{
-								"source": {
-									"name": "CreatedDate",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CreatedDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_Excel_I2025_JNagar1",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "practice-adf",
-							"folder": "Supply Chain Analytics/Dataset",
-							"file": "prd_approvaltaskmaster.xlsx",
-							"sheet": 0
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_sql_I2025_JNagara",
-						"type": "DatasetReference",
-						"parameters": {
-							"sehma": "I2025_JNagara1",
-							"table": "prd_approvaltaskmaster",
-							"database": "Intern_2025"
-						}
-					}
-				]
-			},
-			{
 				"name": "Copy data1_copy5",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data1_copy2",
@@ -1244,6 +615,110 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Excel1_I2025JNagara1",
+						"type": "DatasetReference",
+						"parameters": {
+							"sheetss": 0,
+							"container": "practice-adf",
+							"folder": "Supply Chain Analytics/Dataset",
+							"filename": "*"
+						}
+					},
+					"fieldList": [
+						"childItems",
+						"itemName"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Data flow1",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DFSupplysrc",
+									"type": "DataFlowReference",
+									"parameters": {
+										"outputfile": {
+											"value": "'@{item().name}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"STGManageHistoryMaster": {
+											"container": "practice-adf",
+											"folder": "Supply Chain Analytics/Dataset",
+											"file": {
+												"value": "@item().name",
+												"type": "Expression"
+											},
+											"sheet": 0
+										},
+										"sink1": {
+											"container": "practice-adf",
+											"folder": "I2025_JNagara1/supplySRC",
+											"filename": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine"
+							}
+						}
+					]
+				}
 			}
 		],
 		"folder": {

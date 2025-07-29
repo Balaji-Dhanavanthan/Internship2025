@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CP_Dept",
+				"name": "CP_Dept_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -63,7 +63,7 @@
 				]
 			},
 			{
-				"name": "CP_Div",
+				"name": "CP_Div_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -123,13 +123,13 @@
 				]
 			},
 			{
-				"name": "CP_Holiday",
+				"name": "CP_Holiday_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "CP_Div",
+						"activity": "CP_Div_SQL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -190,13 +190,13 @@
 				]
 			},
 			{
-				"name": "CP_KPI",
+				"name": "CP_KPI_SQL",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "CP_Holiday",
+						"activity": "CP_Holiday_SQL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -257,11 +257,226 @@
 				]
 			},
 			{
-				"name": "CP_HistoryMaster",
+				"name": "CP_HistoryMaster_sql",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "CP_KPI",
+						"activity": "CP_KPI_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "HistoryID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "HistoryID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "FormID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FormID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "FormType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FormType",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActionTakenDateTime",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActionTakenDateTime",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActionTakenByUserID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActionTakenByUserID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Role",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Role",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActionType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActionType",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DelegateUserId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DelegateUserId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedAt",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedAt",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Sheet": 0,
+							"FileName": "STG_ManageHistoryMaster.xlsx"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "STG_MANAGE_HISTORY_MASTER",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_Div_Map_SQL",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Dept_SQL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -305,7 +520,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Sheet": 0,
-							"FileName": "STG_ManageHistoryMaster.xlsx"
+							"FileName": "divisionMapping.xlsx"
 						}
 					}
 				],
@@ -315,7 +530,1415 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Schema": "I2025_SRangan1",
-							"Table": "STG_MANAGE_HISTORY_MASTER",
+							"Table": "SRC_DIVISION_MAPPING",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_Employee_SQL",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Div_Map_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Sheet": 0,
+							"FileName": "employees.xlsx"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_EMPLOYEES",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_GrpMaster_Sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Employee_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Sheet": 0,
+							"FileName": "prd_purchasing_group_Master.xlsx"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_PRD_PURCHASING_GROUP_MASTER",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_Approval_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DF_SupplyChain",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+							"FileName": "prd_approval_task_master.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_PRD_APPROVAL_TASK_MASTER",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "DF_SupplyChain",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFDatasets_I2025_SRangan1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"prdapprovetaskmaster": {
+								"Sheet": 0,
+								"FileName": "prd_approvaltaskmaster.xlsx"
+							},
+							"prdpomaster": {
+								"Sheet": 0,
+								"FileName": "prd_po_master.xlsx"
+							},
+							"purchaserhandledivprd": {
+								"Sheet": 0,
+								"FileName": "purchaserhandlingdivision_prd.xlsx"
+							},
+							"ringiPORMap": {
+								"Sheet": 0,
+								"FileName": "ringiPORMap.xlsx"
+							},
+							"stgRingiMaster": {
+								"Sheet": 0,
+								"FileName": "stg_RingiMaster.xlsx"
+							},
+							"stgpormaster": {
+								"Sheet": 0,
+								"FileName": "stg_pormaster.xlsx"
+							},
+							"SNKApprove": {
+								"Container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+								"FileName": "prd_approval_task_master.csv"
+							},
+							"SNKPomaster": {
+								"Container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+								"FileName": "prd_po_master.csv"
+							},
+							"SNKPurchase": {
+								"Container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+								"FileName": "purchaser_handling_division_prd.csv"
+							},
+							"SNKRingiPOR": {
+								"Container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+								"FileName": "ringiPORMap.csv"
+							},
+							"SNKRingimaster": {
+								"Container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+								"FileName": "stg_RingiMaster.csv"
+							},
+							"SNKPORMaster": {
+								"Container": "test-container",
+								"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+								"FileName": "stg_pormaster.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "CP_ pomaster_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Approval_sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PODate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PODate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "DeliveryDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DeliveryDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "VendorCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VendorCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VendorName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VendorName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalPOValue",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TotalPOValue",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Currency",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Currency",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ExchangeRate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ExchangeRate",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "POValue(INR)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "POValue_INR",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 5,
+									"precision": 20
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PipelineRunDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PipelineRunDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+							"FileName": "prd_po_master.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_PRD_PO_MASTER",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_Purchaser_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_ pomaster_sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PurchaserName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchaserName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PurchaserID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchaserID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Division",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Division",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FromDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FromDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "ToDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ToDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "StartDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "ModifiedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ModifiedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "year",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "quarter",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "quarter",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+							"FileName": "purchaser_handling_division_prd.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_PURCHASER_HANDLING_DIVISION_PRD",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_ringiporMap_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_Purchaser_sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "RingiPORMapKey",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RingiPORMapKey",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PorID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PorID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "RingiID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RingiID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "FinalVendorId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FinalVendorId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "IsDeleted",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsDeleted",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Amount",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+							"FileName": "ringiPORMap.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "RINGI_POR_MAP",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_RingiMaster_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_ringiporMap_sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+							"FileName": "stg_RingiMaster.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "SRC_RINGI_MASTER",
+							"DB_Name": "Intern_2025"
+						}
+					}
+				]
+			},
+			{
+				"name": "CP_pormaster_sql",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "CP_RingiMaster_sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PORID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PORID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PreferredVendorId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PreferredVendorId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PlantId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PlantId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PurchasingGroupId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchasingGroupId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PurchasingOrgId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchasingOrgId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PorNo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PorNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAmount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TotalAmount",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "BaseCurrency",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BaseCurrency",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAmount_INR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TotalAmount_INR",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "ConversionRate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ConversionRate",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "RequiredDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RequiredDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_ReSubmittedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_ReSubmittedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_SubmittedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_SubmittedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "DepartmentId",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DepartmentId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "IsSubmitted",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsSubmitted",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Option1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Option1",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Option2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Option2",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_CreatedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_CreatedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_ModifiedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_ModifiedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Ringi_ModifiedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ringi_ModifiedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "IsDeleted",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsDeleted",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "ReviseNo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ReviseNo",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_PO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAP_PO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_PR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAP_PR",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "IsSynced",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsSynced",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SAPIssueOrder",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAPIssueOrder",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PONo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PONo",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "PODate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PODate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "RingiCreatedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RingiCreatedBy",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "test-container",
+							"FolderName": "I2025_SRangan1/TDSG_Supply_Chain",
+							"FileName": "stg_pormaster.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_SRangan1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": "I2025_SRangan1",
+							"Table": "STG_POR_MASTER",
 							"DB_Name": "Intern_2025"
 						}
 					}

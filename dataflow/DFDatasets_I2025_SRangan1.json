@@ -1,5 +1,5 @@
 {
-	"name": "DFDatasetsI2025SRangan1",
+	"name": "DFDatasets_I2025_SRangan1",
 	"properties": {
 		"folder": {
 			"name": "DF_TDSG_Project_Scenario"
@@ -7,55 +7,6 @@
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "Department"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "Division"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "HolidayCalander"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "KPIIndicator"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "ManageHistoryMaster"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "divisionMap"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "employees"
-				},
 				{
 					"dataset": {
 						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
@@ -69,13 +20,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "prdpomaster"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
-						"type": "DatasetReference"
-					},
-					"name": "prdpurchasegrpMaster"
 				},
 				{
 					"dataset": {
@@ -106,71 +50,254 @@
 					"name": "stgpormaster"
 				}
 			],
-			"sinks": [],
-			"transformations": [
+			"sinks": [
 				{
-					"name": "DCDept"
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKApprove"
 				},
 				{
-					"name": "DCDiv"
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKPomaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKPurchase"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKRingiPOR"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKRingimaster"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "SNKPORMaster"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DCApprove"
+				},
+				{
+					"name": "DCPoMaster"
+				},
+				{
+					"name": "DCPurchase"
+				},
+				{
+					"name": "DCRingiPor"
+				},
+				{
+					"name": "DCRingiMaster"
+				},
+				{
+					"name": "DCPorMaster"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          DepartmentKey as string,",
-				"          SPID as string,",
-				"          CostCenterKey as string,",
-				"          DivisionKey as string,",
-				"          DepartmentName as string,",
-				"          DepartmentHead as string,",
-				"          PurchasingGroupKey as string,",
-				"          ActiveFlag as string,",
+				"          ApproverTaskID as string,",
+				"          FormType as string,",
+				"          FormID as string,",
+				"          AssignedToUserID as string,",
+				"          DelegateUserID as string,",
+				"          DelegateBy as string,",
+				"          DelegateOn as string,",
+				"          Status as string,",
+				"          Role as string,",
+				"          SequenceNo as string,",
+				"          ActionTakenBy as string,",
+				"          ActionTakenDate as string,",
+				"          CreatedBy as string,",
+				"          Src_CreatedDate as string,",
+				"          ModifiedBy as string,",
+				"          ModifiedDate as string,",
+				"          IsActive as string,",
 				"          CreatedDate as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Department",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Division",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> HolidayCalander",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> KPIIndicator",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> ManageHistoryMaster",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> divisionMap",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> employees",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> prdapprovetaskmaster",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          Division as string,",
+				"          PORNumber as string,",
+				"          PORValue as string,",
+				"          AdditionalCharge as string,",
+				"          PORRequester as string,",
+				"          RingiNO as string,",
+				"          SpendDetails as string,",
+				"          SAPPR as string,",
+				"          PONumber as string,",
+				"          PODate as string,",
+				"          DeliveryDate as string,",
+				"          VendorCode as string,",
+				"          VendorName as string,",
+				"          TotalPOValue as string,",
+				"          Currency as string,",
+				"          ExchangeRate as string,",
+				"          {POValue(INR)} as string,",
+				"          CreatedBy as string,",
+				"          PipelineRunDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> prdpomaster",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> prdpurchasegrpMaster",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          PurchaserName as string,",
+				"          PurchaserID as string,",
+				"          Division as string,",
+				"          Department as string,",
+				"          FromDate as string,",
+				"          ToDate as string,",
+				"          IsActive as string,",
+				"          StartDate as string,",
+				"          ModifiedDate as string,",
+				"          CreatedDate as string,",
+				"          year as string,",
+				"          quarter as string,",
+				"          id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> purchaserhandledivprd",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          RingiPORMapKey as string,",
+				"          PorID as string,",
+				"          RingiID as string,",
+				"          FinalVendorId as string,",
+				"          IsDeleted as string,",
+				"          Amount as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ringiPORMap",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          RingiKey as string,",
+				"          DepartmentKey as string,",
+				"          RingiApprovalItemId as string,",
+				"          RingiNo as string,",
+				"          TempRingiNo as string,",
+				"          PlantKey as string,",
+				"          CategoryType as string,",
+				"          Amount as string,",
+				"          BaseCurrency as string,",
+				"          TotalAmount_INR as string,",
+				"          ConversionRate as string,",
+				"          RingiLevel as string,",
+				"          POROption as string,",
+				"          Status as string,",
+				"          SubmittedDate as string,",
+				"          IsSubmitted as string,",
+				"          ModifiedBy as string,",
+				"          Src_CreatedDate as string,",
+				"          CreatedBy as string,",
+				"          ModifiedDate as string,",
+				"          CreatedDate as string,",
+				"          IsSubRingi as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> stgRingiMaster",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          PORID as string,",
+				"          PreferredVendorId as string,",
+				"          PlantId as string,",
+				"          PurchasingGroupId as string,",
+				"          PurchasingOrgId as string,",
+				"          PorNo as string,",
+				"          TotalAmount as string,",
+				"          BaseCurrency as string,",
+				"          TotalAmount_INR as string,",
+				"          ConversionRate as string,",
+				"          RequiredDate as string,",
+				"          Status as string,",
+				"          Ringi_ReSubmittedDate as string,",
+				"          Ringi_SubmittedDate as string,",
+				"          DepartmentId as string,",
+				"          IsSubmitted as string,",
+				"          Option1 as string,",
+				"          Option2 as string,",
+				"          Ringi_CreatedBy as string,",
+				"          Ringi_CreatedDate as string,",
+				"          Ringi_ModifiedBy as string,",
+				"          Ringi_ModifiedDate as string,",
+				"          IsDeleted as string,",
+				"          ReviseNo as string,",
+				"          SAP_PO as string,",
+				"          SAP_PR as string,",
+				"          IsSynced as string,",
+				"          SAPIssueOrder as string,",
+				"          PONo as string,",
+				"          PODate as string,",
+				"          RingiCreatedBy as string,",
+				"          CreatedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> stgpormaster",
-				"Department derive() ~> DCDept",
-				"Division derive() ~> DCDiv"
+				"prdapprovetaskmaster derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()),$$))) ~> DCApprove",
+				"prdpomaster derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()),$$))) ~> DCPoMaster",
+				"purchaserhandledivprd derive(each(match(type == 'string'), $$ = case($$=='NULL', toString(null()),$$))) ~> DCPurchase",
+				"ringiPORMap derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCRingiPor",
+				"stgRingiMaster derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCRingiMaster",
+				"stgpormaster derive(each(match(type == 'string'), $$ = case($$ == 'NULL', toString(null()), $$))) ~> DCPorMaster",
+				"DCApprove sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['prd_approval_task_master.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKApprove",
+				"DCPoMaster sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['prd_po_master.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKPomaster",
+				"DCPurchase sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['purchaser_handling_division_prd.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKPurchase",
+				"DCRingiPor sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['ringiPORMap.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKRingiPOR",
+				"DCRingiMaster sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['stg_RingiMaster.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKRingimaster",
+				"DCPorMaster sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['stg_pormaster.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SNKPORMaster"
 			]
 		}
 	}

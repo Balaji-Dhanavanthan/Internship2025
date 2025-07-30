@@ -169,7 +169,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Schema": "I2025_SRangan1",
-							"Table": "SRC_LU_LANGUAGE"
+							"Table": "SRC_LU_LANGUAGE",
+							"DB_Name": "Intern_2025"
 						}
 					}
 				]

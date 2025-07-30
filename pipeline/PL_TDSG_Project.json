@@ -867,6 +867,118 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "Division",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Division",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PORNumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PORNumber",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PORValue",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PORValue",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "AdditionalCharge",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "AdditionalCharge",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "PORRequester",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PORRequester",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RingiNO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RingiNO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SpendDetails",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SpendDetails",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SAPPR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SAPPR",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "PONumber",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PONumber",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
 									"name": "PODate",
 									"type": "String",
 									"physicalType": "String"
@@ -886,7 +998,7 @@
 								"sink": {
 									"name": "DeliveryDate",
 									"type": "DateTime",
-									"physicalType": "date"
+									"physicalType": "datetime"
 								}
 							},
 							{
@@ -949,8 +1061,8 @@
 									"name": "ExchangeRate",
 									"type": "Decimal",
 									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 10
+									"scale": 4,
+									"precision": 18
 								}
 							},
 							{
@@ -960,11 +1072,11 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "POValue_INR",
+									"name": "POValue(INR)",
 									"type": "Decimal",
 									"physicalType": "decimal",
-									"scale": 5,
-									"precision": 20
+									"scale": 2,
+									"precision": 18
 								}
 							},
 							{

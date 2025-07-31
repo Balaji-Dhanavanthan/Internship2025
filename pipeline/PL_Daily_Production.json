@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "CD_plan_copy1",
+						"activity": "CD_material",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -362,9 +362,14 @@
 			{
 				"name": "CD_material",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CD_plan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -597,7 +602,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"sehma": "I2025_JNagara1",
-							"table": "Material_Master"
+							"table": "Material_Master",
+							"database": "Intern_2025"
 						}
 					}
 				]
@@ -655,14 +661,9 @@
 			{
 				"name": "CD_plan_copy1",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "CD_plan",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,

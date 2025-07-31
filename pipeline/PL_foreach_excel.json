@@ -69,7 +69,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"sehma": "I2025_JNagara1",
-										"table": "anime"
+										"table": "anime",
+										"database": "Intern_2025"
 									}
 								}
 							]

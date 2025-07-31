@@ -108,7 +108,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"sehma": "I2025_JNagara1",
-							"table": "SRC_PHRMCY"
+							"table": "SRC_PHRMCY",
+							"database": "Intern_2025"
 						}
 					}
 				],

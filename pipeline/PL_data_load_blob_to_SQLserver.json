@@ -1,5 +1,5 @@
 {
-	"name": "PL_data_mig_blob_to_SQLserver",
+	"name": "PL_data_load_blob_to_SQLserver",
 	"properties": {
 		"activities": [
 			{

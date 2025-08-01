@@ -48,12 +48,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('METADATA_get_excel_names').output.childItems['name']",
+						"value": "@activity('METADATA_get_excel_names').output.childItems",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Data flow1",
+							"name": "DF_str_null_hanlding",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
@@ -99,11 +99,11 @@
 							}
 						},
 						{
-							"name": "Copy data1",
+							"name": "CP_csv_to_SQLserver",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Data flow1",
+									"activity": "DF_str_null_hanlding",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -165,7 +165,7 @@
 									"parameters": {
 										"DatabaseObject": "I2025_JSenthil",
 										"TableName": {
-											"value": "@replace(item()['name'], '.xlsx', '_sc')",
+											"value": "@replace(replace(item()['name'], '.xlsx', '_sc'), ' ', '_')",
 											"type": "Expression"
 										}
 									}
@@ -178,6 +178,8 @@
 			{
 				"name": "PROCEDURE_supply_chain_sttm",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "FOREACH_excel_file",

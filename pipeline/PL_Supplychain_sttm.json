@@ -35,10 +35,8 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "FOREACH_excel_file",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "METADATA_get_excel_names",
@@ -49,6 +47,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('METADATA_get_excel_names').output.childItems['name']",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Data flow1",
@@ -63,14 +65,141 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_dynamic_null_handling",
+									"type": "DataFlowReference",
+									"parameters": {
+										"output_filename": {
+											"value": "'@{replace(item()['name'], 'xlsx', 'csv')}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"SRCexcel": {
+											"container_name": "practice-adf",
+											"dir_name": "Supply Chain Analytics/Dataset",
+											"file_name": {
+												"value": "@item()['name']",
+												"type": "Expression"
+											},
+											"sheet_idx": 0
+										},
+										"SINKcsv": {
+											"file_name": "sdf",
+											"folder_name": "Supply_chain_src",
+											"container_name": "csvcontainer"
+										}
+									}
+								},
 								"compute": {
 									"coreCount": 8,
 									"computeType": "General"
 								},
 								"traceLevel": "Fine"
 							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Data flow1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_CSV_test",
+									"type": "DatasetReference",
+									"parameters": {
+										"file_name": {
+											"value": "@replace(item()['name'], 'xlsx', 'csv')",
+											"type": "Expression"
+										},
+										"folder_name": "Supply_chain_src",
+										"container_name": "csvcontainer"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_Sql_server_intern",
+									"type": "DatasetReference",
+									"parameters": {
+										"DatabaseObject": "I2025_JSenthil",
+										"TableName": {
+											"value": "@replace(item()['name'], '.xlsx', '_sc')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
+				}
+			},
+			{
+				"name": "PROCEDURE_supply_chain_sttm",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "FOREACH_excel_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[I2025_JSenthil].[fact_por_details_STTM]"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_server",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],

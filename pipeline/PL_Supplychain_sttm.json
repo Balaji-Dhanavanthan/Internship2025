@@ -178,8 +178,6 @@
 			{
 				"name": "PROCEDURE_supply_chain_sttm",
 				"type": "SqlServerStoredProcedure",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "FOREACH_excel_file",
@@ -197,7 +195,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[I2025_JSenthil].[fact_por_details_STTM]"
+					"storedProcedureName": "[I2025_JSenthil].[fact_por_details_STTM_v1]"
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_SQL_server",

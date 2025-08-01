@@ -1,0 +1,17 @@
+{
+	"name": "DF_src_dynamic_null_handling",
+	"properties": {
+		"folder": {
+			"name": "Supply Chain"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}

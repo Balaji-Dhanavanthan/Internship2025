@@ -1,0 +1,49 @@
+{
+	"name": "DF_SupplyChain_I2025_SRangan1",
+	"properties": {
+		"folder": {
+			"name": "DF_TDSG_Project_Scenario"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Excel_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DCNull"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Name as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source derive(each(match(type == 'string'), $$ = case(toString($$) == 'NULL', toString(null()),toString($$)))) ~> DCNull",
+				"DCNull sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:[($Name)],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink"
+			]
+		}
+	}
+}

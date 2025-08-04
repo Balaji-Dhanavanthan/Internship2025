@@ -3,8 +3,10 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Source",
+				"name": "SupplyChainSrc",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -23,19 +25,24 @@
 							"FileName": "*"
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					}
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach_Iteration",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Source",
+						"activity": "SupplyChainSrc",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,10 +50,14 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('SupplyChainSrc').output.childItems",
+						"type": "Expression"
+					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Data flow1",
+							"name": "DF_supplychain_src",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
@@ -58,6 +69,33 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_SupplyChain_I2025_SRangan1",
+									"type": "DataFlowReference",
+									"parameters": {
+										"Name": {
+											"value": "'@{replace(item().name,'.xlsx','.csv')}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"source": {
+											"Sheet": 0,
+											"FileName": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										},
+										"sink": {
+											"Container": "test-container",
+											"FolderName": "I2025_SRangan1/TDSG_Supply_Chain_new",
+											"FileName": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										}
+									}
+								},
 								"compute": {
 									"coreCount": 8,
 									"computeType": "General"
@@ -66,11 +104,11 @@
 							}
 						},
 						{
-							"name": "Copy data1",
+							"name": "CP_csv_sql",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Data flow1",
+									"activity": "DF_supplychain_src",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -85,15 +123,99 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"enableStaging": false
-							}
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_TDSG_Project_I2025_SRangan1",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": "test-container",
+										"FolderName": "I2025_SRangan1/TDSG_Supply_Chain_new",
+										"FileName": {
+											"value": "@replace(item().name,'.xlsx','.csv')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_sql_I2025_SRangan1",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": "I2025_SRangan1",
+										"Table": {
+											"value": "@replace(item().name,'.xlsx','')",
+											"type": "Expression"
+										},
+										"DB_Name": "Intern_2025"
+									}
+								}
+							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Store proc_sql",
+				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "ForEach_Iteration",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[I2025_SRangan1].[fact_por_details_tgt]"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_sql_server",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DataBase": "Intern_2025"
+					}
 				}
 			}
 		],
 		"folder": {
-			"name": "TDSG_Training_I2025_SRangan1"
+			"name": "TDSG_Training_I2025_SRangan1/TDSG_PROJECT_I2025_SRangan1"
 		},
 		"annotations": []
 	}

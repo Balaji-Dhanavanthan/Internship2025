@@ -36,7 +36,7 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> STGManageHistoryMaster",
-				"STGManageHistoryMaster derive(each(match(type=='string'), $$ = case($$=='NULL', toString(null()), $$))) ~> derivedColumn4",
+				"STGManageHistoryMaster derive(each(match(type=='string'), $$ = case(toString($$)=='NULL', toString(null()),toString($$)))) ~> derivedColumn4",
 				"derivedColumn4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:[($outputfile)],",

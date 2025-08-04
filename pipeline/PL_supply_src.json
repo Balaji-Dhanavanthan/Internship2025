@@ -1,0 +1,194 @@
+{
+	"name": "PL_supply_src",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata supply src",
+				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_Excel1_I2025JNagara1",
+						"type": "DatasetReference",
+						"parameters": {
+							"sheetss": 0,
+							"container": "practice-adf",
+							"folder": "Supply Chain Analytics/Dataset",
+							"filename": "*"
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "ForEachtoSQL",
+				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata supply src",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata supply src').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "DFnull",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DFSupplysrc",
+									"type": "DataFlowReference",
+									"parameters": {
+										"outputfile": {
+											"value": "'@{replace(item().name,'.xlsx','.csv')}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"STGManageHistoryMaster": {
+											"container": "practice-adf",
+											"folder": "Supply Chain Analytics/Dataset",
+											"file": {
+												"value": "@item().name",
+												"type": "Expression"
+											},
+											"sheet": 0
+										},
+										"sink1": {
+											"container": "practice-adf",
+											"folder": "I2025_JNagara1/supplySRC",
+											"filename": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine"
+							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "DFnull",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_CSV_I2025_JNagara1",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "practice-adf",
+										"folder": "I2025_JNagara1/supplySRC",
+										"filename": {
+											"value": "@replace(item().name,'.xlsx','.csv')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_sql_I2025_JNagara",
+									"type": "DatasetReference",
+									"parameters": {
+										"sehma": "I2025_JNagara1",
+										"table": {
+											"value": "@replace(item().name,'.xlsx','_src')",
+											"type": "Expression"
+										},
+										"database": "Intern_2025"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "SRC_supply"
+		},
+		"annotations": []
+	}
+}

@@ -41,7 +41,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(each(match(type == 'string'), $$ = iif($$ == 'NULL', toString(null()), $$))) ~> derivedColumn1",
+				"source1 derive(each(match(type=='string'), $$ = iif($$ == 'NULL', toString(null()), $$))) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -110,7 +110,7 @@
 				"          next_batter as string,",
 				"          striker_out as string",
 				"     ),",
-				"     partitionFileNames:['prd_purchasing_group_Master.csv'],",
+				"     partitionFileNames:['PurchaserHandeelingDivision_Prd.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> sink1"

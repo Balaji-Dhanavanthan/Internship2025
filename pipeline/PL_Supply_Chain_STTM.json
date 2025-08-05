@@ -5,8 +5,6 @@
 			{
 				"name": "CP_EXCEL_SQL",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -27,6 +25,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "truncate table I2025_MSyed.purchaserhandlingdivision_prd ;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
@@ -47,7 +46,7 @@
 						"parameters": {
 							"container": "practice-adf",
 							"directory": "Supply Chain Analytics/Dataset",
-							"fileName": "prd_purchasing_group_Master.xlsx",
+							"fileName": "PurchaserHandeelingDivision_Prd.xlsx",
 							"sheet": 0
 						}
 					}
@@ -58,7 +57,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schemaname": "I2025_MSyed",
-							"tablename": "prd_purchasing_group_master",
+							"tablename": "purchaserhandlingdivision_prd",
 							"databasename": "Intern_2025"
 						}
 					}
@@ -129,6 +128,8 @@
 			{
 				"name": "DF_NULL_Handling",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -166,6 +167,8 @@
 			{
 				"name": "CP_BLOB_SQL",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_NULL_Handling",

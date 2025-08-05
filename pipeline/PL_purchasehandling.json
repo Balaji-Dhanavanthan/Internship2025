@@ -1,0 +1,282 @@
+{
+	"name": "PL_purchasehandling",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFSupplysrc",
+						"type": "DataFlowReference",
+						"parameters": {
+							"outputfile": {
+								"value": "'@{'prd_purchasehandling.csv'}'",
+								"type": "Expression"
+							}
+						},
+						"datasetParameters": {
+							"STGManageHistoryMaster": {
+								"container": "practice-adf",
+								"folder": "Supply Chain Analytics/Dataset",
+								"file": "PurchaserHandeelingDivision_Prd.xlsx",
+								"sheet": 0
+							},
+							"sink1": {
+								"container": "practice-adf",
+								"folder": "I2025_JNagara1/newsupply",
+								"filename": "prd_purchasehandling.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table purchaserhandlingdivision_prd",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PurchaserName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchaserName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PurchaserID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PurchaserID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Division",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Division",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FromDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FromDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "ToDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ToDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IsActive",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "StartDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "ModifiedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ModifiedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Year",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "quarter",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Quarter",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_CSV_I2025_JNagara1",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "practice-adf",
+							"folder": "I2025_JNagara1/newsupply",
+							"filename": "prd_purchasehandling.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sql_I2025_JNagara",
+						"type": "DatasetReference",
+						"parameters": {
+							"sehma": "I2025_JNagara1",
+							"table": "purchaserhandlingdivision_prd",
+							"database": "Intern_2025"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "SRC_supply"
+		},
+		"annotations": []
+	}
+}

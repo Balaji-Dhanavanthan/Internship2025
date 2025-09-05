@@ -1,22 +1,17 @@
 {
-	"name": "LS_OnPrem_SQLServer",
+	"name": "LS_sql_onpremcopy",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"parameters": {
-			"Database": {
-				"type": "String"
-			}
-		},
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
 			"server": "SSIC-SQL-01",
-			"database": "@{linkedService().Database}",
+			"database": "Intern_2025",
 			"encrypt": "optional",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
 			"userName": "I2025_MSyed",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4MzNjM2IyOS1jMjZkLTQ5Y2UtOWFiOS1jY2NlMjAyMzk3OTQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmNGU4MDFmNS01ODUzLTRjN2MtOGYwZi0wNTQ4MmU0ZjJjMWYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "SHIR-OnPrem",
